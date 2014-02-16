@@ -1,0 +1,25 @@
+{# src/Pn/PagesBundle/Resources/views/Blog/index.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Accueil{% endblock %}
+
+{% block body %}
+    <h2>Page d'accueil</h2>
+    <p>
+        <br>La page d’accueil est un espace de séduction qui doit donner envie au visiteurs
+        <br>de s’inscrire sur le suite. Elle devra comporter les fonctionnalités suivantes :
+        <br>• Logo + bouton d’inscription + bouton de connexion + FR/EN
+        <br>• Menu
+        <br>Accueil + Annonces + Nounous + Formations + Tarifs + Partager (facebook...)
+        <br>• Menu utilisateur connecté
+        <br>Tableau de bord + Profil + Favoris + Messagerie (?) + Gestion du compte +
+        <br>Déconneixon
+        <br>• Champs de recherche de nounou ou d’offre d’emploi pour les nounous
+        <br>Je suis une nounou et je cherche un emploi / je cherche une nounou
+        <br>Code Postal ou Ville
+        <br>• Dernières nounous inscrites
+        <br>• Derniers billets de blogs postés dans l’espace formation
+        <br>Trois étapes mises en valeurs : recherche efficace, confiance, formations
+    </p>
+{% endblock %}

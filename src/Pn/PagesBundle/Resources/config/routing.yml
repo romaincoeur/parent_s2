@@ -1,0 +1,3 @@
+pn_pages_homepage:
+    pattern:  /
+    defaults: { _controller: PnPagesBundle:Default:index }

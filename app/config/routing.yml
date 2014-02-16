@@ -1,0 +1,13 @@
+pn_pages:
+    resource: "@PnPagesBundle/Resources/config/routing.yml"
+    prefix:   /
+
+login:
+    pattern:   /login
+    defaults:  { _controller: PnUserBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout
