@@ -1,9 +1,0 @@
-{# src/Pn/PagesBundle/Resources/views/Default/menu.html.twig #}
-2
-3<h3>Les derniers articles</h3>
-4
-5<ul class="nav nav-pills nav-stacked">
-    6  {% for article in liste_articles %}
-        7    <li><a href="{{ path('sdzblog_voir', {'id': article.id}) }}">{{ article.titre }}</a></li>
-        8  {% endfor %}
-    9</ul>

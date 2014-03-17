@@ -1,0 +1,158 @@
+{# src/Pn/CoreBundle/Resources/views/Blog/index.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Accueil{% endblock %}
+
+{% block body %}
+    <div class="maptool wrap">
+        <div id="map">
+            Veuillez patienter pendant le chargement de la carte...
+        </div>
+        <div class="searchForm">
+            <form action="#" method="post">
+                <select class="btn">
+                    <option>Je cherche une nounou</option>
+                    <option>Je cherche un job</option>
+                </select>
+                <input class="search" type="search" autocomplete="true" placeholder="Indiquez votre ville ou votre code postal">
+                <input type="submit" value="chercher" class="btn bg-yellow submit">
+            </form>
+        </div>
+    </div>
+
+    <div class="present big-wrap">
+        <div class="row">
+            <h3>Avec Parent Nounou, vous êtes à un clic de la famille ou de la nounou de vos rêves !</h3>
+        </div>
+        <div class="banner">
+            <div class="col-md-4 topic">
+                <img src="{{ asset('img/icons/present-search.png') }}" alt="present-search">
+                <h5>Des recherches efficaces</h5>
+                <p>J'identifie rapidement ma nounou selon mes criteres et les recomandations</p>
+            </div>
+            <div class="col-md-4 topic">
+                <img src="{{ asset('img/icons/present-confiance.png') }}" alt="present-confiance">
+                <h5>La confiance à l'honneur</h5>
+                <p>Un système de points de confiance met en valeur les nounous expérimentées</p>
+            </div>
+            <div class="col-md-4 topic">
+                <img src="{{ asset('img/icons/present-badge.png') }}" alt="present-badge">
+                <h5>E-formations rapides</h5>
+                <p>De nombreux conseils et vidéos m'aident à mieux m'occuper des enfants.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="news wrap">
+        <img src="{{ asset('img/illus/parents-nounou2.png') }}" alt="enfants et nounou" style="height: 360px; margin-top: 40px;">
+        <div class="new">
+            <div class="header">
+                <img src="{{ asset('img/icons/alaune.png') }}" alt="a la une">
+                <div class="title">
+                    <h5>La boite à comptines est née !</h5>
+                </div>
+            </div>
+            <div class="body">
+                <p>La boite à comptines est une application collaborative de collecte et de partage de comptines pour les
+                    tout petits. Son ambition est d'aider les... <a href="">lire la suite</a> </p>
+            </div>
+        </div>
+        <div class="new">
+            <div class="header">
+                <img src="{{ asset('img/icons/profil-badge.png') }}" alt="a la une">
+                <div class="title">
+                    <h5>Comment choisir son mode de garde ?</h5>
+                </div>
+            </div>
+            <div class="body">
+                <p>Il existe quatre modes de garde principaux pour un enfant de moins de
+                    3 ans : les parents... <a href="">lire la suite</a> </p>
+            </div>
+        </div>
+        <div class="new">
+            <div class="header">
+                <img src="{{ asset('img/icons/profil-badge.png') }}" alt="a la une">
+                <div class="title">
+                    <h5>Du geste à la parole</h5>
+                </div>
+            </div>
+            <div class="body">
+                <p>Les comptines représentent une source d'apprentissage linguistique et
+                    culturel des tout-petits. Elles permettent à l'enfant d'incorporer... <a href="">lire la suite</a> </p>
+            </div>
+        </div>
+        <div class="new">
+            <div class="header">
+                <img src="{{ asset('img/icons/profil-badge.png') }}" alt="a la une">
+                <div class="title">
+                    <h5>Conciler vie familliale et vie professionnelle</h5>
+                </div>
+            </div>
+            <div class="body">
+                <p>Mener de front vie familliale et vie professionnelle est l'un des principaux
+                    défi des femmes... <a href="">lire la suite</a> </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="mini-profiles">
+        <div class="banner big-wrap">
+            <h4>Dernières nounou inscrites</h4>
+        </div>
+        <div class="wrap">
+            <div class="mini-profile" style="margin-left: 0;">
+                <div class="header">
+                    <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Sarah L." style="height: 120px;">
+                    <strong>Sarah L.</strong>
+                    <p>Paris</p>
+                </div>
+                <div class="body">
+                    <p>Assistante maternelle</p>
+                </div>
+            </div>
+            <div class="mini-profile">
+                <div class="header">
+                    <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Louis D." style="height: 120px;">
+                    <strong>Louis D.</strong>
+                    <p>Lyon</p>
+                </div>
+                <div class="body">
+                    <p>Baby sitter</p>
+                </div>
+            </div>
+            <div class="mini-profile">
+                <div class="header">
+                    <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Julie B." style="height: 120px;">
+                    <strong>Julie B.</strong>
+                    <p>Asniere sur seine</p>
+                </div>
+                <div class="body">
+                    <p>Nounou à domicile</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+
+    var latlng = new google.maps.LatLng(48.8575162, 2.3426246);
+    // paris : 48.8575162	2.3426246
+    //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
+    //de définir des options d'affichage de notre carte
+    var options = {
+        center: latlng,
+        zoom: 13,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    //constructeur de la carte qui prend en paramêtre le conteneur HTML
+    //dans lequel la carte doit s'afficher et les options
+    var map = new google.maps.Map(document.getElementById("map"), options);
+
+</script>
+{% endblock %}

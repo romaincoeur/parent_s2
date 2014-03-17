@@ -3,14 +3,14 @@
 namespace Pn\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 
 
 /**
  * User
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Pn\UserBundle\Entity\UserRepository")
+ * @ORM\Entity()
  */
 class User extends BaseUser
 {
@@ -26,93 +26,45 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string")
+     * @ORM\Column(name="type", type="string", nullable=true)
      */
     private $type;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string")
-     */
-    private $firstname;
-
-    /**
-     * @var stirng
-     *
-     * @ORM\Column(name="lastname", type="string")
-     */
-    private $lastname;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="address", type="string")
+     * @ORM\Column(name="address", type="string", nullable=true)
      */
     private $address;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string")
-     */
-    private $phone;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="profile_picture", type="string")
+     * @ORM\Column(name="profile_picture", type="string", nullable=true)
      */
     private $profile_picture;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="gender", type="string")
-     */
-    private $gender;
-
-    /**
-     * @var date
-     *
-     * @ORM\Column(name="date_of_birth", type="date")
-     */
-    private $date_of_birth;
-
-    /**
      * @var float
      *
-     * @ORM\Column(name="latitude", type="float")
+     * @ORM\Column(name="latitude", type="float", nullable=true)
      */
     private $latitude;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="longitude", type="float")
+     * @ORM\Column(name="longitude", type="float", nullable=true)
      */
     private $longitude;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="contact_wish", type="string")
+     * @ORM\Column(name="contact_wish", type="string", nullable=true)
      */
     private $contact_wish;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="facebook_id", type="string")
-     */
-    private $facebook_id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="twitter_id", type="string")
-     */
-    private $twitter_id;
 
 
 
@@ -159,52 +111,6 @@ class User extends BaseUser
     }
 
     /**
-     * Set firstname
-     *
-     * @param string $firstname
-     * @return User
-     */
-    public function setFirstname($firstname)
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    /**
-     * Get firstname
-     *
-     * @return string 
-     */
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    /**
-     * Set lastname
-     *
-     * @param string $lastname
-     * @return User
-     */
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * Get lastname
-     *
-     * @return string 
-     */
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    /**
      * Set address
      *
      * @param string $address
@@ -228,29 +134,6 @@ class User extends BaseUser
     }
 
     /**
-     * Set phone
-     *
-     * @param string $phone
-     * @return User
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string 
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
      * Set profile_picture
      *
      * @param string $profilePicture
@@ -271,52 +154,6 @@ class User extends BaseUser
     public function getProfilePicture()
     {
         return $this->profile_picture;
-    }
-
-    /**
-     * Set gender
-     *
-     * @param string $gender
-     * @return User
-     */
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
-
-        return $this;
-    }
-
-    /**
-     * Get gender
-     *
-     * @return string 
-     */
-    public function getGender()
-    {
-        return $this->gender;
-    }
-
-    /**
-     * Set date_of_birth
-     *
-     * @param \DateTime $dateOfBirth
-     * @return User
-     */
-    public function setDateOfBirth($dateOfBirth)
-    {
-        $this->date_of_birth = $dateOfBirth;
-
-        return $this;
-    }
-
-    /**
-     * Get date_of_birth
-     *
-     * @return \DateTime 
-     */
-    public function getDateOfBirth()
-    {
-        return $this->date_of_birth;
     }
 
     /**
@@ -386,51 +223,5 @@ class User extends BaseUser
     public function getContactWish()
     {
         return $this->contact_wish;
-    }
-
-    /**
-     * Set facebook_id
-     *
-     * @param string $facebookId
-     * @return User
-     */
-    public function setFacebookId($facebookId)
-    {
-        $this->facebook_id = $facebookId;
-
-        return $this;
-    }
-
-    /**
-     * Get facebook_id
-     *
-     * @return string 
-     */
-    public function getFacebookId()
-    {
-        return $this->facebook_id;
-    }
-
-    /**
-     * Set twitter_id
-     *
-     * @param string $twitterId
-     * @return User
-     */
-    public function setTwitterId($twitterId)
-    {
-        $this->twitter_id = $twitterId;
-
-        return $this;
-    }
-
-    /**
-     * Get twitter_id
-     *
-     * @return string 
-     */
-    public function getTwitterId()
-    {
-        return $this->twitter_id;
     }
 }

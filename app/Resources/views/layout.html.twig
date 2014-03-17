@@ -17,37 +17,45 @@
 <body>
 
 <header>
-    <div class="row">
-        <div class="span8">
-            <h1>Parent-nounou</h1>
-        </div>
-        {{ render(controller("PnUserBundle:Security:main")) }}
-    </div>
-
-
+        {{ render(controller("PnUserBundle:Default:viewModule")) }}
+    <div class="clearfix"></div>
 </header>
 
-
-<menu id="menu">
-    <ul class="navbar row">
-        <li class=" span2 {% if (menu_select == 1) %} active {% endif %}"><a href="#">Accueil</a></li>
-        <li class=" span2 {% if (menu_select == 2) %} active {% endif %}"><a href="#">Annonces</a></li>
-        <li class=" span2 {% if (menu_select == 3) %} active {% endif %}"><a href="#">Nounou</a></li>
-        <li class=" span2 {% if (menu_select == 4) %} active {% endif %}"><a href="#">Formations</a></li>
-    </ul>
-</menu>
-
-{% block body %}
-{% endblock %}
+<div class="container">
+    {% block body %}
+    {% endblock %}
+</div>
 
 <footer>
-    @Copyright 2014 - INNOVEDUC
+    <div class="wrap">
+        <div class="social-bar">
+            <a href=""><img src="{{ asset('img/icons/social-twitter.png') }}"></a>
+            <a href=""><img src="{{ asset('img/icons/social-facebook.png') }}"></a>
+            <a href=""><img src="{{ asset('img/icons/social-google.png') }}"></a>
+        </div>
+        <div class="pages">
+            <a href="" class="red" style="padding-left: 0; border-left: 0">Les Annonces</a>
+            <a href="" class="red">Les nounous</a>
+            <a href="" class="red">Les Formations</a>
+            <a href="">Plan du site</a>
+            <a href="">CGU</a>
+            <a href="">Tarifs</a>
+            <a href="">Presse</a>
+            <a href="">Contact</a>
+        </div>
+
+    </div>
 </footer>
 
-{% block javascripts %}
-    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalites du bootstrap Twitter #}
+{# jquery est charge en local si l'environnement est dev #}
+{% if app.environment == 'dev' %}
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
+{% else %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+{% endif
+%}
+<script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
+{% block javascripts %}
 {% endblock %}
 
 </body>

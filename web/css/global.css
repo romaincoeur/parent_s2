@@ -1,0 +1,338 @@
+
+
+/***************element principaux du corps de page*****************/
+
+.bg-blue
+{
+    background-color: #65c0e3;
+}
+.bg-yellow
+{
+    background-color: #f7c937;
+}
+.bg-purple
+{
+    background-color: #b093c4;
+}
+.bg-red
+{
+    background-color: #e84355;
+}
+
+.blue
+{
+    color: #65c0e3;
+}
+.yellow
+{
+    color: #f7c937;
+}
+.purple
+{
+    color: #b093c4;
+}
+.red
+{
+    color: #e84355;
+}
+
+
+.btn
+{
+    border-radius: 20px;
+    width: 100px;
+    height: 30px;
+    color: #FFFFFF;
+    padding: 3px;
+}
+.btn:hover
+{
+    color: #FFFFFF;
+}
+
+.wrap
+{
+    max-width: 960px;
+    margin: auto;
+}
+
+.big-wrap
+{
+    max-width: 1000px;
+    margin: auto;
+}
+
+.left
+{
+    float: left;
+}
+
+.right
+{
+    float: right;
+}
+
+
+
+
+
+/***************Header*****************/
+
+header
+{
+    height: 120px;
+}
+
+header .btn
+{
+    margin: 45px 0;
+}
+
+header .connected .btn
+{
+    background-color: lightgrey;
+    border-radius: 20px;
+    height: 35px;
+    width: 35px;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.logo
+{
+    display: block;
+    width: 410px;
+    margin: 20px auto;
+}
+
+.logo h2
+{
+    display: inline;
+    color: #b093c4;
+    margin: 0 30px;
+    font-size: 30px;
+    vertical-align: middle;
+}
+
+
+
+
+
+/***************Page d'accueil*****************/
+
+.maptool
+{
+    height: 360px;
+}
+
+#map
+{
+    height: 360px;
+    width: 100%;
+}
+
+.searchForm
+{
+    position: relative;
+    margin: -55px 0 0 20px;
+}
+
+.searchForm select
+{
+    width: 240px;
+    background-color: #666666;
+    padding-left: 20px;
+    height: 40px;
+}
+.searchForm select::selection
+{
+    color: #FFFFFF;
+}
+.searchForm select:focus
+{
+    color: #FFFFFF;
+}
+
+.searchForm .search
+{
+    margin: auto 20px;
+    height: 40px;
+    border-radius: 20px;
+    width: 500px;
+    padding-left: 20px;
+    border: solid #d9d9d9 1px;
+}
+
+.searchForm .submit
+{
+    height: 40px;
+    width: 140px;
+    background: url("../img/icons/search.png") 20px center no-repeat #f7c937;
+    padding-left: 20px;
+}
+
+.present .row
+{
+    height: 100px;
+    text-align: center;
+}
+
+.present h3
+{
+    margin: 40px 0;
+    color: #65c0e3;
+}
+
+.present .banner
+{
+    background-color: #eeeeee;
+    height: 140px;
+}
+
+.present img
+{
+    height: 100px;
+    float: left;
+    margin: 20px;
+}
+
+.present h5
+{
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.present .topic
+{
+    padding-left: 0;
+}
+
+
+.news
+{
+    height: 400px;
+}
+
+.news img
+{
+    float: right;
+}
+
+.new
+{
+    width: 300px;
+    display: inline-block;
+    border: solid #eeeeee 2px;
+    margin: 40px 30px 0 0;
+    height: 160px;
+    vertical-align: top;
+}
+
+.new .header
+{
+    background-color: #eeeeee;
+    padding: 10px 20px;
+}
+
+.new .header .title
+{
+    width: 236px;
+}
+
+.new .header img
+{
+    height: 20px;
+    float: right;
+}
+
+.new .header h5
+{
+    display: inline;
+    font-weight: bold;
+}
+
+.new .body
+{
+    padding: 10px 20px;
+}
+
+
+.mini-profiles
+{
+    margin-bottom: 50px;
+}
+
+.mini-profiles .banner
+{
+    height: 60px;
+    text-align: center;
+    padding-top: 10px;
+    background-color: crimson;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: #FFFFFF;
+}
+
+.mini-profile
+{
+    width: 300px;
+    display: inline-block;
+    height: 160px;
+    border: solid #eeeeee 2px;
+    margin-left: 20px;
+    overflow: hidden;
+}
+
+.mini-profile .header
+{
+    background-color: #eeeeee;
+    padding: 10px 20px;
+}
+
+.mini-profile img
+{
+    float: left;
+}
+
+.mini-profile .header strong
+{
+    padding-left: 20px;
+}
+
+.mini-profile .header p
+{
+    padding-left: 20px;
+    display: flex;
+}
+
+.mini-profile .body p
+{
+    padding: 20px;
+    display: flex;
+}
+
+
+
+
+
+
+/***************Header*****************/
+
+footer
+{
+    background-color: #eeeeee;
+    color: #000000;
+    height: 140px;
+    padding-top: 60px;
+}
+
+footer .pages a
+{
+    padding: 0 12px;
+    border-left: solid #cccccc 1px;
+}
+
+footer .social-bar
+{
+    float: right;
+}
