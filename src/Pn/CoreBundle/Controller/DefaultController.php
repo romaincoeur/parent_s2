@@ -3,27 +3,54 @@
 namespace Pn\CoreBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Debug\Debug;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('PnCoreBundle:Default:index.html.twig', array('menu_select' => 1));
+        return $this->render('PnCoreBundle:Default:index.html.twig');
     }
 
-    public function menuAction($nombre) // Ici, nouvel argument $nombre, on l'a transmis via le render() depuis la vue
+    public function annoncesAction()
     {
-        // On fixe en dur une liste ici, bien entendu par la suite on la récupérera depuis la BDD !
-        // On pourra récupérer $nombre articles depuis la BDD,
-        // avec $nombre un paramètre qu'on peut changer lorsqu'on appelle cette action
-        $liste = array(
-            array('id' => 2, 'titre' => 'Mon dernier weekend !'),
-            array('id' => 5, 'titre' => 'Sortie de Symfony2.1'),
-            array('id' => 9, 'titre' => 'Petit test')
-        );
+        $request = $this->get('request');
 
-        return $this->render('SdzBlogBundle:Blog:menu.html.twig', array(
-            'liste_articles' => $liste // C'est ici tout l'intérêt : le contrôleur passe les variables nécessaires au template !
-        ));
+        $select = $request->get('searchType');
+        $field = $request->get('field');
+
+        if ($select == 'nounou')
+        {
+            return $this->render('PnCoreBundle:Default:annonce-list.html.twig');
+        }
+        else
+        {
+            return $this->render('PnCoreBundle:Default:job-list.html.twig');
+        }
+    }
+
+    public function profileBabysitterViewAction()
+    {
+        return $this->render('PnCoreBundle:Default:profileBabysitterView.html.twig');
+    }
+
+    public function profileBabysitterEditAction()
+
+    {
+        $user = $this->getUser();
+
+        if ($user->type == 'parent')
+        {
+            return $this->render('PnCoreBundle:Default:profileParentEdit.html.twig');
+        }
+        else if ($user->type == 'nounou')
+        {
+            return $this->render('PnCoreBundle:Default:profileBabysitterEdit.html.twig');
+        }
+        else
+        {
+            //Todo : Throw error
+        }
     }
 }

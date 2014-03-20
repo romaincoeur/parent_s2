@@ -1,3 +1,21 @@
 pn_pages_homepage:
     pattern:  /
     defaults: { _controller: PnCoreBundle:Default:index }
+
+
+pn_pages_annonces:
+    pattern:  /annonces
+    defaults: { _controller: PnCoreBundle:Default:annonces }
+
+
+pn_pages_profile_babysitter:
+    #pattern:  /nounou/{id}/{name}
+    pattern:  /nounou
+    defaults: { _controller: PnCoreBundle:Default:profileBabysitterView }
+    #requirements:
+    #        id:  \d
+
+
+pn_pages_profile_edit:
+    pattern:  /edit_profile
+    defaults: { _controller: PnCoreBundle:Default:profileBabysitterEdit }

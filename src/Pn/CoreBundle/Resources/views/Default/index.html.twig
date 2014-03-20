@@ -1,4 +1,4 @@
-{# src/Pn/CoreBundle/Resources/views/Blog/index.html.twig #}
+{# src/Pn/CoreBundle/Resources/views/Default/index.html.twig #}
 
 {% extends "::layout.html.twig" %}
 
@@ -10,12 +10,12 @@
             Veuillez patienter pendant le chargement de la carte...
         </div>
         <div class="searchForm">
-            <form action="#" method="post">
-                <select class="btn">
-                    <option>Je cherche une nounou</option>
-                    <option>Je cherche un job</option>
+            <form action="{{ path('pn_pages_annonces') }}" method="post">
+                <select class="btn" name="searchType">
+                    <option value="nounou">Je cherche une nounou</option>
+                    <option value="job">Je cherche un job</option>
                 </select>
-                <input class="search" type="search" autocomplete="true" placeholder="Indiquez votre ville ou votre code postal">
+                <input name="field" class="search" type="search" autocomplete="true" placeholder="Indiquez votre ville ou votre code postal">
                 <input type="submit" value="chercher" class="btn bg-yellow submit">
             </form>
         </div>
@@ -25,7 +25,7 @@
         <div class="row">
             <h3>Avec Parent Nounou, vous êtes à un clic de la famille ou de la nounou de vos rêves !</h3>
         </div>
-        <div class="banner">
+        <div class="big-banner">
             <div class="col-md-4 topic">
                 <img src="{{ asset('img/icons/present-search.png') }}" alt="present-search">
                 <h5>Des recherches efficaces</h5>
@@ -101,36 +101,42 @@
             <h4>Dernières nounou inscrites</h4>
         </div>
         <div class="wrap">
-            <div class="mini-profile" style="margin-left: 0;">
-                <div class="header">
-                    <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Sarah L." style="height: 120px;">
-                    <strong>Sarah L.</strong>
-                    <p>Paris</p>
+            <a href="{{ path('pn_pages_profile_babysitter') }}">
+                <div class="mini-profile" style="margin-left: 0;">
+                    <div class="header">
+                        <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Sarah L." style="height: 120px;">
+                        <strong>Sarah L.</strong>
+                        <p>Paris</p>
+                    </div>
+                    <div class="body">
+                        <p>Assistante maternelle</p>
+                    </div>
                 </div>
-                <div class="body">
-                    <p>Assistante maternelle</p>
+            </a>
+            <a href="">
+                <div class="mini-profile">
+                    <div class="header">
+                        <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Louis D." style="height: 120px;">
+                        <strong>Louis D.</strong>
+                        <p>Lyon</p>
+                    </div>
+                    <div class="body">
+                        <p>Baby sitter</p>
+                    </div>
                 </div>
-            </div>
-            <div class="mini-profile">
-                <div class="header">
-                    <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Louis D." style="height: 120px;">
-                    <strong>Louis D.</strong>
-                    <p>Lyon</p>
+            </a>
+            <a href="">
+                <div class="mini-profile">
+                    <div class="header">
+                        <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Julie B." style="height: 120px;">
+                        <strong>Julie B.</strong>
+                        <p>Asniere sur seine</p>
+                    </div>
+                    <div class="body">
+                        <p>Nounou à domicile</p>
+                    </div>
                 </div>
-                <div class="body">
-                    <p>Baby sitter</p>
-                </div>
-            </div>
-            <div class="mini-profile">
-                <div class="header">
-                    <img src="{{ asset('img/illus/nounou.jpg') }}" alt="Julie B." style="height: 120px;">
-                    <strong>Julie B.</strong>
-                    <p>Asniere sur seine</p>
-                </div>
-                <div class="body">
-                    <p>Nounou à domicile</p>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -153,6 +159,19 @@
     //constructeur de la carte qui prend en paramêtre le conteneur HTML
     //dans lequel la carte doit s'afficher et les options
     var map = new google.maps.Map(document.getElementById("map"), options);
+
+</script>
+<script type="text/javascript">
+
+    $(function() {
+        $('.mini-profile').hover(
+                function() {
+                    $(this).children(".header").css('background-color','#e84355');
+                }
+                , function() {
+                    $(this).children(".header").css('background-color','#eeeeee');
+                });
+    })
 
 </script>
 {% endblock %}

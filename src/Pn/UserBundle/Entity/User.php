@@ -26,6 +26,8 @@ class User extends BaseUser
     /**
      * @var string
      *
+     * If it is a parent or a babysitter
+     *
      * @ORM\Column(name="type", type="string", nullable=true)
      */
     private $type;
