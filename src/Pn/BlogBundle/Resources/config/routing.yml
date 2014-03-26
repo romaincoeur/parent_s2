@@ -1,3 +1,0 @@
-pn_blog_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: PnBlogBundle:Default:index }

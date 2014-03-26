@@ -1,7 +1,0 @@
-parameters:
-#    pn_user.example.class: Pn\UserBundle\Example
-
-services:
-#    pn_user.example:
-#        class: %pn_user.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]

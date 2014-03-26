@@ -1,3 +1,0 @@
-pn_job_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: PnJobBundle:Default:index }
