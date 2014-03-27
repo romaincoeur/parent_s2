@@ -1,0 +1,114 @@
+{# src/Pn/PnBundle/Resources/views/Job/new.html.twig #}
+
+{% import "PnPnBundle:Job:calendar.html.twig" as calendar %}
+{% extends 'PnPnBundle::layout.html.twig' %}
+
+{% block title %}{{ parent() }} - Nouvelle annonce{% endblock %}
+
+{% block body %}
+    <div class="job-show job-edit wrap">
+
+        <form id="createJobForm" action="{{ path('pn_job_create') }}" method="post" {{ form_enctype(form) }}>
+
+            <div id="map" style="height: 180px;">
+                Veuillez patienter pendant le chargement de la carte...
+            </div>
+
+
+            <div class="description">
+                <div class="header">
+                    <div class="right">
+                        <div class="tarif">{{ form_errors(form.rate_price) }}{{ form_widget(form.rate_price) }}€ / {{ form_errors(form.rate_type) }}{{ form_widget(form.rate_type) }}</div>
+                        <button class="btn bg-yellow icon"><img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon"></button>
+                        <button class="btn bg-yellow engage">engager</button>
+                    </div>
+                    {{ form_errors(form.title) }}
+                    {{ form_widget(form.title) }}
+                    <span class="balloon"></span>
+                    <span class="balloon"></span>
+                    <span class="balloon"></span>
+                    <span class="trust-points">126 points de confiance</span>
+                </div>
+                <div class="body">
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description) }}
+                </div>
+            </div>
+
+            {# Les erreurs générales du formulaire. #}
+            {{ form_errors(form) }}
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="coords">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone"> 06 39 86 64 90 <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                    </div>
+                    <div class="details">
+                        <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="marker icon"> Paris, 14e <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-calendar.png') }}" alt="calendar icon"> du 17.12.2013 au 20.032014<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience icon"> 3 ans d'expérience minimum<img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certification icon"> Agrément assistante maternelle <br>
+                        Brevet d'aptitude aux fonctions d'animateur <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="telephone"> Prise en charge des enfants de 0 à 1 an, 1 à 3 ans, 4 à 6 ans <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone"> Français, Italien <br>
+                    </div>
+                </div>
+                <div class="col-md-4 calendar">
+                    {{ calendar.editTable(calendarMatrix) }}
+                </div>
+                <div class="col-md-4">
+                    <div class="child-block">
+                        <b>Anais</b><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-timer.png') }}" alt="timer icon"> 6 ans<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> jouer aux barbies<br>
+                    </div>
+                    <div class="child-block">
+                        <b>Tom</b><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-timer.png') }}" alt="timer icon"> 10 ans<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> football, jouer aux mikado, echecs<br>
+                    </div>
+                    <div class="other">
+                        <b>Tâches supplémentaire :</b>
+                        <p>cuisine, aide aux devoirs</p>
+
+                        <b>Vos petits plus :</b>
+                        <p>Repas bio</p>
+
+                        <b>Vos atouts :</b>
+                        <p>- non fumeur<br>
+                            - permis de conduire<br>
+                            - lettre de recommandation</p>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="Enregistrer">
+
+        </form>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+
+        var latlng = new google.maps.LatLng(48.8575162, 2.3426246);
+        // paris : 48.8575162	2.3426246
+        //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
+        //de définir des options d'affichage de notre carte
+        var options = {
+            center: latlng,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        //constructeur de la carte qui prend en paramêtre le conteneur HTML
+        //dans lequel la carte doit s'afficher et les options
+        var map = new google.maps.Map(document.getElementById("map"), options);
+
+    </script>
+{% endblock %}

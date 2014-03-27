@@ -1,0 +1,30 @@
+pn_job:
+    pattern:  /
+    defaults: { _controller: "PnPnBundle:Job:index" }
+
+pn_job_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PnPnBundle:Job:show" }
+
+pn_job_new:
+    pattern:  /new
+    defaults: { _controller: "PnPnBundle:Job:new" }
+
+pn_job_create:
+    pattern:  /create
+    defaults: { _controller: "PnPnBundle:Job:create" }
+    requirements: { _method: post }
+
+pn_job_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PnPnBundle:Job:edit" }
+
+pn_job_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PnPnBundle:Job:update" }
+    requirements: { _method: post|put }
+
+pn_job_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PnPnBundle:Job:delete" }
+    requirements: { _method: post|delete }

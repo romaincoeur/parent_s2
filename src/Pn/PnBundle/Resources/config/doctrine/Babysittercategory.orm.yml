@@ -1,0 +1,19 @@
+# src/Pn/PnBundle/Resources/config/doctrine/Babysittercategory.orm.yml
+Pn\PnBundle\Entity\Babysittercategory:
+  type: entity
+  table: babysittercategory
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    title:
+      type: string
+      length: 255
+  oneToMany:
+    babysitters:
+      targetEntity: Babysitter
+      mappedBy: babysittercategory
+    jobs:
+      targetEntity: Job
+      mappedBy: babysittercategory

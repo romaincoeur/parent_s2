@@ -1,0 +1,75 @@
+# src/Pn/PnBundle/Resources/config/doctrine/Job.orm.yml
+Pn\PnBundle\Entity\Job:
+  type: entity
+  table: job
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    title:
+      type: string
+      length: 255
+    status:
+      type: string
+      length: 255
+      nullable: true
+    description:
+      type: text
+      nullable: true
+    address:
+      type: string
+      length: 255
+      nullable: true
+    latitude:
+      type: decimal
+      nullable: true
+    longitude:
+      type: decimal
+      nullable: true
+    rate_price:
+      type: decimal
+      nullable: true
+    rate_type:
+      type: string
+      length: 255
+      nullable: true
+    duration:
+      type: string
+      length: 255
+      nullable: true
+    how_to_apply:
+      type: text
+      nullable: true
+    calendar:
+      type: string
+      length: 255
+      nullable: true
+    token:
+      type: string
+      length: 255
+      unique: true
+    is_public:
+      type: boolean
+      nullable: true
+    is_activated:
+      type: boolean
+      nullable: true
+    expires_at:
+      type: datetime
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+      nullable: true
+  manyToOne:
+    babysittercategory:
+      targetEntity: Babysittercategory
+      inversedBy: jobs
+      joinColumn:
+        name: babysittercategory_id
+        referencedColumnName: id
+  lifecycleCallbacks:
+    prePersist: [ setCreatedAtValue ]
+    preUpdate: [ setUpdatedAtValue ]

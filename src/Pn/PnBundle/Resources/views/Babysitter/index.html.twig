@@ -1,0 +1,59 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Babysitter list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Presentation</th>
+                <th>Hourlyrate</th>
+                <th>Experience</th>
+                <th>Trustpoints</th>
+                <th>Anythingelse</th>
+                <th>Ageofchildren</th>
+                <th>Availabilities</th>
+                <th>Favoriteactivities</th>
+                <th>Hobbies</th>
+                <th>Mychildren</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('babysitter_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.presentation }}</td>
+                <td>{{ entity.hourlyrate }}</td>
+                <td>{{ entity.experience }}</td>
+                <td>{{ entity.trustpoints }}</td>
+                <td>{{ entity.anythingelse }}</td>
+                <td>{{ entity.ageofchildren }}</td>
+                <td>{{ entity.availabilities }}</td>
+                <td>{{ entity.favoriteactivities }}</td>
+                <td>{{ entity.hobbies }}</td>
+                <td>{{ entity.mychildren }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('babysitter_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('babysitter_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('babysitter_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

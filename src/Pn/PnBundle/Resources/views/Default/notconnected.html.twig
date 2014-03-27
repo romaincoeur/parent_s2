@@ -1,0 +1,54 @@
+<div class="row wrap">
+    <a href="#register" role="button" class="btn col-md-2 bg-blue left" data-toggle="modal">Inscription</a>
+    <a href="#login" role="button" class="btn col-md-2 bg-purple right" data-toggle="modal">Connexion</a>
+    <a href="{{ path('pn_pn_homepage') }}">
+        <div class="logo">
+            <h2 style="    text-align: right;">Parent</h2>
+            <img src="{{ asset('bundles/pnpn/images/illus/logo.jpg') }}" alt="logo" height="80px" style="border: dashed lightgrey 1px;">
+            <h2>Nounou</h2>
+        </div>
+    </a>
+</div>
+
+
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Inscription</h3>
+            </div>
+            <div class="modal-body">
+                {{ render(controller("PnPnBundle:Default:Register")) }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Connexion</h3>
+            </div>
+            <div class="modal-body">
+{#                {% if error %}
+                    <div>{{ error.message }}</div>
+                {% endif %}#}
+
+                <form action="{{ path('login_check') }}" method="post">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="_username" />
+
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="_password" />
+
+                    <button type="submit">login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

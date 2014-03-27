@@ -1,0 +1,30 @@
+babysitter:
+    pattern:  /
+    defaults: { _controller: "PnPnBundle:Babysitter:index" }
+
+babysitter_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PnPnBundle:Babysitter:show" }
+
+babysitter_new:
+    pattern:  /new
+    defaults: { _controller: "PnPnBundle:Babysitter:new" }
+
+babysitter_create:
+    pattern:  /create
+    defaults: { _controller: "PnPnBundle:Babysitter:create" }
+    requirements: { _method: post }
+
+babysitter_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PnPnBundle:Babysitter:edit" }
+
+babysitter_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PnPnBundle:Babysitter:update" }
+    requirements: { _method: post|put }
+
+babysitter_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PnPnBundle:Babysitter:delete" }
+    requirements: { _method: post|delete }

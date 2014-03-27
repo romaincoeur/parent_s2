@@ -1,0 +1,73 @@
+# src/Pn/PnBundle/Resources/config/doctrine/Babysitter.orm.yml
+Pn\PnBundle\Entity\Babysitter:
+  type: entity
+  repositoryClass: Pn\PnBundle\Repository\BabysitterRepository
+  table: babysitter
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    presentation:
+      type: text
+      nullable: true
+    rate_price:
+      type: decimal
+      nullable: true
+    rate_type:
+      type: string
+      length: 255
+      nullable: true
+    avatar:
+      type: string
+      length: 255
+      nullable: true
+    video:
+      type: string
+      length: 255
+      nullable: true
+    experience:
+      type: string
+      length: 255
+      nullable: true
+    trustpoints:
+      type: integer
+      nullable: true
+    anythingelse:
+      type: text
+      nullable: true
+    ageofchildren:
+      type: string
+      length: 255
+      nullable: true
+    availabilities:
+      type: array
+      nullable: true
+    favoriteactivities:
+      type: string
+      length: 255
+      nullable: true
+    hobbies:
+      type: text
+      nullable: true
+    mychildren:
+      type: string
+      length: 255
+      nullable: true
+  manyToOne:
+    babysittercategory:
+      targetEntity: Babysittercategory
+      inversedBy: babysitters
+      joinColumn:
+        name: babysittercategory_id
+        referencedColumnName: id
+  oneToOne:
+    user:
+      targetEntity: User
+      inversedBy: babysitter
+      joinColumn:
+          name: user_id
+          referencedColumnName: id
+  lifecycleCallbacks:
+    prePersist: [ setCreatedAtValue ]
+    preUpdate: [ setUpdatedAtValue ]

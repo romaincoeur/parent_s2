@@ -18,7 +18,18 @@
         "sensio/distribution-bundle": "~2.3",
         "sensio/framework-extra-bundle": "~3.0",
         "sensio/generator-bundle": "~2.3",
-        "incenteev/composer-parameter-handler": "~2.0"
+        "incenteev/composer-parameter-handler": "~2.0",
+
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "sonata-project/cache-bundle": "dev-master",
+        "sonata-project/jquery-bundle": "1.8.x-dev",
+        "sonata-project/exporter": "~1.0",
+        "sonata-project/block-bundle": "dev-master",
+        "sonata-project/user-bundle": "dev-master",
+        "sonata-project/admin-bundle": "dev-master",
+        "sonata-project/doctrine-orm-admin-bundle": "dev-master",
+        "knplabs/knp-menu-bundle": ">=1.1.0,<2.0.x-dev",
+        "sonata-project/core-bundle": "~2.2@dev"
     },
     "scripts": {
         "post-install-cmd": [

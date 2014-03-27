@@ -2,6 +2,14 @@ parameters:
 #    pn_pn.example.class: Pn\PnBundle\Example
 
 services:
-#    pn_pn.example:
-#        class: %pn_pn.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    pn.pn.admin.category:
+        class: Pn\PnBundle\Admin\BabysittercategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: jobs, label: Categories }
+        arguments: [null, Pn\PnBundle\Entity\Babysittercategory, PnPnBundle:BabysittercategoryAdmin]
+
+    pn.pn.admin.job:
+        class: Pn\PnBundle\Admin\JobAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: jobs, label: Jobs }
+        arguments: [null, Pn\PnBundle\Entity\Job, PnPnBundle:JobAdmin]

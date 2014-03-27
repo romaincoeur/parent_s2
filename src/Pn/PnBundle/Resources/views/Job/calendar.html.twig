@@ -1,0 +1,57 @@
+{# src/Pn/PnBundle/Resources/views/Job/calendar.html.twig #}
+
+{% macro viewTable(matrix) %}
+    <table class="calendar">
+        <tr>
+            <th>h/d</th>
+            <th>l</th>
+            <th>m</th>
+            <th>m</th>
+            <th>j</th>
+            <th>v</th>
+            <th>s</th>
+            <th>d</th>
+        </tr>
+        {% for i in 1..24 %}
+            <tr>
+                <td>{{ i }}</td>
+                {% for j in 1..7 %}
+                    {% if matrix[i][j] %}
+                        <td class="on"></td>
+                    {% else %}
+                        <td class="off"></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endmacro %}
+
+{% macro editTable(matrix) %}
+    <table class="calendar">
+        <tr>
+            <th>h/d</th>
+            <th>l</th>
+            <th>m</th>
+            <th>m</th>
+            <th>j</th>
+            <th>v</th>
+            <th>s</th>
+            <th>d</th>
+        </tr>
+        {% for i in 1..24 %}
+            <tr>
+                <td>{{ i }}</td>
+                {% for j in 1..7 %}
+                    <td>
+                    {% if matrix[i][j] %}
+                        <button type="button"></button>
+                    {% else %}
+                        <button type="button"></button>
+                    {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endmacro %}

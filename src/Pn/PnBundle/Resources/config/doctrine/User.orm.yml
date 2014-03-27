@@ -1,0 +1,55 @@
+# src/Pn/PnBundle/Resources/config/doctrine/User.orm.yml
+
+Pn\PnBundle\Entity\User:
+  type: entity
+  repositoryClass: Pn\PnBundle\Repository\UserRepository
+  table: user
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    username:
+      type: string
+      length: 255
+      unique: true
+    password:
+      type: string
+      length: 255
+    rawPassword:
+      type: string
+      length: 255
+      nullable: true
+    type:
+      type: string
+      length: 255
+    email:
+      type: string
+      length: 255
+    firstname:
+      type: string
+      length: 255
+      nullable: true
+    lastname:
+      type: string
+      length: 255
+      nullable: true
+    phone:
+      type: string
+      length: 255
+      nullable: true
+    is_activated:
+      type: boolean
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+      nullable: true
+  oneToOne:
+    babysitter:
+        targetEntity: Babysitter
+        mappedBy: user
+  lifecycleCallbacks:
+    prePersist: [ setCreatedAtValue ]
+    preUpdate: [ setUpdatedAtValue ]

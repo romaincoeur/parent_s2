@@ -1,0 +1,235 @@
+{# src/Pn/PnBundle/Resources/views/Job/show.html.twig #}
+
+{% import "PnPnBundle:Job:calendar.html.twig" as calendar %}
+{% extends "PnPnBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Annonce1{% endblock %}
+
+{% block body %}
+    <div class="job-show wrap">
+
+        <div id="map" style="height: 180px;">
+            Veuillez patienter pendant le chargement de la carte...
+        </div>
+
+
+        <div class="description">
+            <div class="header">
+                <div class="right">
+                    <div class="tarif">10€ / heure</div>
+                    <button class="btn bg-yellow icon"><img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon"></button>
+                    <button class="btn bg-yellow engage">engager</button>
+                </div>
+                <h1>{{ entity.title }}</h1>
+                <span class="balloon"></span>
+                <span class="balloon"></span>
+                <span class="balloon"></span>
+                <span class="trust-points">126 points de confiance</span>
+            </div>
+            <div class="body">
+                {{ entity.description|raw }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="coords">
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone"> 06 39 86 64 90 <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                </div>
+                <div class="details">
+                    <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="marker icon"> Paris, 14e <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-calendar.png') }}" alt="calendar icon"> du 17.12.2013 au 20.032014<br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience icon"> 3 ans d'expérience minimum<img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certification icon"> Agrément assistante maternelle <br>
+                    Brevet d'aptitude aux fonctions d'animateur <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="telephone"> Prise en charge des enfants de 0 à 1 an, 1 à 3 ans, 4 à 6 ans <br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone"> Français, Italien <br>
+                </div>
+                <div class="badges">
+                    <div class="header">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-badges.png') }}" alt="badge"> 7 Badges
+                    </div>
+                    <div class="body">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-check.png') }}" alt="badge check">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-biberon.png') }}" alt="badge biberon">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-pansement.png') }}" alt="badge pansement">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-.png') }}" alt="badge ">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-ballon.png') }}" alt="badge ballon">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-jeu.png') }}" alt="badge jeu">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-couche.png') }}" alt="badge couche">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-blessure.png') }}" alt="badge blessure">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-securite.png') }}" alt="badge securite">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 calendar">
+                {{ calendar.viewTable(calendarMatrix) }}
+            </div>
+            <div class="col-md-4">
+                <div class="child-block">
+                    <b>Anais</b><br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-timer.png') }}" alt="timer icon"> 6 ans<br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> jouer aux barbies<br>
+                </div>
+                <div class="child-block">
+                    <b>Tom</b><br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-timer.png') }}" alt="timer icon"> 10 ans<br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> football, jouer aux mikado, echecs<br>
+                </div>
+                <div class="other">
+                    <b>Tâches supplémentaire :</b>
+                    <p>cuisine, aide aux devoirs</p>
+
+                    <b>Vos petits plus :</b>
+                    <p>Repas bio</p>
+
+                    <b>Vos atouts :</b>
+                    <p>- non fumeur<br>
+                        - permis de conduire<br>
+                        - lettre de recommandation</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="recommandations">
+            <div class="banner bg-red"><h4>Mes recommandations</h4></div>
+            <form action="" method="post">
+                <input type="search" placeholder="Ecrivez une recommandation">
+                <input type="submit" value="publier">
+            </form>
+            <div class="recommandation">
+                <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+                <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icon/left-arrow.png') }}" alt="left-arrow">
+                <div class="bulle">
+                    <p>Sarah est une de mes amies. Nous avons travaillé ensemble dans un centre de loisir l'année derniere. Elle
+                        s'occupait des activités artisitiques. Les enfants étaient tres réceptifs à ses conseils et elle n'a jamais eu
+                        besoin de gronder qui que ce soit. Nous étions tres impressionnés.</p>
+                    <span class="red">Louis D.</span> Baby sitter. Posté le 19 mars 2013
+                </div>
+            </div>
+            <div class="recommandation">
+                <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+                <img class="left-arrow" src="{{ asset('img/icon/left-arrow.png') }}" alt="left-arrow">
+                <div class="bulle">
+                    <p>Sarah est une fille tres gentille et tres agréable. Les enfants l'adorent et nous aussi.</p>
+                    <span class="red">Julie B.</span> Parent. Posté le 20 février 2014
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+
+        var latlng = new google.maps.LatLng(48.8575162, 2.3426246);
+        // paris : 48.8575162	2.3426246
+        //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
+        //de définir des options d'affichage de notre carte
+        var options = {
+            center: latlng,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        //constructeur de la carte qui prend en paramêtre le conteneur HTML
+        //dans lequel la carte doit s'afficher et les options
+        var map = new google.maps.Map(document.getElementById("map"), options);
+
+    </script>
+{% endblock %}
+
+{#
+
+
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Job</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ entity.status }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ entity.description }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ entity.address }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ entity.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ entity.longitude }}</td>
+            </tr>
+            <tr>
+                <th>Hourlyrate</th>
+                <td>{{ entity.hourlyrate }}</td>
+            </tr>
+            <tr>
+                <th>Duration</th>
+                <td>{{ entity.duration }}</td>
+            </tr>
+            <tr>
+                <th>How_to_apply</th>
+                <td>{{ entity.howtoapply }}</td>
+            </tr>
+            <tr>
+                <th>Token</th>
+                <td>{{ entity.token }}</td>
+            </tr>
+            <tr>
+                <th>Is_public</th>
+                <td>{{ entity.ispublic }}</td>
+            </tr>
+            <tr>
+                <th>Is_activated</th>
+                <td>{{ entity.isactivated }}</td>
+            </tr>
+            <tr>
+                <th>Expires_at</th>
+                <td>{{ entity.expiresat|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ entity.createdat|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ entity.updatedat|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('pn_job') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('pn_job_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
+#}

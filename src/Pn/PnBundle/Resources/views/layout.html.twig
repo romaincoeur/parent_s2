@@ -1,0 +1,65 @@
+{# src/Pn/PnBundle/Resources/views/layout.html.twig #}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>{% block title %}Parent-nounou.fr{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/bootstrap.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/global.css') }}" type="text/css" />
+    {% endblock %}
+
+    <!-- Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+<header>
+    {{ render(controller("PnPnBundle:Default:header")) }}
+</header>
+
+<div class="container">
+    {% block body %}
+    {% endblock %}
+</div>
+
+<footer>
+    <div class="wrap">
+        <div class="social-bar">
+            <a href=""><img src="{{ asset('bundles/pnpn/images/icons/social-twitter.png') }}"></a>
+            <a href=""><img src="{{ asset('bundles/pnpn/images/icons/social-facebook.png') }}"></a>
+            <a href=""><img src="{{ asset('bundles/pnpn/images/icons/social-google.png') }}"></a>
+        </div>
+        <div class="pages">
+            <a href="" class="red" style="padding-left: 0; border-left: 0">Les Annonces</a>
+            <a href="" class="red">Les nounous</a>
+            <a href="" class="red">Les Formations</a>
+            <a href="">Plan du site</a>
+            <a href="">CGU</a>
+            <a href="">Tarifs</a>
+            <a href="">Presse</a>
+            <a href="">Contact</a>
+        </div>
+
+    </div>
+</footer>
+
+{# jquery est charge en local si l'environnement est dev #}
+{% if app.environment == 'dev' %}
+    <script type="text/javascript" src="{{ asset('bundles/pnpn/js/jquery.js') }}"></script>
+{% else %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+{% endif
+%}
+<script type="text/javascript" src="{{ asset('bundles/pnpn/js/bootstrap.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/pnpn/js/parentnounou.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,3 +1,33 @@
 pn_pn_homepage:
-    pattern:  /hello/{name}
+    pattern:  /
     defaults: { _controller: PnPnBundle:Default:index }
+
+pn_pn_jobs:
+    resource: "@PnPnBundle/Resources/config/routing/job.yml"
+    prefix:   /job
+
+PnPnBundle_user:
+    resource: "@PnPnBundle/Resources/config/routing/user.yml"
+    prefix:   /user
+
+login:
+    pattern:   /login
+    defaults:  { _controller: PnPnBundle:Default:login }
+
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout
+
+register:
+    pattern:   /register
+    defaults:  { _controller: PnPnBundle:Default:register }
+
+myprofile:
+    pattern:   /myprofile
+    defaults:  { _controller: PnPnBundle:Default:myprofileView }
+
+PnPnBundle_babysitter:
+    resource: "@PnPnBundle/Resources/config/routing/babysitter.yml"
+    prefix:   /babysitter
