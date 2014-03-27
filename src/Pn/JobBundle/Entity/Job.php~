@@ -1,0 +1,158 @@
+<?php
+
+namespace Pn\JobBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Job
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Pn\PagesBundle\Entity\JobRepository")
+ */
+class Job
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=255)
+     */
+    private $status;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255)
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="latitude", type="string", length=255)
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="longitude", type="decimal")
+     */
+    private $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="publication_status", type="string", length=255)
+     */
+    private $publicationStatus;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="publication_start", type="datetime")
+     */
+    private $publicationStart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="publication_end", type="datetime")
+     */
+    private $publicationEnd;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hourly_rate", type="decimal")
+     */
+    private $hourlyRate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="duration", type="string", length=255)
+     */
+    private $duration;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="minimum_experience", type="string", length=255)
+     */
+    private $minimumExperience;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="start_date", type="datetime")
+     */
+    private $startDate;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="preferences", type="array")
+     */
+    private $preferences;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="extratasks", type="array")
+     */
+    private $extratasks;
+
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="specialdemands", type="array")
+     */
+    private $specialdemands;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Pn\JobBundle\Entity\Child", cascade={"persist"})
+     */
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Pn\CoreBundle\Entity\Babysitter")
+     */
+    private $babysitter;
+
+
+
+
+
+
+
+
+
+
+
+    
+}
