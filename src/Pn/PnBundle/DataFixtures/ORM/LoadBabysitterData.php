@@ -20,6 +20,7 @@ class LoadBabysitterData extends AbstractFixture implements OrderedFixtureInterf
     {
         $babysitter_romain = new Babysitter();
         $babysitter_romain->setUser($em->merge($this->getReference('user-romain')));
+        $babysitter_romain->setCategory('aupair');
 
         $babysitter_sarah = new Babysitter();
         $babysitter_sarah->setUser($em->merge($this->getReference('user-sarah')));
@@ -35,9 +36,15 @@ comptines et fables plus courtes avec des marionnettes en forme d'animaux. Je pr
 chinoises...</p>
 <p>Enfin, je jouerai à partir du 8 janvier dans un joli spectacle théâtral et musical pour enfant à la Comédie de la
 Passerelle : La Sorcière Polluair et le petit peuple vert !</p>");
+        $babysitter_sarah->setCategory('nounou');
+
+        $babysitter_manue = new Babysitter();
+        $babysitter_manue->setUser($em->merge($this->getReference('user-manue')));
+        $babysitter_manue->setCategory('babysitter');
 
         $em->persist($babysitter_romain);
         $em->persist($babysitter_sarah);
+        $em->persist($babysitter_manue);
 
         $em->flush();
     }

@@ -16,7 +16,7 @@ $(function() {
         }
     });
 
-    $("#createJobForm").submit(function(e){
+    $(".calendarForm").submit(function(e){
         e.preventDefault();
         var form = this;
         var calendar = '[(';
@@ -32,7 +32,8 @@ $(function() {
             }
         });
         calendar += ')]';
-        $('#pn_pnbundle_job_calendar').val(calendar);
+        //$('#pn_pnbundle_job_calendar').val(calendar);
+        $('#pn_pnbundle_babysitter_calendar').val(calendar);
 
         form.submit(); // submit bypassing the jQuery bound event
     });

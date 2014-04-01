@@ -2,14 +2,21 @@ parameters:
 #    pn_pn.example.class: Pn\PnBundle\Example
 
 services:
-    pn.pn.admin.category:
-        class: Pn\PnBundle\Admin\BabysittercategoryAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: jobs, label: Categories }
-        arguments: [null, Pn\PnBundle\Entity\Babysittercategory, PnPnBundle:BabysittercategoryAdmin]
 
     pn.pn.admin.job:
         class: Pn\PnBundle\Admin\JobAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: jobs, label: Jobs }
         arguments: [null, Pn\PnBundle\Entity\Job, PnPnBundle:JobAdmin]
+
+    pn.pn.admin.user:
+        class: Pn\PnBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users, label: Utilisateurs }
+        arguments: [null, Pn\PnBundle\Entity\User, PnPnBundle:UserAdmin]
+
+    pn.pn.admin.babysitter:
+        class: Pn\PnBundle\Admin\BabysitterAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users, label: Babysitters }
+        arguments: [null, Pn\PnBundle\Entity\Babysitter, PnPnBundle:BabysitterAdmin]

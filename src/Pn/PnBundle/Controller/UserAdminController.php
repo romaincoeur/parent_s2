@@ -6,12 +6,12 @@
  * Time: 14:29
  */
 
-// src/Pn/PnBundle/Controller/BabysittercategoryAdminController.php
+// src/Pn/PnBundle/Controller/UserAdminController.php
 namespace Pn\PnBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController as Controller;
 
-class BabysittercategoryAdminController extends Controller
+class UserAdminController extends Controller
 {
 
 }

@@ -69,11 +69,13 @@ class Babysitter
      */
     private $babysittercategory;
 
+    public $file;
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -96,34 +98,11 @@ class Babysitter
     /**
      * Get presentation
      *
-     * @return string 
+     * @return string
      */
     public function getPresentation()
     {
         return $this->presentation;
-    }
-
-    /**
-     * Set hourlyrate
-     *
-     * @param string $hourlyrate
-     * @return Babysitter
-     */
-    public function setHourlyrate($hourlyrate)
-    {
-        $this->hourlyrate = $hourlyrate;
-
-        return $this;
-    }
-
-    /**
-     * Get hourlyrate
-     *
-     * @return string 
-     */
-    public function getHourlyrate()
-    {
-        return $this->hourlyrate;
     }
 
     /**
@@ -142,7 +121,7 @@ class Babysitter
     /**
      * Get experience
      *
-     * @return string 
+     * @return string
      */
     public function getExperience()
     {
@@ -165,7 +144,7 @@ class Babysitter
     /**
      * Get trustpoints
      *
-     * @return integer 
+     * @return integer
      */
     public function getTrustpoints()
     {
@@ -188,7 +167,7 @@ class Babysitter
     /**
      * Get anythingelse
      *
-     * @return string 
+     * @return string
      */
     public function getAnythingelse()
     {
@@ -211,7 +190,7 @@ class Babysitter
     /**
      * Get ageofchildren
      *
-     * @return string 
+     * @return string
      */
     public function getAgeofchildren()
     {
@@ -234,7 +213,7 @@ class Babysitter
     /**
      * Get availabilities
      *
-     * @return array 
+     * @return array
      */
     public function getAvailabilities()
     {
@@ -257,7 +236,7 @@ class Babysitter
     /**
      * Get favoriteactivities
      *
-     * @return string 
+     * @return string
      */
     public function getFavoriteactivities()
     {
@@ -280,7 +259,7 @@ class Babysitter
     /**
      * Get hobbies
      *
-     * @return string 
+     * @return string
      */
     public function getHobbies()
     {
@@ -303,7 +282,7 @@ class Babysitter
     /**
      * Get mychildren
      *
-     * @return string 
+     * @return string
      */
     public function getMychildren()
     {
@@ -326,7 +305,7 @@ class Babysitter
     /**
      * Get babysittercategory
      *
-     * @return \Pn\PnBundle\Entity\Babysittercategory 
+     * @return \Pn\PnBundle\Entity\Babysittercategory
      */
     public function getBabysittercategory()
     {
@@ -369,7 +348,7 @@ class Babysitter
     /**
      * Get user
      *
-     * @return \Pn\PnBundle\Entity\User 
+     * @return \Pn\PnBundle\Entity\User
      */
     public function getUser()
     {
@@ -412,7 +391,7 @@ class Babysitter
     /**
      * Get rate_price
      *
-     * @return string 
+     * @return string
      */
     public function getRatePrice()
     {
@@ -435,7 +414,7 @@ class Babysitter
     /**
      * Get rate_type
      *
-     * @return string 
+     * @return string
      */
     public function getRateType()
     {
@@ -458,7 +437,7 @@ class Babysitter
     /**
      * Get avatar
      *
-     * @return string 
+     * @return string
      */
     public function getAvatar()
     {
@@ -481,11 +460,320 @@ class Babysitter
     /**
      * Get video
      *
-     * @return string 
+     * @return string
      */
     public function getVideo()
     {
         return $this->video;
     }
 
+    public function getUserUsername()
+    {
+        return $this->user->getUsername();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'uploads/babysitters';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->avatar ? null : $this->getUploadDir().'/'.$this->avatar;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->avatar ? null : $this->getUploadRootDir().'/'.$this->avatar;
+    }
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function preUpload()
+    {
+        if (null !== $this->file) {
+            // do whatever you want to generate a unique name
+            $this->avatar = uniqid().'.'.$this->file->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->file->move($this->getUploadRootDir(), $this->avatar);
+
+        unset($this->file);
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
+    }
+    /**
+     * @var string
+     */
+    private $calendar;
+
+
+    /**
+     * Set calendar
+     *
+     * @param string $calendar
+     * @return Babysitter
+     */
+    public function setCalendar($calendar)
+    {
+        $this->calendar = $calendar;
+
+        return $this;
+    }
+
+    /**
+     * Get calendar
+     *
+     * @return string
+     */
+    public function getCalendar()
+    {
+        return $this->calendar;
+    }
+
+
+    /**
+     * @var \DateTime
+     */
+    private $created_at;
+
+    /**
+     * @var \DateTime
+     */
+    private $updated_at;
+
+    /**
+     * @var boolean
+     */
+    private $new;
+
+
+    /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return Babysitter
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param \DateTime $updatedAt
+     * @return Babysitter
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * Set new
+     *
+     * @param boolean $new
+     * @return Babysitter
+     */
+    public function setNew($new)
+    {
+        $this->new = $new;
+
+        return $this;
+    }
+
+    /**
+     * Get new
+     *
+     * @return boolean
+     */
+    public function getNew()
+    {
+        return $this->new;
+    }
+    /**
+     * @var string
+     */
+    private $category;
+
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     * @return Babysitter
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string
+     */
+    public function getCategory()
+    {
+        if ($this->category != null)
+            return $this->getCategories()[$this->category];
+        else
+            return "";
+    }
+
+    public static function getCategories()
+    {
+        return array('babysitter' => 'Babysitter', 'animateur' => 'Animatrice', 'nounou' => 'Nounou', 'aupair' => 'Fille au pair');
+    }
+
+    public static function getCategoryValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        if ($this->getPresentation() == null) $this->setPresentation('Entrez votre texte de présentation ici');
+        if ($this->getCategory() == null) $this->setCategory('nounou');
+        if ($this->getExperience() == null) $this->setExperience(0);
+        if ($this->getNew() == null) $this->setNew(true);
+        if ($this->getRatePrice() == null) $this->setRatePrice(0);
+        if ($this->getRateType() == null) $this->setRateType('hour');
+        if ($this->getTrustpoints() == null) $this->setTrustpoints(0);
+    }
+    /**
+     * @var string
+     */
+    private $petitsplus;
+
+
+    /**
+     * Set petitsplus
+     *
+     * @param string $petitsplus
+     * @return Babysitter
+     */
+    public function setPetitsplus($petitsplus)
+    {
+        $this->petitsplus = $petitsplus;
+
+        return $this;
+    }
+
+    /**
+     * Get petitsplus
+     *
+     * @return string
+     */
+    public function getPetitsplus()
+    {
+        return $this->petitsplus;
+    }
+
+    public static function getPetitspluss()
+    {
+        return array('bio' => 'Repas bio', 'nopet' => 'Pas d\'animal');
+    }
+
+    public static function getPetitsplusValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    /**
+     * @var string
+     */
+    private $particularite;
+
+
+    /**
+     * Set particularite
+     *
+     * @param string $particularite
+     * @return Babysitter
+     */
+    public function setParticularite($particularite)
+    {
+        $this->particularite = $particularite;
+
+        return $this;
+    }
+
+    /**
+     * Get particularite
+     *
+     * @return string
+     */
+    public function getParticularite()
+    {
+        return $this->particularite;
+    }
+
+    public static function getParticularites()
+    {
+        return array('nonfumeur' => 'Non fumeur', 'permis' => 'Permis de conduire', 'voiture' => 'Voiture', 'lettre' => 'Lettre de recommandation');
+    }
+
+    public static function getParticulariteValues()
+    {
+        return array_keys(self::getRateType());
+    }
 }

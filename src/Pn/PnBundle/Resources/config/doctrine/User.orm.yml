@@ -48,8 +48,10 @@ Pn\PnBundle\Entity\User:
       nullable: true
   oneToOne:
     babysitter:
-        targetEntity: Babysitter
-        mappedBy: user
+      targetEntity: Babysitter
+      mappedBy: user
+      joinColumn:
+          onDelete: CASCADE
   lifecycleCallbacks:
     prePersist: [ setCreatedAtValue ]
     preUpdate: [ setUpdatedAtValue ]

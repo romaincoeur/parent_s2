@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Pn\PnBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Pn\PnBundle\Form\UserType;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class DefaultController extends Controller
 {
@@ -82,8 +83,13 @@ class DefaultController extends Controller
                 $em->persist($babysitter);
             }
 
+            // enregistrement en BDD
             $em->persist($entity);
             $em->flush();
+
+            // Connexion
+            $token = new UsernamePasswordToken($entity, null, 'main', $entity->getRoles());
+            $this->get('security.context')->setToken($token);
 
             return $this->redirect($this->generateUrl('myprofile'));
         }
@@ -108,8 +114,6 @@ class DefaultController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
         return $form;
     }
 
@@ -126,6 +130,30 @@ class DefaultController extends Controller
         {
             $nounou = $user->getBabysitter();
             return $this->redirect($this->generateUrl('babysitter_show', array('id' => $nounou->getId())));
+        }
+        elseif ($type == 'parent')
+        {
+            return $this->redirect($this->generateUrl('pn_job_new'));
+        }
+        else
+        {
+            throw $this->createNotFoundException('Wrong user type.');
+        }
+    }
+
+    public function myprofileEditAction()
+    {
+        $user = $this->getUser();
+        if ($user == null)
+        {
+            return $this->redirect($this->generateUrl('pn_pn_homepage'));
+        }
+        $type = $user->getType();
+
+        if ($type == 'nounou')
+        {
+            $nounou = $user->getBabysitter();
+            return $this->redirect($this->generateUrl('babysitter_edit', array('id' => $nounou->getId())));
         }
         elseif ($type == 'parent')
         {

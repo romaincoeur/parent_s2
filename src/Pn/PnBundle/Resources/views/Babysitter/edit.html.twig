@@ -1,3 +1,151 @@
+{# src/Pn/PnBundle/Resources/views/Babysitter/edit.html.twig #}
+
+{% import "PnPnBundle::calendar.html.twig" as calendar %}
+{% extends "PnPnBundle::layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Profil{% endblock %}
+
+{% block body %}
+    <div class="profile-page babysitter wrap">
+
+        <form class="calendarForm" id="editBabysitterForm" action="{{ path('babysitter_edit', {'id': id}) }}" method="post" {{ form_enctype(form) }}>
+
+            <div id="map" style="height: 180px;">
+                Veuillez patienter pendant le chargement de la carte...
+            </div>
+
+
+            <div class="description">
+                <div class="header">
+                    <div class="left">
+                        <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil de Sarah L." style="height: 120px;">
+                        {{ form_row(form.file) }}
+                    </div>
+                    <div class="right">
+                        <div class="tarif">{{ form_errors(form.rate_price) }}{{ form_widget(form.rate_price) }}€ / {{ form_errors(form.rate_type) }}{{ form_widget(form.rate_type) }}</div>
+                    </div>
+                    {{ form_errors(form.user.firstname) }}
+                    {{ form_widget(form.user.firstname) }}
+                    {{ form_errors(form.user.lastname) }}
+                    {{ form_widget(form.user.lastname) }}
+                </div>
+                <div class="body">
+                    {{ form_errors(form.presentation) }}
+                    {{ form_widget(form.presentation) }}
+                </div>
+            </div>
+
+            {{ form_errors(form) }}
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="coords">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ form_widget(form.user.phone) }}&nbsp;<img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                    </div>
+                    <div class="details">
+                        <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="telephone"> Paris, 14e <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="telephone"> 20 ans <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="telephone"> {{ form_widget(form.experience) }} ans d'expérience <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="telephone"> Agrément assistante maternelle <br>
+                        Brevet d'aptitude aux fonctions d'animateur <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="telephone"> Prise en charge des enfants de 0 à 1 an, 1 à 3 ans, 4 à 6 ans <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone"> Français, Italien <br>
+                    </div>
+                    <div class="badges">
+                        <div class="header">
+                            <img src="{{ asset('img/icons/profil-badges.png') }}" alt="badge"> 7 Badges
+                        </div>
+                        <div class="body">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-check.png') }}" alt="badge check">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-biberon.png') }}" alt="badge biberon">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-pansement.png') }}" alt="badge pansement">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-.png') }}" alt="badge ">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-ballon.png') }}" alt="badge ballon">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-jeu.png') }}" alt="badge jeu">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-couche.png') }}" alt="badge couche">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-blessure.png') }}" alt="badge blessure">
+                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-securite.png') }}" alt="badge securite">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 calendar">
+                    {{ calendar.editTable(calendarMatrix) }}
+                </div>
+                <div class="col-md-4">
+                    {% if entity.video %}
+                        <div class="pres-video">
+                            <p>video</p>
+                        </div>
+                    {% endif %}
+                    <div class="other">
+                        <b>Mes activités préférées avec les enfants :</b>
+                        {{ form_widget(form.favoriteactivities) }} <br>
+
+                        <b>Mes loisirs :</b> <br>
+                        {{ form_widget(form.hobbies) }} <br>
+
+                        <b>Tâches supplémentaire :</b>
+                        {{ form_widget(form.anythingelse) }} <br>
+
+                        <b>Les petits plus :</b>
+                        {{ form_errors(form.petitsplus) }}
+                        {{ form_widget(form.petitsplus) }} <br>
+
+                        <b>Particularités :</b>
+                        {{ form_errors(form.particularite) }}
+                        {{ form_widget(form.particularite) }} <br>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="Enregistrer">
+
+        </form>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+
+        var latlng = new google.maps.LatLng(48.8575162, 2.3426246);
+        // paris : 48.8575162	2.3426246
+        //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
+        //de définir des options d'affichage de notre carte
+        var options = {
+            center: latlng,
+            zoom: 13,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        //constructeur de la carte qui prend en paramêtre le conteneur HTML
+        //dans lequel la carte doit s'afficher et les options
+        var map = new google.maps.Map(document.getElementById("map"), options);
+
+    </script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
 {% extends '::base.html.twig' %}
 
 {% block body -%}
@@ -13,4 +161,4 @@
     </li>
     <li>{{ form(delete_form) }}</li>
 </ul>
-{% endblock %}
+{% endblock %}#}

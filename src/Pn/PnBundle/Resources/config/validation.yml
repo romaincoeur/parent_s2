@@ -6,8 +6,13 @@ Pn\PnBundle\Entity\Job:
             - NotBlank: ~
             - Choice: { callback: getTypeValues }
         title:
-          - NotBlank: ~
+            - NotBlank: ~
         description:
-          - NotBlank: ~
+            - NotBlank: ~
         rate_type:
-          - NotBlank: ~
+            - NotBlank: ~
+
+Pn\PnBundle\Entity\Babysitter:
+    properties:
+        file:
+            - Image: ~

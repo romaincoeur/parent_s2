@@ -103,14 +103,18 @@
         <div class="wrap">
             {% for babysitter in babysitters %}
             <a href="{{ path('babysitter_show', {'id': babysitter.babysitter.id}) }}">
-                <div class="mini-profile" style="margin-left: 0;">
+                <div class="mini-profile">
                     <div class="header">
-                        <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="Sarah L." style="height: 120px;">
+                        {% if babysitter.babysitter.avatar %}
+                            <img class="profile-picture" src="{{ asset('uploads/babysitters/' ~ babysitter.babysitter.avatar) }}" alt="photo de profil de {{ babysitter.firstname }}" style="height: 120px;">
+                        {% else %}
+                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
+                        {% endif %}
                         <strong>{{ babysitter.getHiddenName() }}</strong>
                         <p>Paris</p>
                     </div>
                     <div class="body">
-                        <p>Assistante maternelle</p>
+                        <p>{{ babysitter.babysitter.category }}</p>
                     </div>
                 </div>
             </a>

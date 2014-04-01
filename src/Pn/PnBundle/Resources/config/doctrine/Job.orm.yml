@@ -63,13 +63,10 @@ Pn\PnBundle\Entity\Job:
     updated_at:
       type: datetime
       nullable: true
-  manyToOne:
-    babysittercategory:
-      targetEntity: Babysittercategory
-      inversedBy: jobs
-      joinColumn:
-        name: babysittercategory_id
-        referencedColumnName: id
+    category:
+      type: string
+      length: 255
+      nullable: true
   lifecycleCallbacks:
     prePersist: [ setCreatedAtValue ]
     preUpdate: [ setUpdatedAtValue ]

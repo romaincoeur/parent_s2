@@ -1,7 +1,67 @@
 
+<form id="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
 
-    <h1>Inscription</h1>
+    <table id="job_form">
+        <tfoot>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="inscription" />
+            </td>
+        </tr>
+        </tfoot>
+        <tbody>
+        <tr>
+            <td>
+                {{ form_errors(form.type) }}
+                {{ form_widget(form.type) }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.username) }}</th>
+            <td>
+                {{ form_errors(form.username) }}
+                {{ form_widget(form.username) }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.firstname) }}</th>
+            <td>
+                {{ form_errors(form.firstname) }}
+                {{ form_widget(form.firstname) }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.lastname) }}</th>
+            <td>
+                {{ form_errors(form.lastname) }}
+                {{ form_widget(form.lastname) }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.email) }}</th>
+            <td>
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.email) }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.rawPassword.first) }}</th>
+            <td>
+                {{ form_errors(form.rawPassword.first) }}
+                {{ form_widget(form.rawPassword.first) }}
+            </td>
+        </tr>
+        <tr>
+            <th>{{ form_label(form.rawPassword.second) }}</th>
+            <td>
+                {{ form_errors(form.rawPassword.second) }}
+                {{ form_widget(form.rawPassword.second) }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-    {{ form(form) }}
+    {{ form_rest(form) }}
 
 
+</form>

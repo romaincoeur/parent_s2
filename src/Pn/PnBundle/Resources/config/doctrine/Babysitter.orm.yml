@@ -27,8 +27,7 @@ Pn\PnBundle\Entity\Babysitter:
       length: 255
       nullable: true
     experience:
-      type: string
-      length: 255
+      type: integer
       nullable: true
     trustpoints:
       type: integer
@@ -40,12 +39,8 @@ Pn\PnBundle\Entity\Babysitter:
       type: string
       length: 255
       nullable: true
-    availabilities:
-      type: array
-      nullable: true
     favoriteactivities:
-      type: string
-      length: 255
+      type: text
       nullable: true
     hobbies:
       type: text
@@ -54,20 +49,30 @@ Pn\PnBundle\Entity\Babysitter:
       type: string
       length: 255
       nullable: true
-  manyToOne:
-    babysittercategory:
-      targetEntity: Babysittercategory
-      inversedBy: babysitters
-      joinColumn:
-        name: babysittercategory_id
-        referencedColumnName: id
+    calendar:
+      type: string
+      length: 255
+      nullable: true
+    category:
+      type: string
+      length: 255
+      nullable: true
+    petitsplus:
+      type: array
+      nullable: true
+    particularite:
+        type: array
+        nullable: true
   oneToOne:
     user:
       targetEntity: User
       inversedBy: babysitter
       joinColumn:
-          name: user_id
-          referencedColumnName: id
+        name: user_id
+        referencedColumnName: id
   lifecycleCallbacks:
-    prePersist: [ setCreatedAtValue ]
-    preUpdate: [ setUpdatedAtValue ]
+    prePersist: [ preUpload, setDefaultValues ]
+    preUpdate: [ preUpload ]
+    postPersist: [ upload ]
+    postUpdate: [ upload ]
+    postRemove: [ removeUpload ]

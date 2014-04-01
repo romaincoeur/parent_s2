@@ -1,5 +1,6 @@
 {# src/Pn/PnBundle/Resources/views/Babysitter/show.html.twig #}
 
+{% import "PnPnBundle::calendar.html.twig" as calendar %}
 {% extends "PnPnBundle::layout.html.twig" %}
 
 {% block title %}{{ parent() }} - Profil{% endblock %}
@@ -15,45 +16,52 @@
         <div class="description">
             <div class="header">
                 <div class="left">
-                    <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil de Sarah L." style="height: 120px;">
-                    <button class="favorite icon bg-yellow white">F</button>
+                    {% if entity.avatar %}
+                        <img class="profile-picture" src="{{ asset('uploads/babysitters/' ~ entity.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">
+                    {% else %}
+                        <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
+                    {% endif %}
+                    {% if (app.user) and not(app.user.babysitter.id == id) %}
+                        <button class="favorite icon bg-yellow white">F</button>
+                    {% endif %}
                 </div>
                 <div class="right">
-                    <div class="tarif">10€ / heure</div>
-                    <button class="btn bg-yellow icon"><img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon"></button>
-                    <button class="btn bg-yellow engage">engager</button>
+                    <div class="tarif">{{ entity.ratePrice }}€ / {{ entity.rateType }}</div>
+                    {% if (app.user) and (app.user.babysitter.id == id) %}
+                        <a href="{{ path('myprofile_edit') }}" class="btn bg-yellow engage">edit</a>
+                    {% else %}
+                        <button class="btn bg-yellow icon">
+                            <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
+                        </button>
+                        <button class="btn bg-yellow engage">engager</button>
+                    {% endif %}
                 </div>
-                <h1>Sarah L.</h1>
+                {% if app.user %}
+                    <h1>{{ entity.user.firstname }} {{ entity.user.lastname }}</h1>
+                {% else %}
+                    <h1>{{ entity.user.getHiddenName() }}</h1>
+                {% endif %}
                 <span class="balloon"></span>
                 <span class="balloon"></span>
                 <span class="balloon"></span>
-                <span class="trust-points">126 points de confiance</span>
+                <span class="trust-points">{{ entity.trustpoints }} points de confiance</span>
             </div>
             <div class="body">
-                <p>Je m'appelle Clémentine, j'ai 28 ans, je suis animatrice pour enfants et comédienne. J'ai mon BAFA, et j'ai été
-                    cheftaine scout et animatrice de centre de loisir pendant plusieurs années. A présent, je propose des
-                    animations de goûter d'anniversaire : je maquille les enfants puis j'organise des jeux sur un thème de conte de
-                    fée, afin de préparer les enfants au spectacle de marionnettes qui va suivre. Vous pourrez choisir des contes
-                    célèbres comme Pinocchio, le Petit Chaperon rouge, et aussi des contes plus rares du folklore Russe avec les
-                    histoires de la sorcière Babayaga ou de la princesse Vassilissa... Pour les tout petits je présenterai aussi des
-                    comptines et fables plus courtes avec des marionnettes en forme d'animaux. Je propose également des spectacles
-                    d'ombre chinoises...</p>
-                <p>
-                    Enfin, je jouerai à partir du 8 janvier dans un joli spectacle théâtral et musical pour enfant à la Comédie de la
-                    Passerelle : La Sorcière Polluair et le petit peuple vert !</p>
+                {{ entity.presentation|raw }}
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
-                <div class="coords">
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone"> 06 39 86 64 90 <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-email.png') }}" alt="arobase"> sarah.lenard@gmail.com <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié">
-                </div>
+                {% if app.user %}
+                    <div class="coords">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.user.phone }}&nbsp;<img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                    </div>
+                {% endif %}
                 <div class="details">
                     <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="telephone"> Paris, 14e <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
                     <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="telephone"> 20 ans <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="telephone"> 6 ans d'expérience <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="telephone"> {{ entity.experience }} ans d'expérience <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="telephone"> Agrément assistante maternelle <br>
                     Brevet d'aptitude aux fonctions d'animateur <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="telephone"> Prise en charge des enfants de 0 à 1 an, 1 à 3 ans, 4 à 6 ans <br>
@@ -77,29 +85,37 @@
                 </div>
             </div>
             <div class="col-md-4 calendar">
-                <!-- render -->
+                {{ calendar.viewTable(calendarMatrix) }}
             </div>
             <div class="col-md-4">
-                <div class="pres-video">
-                    <p>video</p>
-                </div>
+                {% if entity.video %}
+                    <div class="pres-video">
+                        <p>video</p>
+                    </div>
+                {% endif %}
                 <div class="other">
                     <b>Mes activités préférées avec les enfants :</b>
-                    <p>Animation de gouter d'anniversaire : spectacle de marionnettes, ombres chinoises, maquillage, sculptures de ballon, jeux, chansons et comptines</p>
+                    <p>{{ entity.favoriteactivities }}</p>
 
                     <b>Mes loisirs :</b>
-                    <p>Théatre - Dessin - Sport</p>
+                    <p>{{ entity.hobbies }}</p>
 
                     <b>Tâches supplémentaire :</b>
-                    <p>cuisine, aide aux devoirs</p>
+                    <p>{{ entity.anythingelse }}</p>
 
                     <b>Les petits plus :</b>
-                    <p>Repas bio</p>
+                    <p>
+                        {% for pp in entity.petitsplus %}
+                            - {{ pp }}<br>
+                        {% endfor %}
+                    </p>
 
                     <b>Particularités :</b>
-                    <p>- non fumeur<br>
-                        - permis de conduire<br>
-                        - lettre de recommandation</p>
+                    <p>
+                        {% for part in entity.particularite %}
+                            - {{ part }}<br>
+                        {% endfor %}
+                    </p>
                 </div>
             </div>
         </div>

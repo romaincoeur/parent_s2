@@ -6,7 +6,7 @@
  * Time: 14:32
  */
 
-// src/Pn/PnBundle/Admin/BabysittercategoryAdmin.php
+// src/Pn/PnBundle/Admin/UserAdmin.php
 
 namespace Pn\PnBundle\Admin;
 
@@ -15,35 +15,48 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 
-class BabysittercategoryAdmin extends Admin
+class UserAdmin extends Admin
 {
     // setup the default sort column and order
     protected $datagridValues = array(
         '_sort_order' => 'ASC',
-        '_sort_by' => 'title'
+        '_sort_by' => 'username'
     );
 
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title')
-            ->add('slug')
+            ->add('username')
         ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('title')
+            ->add('username')
         ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('title')
-            ->add('slug')
+            ->addIdentifier('username')
+            ->add('_action', 'actions', array(
+                'actions' => array(
+                    'show' => array(),
+                    'edit' => array(),
+                    'delete' => array(),
+                )
+            ))
+        ;
+    }
+
+    protected function configureShowField(ShowMapper $showMapper)
+    {
+        $showMapper
+            ->add('username')
         ;
     }
 }

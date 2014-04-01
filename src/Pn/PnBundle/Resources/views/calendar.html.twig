@@ -1,4 +1,4 @@
-{# src/Pn/PnBundle/Resources/views/Job/calendar.html.twig #}
+{# src/Pn/PnBundle/Resources/views/calendar.html.twig #}
 
 {% macro viewTable(matrix) %}
     <table class="calendar">
@@ -45,7 +45,7 @@
                 {% for j in 1..7 %}
                     <td>
                     {% if matrix[i][j] %}
-                        <button type="button"></button>
+                        <button type="button" style="background-color: lightgreen;"></button>
                     {% else %}
                         <button type="button"></button>
                     {% endif %}

@@ -5,6 +5,9 @@ namespace Pn\PnBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Pn\PnBundle\Entity\Job;
+use Pn\PnBundle\Entity\Babysitter;
+
 
 class BabysitterType extends AbstractType
 {
@@ -16,16 +19,36 @@ class BabysitterType extends AbstractType
     {
         $builder
             ->add('presentation')
-            ->add('hourlyrate')
+            ->add('rate_price')
+            ->add('rate_type', 'choice', array(
+                'choices'   => Job::getRateTypes(),
+                'expanded' => false,
+                'required'  => true,
+            ))
             ->add('experience')
-            ->add('trustpoints')
             ->add('anythingelse')
-            ->add('ageofchildren')
-            ->add('availabilities')
             ->add('favoriteactivities')
             ->add('hobbies')
-            ->add('mychildren')
-            ->add('babysittercategory')
+            ->add('category', 'choice', array(
+                'choices'   => Babysitter::getCategories(),
+                'expanded' => false,
+                'required'  => true,
+            ))
+            ->add('file', 'file', array('label' => 'Photo de profil', 'required' => false))
+            ->add('user', new UserFullType())
+            ->add('calendar', 'hidden')
+            ->add('petitsplus', 'choice', array(
+                'choices'   => Babysitter::getPetitspluss(),
+                'expanded' => true,
+                'multiple' => true,
+                'required'  => true,
+            ))
+            ->add('particularite', 'choice', array(
+                'choices'   => Babysitter::getParticularites(),
+                'expanded' => true,
+                'multiple' => true,
+                'required'  => true,
+            ))
         ;
     }
     

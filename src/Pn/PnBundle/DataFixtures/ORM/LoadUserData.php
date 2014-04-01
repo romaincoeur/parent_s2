@@ -70,15 +70,31 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $encodedPassword = $encoder->encodePassword('azerty', $user_sarah->getSalt());
         $user_sarah->setPassword($encodedPassword);
 
+        $user_manu = new User();
+        $user_manu->setUsername('manue');
+        $user_manu->setType('nounou');
+        $user_manu->setFirstname('Emmanuelle');
+        $user_manu->setLastname('Gousse');
+        $user_manu->setEmail('emmanuelle.gousse@gmail.com');
+        $user_manu->setIsActivated(true);
+        $user_manu->setPhone("06 34 56 67 87");
+
+        // set password
+        $encoder = $factory->getEncoder($user_manu);
+        $encodedPassword = $encoder->encodePassword('azerty', $user_manu->getSalt());
+        $user_manu->setPassword($encodedPassword);
+
         $em->persist($user1);
         $em->persist($user2);
         $em->persist($user_sarah);
+        $em->persist($user_manu);
 
         $em->flush();
 
         $this->addReference('user-romain', $user1);
         $this->addReference('user-anna', $user2);
         $this->addReference('user-sarah', $user_sarah);
+        $this->addReference('user-manue', $user_manu);
     }
 
     public function getOrder()

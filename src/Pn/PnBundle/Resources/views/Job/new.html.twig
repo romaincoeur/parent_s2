@@ -8,7 +8,7 @@
 {% block body %}
     <div class="job-show job-edit wrap">
 
-        <form id="createJobForm" action="{{ path('pn_job_create') }}" method="post" {{ form_enctype(form) }}>
+        <form class="calendarForm" id="createJobForm" action="{{ path('pn_job_create') }}" method="post" {{ form_enctype(form) }}>
 
             <div id="map" style="height: 180px;">
                 Veuillez patienter pendant le chargement de la carte...

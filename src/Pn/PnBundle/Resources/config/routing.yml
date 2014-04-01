@@ -28,6 +28,10 @@ myprofile:
     pattern:   /myprofile
     defaults:  { _controller: PnPnBundle:Default:myprofileView }
 
+myprofile_edit:
+    pattern:   /myprofile/edit
+    defaults:  { _controller: PnPnBundle:Default:myprofileEdit }
+
 PnPnBundle_babysitter:
     resource: "@PnPnBundle/Resources/config/routing/babysitter.yml"
     prefix:   /babysitter

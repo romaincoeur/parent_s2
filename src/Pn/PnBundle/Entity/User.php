@@ -407,4 +407,5 @@ class User implements UserInterface
     {
         return $this->getFirstname().' '.substr($this->getLastname(),0,1).'.';
     }
+
 }

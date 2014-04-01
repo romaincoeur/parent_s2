@@ -581,6 +581,16 @@ class Job
         return $this->rate_type;
     }
 
+    public static function getRateTypes()
+    {
+        return array('hour' => 'Heure', 'month' => 'Mois', 'forfait' => 'Forfait');
+    }
+
+    public static function getRateTypeValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
     /**
      * Set calendar
      *
@@ -604,13 +614,32 @@ class Job
         return $this->calendar;
     }
 
-    public static function getRateTypes()
+    /**
+     * @var string
+     */
+    private $category;
+
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     * @return Job
+     */
+    public function setCategory($category)
     {
-        return array('hour' => 'Heure', 'month' => 'Mois', 'forfait' => 'Forfait');
+        $this->category = $category;
+
+        return $this;
     }
 
-    public static function getRateTypeValues()
+    /**
+     * Get category
+     *
+     * @return string 
+     */
+    public function getCategory()
     {
-        return array_keys(self::getRateType());
+        return $this->category;
     }
 }

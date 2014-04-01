@@ -366,12 +366,17 @@ header .connected .btn:hover
     display: inline-block;
     height: 160px;
     border: solid #eeeeee 2px;
-    margin-left: 20px;
     overflow: hidden;
+    margin-left: 20px;
 }
 .mini-profile:hover
 {
     border-color: #e84355;
+}
+
+.mini-profiles .wrap a:first-child .mini-profile
+{
+    margin-left: 0;
 }
 
 .mini-profile .header
@@ -656,6 +661,7 @@ aside a.btn
 {
     padding: 20px 20px 20px 154px;
     font-weight: bold;
+    min-height: 150px;
 }
 
 .coords
@@ -797,7 +803,7 @@ table.calendar td.off
 
 table.calendar td.on
 {
-    background-color: green;
+    background-color: lightgreen;
 }
 
 .child-block
@@ -814,13 +820,92 @@ table.calendar td.on
     margin-bottom: 30px;
 }
 
-.job-edit .calendar button
+table.calendar button
 {
     width: 100%;
     height: 100%;
     border: none;
     background-color: #ffffff;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+/***************Page babysitter profile edit*****************/
+
+#pn_pnbundle_babysitter_presentation
+{
+    height: 106px;
+    width: 100%;
+}
+
+#editBabysitterForm input[type='submit']
+{
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#pn_pnbundle_babysitter_file
+{
+    position: absolute;
+}
+
+
+
+
+
+
+
+
+
+
+/***************Popups*****************/
+
+.modal-dialog
+{
+    width: 400px;
+}
+
+.modal-header
+{
+    text-align: center;
+}
+
+h3#register
+{
+    margin: 0;
+    font-weight: bold;
+}
+
+.modal-body
+{
+    color: #bbbbbb;
+}
+
+.modal-dialog input[type='radio']
+{
+    height: initial;
+}
+
+.modal-dialog input[type='text']
+{
+    border: solid #eeeeee 1px;
+}
+
+.modal-dialog input[type='password']
+{
+    border: solid #eeeeee 1px;
+}
+
 
 
 

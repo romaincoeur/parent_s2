@@ -81,9 +81,12 @@ class BabysitterController extends Controller
         $entity = new Babysitter();
         $form   = $this->createCreateForm($entity);
 
+        $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
+
         return $this->render('PnPnBundle:Babysitter:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'calendarMatrix' => $calendar
         ));
     }
 
@@ -103,16 +106,44 @@ class BabysitterController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
+        $calendarStr = str_split($entity->getCalendar(),1);
+
+        $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
+
+        $i = 1;
+        $j = 1;
+        foreach ($calendarStr as &$c)
+        {
+            if ($c == ')')
+            {
+                $j = 1;
+                $i++;
+                continue;
+            }
+            if ($c == '0')
+            {
+                $j++;
+            }
+            if ($c == '1')
+            {
+                $calendar[$i][$j] = true;
+                $j++;
+            }
+        }
+
         return $this->render('PnPnBundle:Babysitter:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        ));
+            'delete_form' => $deleteForm->createView(),
+            'calendarMatrix' => $calendar,
+            'id' => $id
+        ));
     }
 
     /**
      * Displays a form to edit an existing Babysitter entity.
      *
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -122,14 +153,54 @@ class BabysitterController extends Controller
             throw $this->createNotFoundException('Unable to find Babysitter entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $form = $this->createForm(new BabysitterType(), $entity);
 
+        $form->handleRequest($request);
+
+        if ($form->isValid()){
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('babysitter_show', array('id' => $id)));
+        }
+
+        $calendar = $this->createCalendar($entity->getCalendar());
         return $this->render('PnPnBundle:Babysitter:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'form'   => $form->createView(),
+            'calendarMatrix' => $calendar,
+            'id' => $id
         ));
+    }
+
+    private function createCalendar($calendarText)
+    {
+        $calendarStr = str_split($calendarText,1);
+
+        $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
+
+        $i = 1;
+        $j = 1;
+        foreach ($calendarStr as &$c)
+        {
+            if ($c == ')')
+            {
+                $j = 1;
+                $i++;
+                continue;
+            }
+            if ($c == '0')
+            {
+                $j++;
+            }
+            if ($c == '1')
+            {
+                $calendar[$i][$j] = true;
+                $j++;
+            }
+        }
+
+        return $calendar;
     }
 
     /**
@@ -145,8 +216,6 @@ class BabysitterController extends Controller
             'action' => $this->generateUrl('babysitter_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }
@@ -167,17 +236,21 @@ class BabysitterController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
+        $calendar = $this->createCalendar($entity->getCalendar());
 
         if ($editForm->isValid()) {
+            $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('babysitter_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('babysitter_show', array('id' => $id)));
         }
 
         return $this->render('PnPnBundle:Babysitter:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'        => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'id'          => $id,
+            'calendarMatrix'    => $calendar
         ));
     }
     /**
