@@ -19,11 +19,11 @@ class BabysitterController extends Controller
      * Lists all Babysitter entities.
      *
      */
-    public function indexAction()
+    public function indexAction($search)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PnPnBundle:Babysitter')->findAll();
+        $entities = $em->getRepository('PnPnBundle:Babysitter')->getFromSearch($search);
 
         return $this->render('PnPnBundle:Babysitter:index.html.twig', array(
             'entities' => $entities,
@@ -81,7 +81,9 @@ class BabysitterController extends Controller
         $entity = new Babysitter();
         $form   = $this->createCreateForm($entity);
 
-        $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
+        // gestion du calendrier
+        $calendarService = $this->container->get('pn.calendar');
+        $calendar = $calendarService->newMatrix();
 
         return $this->render('PnPnBundle:Babysitter:new.html.twig', array(
             'entity' => $entity,
@@ -164,43 +166,16 @@ class BabysitterController extends Controller
             return $this->redirect($this->generateUrl('babysitter_show', array('id' => $id)));
         }
 
-        $calendar = $this->createCalendar($entity->getCalendar());
+        // gestion du calendrier
+        $calendarService = $this->container->get('pn.calendar');
+        $calendar = $calendarService->getMatrix($entity->getCalendar());
+
         return $this->render('PnPnBundle:Babysitter:edit.html.twig', array(
             'entity'      => $entity,
             'form'   => $form->createView(),
             'calendarMatrix' => $calendar,
             'id' => $id
         ));
-    }
-
-    private function createCalendar($calendarText)
-    {
-        $calendarStr = str_split($calendarText,1);
-
-        $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
-
-        $i = 1;
-        $j = 1;
-        foreach ($calendarStr as &$c)
-        {
-            if ($c == ')')
-            {
-                $j = 1;
-                $i++;
-                continue;
-            }
-            if ($c == '0')
-            {
-                $j++;
-            }
-            if ($c == '1')
-            {
-                $calendar[$i][$j] = true;
-                $j++;
-            }
-        }
-
-        return $calendar;
     }
 
     /**

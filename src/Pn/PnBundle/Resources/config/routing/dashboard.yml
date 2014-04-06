@@ -1,0 +1,12 @@
+pn_dashboard:
+    pattern:  /
+    defaults: { _controller: "PnPnBundle:Dashboard:index" }
+
+pn_dashboard_revenus:
+    pattern:  /revenus
+    defaults: { _controller: "PnPnBundle:Dashboard:revenus" }
+
+pn_dashboard_paiements:
+    pattern:  /paiements
+    defaults: { _controller: "PnPnBundle:Dashboard:paiements" }
+

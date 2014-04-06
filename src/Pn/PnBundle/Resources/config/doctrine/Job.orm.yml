@@ -1,6 +1,7 @@
 # src/Pn/PnBundle/Resources/config/doctrine/Job.orm.yml
 Pn\PnBundle\Entity\Job:
   type: entity
+  repositoryClass: Pn\PnBundle\Repository\JobRepository
   table: job
   id:
     id:
@@ -45,10 +46,6 @@ Pn\PnBundle\Entity\Job:
       type: string
       length: 255
       nullable: true
-    token:
-      type: string
-      length: 255
-      unique: true
     is_public:
       type: boolean
       nullable: true
@@ -67,6 +64,16 @@ Pn\PnBundle\Entity\Job:
       type: string
       length: 255
       nullable: true
+    experience:
+      type: integer
+      nullable: true
+  manyToOne:
+    parent:
+      targetEntity: Pparent
+      inversedBy: jobs
+      joinColumn:
+        name: parent_id
+        referencedColumnName: id
   lifecycleCallbacks:
-    prePersist: [ setCreatedAtValue ]
+    prePersist: [ setCreatedAtValue, setDefaultValues ]
     preUpdate: [ setUpdatedAtValue ]

@@ -1,23 +1,176 @@
+{# src/Pn/PnBundle/Resources/views/Job/edit.html.twig #}
+
 {% import "PnPnBundle::calendar.html.twig" as calendar %}
+{% extends 'PnPnBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Job edit</h1>
+{% block title %}{{ parent() }} - Nouvelle annonce{% endblock %}
 
-    {{ form(edit_form) }}
+{% block body %}
+    <div class="job-show job-edit wrap">
+
+        <form class="calendarForm" id="editJobForm" action="{{ path('pn_job_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(form) }}>
+
+            <div id="map" style="height: 180px;">
+                Veuillez patienter pendant le chargement de la carte...
+            </div>
+
+
+            <div class="description">
+                <div class="header">
+                    <div class="right">
+                        <div class="tarif">{{ form_errors(form.rate_price) }}{{ form_widget(form.rate_price) }}€ / {{ form_errors(form.rate_type) }}{{ form_widget(form.rate_type) }}</div>
+                    </div>
+                    {{ form_errors(form.title) }}
+                    {{ form_widget(form.title) }}
+                    <span class="balloon"></span>
+                    <span class="balloon"></span>
+                    <span class="balloon"></span>
+                    <span class="trust-points">126 points de confiance</span>
+                </div>
+                <div class="body">
+                    {{ form_errors(form.description) }}
+                    {{ form_widget(form.description) }}
+                </div>
+            </div>
+
+            {# Les erreurs générales du formulaire. #}
+            {{ form_errors(form) }}
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="coords">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone"> 06 39 86 64 90 <br>
+                    </div>
+                    <div class="details">
+                        <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="marker icon"> Paris, 14e <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-calendar.png') }}" alt="calendar icon"> du 17.12.2013 au 20.032014<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience icon"> {{ form_errors(form.experience) }} {{ form_widget(form.experience) }} ans d'expérience minimum <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certification icon"> Agrément assistante maternelle <br>
+                        Brevet d'aptitude aux fonctions d'animateur <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="telephone"> Prise en charge des enfants de 0 à 1 an, 1 à 3 ans, 4 à 6 ans <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone"> Français, Italien <br>
+                    </div>
+                </div>
+                <div class="col-md-4 calendar">
+                    {{ calendar.editTable(calendarMatrix) }}
+                </div>
+                <div class="col-md-4">
+                    <div class="child-block">
+                        <b>Anais</b><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-timer.png') }}" alt="timer icon"> 6 ans<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> jouer aux barbies<br>
+                    </div>
+                    <div class="child-block">
+                        <b>Tom</b><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-timer.png') }}" alt="timer icon"> 10 ans<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> football, jouer aux mikado, echecs<br>
+                    </div>
+                    <div class="other">
+                        <b>Tâches supplémentaire :</b>
+                        <p>cuisine, aide aux devoirs</p>
+
+                        <b>Vos petits plus :</b>
+                        <p>Repas bio</p>
+
+                        <b>Vos atouts :</b>
+                        <p>- non fumeur<br>
+                            - permis de conduire<br>
+                            - lettre de recommandation</p>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_rest(form) }}
+
+            <input type="submit" value="Enregistrer">
+
+        </form>
+
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+        var geocoder;
+        var carte;
+        var marqueur;
+
+        function init_map() {
+            geocoder = new google.maps.Geocoder();
+            var latlng = new google.maps.LatLng(48.8575162,	2.3426246);
+            // paris : 48.8575162	2.3426246
+            //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
+            //de définir des options d'affichage de notre carte
+            var options = {
+                center: latlng,
+                zoom: 13,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+//constructeur de la carte qui prend en paramêtre le conteneur HTML
+//dans lequel la carte doit s'afficher et les options
+            carte = new google.maps.Map(document.getElementById("map"), options);
 
 
 
+//création du marqueur
+            marqueur = new google.maps.Marker({
+                position: new google.maps.LatLng(48.8567,2.3508),
+                draggable:true,
+                map: carte
+            });
 
-    {{ calendar.editTable('table1') }}
+            google.maps.event.addListener(marqueur, 'dragend', function(event) {
+                carte.setCenter(marqueur.getPosition());
+                setAddressFromMap(marqueur.getPosition());
+            });
 
-    </form>
+            google.maps.event.addListener(carte, 'dragend', function() {
+                marqueur.setPosition(carte.getCenter());
+                setAddressFromMap(carte.getCenter());
+            });
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('pn_job') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+            google.maps.event.addListener(carte, 'zoom_changed', function() {
+                marqueur.setPosition(carte.getCenter());
+                setAddressFromMap(carte.getCenter());
+            });
+        }
+
+
+        init_map();
+        $('#map').animate({marginTop: "0",opacity: 'show'}, 700, function() {init_map();});
+
+
+        function setAddressFromText() {
+            var address = document.getElementById('pn_pnbundle_babysitter_user_address').value;
+            geocoder.geocode( { 'address': address}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    carte.setCenter(results[0].geometry.location);
+                    carte.setZoom(19);
+                    marqueur.setPosition(results[0].geometry.location);
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+
+        function setAddressFromMap(latlng) {
+            geocoder.geocode({'latLng': latlng}, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        document.getElementById('pn_pnbundle_babysitter_user_address').value = results[1].formatted_address;
+                    } else {
+                        document.getElementById('pn_pnbundle_babysitter_user_address').value = 'Pas d\'adresse trouvée';
+                    }
+                } else {
+                    document.getElementById('pn_pnbundle_babysitter_user_address').value = status;
+                }
+                document.getElementById('pn_pnbundle_babysitter_user_latitude').value = latlng.lat();
+                document.getElementById('pn_pnbundle_babysitter_user_longitude').value = latlng.lng();
+            });
+        }
+    </script>
 {% endblock %}

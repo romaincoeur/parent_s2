@@ -35,3 +35,20 @@ myprofile_edit:
 PnPnBundle_babysitter:
     resource: "@PnPnBundle/Resources/config/routing/babysitter.yml"
     prefix:   /babysitter
+
+pn_search:
+    pattern:   /search
+    defaults:  { _controller: PnPnBundle:Default:search }
+
+PnPnBundle_parent:
+    resource: "@PnPnBundle/Resources/config/routing/pparent.yml"
+    prefix:   /pparent
+
+PnPnBundle_dashboard:
+    resource: "@PnPnBundle/Resources/config/routing/dashboard.yml"
+    prefix:   /dashboard
+
+PnPnBundle_mooc:
+    resource: "@PnPnBundle/Resources/config/routing/mooc.yml"
+    prefix:   /mooc
+

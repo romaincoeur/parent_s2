@@ -34,7 +34,7 @@ class BabysitterAdmin extends Admin
             ->add('presentation')
             ->add('rate_price')
             ->add('rate_type')
-            ->add('babysittercategory')
+            ->add('category')
         ;
     }
 
@@ -53,7 +53,7 @@ class BabysitterAdmin extends Admin
         $listMapper
             ->addIdentifier('userUsername')
             ->add('id')
-            ->add('babysittercategory')
+            ->add('category')
             ->add('trustpoints')
             ->add('rate_price')
             ->add('rate_type')
@@ -76,7 +76,7 @@ class BabysitterAdmin extends Admin
             ->add('presentation')
             ->add('rate_price')
             ->add('rate_type')
-            ->add('babysittercategory')
+            ->add('category')
         ;
     }
 }

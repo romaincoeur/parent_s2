@@ -1,0 +1,32 @@
+# src/Pn/PnBundle/Resources/config/doctrine/Mooc.orm.yml
+Pn\PnBundle\Entity\Mooc:
+  type: entity
+  repositoryClass: Pn\PnBundle\Repository\MoocRepository
+  table: mooc
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    title:
+      type: string
+      length: 255
+      nullable: true
+    presentation:
+      type: text
+      nullable: true
+    category:
+      type: string
+      length: 255
+      nullable: true
+    is_activated:
+      type: boolean
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+      nullable: true
+  lifecycleCallbacks:
+    prePersist: [ setCreatedAtValue, setDefaultValues ]
+    preUpdate: [ setUpdatedAtValue ]

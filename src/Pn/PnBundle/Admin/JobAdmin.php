@@ -29,23 +29,35 @@ class JobAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('babysittercategory')
             ->add('title')
             ->add('description')
+            ->add('status')
+            ->add('parent')
             ->add('rate_price')
             ->add('rate_type', 'choice', array(
                 'choices'   => array('hour' => 'Heure', 'month' => 'Mois', 'forfait' => 'Forfait'),
                 'required'  => true,
             ))
+            ->add('address')
+            ->add('latitude')
+            ->add('longitude')
+            ->add('duration')
+            ->add('how_to_apply')
+            ->add('calendar')
+            ->add('category')
+            ->add('experience')
+            ->add('expires_at')
+            ->add('is_public')
+            ->add('is_activated')
         ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('babysittercategory')
             ->add('title')
             ->add('description')
+            ->add('address')
         ;
     }
 
@@ -53,8 +65,11 @@ class JobAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('title')
-            ->add('babysittercategory')
-            ->add('expires_at')
+            ->add('status')
+            ->add('parent')
+            ->add('category')
+            ->add('address')
+            ->add('is_activated')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'view' => array(),
@@ -68,9 +83,25 @@ class JobAdmin extends Admin
     protected function configureShowField(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('babysittercategory')
             ->add('title')
             ->add('description')
+            ->add('status')
+            ->add('parent')
+            ->add('address')
+            ->add('latitude')
+            ->add('longitude')
+            ->add('rate_price')
+            ->add('rate_type')
+            ->add('duration')
+            ->add('how_to_apply')
+            ->add('calendar')
+            ->add('category')
+            ->add('experience')
+            ->add('expires_at')
+            ->add('created_at')
+            ->add('updated_at')
+            ->add('is_public')
+            ->add('is_activated')
         ;
     }
 }

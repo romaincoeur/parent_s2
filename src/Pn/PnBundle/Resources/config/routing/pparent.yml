@@ -1,0 +1,30 @@
+pparent:
+    pattern:  /
+    defaults: { _controller: "PnPnBundle:Pparent:index" }
+
+pparent_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PnPnBundle:Pparent:show" }
+
+pparent_new:
+    pattern:  /new
+    defaults: { _controller: "PnPnBundle:Pparent:new" }
+
+pparent_create:
+    pattern:  /create
+    defaults: { _controller: "PnPnBundle:Pparent:create" }
+    requirements: { _method: post }
+
+pparent_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PnPnBundle:Pparent:edit" }
+
+pparent_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PnPnBundle:Pparent:update" }
+    requirements: { _method: post|put }
+
+pparent_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PnPnBundle:Pparent:delete" }
+    requirements: { _method: post|delete }

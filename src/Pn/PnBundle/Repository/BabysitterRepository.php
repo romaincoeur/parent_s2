@@ -12,5 +12,22 @@ use Doctrine\ORM\EntityRepository;
  */
 class BabysitterRepository extends EntityRepository
 {
+    public function getFromSearch($search, $max = null)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->leftJoin('b.user', 'u')
+            ->where('u.address LIKE :search')
+            ->setParameter('search', '%'.$search.'%')
+            ->orderBy('b.trustpoints', 'DESC');
 
+        if($max)
+        {
+            $qb->setMaxResults($max);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

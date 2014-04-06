@@ -1,0 +1,65 @@
+{# src/Pn/PnBundle/Resources/views/Dashboard/revenus.html.twig #}
+
+{% extends "PnPnBundle:Dashboard:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Dashboard{% endblock %}
+
+{% block dashbody %}
+    <div class="wrap">
+        <div class="row">
+            <div class="revenus col-md-9">
+                <div class="job revenu">
+                    <div class="header">
+                        <p class="tarif">9€ / heure</p>
+                        <strong>Animatrice pour une soirée d'aniversaire&nbsp;</strong>
+                        <span class="balloon"></span>
+                        <span class="balloon"></span>
+                        <span class="balloon"></span>
+                    </div>
+                    <div class="body">
+                        <div class="line clearfix">
+                            <div class="right">
+                                30€
+                            </div>
+                            <div class="left">
+                                06/03/2014 - #465798 - disponible
+                            </div>
+                        </div>
+                        <div class="line clearfix">
+                            <div class="right">
+                                30€
+                            </div>
+                            <div class="left">
+                                06/03/2014 - #465798 - retiré
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="job revenu">
+                    <div class="header">
+                        <p class="tarif">10€ / heure</p>
+                        <strong>Garde d'enfant à Paris ! URGENT !!!&nbsp;</strong>
+                        <span class="balloon"></span>
+                    </div>
+                    <div class="body">
+                        <div class="line clearfix">
+                            <div class="right">
+                                30€
+                            </div>
+                            <div class="left">
+                                06/03/2014 - #465798 - retiré
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="solde bg-red">
+                    <p>Solde disponible : 30€</p>
+                    <button class="btn btn-inverse">retirer mon solde</button>
+                </div>
+                <p style="text-align: center; font-weight: bold; margin-top: 20px;">Revenu total : 250€</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

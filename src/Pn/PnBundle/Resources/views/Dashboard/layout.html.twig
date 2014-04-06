@@ -1,0 +1,32 @@
+{# src/Pn/PnBundle/Resources/views/Dashboard/layout.html.twig #}
+
+
+{% extends "PnPnBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="wrap">
+        <div class="dashboard menu clearfix">
+            {% if app.user.type == 'parent' %}
+                <div class="right">
+                    <a href="">Recommandations</a>
+                    <a href="{{ path('pn_dashboard_paiements') }}">Mes paiements</a>
+                </div>
+                <div class="left">
+                    <a href="{{ path('pn_dashboard') }}" style="color: #BBBBBB;">Annonces</a>
+                </div>
+            {% else %}
+                <div class="right">
+                    <a href="">Recommandations</a>
+                    <a href="{{ path('pn_dashboard_revenus') }}">Mes revenus</a>
+                </div>
+                <div class="left">
+                    <a href="{{ path('pn_dashboard') }}" style="color: #BBBBBB;">Annonces</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% block dashbody %}
+    {% endblock %}
+
+{% endblock %}

@@ -24,4 +24,19 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function getBabysitterFromSearch($search, $max = null)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->where('b.address LIKE :search')
+            ->setParameter('search', $search);
+        if($max)
+        {
+            $qb->setMaxResults($max);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

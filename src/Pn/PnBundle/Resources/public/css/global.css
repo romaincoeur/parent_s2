@@ -41,6 +41,11 @@
     color: white;
 }
 
+.green
+{
+    color: green;
+}
+
 
 body
 {
@@ -89,6 +94,10 @@ aside
     margin: 45px 30px 40px 0;
 }
 
+a
+{
+    color: #000000;
+}
 a:hover
 {
     text-decoration: none;
@@ -138,7 +147,6 @@ select:focus
 
 input
 {
-    height: 40px;
     border-radius: 20px;
     border: none;
 }
@@ -565,7 +573,7 @@ aside a.btn
 
 .job .header strong
 {
-    padding-left: 20px;
+    padding-left: 0;
 }
 
 .job .header p.tarif
@@ -859,6 +867,102 @@ table.calendar button
     position: absolute;
 }
 
+#pn_pnbundle_babysitter_user_phone
+{
+    color: #000000;
+}
+
+
+
+
+
+
+
+
+/***************Dashboard*****************/
+
+.dashboard.menu
+{
+    background-color: #eeeeee;
+    height: 40px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    padding: 7px 20px;
+}
+
+.dashboard.menu a
+{
+    color: #000000;
+    margin-right: 20px;
+}
+.dashboard.menu a:hover
+{
+    color: #BBBBBB;
+}
+
+.annonce
+{
+    color: #000000;
+}
+
+.annonce .header
+{
+    height: 40px;
+    padding: 7px 20px;
+}
+
+.solde
+{
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.solde button
+{
+    background-color: #555555;
+    padding: 0 10px;
+    width: inherit;
+}
+
+
+
+
+
+
+
+
+/***************Formations*****************/
+.moocs .frame
+{
+    position: relative;
+}
+
+.moocs .frame .description
+{
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    border: none;
+    width: 500px;
+}
+
+.moocs .frame .description img
+{
+    float: left;
+    margin-right: 10px;
+}
+
+.moocs .frame .description strong
+{
+    vertical-align: -webkit-baseline-middle;
+}
+
+.moocs .list
+{
+    margin-bottom: 50px;
+}
 
 
 
@@ -872,7 +976,13 @@ table.calendar button
 
 .modal-dialog
 {
-    width: 400px;
+    width: 300px;
+    border-radius: 0;
+}
+
+.modal-content
+{
+    border-radius: 0;
 }
 
 .modal-header
@@ -880,32 +990,118 @@ table.calendar button
     text-align: center;
 }
 
-h3#register
+.modal-header h3
 {
     margin: 0;
+    color: #ffffff;
     font-weight: bold;
+}
+
+.modal-header .close
+{
+    font-size: 30px;
+    color: #ffffff;
+    opacity: .7;
+}
+.modal-header .close:hover
+{
+    opacity: 1;
 }
 
 .modal-body
 {
-    color: #bbbbbb;
+    color: #888888;
+    padding: 30px;
+    font-size: 16px;
 }
 
 .modal-dialog input[type='radio']
 {
-    height: initial;
+    height: inherit;
 }
 
 .modal-dialog input[type='text']
 {
-    border: solid #eeeeee 1px;
+    border: solid #eeeeee 2px;
+    width: 100%;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    line-height: 1.8;
 }
 
 .modal-dialog input[type='password']
 {
-    border: solid #eeeeee 1px;
+    border: solid #eeeeee 2px;
+    width: 100%;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    line-height: 1.8;
 }
 
+.modal-dialog button[type="submit"]
+{
+    margin: 20px 5px 10px 0;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    border: none;
+    padding: 5px 20px 10px;
+}
+
+#login .modal-dialog button[type="submit"]
+{
+    background-color: #b093c4;
+}
+
+#login .modal-dialog a#mdp_oublie
+{
+    color: #b093c4;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#register .info
+{
+    border-top: solid #eeeeee 1px;
+    border-bottom: solid #eeeeee 1px;
+    margin: 15px 0;
+    padding: 15px 0;
+}
+
+#register .modal-dialog button[type="submit"]
+{
+    background-color: #65c0e3;
+}
+
+.revenu
+{
+    height: inherit;
+    border: none;
+    background-color: #eeeeee;
+}
+
+.revenu .header strong
+{
+    padding-left: 0;
+}
+
+.revenu .body
+{
+    background-color: #eeeeee;
+}
+
+.revenu .body .line
+{
+    background-color: white;
+    margin: 5px;
+    padding: 5px 10px;
+    color: #BBBBBB;
+}
+
+#login .modal-header
+{
+    background-color: #b093c4;
+}
 
 
 

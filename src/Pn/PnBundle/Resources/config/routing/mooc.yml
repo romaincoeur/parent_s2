@@ -1,0 +1,10 @@
+mooc:
+    pattern:  /
+    defaults: { _controller: "PnPnBundle:Mooc:index" }
+
+mooc_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PnPnBundle:Mooc:show" }
+
+
+

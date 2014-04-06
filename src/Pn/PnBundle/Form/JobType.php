@@ -28,8 +28,7 @@ class JobType extends AbstractType
                 'required'  => true,
             ))
             ->add('calendar', 'hidden')
-            ->add('token')
-            ->add('babysittercategory')
+            ->add('experience')
         ;
     }
     

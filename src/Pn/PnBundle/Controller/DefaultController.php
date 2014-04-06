@@ -3,6 +3,7 @@
 namespace Pn\PnBundle\Controller;
 
 use Pn\PnBundle\Entity\Babysitter;
+use Pn\PnBundle\Entity\Pparent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Pn\PnBundle\Entity\User;
@@ -18,8 +19,11 @@ class DefaultController extends Controller
 
         $babysitters = $em->getRepository('PnPnBundle:User')->getLastBabysitters();
 
+        $nounous = $em->getRepository('PnPnBundle:Babysitter')->findAll();
+
         return $this->render('PnPnBundle:Default:index.html.twig', array(
-            'babysitters' => $babysitters
+            'babysitters' => $babysitters,
+            'nounous' => $nounous
         ));
     }
 
@@ -82,6 +86,12 @@ class DefaultController extends Controller
                 $babysitter->setUser($entity);
                 $em->persist($babysitter);
             }
+            elseif ($form["type"]->getData() == 'parent')
+            {
+                $parent = new Pparent();
+                $parent->setUser($entity);
+                $em->persist($parent);
+            }
 
             // enregistrement en BDD
             $em->persist($entity);
@@ -91,6 +101,10 @@ class DefaultController extends Controller
             $token = new UsernamePasswordToken($entity, null, 'main', $entity->getRoles());
             $this->get('security.context')->setToken($token);
 
+            // Redirection
+            $currentRoute = $request->attributes->get('_route');
+            $currentUrl = $this->get('router')
+                ->generate($currentRoute, array(), true);
             return $this->redirect($this->generateUrl('myprofile'));
         }
 
@@ -133,7 +147,18 @@ class DefaultController extends Controller
         }
         elseif ($type == 'parent')
         {
-            return $this->redirect($this->generateUrl('pn_job_new'));
+            $parent = $this->getUser()->getParent();
+            $em = $this->getDoctrine()->getManager();
+            $currentAnnonce = $em->getRepository('PnPnBundle:Job')->getAnnonce($parent);
+
+            if ($currentAnnonce == null)
+            {
+                return $this->redirect($this->generateUrl('pn_job_new'));
+            }
+            else
+            {
+                return $this->redirect($this->generateUrl('pn_job_show', array('id' => $currentAnnonce[0]->getId())));
+            }
         }
         else
         {
@@ -162,6 +187,26 @@ class DefaultController extends Controller
         else
         {
             throw $this->createNotFoundException('Wrong user type.');
+        }
+    }
+
+    /**
+     * Handle the search form of the welcome page
+     */
+    public function searchAction()
+    {
+        $request = $this->get('request');
+
+        $select = $request->get('searchType');
+        $field = $request->get('field');
+
+        if ($select == 'nounou')
+        {
+            return $this->redirect($this->generateUrl('babysitter', array('search' => $field)));
+        }
+        else
+        {
+            return $this->redirect($this->generateUrl('pn_job', array('search' => $field)));
         }
     }
 }

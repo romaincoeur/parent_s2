@@ -15,21 +15,38 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('firstname')
-            ->add('lastname')
-            ->add('email')
+            ->add('firstname', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Prénom',
+                ))
+            )
+            ->add('lastname', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Nom',
+                ))
+            )
+            ->add('email'
+                , 'text', array(
+                    'attr' => array(
+                        'placeholder' => 'E-mail',
+                    ))
+            )
             ->add('rawPassword', 'repeated', array(
                 'type' => 'password',
                 'invalid_message' => 'mot de passe invalide',
                 'options' => array('required' => true),
-                'first_options' => array('label' => 'Mot de passe'),
-                'second_options' => array('label' => 'Mot de passe (validation)'),
+                'first_options' => array('label' => 'Mot de passe', 'attr' => array(
+                        'placeholder' => 'Mot de passe',
+                    )),
+                'second_options' => array('label' => 'Mot de passe (validation)', 'attr' => array(
+                        'placeholder' => 'Confirmation du mot de passe',
+                    )),
             ))
             ->add('type', 'choice', array(
                 'choices'   => array('parent' => 'Je suis parent', 'nounou' => 'Je suis nounou'),
                 'expanded' => true,
                 'required'  => true,
+                'data' => 'parent',
             ))
         ;
     }

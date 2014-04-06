@@ -678,7 +678,14 @@ class Babysitter
 
     public static function getCategories()
     {
-        return array('babysitter' => 'Babysitter', 'animateur' => 'Animatrice', 'nounou' => 'Nounou', 'aupair' => 'Fille au pair');
+        return array(
+            'babysitter' => 'Babysitter',
+            'assistante' => 'Assistante maternelle',
+            'nounou' => 'Nounou à domicile',
+            'garde' => 'Garde partagée',
+            'aupair' => 'Fille au pair',
+            'animateur' => 'Animateur'
+        );
     }
 
     public static function getCategoryValues()
@@ -730,7 +737,7 @@ class Babysitter
 
     public static function getPetitspluss()
     {
-        return array('bio' => 'Repas bio', 'nopet' => 'Pas d\'animal');
+        return array('repasmaison' => 'Repas cuisinés maison', 'bio' => 'Repas bio', 'promenade' => 'Promenade quotidienne', 'notv' => 'Zéro télé');
     }
 
     public static function getPetitsplusValues()
@@ -769,11 +776,25 @@ class Babysitter
 
     public static function getParticularites()
     {
-        return array('nonfumeur' => 'Non fumeur', 'permis' => 'Permis de conduire', 'voiture' => 'Voiture', 'lettre' => 'Lettre de recommandation');
+        return array(
+            'nonfumeur' => 'Non fumeur',
+            'animaux' => 'Pas d\'animaux domestiques',
+            'permis' => 'Avec permis de conduire',
+            'voiture' => 'Avec voiture',
+            'lettre' => 'Lettres de recommandation');
     }
 
     public static function getParticulariteValues()
     {
         return array_keys(self::getRateType());
+    }
+
+    public function shortPresentation($maxLength)
+    {
+        if (strlen($this->presentation) <= $maxLength)
+            return $this->presentation;
+
+        $result = substr($this->presentation, 0, $maxLength);
+        return $result."...";
     }
 }

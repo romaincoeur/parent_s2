@@ -1,0 +1,56 @@
+{# src/Pn/PnBundle/Resources/views/Dashboard/annonces-parent.html.twig #}
+
+{% extends "PnPnBundle:Dashboard:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Dashboard{% endblock %}
+
+{% block dashbody %}
+<div class="wrap">
+    <a href="">
+        <div class="job annonce">
+            <div class="header">
+                <p class="tarif">9€ / heure</p>
+                <strong>Animatrice pour une soirée d'aniversaire&nbsp;</strong>
+                <span class="balloon"></span>
+                <span class="balloon"></span>
+                <span class="balloon"></span>
+            </div>
+            <div class="body">
+                <p>
+                    Nous cherchons une animatrice dynamique pour s'occuper d'une soirée d'anniversaire
+                </p>
+            </div>
+            <div class="footer">
+
+            </div>
+        </div>
+    </a>
+    <a href="">
+        <div class="job annonce">
+            <div class="header">
+                <p class="tarif">10€ / heure</p>
+                <strong>Garde d'enfant à Paris ! URGENT !!!&nbsp;</strong>
+            </div>
+            <div class="body">
+                <p>
+                    Nous cherchons une animatrice dynamique pour s'occuper d'une soirée d'anniversaire
+                </p>
+            </div>
+        </div>
+    </a>
+    <a href="">
+        <div class="job annonce">
+            <div class="header">
+                <p class="tarif">11€ / heure</p>
+                <strong>Garde d'enfant pour une soirée&nbsp;</strong>
+                <span class="balloon"></span>
+            </div>
+            <div class="body">
+                <p>
+                    Nous cherchons une animatrice dynamique pour s'occuper d'une soirée d'anniversaire
+                </p>
+            </div>
+        </div>
+    </a>
+</div>
+{% endblock %}

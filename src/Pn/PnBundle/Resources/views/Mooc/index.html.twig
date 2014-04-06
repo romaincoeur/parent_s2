@@ -1,0 +1,96 @@
+{# src/Pn/PnBundle/Resources/views/Mooc/index.html.twig #}
+
+
+{% extends "PnPnBundle::layout.html.twig" %}
+
+
+{% block body %}
+
+    <div class="wrap moocs">
+        <div class="frame">
+            <img src="{{ asset('bundles/pnpn/images/illus/formations.jpg') }}" alt="formations">
+            <div class="description">
+                <img src="{{  asset('bundles/pnpn/images/icons/present-badge.png') }}" alt="badge">
+                <strong>
+                    Lisez nos articles,<br>
+                    Passez des tests,<br>
+                    Gagnez des badges !
+                </strong>
+            </div>
+        </div>
+
+        <div class="list row">
+
+            <div class="col-md-4">
+                <div class="mooc-mini new">
+                    <div class="header">
+                        <img src="{{ asset('bundles/pnpn/images/icons/alaune.png') }}" alt="a la une">
+                        <div class="title">
+                            <h5>Filtrez par catégorie</h5>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <input type="checkbox">Santé et sécurité<br>
+                        <input type="checkbox">Eveil<br>
+                        <input type="checkbox">Geste du quotidien<br>
+                        <input type="checkbox">Organisation professionnel<br>
+                    </div>
+                </div>
+            </div>
+
+            {% for entity in entities %}
+                <a href="{{ path('mooc_show', { 'id': entity.id }) }}">
+                    <div class="col-md-4">
+                        <div class="mooc-mini new">
+                            <div class="header">
+                                {% if entity.category == 'new' %}
+                                    <img src="{{ asset('bundles/pnpn/images/icons/alaune.png') }}" alt="a la une">
+                                {% elseif entity.category == 'baby' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-baby.png') }}" alt="a la une">
+                                {% endif %}
+                                <div class="title">
+                                    <h5>{{ entity.title }}</h5>
+                                </div>
+                            </div>
+                            <div class="body">
+                                <p>{{ entity.presentation }}... <a href="">lire la suite</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{#<table class="records_list">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Presentation</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('mooc_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.title }}</td>
+            <td>{{ entity.presentation }}</td>
+            <td>{{ entity.category }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('mooc_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>#}

@@ -1,0 +1,33 @@
+# src/Pn/PnBundle/Resources/config/doctrine/Pparent.orm.yml
+Pn\PnBundle\Entity\Pparent:
+  type: entity
+  repositoryClass: Pn\PnBundle\Repository\ParentRepository
+  table: parent
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    nbChildren:
+      type: integer
+      nullable: true
+    trustpoints:
+      type: integer
+      nullable: true
+    calendar:
+      type: string
+      length: 255
+      nullable: true
+  oneToOne:
+    user:
+      targetEntity: User
+      inversedBy: parent
+      joinColumn:
+        name: user_id
+        referencedColumnName: id
+  oneToMany:
+    jobs:
+      targetEntity: Job
+      mappedBy: parent
+  lifecycleCallbacks:
+    prePersist: [ setDefaultValues ]

@@ -530,7 +530,7 @@ class Job
     private $rate_type;
 
     /**
-     * @var array
+     * @var string
      */
     private $calendar;
 
@@ -588,13 +588,13 @@ class Job
 
     public static function getRateTypeValues()
     {
-        return array_keys(self::getRateType());
+        return array_keys(self::getRateTypes());
     }
 
     /**
      * Set calendar
      *
-     * @param array $calendar
+     * @param string $calendar
      * @return Job
      */
     public function setCalendar($calendar)
@@ -607,7 +607,7 @@ class Job
     /**
      * Get calendar
      *
-     * @return array 
+     * @return string
      */
     public function getCalendar()
     {
@@ -642,4 +642,89 @@ class Job
     {
         return $this->category;
     }
+    /**
+     * @var \Pn\PnBundle\Entity\Pparent
+     */
+    private $parent;
+
+
+    /**
+     * Set parent
+     *
+     * @param \Pn\PnBundle\Entity\Pparent $parent
+     * @return Job
+     */
+    public function setParent(\Pn\PnBundle\Entity\Pparent $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Pn\PnBundle\Entity\Pparent 
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    public static function getStatuses()
+    {
+        return array('annonce' => 'Annonces', 'job' => 'Job', 'facture' => 'Facture');
+    }
+
+    public static function getStatusValues()
+    {
+        return array_keys(self::getStatuses());
+    }
+    /**
+     * @var integer
+     */
+    private $experience;
+
+
+    /**
+     * Set experience
+     *
+     * @param integer $experience
+     * @return Job
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
+
+    /**
+     * Get experience
+     *
+     * @return integer 
+     */
+    public function getExperience()
+    {
+        return $this->experience;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        $this->setStatus('annonce');
+    }
+
+    public function shortDescription($maxLength)
+    {
+        if (strlen($this->description) <= $maxLength)
+            return $this->description;
+
+        $result = substr($this->description, 0, $maxLength);
+        return $result."...";
+    }
+
+
 }

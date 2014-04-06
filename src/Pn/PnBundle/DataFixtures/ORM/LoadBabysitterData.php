@@ -20,7 +20,7 @@ class LoadBabysitterData extends AbstractFixture implements OrderedFixtureInterf
     {
         $babysitter_romain = new Babysitter();
         $babysitter_romain->setUser($em->merge($this->getReference('user-romain')));
-        $babysitter_romain->setCategory('aupair');
+        $babysitter_romain->setCategory('assistante');
 
         $babysitter_sarah = new Babysitter();
         $babysitter_sarah->setUser($em->merge($this->getReference('user-sarah')));

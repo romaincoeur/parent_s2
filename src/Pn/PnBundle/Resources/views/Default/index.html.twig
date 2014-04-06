@@ -10,7 +10,7 @@
             Veuillez patienter pendant le chargement de la carte...
         </div>
         <div class="searchForm">
-            <form action="" method="post">
+            <form action="{{ path('pn_search') }}" method="post">
                 <select class="btn" name="searchType">
                     <option value="nounou">Je cherche une nounou</option>
                     <option value="job">Je cherche un job</option>
@@ -141,6 +141,25 @@
     //constructeur de la carte qui prend en paramêtre le conteneur HTML
     //dans lequel la carte doit s'afficher et les options
     var map = new google.maps.Map(document.getElementById("map"), options);
+
+    //Positionnement des nounou
+    {% for entity in nounous %}
+    {% if entity.user.latitude and entity.user.longitude %}
+    var nounou_position{{ loop.index }} = new google.maps.LatLng({{ entity.user.latitude }},{{ entity.user.longitude }});
+    var nounou_m{{ loop.index }} = new google.maps.Marker({
+        position: nounou_position{{ loop.index }},
+        map: map
+    });
+    var nounou_contentm{{ loop.index }} = '{{ entity.user.hiddenName() }}';
+    var nounou_info{{ loop.index }} = new google.maps.InfoWindow({
+        content  : nounou_contentm{{ loop.index }},
+        position : nounou_position{{ loop.index }}
+    });
+    google.maps.event.addListener(nounou_m{{ loop.index }}, 'click', function() {
+        nounou_info{{ loop.index }}.open(map,nounou_m{{ loop.index }});
+    });
+    {% endif %}
+    {% endfor %}
 
 </script>
 <script type="text/javascript">

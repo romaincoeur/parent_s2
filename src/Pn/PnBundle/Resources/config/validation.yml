@@ -4,12 +4,10 @@ Pn\PnBundle\Entity\Job:
     properties:
         rate_type:
             - NotBlank: ~
-            - Choice: { callback: getTypeValues }
+            - Choice: { callback: getRateTypeValues }
         title:
             - NotBlank: ~
         description:
-            - NotBlank: ~
-        rate_type:
             - NotBlank: ~
 
 Pn\PnBundle\Entity\Babysitter:

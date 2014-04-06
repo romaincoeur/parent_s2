@@ -15,7 +15,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-blue white">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
                 <h3 id="register">Inscription</h3>
             </div>
             <div class="modal-body">
@@ -30,7 +30,7 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
                 <h3 id="myModalLabel">Connexion</h3>
             </div>
             <div class="modal-body">
@@ -39,16 +39,29 @@
                 {% endif %}#}
 
                 <form action="{{ path('login_check') }}" method="post">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="_username" />
+                    <input type="text" id="username" name="_username" placeholder="E-mail"/>
 
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="_password" />
+                    <input type="password" id="password" name="_password" placeholder="Mot de passe"/>
 
-                    <button type="submit">login</button>
+                    <input type="checkbox" id="remember_me"> Garder ma session active<br>
+
+                    <button type="submit">Connexion</button>
+                    <a href="" id="mdp_oublie">mot de passe oublié ?</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+    #pn_pnbundle_user_type_0
+    {
+        margin-right: 9px;
+    }
+    #pn_pnbundle_user_type_1
+    {
+        margin-left: 15px;
+        margin-right: 9px;
+    }
+</style>
 

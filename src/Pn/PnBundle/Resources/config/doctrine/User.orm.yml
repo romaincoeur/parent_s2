@@ -12,7 +12,6 @@ Pn\PnBundle\Entity\User:
     username:
       type: string
       length: 255
-      unique: true
     password:
       type: string
       length: 255
@@ -26,6 +25,7 @@ Pn\PnBundle\Entity\User:
     email:
       type: string
       length: 255
+      unique: true
     firstname:
       type: string
       length: 255
@@ -46,12 +46,31 @@ Pn\PnBundle\Entity\User:
     updated_at:
       type: datetime
       nullable: true
+    address:
+      type: string
+      length: 255
+      nullable: true
+    latitude:
+      type: decimal
+      length: 10
+      scale: 8
+      nullable: true
+    longitude:
+      type: decimal
+      length: 10
+      scale: 8
+      nullable: true
   oneToOne:
     babysitter:
       targetEntity: Babysitter
       mappedBy: user
       joinColumn:
           onDelete: CASCADE
+    parent:
+      targetEntity: Pparent
+      mappedBy: user
+      joinColumn:
+          onDelete: CASCADE
   lifecycleCallbacks:
-    prePersist: [ setCreatedAtValue ]
+    prePersist: [ setCreatedAtValue, setDefaultValues ]
     preUpdate: [ setUpdatedAtValue ]

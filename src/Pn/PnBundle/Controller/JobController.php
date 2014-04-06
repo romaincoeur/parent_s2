@@ -19,11 +19,11 @@ class JobController extends Controller
      * Lists all Job entities.
      *
      */
-    public function indexAction()
+    public function indexAction($search)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PnPnBundle:Job')->findAll();
+        $entities = $em->getRepository('PnPnBundle:Job')->getFromSearch($search);
 
         return $this->render('PnPnBundle:Job:index.html.twig', array(
             'entities' => $entities,
@@ -41,6 +41,7 @@ class JobController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setParent($this->getUser()->getParent());
             $em->persist($entity);
             $em->flush();
 
@@ -68,8 +69,6 @@ class JobController extends Controller
             'action' => $this->generateUrl('pn_job_create'),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;
     }
@@ -108,30 +107,9 @@ class JobController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        $calendarStr = str_split($entity->getCalendar(),1);
-
-        $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
-
-        $i = 1;
-        $j = 1;
-        foreach ($calendarStr as &$c)
-        {
-            if ($c == ')')
-            {
-                $j = 1;
-                $i++;
-                continue;
-            }
-            if ($c == '0')
-            {
-                $j++;
-            }
-            if ($c == '1')
-            {
-                $calendar[$i][$j] = true;
-                $j++;
-            }
-        }
+        // gestion du calendrier
+        $calendarService = $this->container->get('pn.calendar');
+        $calendar = $calendarService->getMatrix($entity->getCalendar());
 
         return $this->render('PnPnBundle:Job:show.html.twig', array(
             'entity'      => $entity,
@@ -157,10 +135,15 @@ class JobController extends Controller
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
+        // gestion du calendrier
+        $calendarService = $this->container->get('pn.calendar');
+        $calendar = $calendarService->getMatrix($entity->getCalendar());
+
         return $this->render('PnPnBundle:Job:edit.html.twig', array(
             'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'calendarMatrix' => $calendar
         ));
     }
 
@@ -177,8 +160,6 @@ class JobController extends Controller
             'action' => $this->generateUrl('pn_job_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
     }

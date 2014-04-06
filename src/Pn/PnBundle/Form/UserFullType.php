@@ -18,6 +18,9 @@ class UserFullType extends AbstractType
             ->add('firstname')
             ->add('lastname')
             ->add('phone')
+            ->add('latitude', 'hidden')
+            ->add('longitude', 'hidden')
+            ->add('address', 'hidden')
         ;
     }
 

@@ -1,6 +1,3 @@
-pn_job:
-    pattern:  /
-    defaults: { _controller: "PnPnBundle:Job:index" }
 
 pn_job_show:
     pattern:  /{id}/show
@@ -28,3 +25,7 @@ pn_job_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "PnPnBundle:Job:delete" }
     requirements: { _method: post|delete }
+
+pn_job:
+    pattern:  /{search}
+    defaults: { _controller: "PnPnBundle:Job:index" }

@@ -20,3 +20,18 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: users, label: Babysitters }
         arguments: [null, Pn\PnBundle\Entity\Babysitter, PnPnBundle:BabysitterAdmin]
+
+    pn.pn.admin.pparent:
+        class: Pn\PnBundle\Admin\PparentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users, label: Parents }
+        arguments: [null, Pn\PnBundle\Entity\Pparent, PnPnBundle:PparentAdmin]
+
+    pn.pn.admin.mooc:
+        class: Pn\PnBundle\Admin\MoocAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: formations, label: Formations }
+        arguments: [null, Pn\PnBundle\Entity\Mooc, PnPnBundle:MoocAdmin]
+
+    pn.calendar:
+        class: Pn\PnBundle\Services\Calendar
