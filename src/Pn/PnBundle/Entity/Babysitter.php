@@ -174,28 +174,7 @@ class Babysitter
         return $this->anythingelse;
     }
 
-    /**
-     * Set ageofchildren
-     *
-     * @param string $ageofchildren
-     * @return Babysitter
-     */
-    public function setAgeofchildren($ageofchildren)
-    {
-        $this->ageofchildren = $ageofchildren;
 
-        return $this;
-    }
-
-    /**
-     * Get ageofchildren
-     *
-     * @return string
-     */
-    public function getAgeofchildren()
-    {
-        return $this->ageofchildren;
-    }
 
     /**
      * Set availabilities
@@ -698,7 +677,7 @@ class Babysitter
      */
     public function setDefaultValues()
     {
-        if ($this->getPresentation() == null) $this->setPresentation('Entrez votre texte de présentation ici');
+        if ($this->getPresentation() == null) $this->setPresentation('Décrivez-vous en quelques lignes');
         if ($this->getCategory() == null) $this->setCategory('nounou');
         if ($this->getExperience() == null) $this->setExperience(0);
         if ($this->getNew() == null) $this->setNew(true);
@@ -792,9 +771,143 @@ class Babysitter
     public function shortPresentation($maxLength)
     {
         if (strlen($this->presentation) <= $maxLength)
-            return $this->presentation;
+            return $this->presentation."...";
 
         $result = substr($this->presentation, 0, $maxLength);
         return $result."...";
+    }
+
+    public function __toString()
+    {
+        return $this->getUser()->getFirstname();
+    }
+    /**
+     * @var array
+     */
+    private $diplomas;
+
+    /**
+     * @var array
+     */
+    private $languages;
+
+
+    /**
+     * Set diplomas
+     *
+     * @param array $diplomas
+     * @return Babysitter
+     */
+    public function setDiplomas($diplomas)
+    {
+        $this->diplomas = $diplomas;
+
+        return $this;
+    }
+
+    /**
+     * Get diplomas
+     *
+     * @return array 
+     */
+    public function getDiplomas()
+    {
+        return $this->diplomas;
+    }
+
+    public static function getDiplomass()
+    {
+        return array(
+            'assistante' => 'Agrément assistante maternelle',
+            'bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
+        );
+    }
+
+    public static function getDiplomasValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    /**
+     * Set languages
+     *
+     * @param array $languages
+     * @return Babysitter
+     */
+    public function setLanguages($languages)
+    {
+        $this->languages = $languages;
+
+        return $this;
+    }
+
+    /**
+     * Get languages
+     *
+     * @return array 
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
+
+    public static function getLanguagess()
+    {
+        return array(
+            'fr' => 'Francais',
+            'en' => 'Anglais',
+            'ge' => 'Allemand',
+            'it' => 'Italien',
+            'es' => 'Espagnol',
+            'ru' => 'Russe',
+            'po' => 'Portugais',
+            'ar' => 'Arabe',
+        );
+    }
+
+    public static function getLanguagesValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+
+
+    /**
+     * Set ageofchildren
+     *
+     * @param array $ageofchildren
+     * @return Babysitter
+     */
+    public function setAgeofchildren($ageofchildren)
+    {
+        $this->ageofchildren = $ageofchildren;
+
+        return $this;
+    }
+
+    /**
+     * Get ageofchildren
+     *
+     * @return array 
+     */
+    public function getAgeofchildren()
+    {
+        return $this->ageofchildren;
+    }
+
+    public static function getAgeofchildrens()
+    {
+        return array(
+            0 => '0 à 1 an',
+            1 => '1 à 3 ans',
+            2 => '3 à 6 an',
+            3 => '6 à 10 ans',
+            4 => '10 ans et +',
+        );
+    }
+
+    public static function getAgeofchildrenValues()
+    {
+        return array_keys(self::getRateType());
     }
 }

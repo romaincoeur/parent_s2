@@ -36,14 +36,78 @@
             <a href=""><img src="{{ asset('bundles/pnpn/images/icons/social-google.png') }}"></a>
         </div>
         <div class="pages">
-            <a href="" class="red" style="padding-left: 0; border-left: 0">Les Annonces</a>
-            <a href="" class="red">Les nounous</a>
+            <a href="{{ path('pn_job_annonces') }}" class="red" style="padding-left: 0; border-left: 0">Les Annonces</a>
+            <a href="{{ path('babysitter') }}" class="red">Les nounous</a>
             <a href="{{ path('mooc') }}" class="red">Les Formations</a>
             <a href="">Plan du site</a>
             <a href="">CGU</a>
-            <a href="">Tarifs</a>
+            <a href="#tarifs" role="button" data-toggle="modal">Tarifs</a>
             <a href="">Presse</a>
-            <a href="">Contact</a>
+            <a href="#contact" role="button" data-toggle="modal">Contact</a>
+
+            <div class="modal fade" id="tarifs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-red">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                            <h3 id="myModalLabel">Nos tarifs</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-6">
+                                <div class="subtitle">
+                                    <h4>Forfait NOUNOU</h4>
+                                    <span class="red">GRATUIT</span>
+                                </div>
+                                <div class="list">
+                                    <img src="{{ asset('bundles/pnpn/images/icon/check.png') }}" alt="check">Publiez votre annonce<br>
+                                    <img src="{{ asset('bundles/pnpn/images/icon/check.png') }}" alt="check">Postulez aux offres d'emplois<br>
+                                    <img src="{{ asset('bundles/pnpn/images/icon/check.png') }}" alt="check">Contactez les parents
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="subtitle">
+                                    <h4>Forfait PARENT</h4>
+                                    <span class="red">9€50</span>
+                                </div>
+                                <div class="list">
+                                    <img src="{{ asset('bundles/pnpn/images/icon/check.png') }}" alt="check">Publiez plusieurs annonces annonce<br>
+                                    <img src="{{ asset('bundles/pnpn/images/icon/check.png') }}" alt="check">Engagez des nounous<br>
+                                    <img src="{{ asset('bundles/pnpn/images/icon/check.png') }}" alt="check">Contactez des nounous
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header bg-blue">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                            <h3 id="myModalLabel">Contact</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text">
+                                <p>Une question ? Un avis ? Un simple petit mot ? Appelez-nous ou laissez-nous un message !</p>
+                                <p class="bold">01 56 78 98 09</p>
+                            </div>
+
+                            <form action="" method="post">
+                                <input type="text" id="firstname" name="_firstname" placeholder="Prénom *"/>
+                                <input type="text" id="lastname" name="_lastname" placeholder="Nom *"/>
+                                <input type="email" id="email" name="_email" placeholder="E-mail *"/>
+
+                                <textarea rows="4" placeholder="Votre message"></textarea>
+
+                                <button type="submit" class="bg-blue">Envoyer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -59,6 +123,87 @@
 <script type="text/javascript" src="{{ asset('bundles/pnpn/js/bootstrap.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/pnpn/js/parentnounou.js') }}"></script>
 {% block javascripts %}
+
+    <script type="text/javascript">
+        // Inscription AJAX
+        function postForm( $form, callback1, callback2 ){
+
+            /*
+             * Get all form values
+             */
+            var values = {};
+            $.each( $form.serializeArray(), function(i, field) {
+                values[field.name] = field.value;
+            });
+
+            /*
+             * Throw the form values to the server!
+             */
+            $.ajax({
+                type        : $form.attr( 'method' ),
+                url         : $form.attr( 'action' ),
+                data        : values,
+                success     : function(data) {
+                    callback1( data );
+                },
+                error     : function(data) {
+                    callback2( data );
+                }
+            });
+
+        }
+
+        $(document).ready(function(){
+
+            $( '#registerForm' ).submit( function( e ){
+                e.preventDefault();
+
+                postForm(
+                        $(this),
+                        function( response ){
+                            if (response.success)
+                            {
+                                location.reload();
+                            }
+                            else
+                            {
+                                $('#registerErrors').html(response.cause)
+                            }
+                        },
+                        function(error){
+                            $('#registerErrors').html(error)
+                        }
+                );
+
+                return false;
+            });
+
+            $( '#changePasswordForm' ).submit( function( e ){
+                e.preventDefault();
+
+                postForm(
+                        $(this),
+                        function( response ){
+                            if (response.success)
+                            {
+                                $( "#account_management button.close" ).trigger( "click" );
+                            }
+                            else
+                            {
+                                $('#changePasswordErrors').html(response.cause)
+                            }
+                        },
+                        function(error){
+                            $('#changePasswordErrors').html(error)
+                        }
+                );
+
+                return false;
+            });
+
+        });
+
+    </script>
 {% endblock %}
 
 </body>

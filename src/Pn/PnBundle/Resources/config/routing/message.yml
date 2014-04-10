@@ -1,0 +1,30 @@
+message:
+    pattern:  /
+    defaults: { _controller: "PnPnBundle:Message:index" }
+
+message_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PnPnBundle:Message:show" }
+
+message_new:
+    pattern:  /new
+    defaults: { _controller: "PnPnBundle:Message:new" }
+
+message_create:
+    pattern:  /create
+    defaults: { _controller: "PnPnBundle:Message:create" }
+    requirements: { _method: post }
+
+message_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PnPnBundle:Message:edit" }
+
+message_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PnPnBundle:Message:update" }
+    requirements: { _method: post|put }
+
+message_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PnPnBundle:Message:delete" }
+    requirements: { _method: post|delete }

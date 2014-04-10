@@ -30,6 +30,8 @@ twig:
     strict_variables: "%kernel.debug%"
 
 
+
+
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
@@ -64,6 +66,7 @@ doctrine:
 # Swiftmailer Configuration
 swiftmailer:
     transport: "%mailer_transport%"
+    encryption: ssl
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"

@@ -21,19 +21,21 @@
                     {% else %}
                         <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
                     {% endif %}
-                    {% if (app.user) and not(app.user.babysitter.id == id) %}
+                    {% if (app.user) and (app.user.type == 'parent') %}
                         <button class="favorite icon bg-yellow white">F</button>
                     {% endif %}
                 </div>
                 <div class="right">
                     <div class="tarif">{{ entity.ratePrice }}€ / {{ entity.rateType }}</div>
-                    {% if (app.user) and (app.user.babysitter.id == id) %}
-                        <a href="{{ path('myprofile_edit') }}" class="btn bg-yellow engage">edit</a>
-                    {% else %}
-                        <button class="btn bg-yellow icon">
-                            <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
-                        </button>
-                        <button class="btn bg-yellow engage">engager</button>
+                    {% if (app.user) and (app.user.type == 'nounou') %}
+                        {% if app.user.babysitter.id == id %}
+                            <a href="{{ path('myprofile_edit') }}" class="btn bg-yellow engage">edit</a>
+                        {% else %}
+                            <button class="btn bg-yellow icon">
+                                <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
+                            </button>
+                            {#<button class="btn bg-yellow engage">engager</button>#}
+                        {% endif %}
                     {% endif %}
                 </div>
                 {% if app.user %}
@@ -47,7 +49,7 @@
                 <span class="trust-points">{{ entity.trustpoints }} points de confiance</span>
             </div>
             <div class="body">
-                {{ entity.presentation|raw }}
+                <p>{{ entity.presentation|raw }}</p>
             </div>
         </div>
 

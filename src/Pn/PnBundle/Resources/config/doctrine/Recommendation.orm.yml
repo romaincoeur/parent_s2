@@ -1,0 +1,34 @@
+# src/Pn/PnBundle/Resources/config/doctrine/Recommendation.orm.yml
+Pn\PnBundle\Entity\Recommendation:
+  type: entity
+  repositoryClass: Pn\PnBundle\Repository\RecommendationRepository
+  table: recommendation
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    status:
+      type: string
+      length: 255
+      nullable: true
+    body:
+      type: text
+      nullable: true
+    created_at:
+      type: datetime
+  manyToOne:
+    giver:
+      targetEntity: User
+      inversedBy: given_recommendations
+      joinColumn:
+        name: giver_id
+        referencedColumnName: id
+    receiver:
+      targetEntity: User
+      inversedBy: received_recommendations
+      joinColumn:
+        name: receiver_id
+        referencedColumnName: id
+  lifecycleCallbacks:
+    prePersist: [ setCreatedAtValue ]

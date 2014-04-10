@@ -10,3 +10,7 @@ pn_dashboard_paiements:
     pattern:  /paiements
     defaults: { _controller: "PnPnBundle:Dashboard:paiements" }
 
+pn_dashboard_recommendations:
+    pattern:  /recommendations
+    defaults: { _controller: "PnPnBundle:Dashboard:recommendations" }
+

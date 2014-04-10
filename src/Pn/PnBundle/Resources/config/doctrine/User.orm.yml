@@ -60,6 +60,14 @@ Pn\PnBundle\Entity\User:
       length: 10
       scale: 8
       nullable: true
+    confirmed:
+      type: boolean
+    confirmationToken:
+      type: string
+      length: 255
+    birthdate:
+      type: date
+      nullable: true
   oneToOne:
     babysitter:
       targetEntity: Babysitter
@@ -71,6 +79,19 @@ Pn\PnBundle\Entity\User:
       mappedBy: user
       joinColumn:
           onDelete: CASCADE
+  oneToMany:
+    sent_messages:
+      targetEntity: Message
+      mappedBy: sender
+    received_messages:
+      targetEntity: Message
+      mappedBy: receiver
+    given_recommendations:
+      targetEntity: Recommendation
+      mappedBy: giver
+    received_recommendations:
+      targetEntity: Recommendation
+      mappedBy: receiver
   lifecycleCallbacks:
     prePersist: [ setCreatedAtValue, setDefaultValues ]
     preUpdate: [ setUpdatedAtValue ]

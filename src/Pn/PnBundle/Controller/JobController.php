@@ -19,7 +19,37 @@ class JobController extends Controller
      * Lists all Job entities.
      *
      */
-    public function indexAction($search)
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('PnPnBundle:Job')->findAll();
+
+        return $this->render('PnPnBundle:Job:index.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+    /**
+     * Lists all Job entities.
+     *
+     */
+    public function annoncesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('PnPnBundle:Job')->findOneByStatus('annonce');
+
+        return $this->render('PnPnBundle:Job:index.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+    /**
+     * Lists Job entities.
+     *
+     */
+    public function searchAction($search)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -29,6 +59,7 @@ class JobController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Job entity.
      *

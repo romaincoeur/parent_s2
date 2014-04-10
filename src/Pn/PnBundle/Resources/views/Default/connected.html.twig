@@ -2,11 +2,11 @@
 
 <div class="row wrap connected">
     <a href="{{ path('pn_dashboard') }}" class="btn left" style="margin-left: 0"><img src="{{ asset('bundles/pnpn/images/icons/menu-tab.png') }}" alt="menu tab"></a>
-    <a href="{{ path('myprofile') }}" class="btn left"><img src="{{ asset('bundles/pnpn/images/icons/menu-profile.png') }}" alt="menu profile"></a>
+    <a href="{{ path('myprofile_edit') }}" class="btn left"><img src="{{ asset('bundles/pnpn/images/icons/menu-profile.png') }}" alt="menu profile"></a>
     <a href="{{ path('mooc') }}" class="btn left"><img src="{{ asset('bundles/pnpn/images/icons/menu-formations.png') }}" alt="menu formations"></a>
     <a href="{{ path('logout') }}" class="btn right"><img src="{{ asset('bundles/pnpn/images/icons/menu-signout.png') }}" alt="menu signout"></a>
-    <a href="" class="btn right"><img src="{{ asset('bundles/pnpn/images/icons/menu-account.png') }}" alt="menu account"></a>
-    <a href="" class="btn right"><img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="menu message"></a>
+    <a href="#account_management" role="button" class="btn right" data-toggle="modal"><img src="{{ asset('bundles/pnpn/images/icons/menu-account.png') }}" alt="menu account"></a>
+    <a href="{{ path('message') }}" class="btn right"><img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="menu message"></a>
     <a href="{{ path('pn_pn_homepage') }}">
         <div class="logo">
             <h2 style="    text-align: right;">Parent</h2>
@@ -14,4 +14,19 @@
             <h2>Nounou</h2>
         </div>
     </a>
+</div>
+
+
+<div class="modal fade" id="account_management" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-red white">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                <h3 id="register">Gestion du compte</h3>
+            </div>
+            <div class="modal-body">
+                {{ render(controller("PnPnBundle:Default:ChangePassword")) }}
+            </div>
+        </div>
+    </div>
 </div>

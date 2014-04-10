@@ -43,10 +43,24 @@
                     <div class="col-md-4">
                         <div class="mooc-mini new">
                             <div class="header">
-                                {% if entity.category == 'new' %}
+                                {% if entity.getCategory()=='new' %}
                                     <img src="{{ asset('bundles/pnpn/images/icons/alaune.png') }}" alt="a la une">
-                                {% elseif entity.category == 'baby' %}
-                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-baby.png') }}" alt="a la une">
+                                {% elseif entity.getCategory()=='alimentation' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-alimentation.png') }}" alt="badge-alimentation">
+                                {% elseif entity.getCategory()=='baby' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-baby.png') }}" alt="badge-baby">
+                                {% elseif entity.getCategory()=='dialogue' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-dialogue.png') }}" alt="badge-dialogue">
+                                {% elseif entity.getCategory()=='droit' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-droit.png') }}" alt="badge-droit">
+                                {% elseif entity.getCategory()=='eveil' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-eveil.png') }}" alt="badge-eveil">
+                                {% elseif entity.getCategory()=='prevention' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-prevention.png') }}" alt="badge-prevention">
+                                {% elseif entity.getCategory()=='psycho' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-psycho.png') }}" alt="badge-psycho">
+                                {% elseif entity.getCategory()=='sante' %}
+                                    <img src="{{ asset('bundles/pnpn/images/badges/badge-sante.png') }}" alt="badge-sante">
                                 {% endif %}
                                 <div class="title">
                                     <h5>{{ entity.title }}</h5>

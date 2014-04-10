@@ -38,6 +38,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user1->setIsActivated(true);
         $user1->setLatitude(48.8481553);
         $user1->setLongitude(2.3886942);
+        $user1->setAddress('Picpus, Paris, France');
+        $user1->setConfirmed(true);
+        $user1->setConfirmationToken('');
 
         // set password
         $encoder = $factory->getEncoder($user1);
@@ -52,6 +55,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user2->setIsActivated(true);
         $user2->setLatitude(48.8592950);
         $user2->setLongitude(2.3586750);
+        $user2->setConfirmed(true);
+        $user2->setConfirmationToken('');
 
         // set password
         $encoder = $factory->getEncoder($user2);
@@ -67,6 +72,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user_sarah->setPhone("06 39 86 64 90");
         $user_sarah->setLatitude(48.8620054);
         $user_sarah->setLongitude(2.3245144);
+        $user_sarah->setAddress('Saint-Germain-l\'Auxerrois, Paris, France');
+        $user_sarah->setConfirmed(true);
+        $user_sarah->setConfirmationToken('');
 
         // set password
         $encoder = $factory->getEncoder($user_sarah);
@@ -80,8 +88,12 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user_manu->setEmail('emmanuelle.gousse@gmail.com');
         $user_manu->setIsActivated(true);
         $user_manu->setPhone("06 34 56 67 87");
-        $user_manu->setLatitude(48.8373803);
-        $user_manu->setLongitude(2.3293209);
+        $user_manu->setLatitude(48.8500050);
+        $user_manu->setLongitude(2.3353719);
+        $user_manu->setAddress('Odéon, Paris, France');
+        $user_manu->setConfirmed(true);
+        $user_manu->setConfirmationToken('');
+        // 48.8500050	2.3353719
 
         // set password
         $encoder = $factory->getEncoder($user_manu);

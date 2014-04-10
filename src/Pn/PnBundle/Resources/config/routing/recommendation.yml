@@ -1,0 +1,30 @@
+recommendation:
+    pattern:  /
+    defaults: { _controller: "PnPnBundle:Recommendation:index" }
+
+recommendation_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PnPnBundle:Recommendation:show" }
+
+recommendation_new:
+    pattern:  /new
+    defaults: { _controller: "PnPnBundle:Recommendation:new" }
+
+recommendation_create:
+    pattern:  /create
+    defaults: { _controller: "PnPnBundle:Recommendation:create" }
+    requirements: { _method: post }
+
+recommendation_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "PnPnBundle:Recommendation:edit" }
+
+recommendation_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "PnPnBundle:Recommendation:update" }
+    requirements: { _method: post|put }
+
+recommendation_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "PnPnBundle:Recommendation:delete" }
+    requirements: { _method: post|delete }

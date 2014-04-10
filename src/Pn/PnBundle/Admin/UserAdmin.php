@@ -88,6 +88,8 @@ class UserAdmin extends Admin
             ->add('created_at')
             ->add('updated_at')
             ->add('is_activated')
+            ->add('confirmed')
+            ->add('confirmationToken')
         ;
     }
 }

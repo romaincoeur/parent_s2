@@ -5,6 +5,7 @@ namespace Pn\PnBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Pn\PnBundle\Form\BabysitterCategoryType;
 
 class UserType extends AbstractType
 {
@@ -48,6 +49,7 @@ class UserType extends AbstractType
                 'required'  => true,
                 'data' => 'parent',
             ))
+            ->add('babysitter', new BabysitterCategoryType())
         ;
     }
     

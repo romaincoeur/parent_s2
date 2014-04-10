@@ -36,8 +36,7 @@ Pn\PnBundle\Entity\Babysitter:
       type: text
       nullable: true
     ageofchildren:
-      type: string
-      length: 255
+      type: array
       nullable: true
     favoriteactivities:
       type: text
@@ -61,8 +60,14 @@ Pn\PnBundle\Entity\Babysitter:
       type: array
       nullable: true
     particularite:
-        type: array
-        nullable: true
+      type: array
+      nullable: true
+    diplomas:
+      type: array
+      nullable: true
+    languages:
+      type: array
+      nullable: true
   oneToOne:
     user:
       targetEntity: User

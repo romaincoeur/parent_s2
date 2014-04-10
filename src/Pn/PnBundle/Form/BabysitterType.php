@@ -18,8 +18,16 @@ class BabysitterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('presentation')
-            ->add('rate_price')
+            ->add('presentation', 'textarea', array(
+                'attr' => array(
+                    'placeholder' => 'Décrivez-vous en quelques lignes',
+                )
+            ))
+            ->add('rate_price', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Votre tarif',
+                )
+            ))
             ->add('rate_type', 'choice', array(
                 'choices'   => Job::getRateTypes(),
                 'expanded' => false,
@@ -29,11 +37,6 @@ class BabysitterType extends AbstractType
             ->add('anythingelse')
             ->add('favoriteactivities')
             ->add('hobbies')
-            ->add('category', 'choice', array(
-                'choices'   => Babysitter::getCategories(),
-                'expanded' => false,
-                'required'  => true,
-            ))
             ->add('file', 'file', array('label' => 'Photo de profil', 'required' => false))
             ->add('user', new UserFullType())
             ->add('calendar', 'hidden')
@@ -45,6 +48,24 @@ class BabysitterType extends AbstractType
             ))
             ->add('particularite', 'choice', array(
                 'choices'   => Babysitter::getParticularites(),
+                'expanded' => true,
+                'multiple' => true,
+                'required'  => true,
+            ))
+            ->add('diplomas', 'choice', array(
+                'choices'   => Babysitter::getDiplomass(),
+                'expanded' => true,
+                'multiple' => true,
+                'required'  => true,
+            ))
+            ->add('ageOfChildren', 'choice', array(
+                'choices'   => Babysitter::getAgeofchildrens(),
+                'expanded' => true,
+                'multiple' => true,
+                'required'  => true,
+            ))
+            ->add('languages', 'choice', array(
+                'choices'   => Babysitter::getLanguagess(),
                 'expanded' => true,
                 'multiple' => true,
                 'required'  => true,

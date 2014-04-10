@@ -4,6 +4,7 @@ namespace Pn\PnBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Util\SecureRandom;
 
 /**
  * User
@@ -533,5 +534,253 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->getUsername();
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $sent_messages;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $received_messages;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->sent_messages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->received_messages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->confirmed = false;
+        $generator = new SecureRandom();
+        $this->confirmationToken = $generator->nextBytes(10);
+    }
+
+    /**
+     * Add sent_messages
+     *
+     * @param \Pn\PnBundle\Entity\Message $sentMessages
+     * @return User
+     */
+    public function addSentMessage(\Pn\PnBundle\Entity\Message $sentMessages)
+    {
+        $this->sent_messages[] = $sentMessages;
+
+        return $this;
+    }
+
+    /**
+     * Remove sent_messages
+     *
+     * @param \Pn\PnBundle\Entity\Message $sentMessages
+     */
+    public function removeSentMessage(\Pn\PnBundle\Entity\Message $sentMessages)
+    {
+        $this->sent_messages->removeElement($sentMessages);
+    }
+
+    /**
+     * Get sent_messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSentMessages()
+    {
+        return $this->sent_messages;
+    }
+
+    /**
+     * Add received_messages
+     *
+     * @param \Pn\PnBundle\Entity\Message $receivedMessages
+     * @return User
+     */
+    public function addReceivedMessage(\Pn\PnBundle\Entity\Message $receivedMessages)
+    {
+        $this->received_messages[] = $receivedMessages;
+
+        return $this;
+    }
+
+    /**
+     * Remove received_messages
+     *
+     * @param \Pn\PnBundle\Entity\Message $receivedMessages
+     */
+    public function removeReceivedMessage(\Pn\PnBundle\Entity\Message $receivedMessages)
+    {
+        $this->received_messages->removeElement($receivedMessages);
+    }
+
+    /**
+     * Get received_messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReceivedMessages()
+    {
+        return $this->received_messages;
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $given_recommendations;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $received_recommendations;
+
+
+    /**
+     * Add given_recommendations
+     *
+     * @param \Pn\PnBundle\Entity\Recommendation $givenRecommendations
+     * @return User
+     */
+    public function addGivenRecommendation(\Pn\PnBundle\Entity\Recommendation $givenRecommendations)
+    {
+        $this->given_recommendations[] = $givenRecommendations;
+
+        return $this;
+    }
+
+    /**
+     * Remove given_recommendations
+     *
+     * @param \Pn\PnBundle\Entity\Recommendation $givenRecommendations
+     */
+    public function removeGivenRecommendation(\Pn\PnBundle\Entity\Recommendation $givenRecommendations)
+    {
+        $this->given_recommendations->removeElement($givenRecommendations);
+    }
+
+    /**
+     * Get given_recommendations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGivenRecommendations()
+    {
+        return $this->given_recommendations;
+    }
+
+    /**
+     * Add received_recommendations
+     *
+     * @param \Pn\PnBundle\Entity\Recommendation $receivedRecommendations
+     * @return User
+     */
+    public function addReceivedRecommendation(\Pn\PnBundle\Entity\Recommendation $receivedRecommendations)
+    {
+        $this->received_recommendations[] = $receivedRecommendations;
+
+        return $this;
+    }
+
+    /**
+     * Remove received_recommendations
+     *
+     * @param \Pn\PnBundle\Entity\Recommendation $receivedRecommendations
+     */
+    public function removeReceivedRecommendation(\Pn\PnBundle\Entity\Recommendation $receivedRecommendations)
+    {
+        $this->received_recommendations->removeElement($receivedRecommendations);
+    }
+
+    /**
+     * Get received_recommendations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getReceivedRecommendations()
+    {
+        return $this->received_recommendations;
+    }
+    /**
+     * @var boolean
+     */
+    private $confirmed;
+
+    /**
+     * @var string
+     */
+    private $confirmationToken;
+
+
+    /**
+     * Set confirmed
+     *
+     * @param boolean $confirmed
+     * @return User
+     */
+    public function setConfirmed($confirmed)
+    {
+        $this->confirmed = $confirmed;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmed
+     *
+     * @return boolean 
+     */
+    public function getConfirmed()
+    {
+        return $this->confirmed;
+    }
+
+    /**
+     * Set confirmationToken
+     *
+     * @param string $confirmationToken
+     * @return User
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationToken
+     *
+     * @return string 
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @var \DateTime
+     */
+    private $birthdate;
+
+
+    /**
+     * Set birthdate
+     *
+     * @param \DateTime $birthdate
+     * @return User
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdate
+     *
+     * @return \DateTime 
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
     }
 }

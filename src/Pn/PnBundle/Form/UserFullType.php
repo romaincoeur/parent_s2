@@ -15,12 +15,33 @@ class UserFullType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname')
-            ->add('lastname')
-            ->add('phone')
+            ->add('firstname', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Prénom',
+                )
+            ))
+            ->add('lastname', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Nom',
+                )
+            ))
+            ->add('phone', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Numero de téléphone',
+                )
+            ))
             ->add('latitude', 'hidden')
             ->add('longitude', 'hidden')
-            ->add('address', 'hidden')
+            ->add('address', 'text', array(
+                'attr' => array(
+                    'placeholder' => 'Où habitez-vous ?',
+                )
+            ))
+            ->add('birthdate', 'birthday', array(
+                'attr' => array(
+                    'placeholder' => 'Votre date de naissance',
+                )
+            ))
         ;
     }
 

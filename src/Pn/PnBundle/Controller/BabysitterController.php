@@ -19,7 +19,22 @@ class BabysitterController extends Controller
      * Lists all Babysitter entities.
      *
      */
-    public function indexAction($search)
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('PnPnBundle:Babysitter')->findAll();
+
+        return $this->render('PnPnBundle:Babysitter:index.html.twig', array(
+            'entities' => $entities,
+        ));
+    }
+
+    /**
+     * Lists Babysitter entities.
+     *
+     */
+    public function searchAction($search)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -29,6 +44,7 @@ class BabysitterController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Babysitter entity.
      *

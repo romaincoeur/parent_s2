@@ -13,6 +13,7 @@
             <div id="map" style="height: 180px;">
                 Veuillez patienter pendant le chargement de la carte...
             </div>
+            <a href="{{ path('myprofile') }}"><button class="apercu bg-red white">apercu de votre profil</button></a>
 
 
             <div class="description">
@@ -47,13 +48,53 @@
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ form_widget(form.user.phone) }}&nbsp;<br>
                     </div>
                     <div class="details">
-                        <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="telephone"> Paris, 14e <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="telephone"> 20 ans <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="telephone"> {{ form_widget(form.experience) }} ans d'expérience <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="telephone"> Agrément assistante maternelle <br>
-                        Brevet d'aptitude aux fonctions d'animateur <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="telephone"> Prise en charge des enfants de 0 à 1 an, 1 à 3 ans, 4 à 6 ans <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone"> Français, Italien <br>
+                        <div id="address">
+                            <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="marker">
+                            {{ form_errors(form.user.address) }}
+                            {{ form_widget(form.user.address) }}
+                        </div>
+                        <div id="birthdate">
+                            <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier">
+                            {{ form_errors(form.user.birthdate) }}
+                            {{ form_widget(form.user.birthdate) }}
+                        </div>
+                        <div id="experience">
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
+                            {{ form_widget(form.experience) }} ans d'expérience
+                        </div>
+                        <div id="diplomas">
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
+                            <b>Vos diplomes</b>
+                            {{ form_errors(form.diplomas) }}
+                            {% for child in form.diplomas %}
+                                <li style="list-style-type: none;">
+                                    {{ form_widget(child) }}
+                                    {{ form_label(child) }}
+                                </li>
+                            {% endfor %}
+                        </div>
+                        <div id="ageOfChildren">
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age">
+                            <b>Âges des enfants pris en charge</b>
+                            {{ form_errors(form.ageOfChildren) }}
+                            {% for child in form.ageOfChildren %}
+                                <li style="list-style-type: none;">
+                                    {{ form_widget(child) }}
+                                    {{ form_label(child) }}
+                                </li>
+                            {% endfor %}
+                        </div>
+                        <div id="languages">
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="languages">
+                            <b>Langues parlées</b>
+                            {{ form_errors(form.languages) }}
+                            {% for child in form.languages %}
+                                <li style="list-style-type: none;">
+                                    {{ form_widget(child) }}
+                                    {{ form_label(child) }}
+                                </li>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-4 calendar">
@@ -66,22 +107,42 @@
                         </div>
                     {% endif %}
                     <div class="other">
-                        <b>Mes activités préférées avec les enfants :</b>
-                        {{ form_widget(form.favoriteactivities) }} <br>
+                        <div id="favoriteactivities">
+                            <b>Mes activités préférées avec les enfants :</b>
+                            {{ form_widget(form.favoriteactivities) }}
+                        </div>
 
-                        <b>Mes loisirs :</b> <br>
-                        {{ form_widget(form.hobbies) }} <br>
+                        <div id="hobbies">
+                            <b>Mes loisirs :</b> <br>
+                            {{ form_widget(form.hobbies) }}
+                        </div>
 
-                        <b>Tâches supplémentaire :</b>
-                        {{ form_widget(form.anythingelse) }} <br>
+                        <div id="extratasks">
+                            <b>Tâches supplémentaire :</b>
+                            {{ form_widget(form.anythingelse) }}
+                        </div>
 
-                        <b>Les petits plus :</b>
-                        {{ form_errors(form.petitsplus) }}
-                        {{ form_widget(form.petitsplus) }} <br>
+                        <div id="petitsplus">
+                            <b>Les petits plus :</b>
+                            {{ form_errors(form.petitsplus) }}
+                            {% for child in form.petitsplus %}
+                                <li style="list-style-type: none;">
+                                    {{ form_widget(child) }}
+                                    {{ form_label(child) }}
+                                </li>
+                            {% endfor %}
+                        </div>
 
-                        <b>Particularités :</b>
-                        {{ form_errors(form.particularite) }}
-                        {{ form_widget(form.particularite) }} <br>
+                        <div id="particularite">
+                            <b>Particularités :</b>
+                            {{ form_errors(form.particularite) }}
+                            {% for child in form.particularite %}
+                                <li style="list-style-type: none;">
+                                    {{ form_widget(child) }}
+                                    {{ form_label(child) }}
+                                </li>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>

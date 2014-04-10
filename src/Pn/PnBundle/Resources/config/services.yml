@@ -1,5 +1,6 @@
 parameters:
 #    pn_pn.example.class: Pn\PnBundle\Example
+    mailer.from: contact@parent-nounou.fr
 
 services:
 
@@ -32,6 +33,12 @@ services:
         tags:
             - { name: sonata.admin, manager_type: orm, group: formations, label: Formations }
         arguments: [null, Pn\PnBundle\Entity\Mooc, PnPnBundle:MoocAdmin]
+
+    pn.pn.admin.mailtemplate:
+        class: Pn\PnBundle\Admin\MailTemplateAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: emails, label: Emails }
+        arguments: [null, Pn\PnBundle\Entity\MailTemplate, PnPnBundle:MailTemplateAdmin]
 
     pn.calendar:
         class: Pn\PnBundle\Services\Calendar

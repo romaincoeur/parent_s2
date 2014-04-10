@@ -12,4 +12,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class MoocRepository extends EntityRepository
 {
+    public function getLatest($number = 4)
+    {
+        $qb = $this->createQueryBuilder('m')
+            ->orderBy('m.created_at', 'DESC')
+            ->setMaxResults($number);
+
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

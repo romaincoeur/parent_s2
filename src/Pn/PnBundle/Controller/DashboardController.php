@@ -56,4 +56,18 @@ class DashboardController extends Controller
         return $this->render('PnPnBundle:Dashboard:paiements.html.twig');
     }
 
+    /**
+     * Liste les recommandations
+     *
+     */
+    public function recommendationsAction()
+    {
+        $user = $this->getUser();
+
+        $given = $user->getGivenRecommendations();
+        $received = $user->getReceivedRecommendations();
+
+        return $this->render('PnPnBundle:Dashboard:recommendations.html.twig');
+    }
+
 }

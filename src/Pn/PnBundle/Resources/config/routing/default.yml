@@ -1,0 +1,33 @@
+login:
+    pattern:   /login
+    defaults:  { _controller: PnPnBundle:Default:login }
+
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout
+
+register:
+    pattern:   /register
+    defaults:  { _controller: PnPnBundle:Default:register }
+
+confirmation:
+    pattern:   /confirmation/{token}
+    defaults:  { _controller: PnPnBundle:Default:confirmation }
+
+myprofile:
+    pattern:   /myprofile
+    defaults:  { _controller: PnPnBundle:Default:myprofileView }
+
+myprofile_edit:
+    pattern:   /myprofile/edit
+    defaults:  { _controller: PnPnBundle:Default:myprofileEdit }
+
+pn_search:
+    pattern:   /search
+    defaults:  { _controller: PnPnBundle:Default:search }
+
+pn_change_password:
+    pattern:   /changePassword
+    defaults:  { _controller: PnPnBundle:Default:changePassword }

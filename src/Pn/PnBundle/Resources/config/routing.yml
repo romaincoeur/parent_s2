@@ -2,6 +2,10 @@ pn_pn_homepage:
     pattern:  /
     defaults: { _controller: PnPnBundle:Default:index }
 
+pn_pn_default:
+    resource: "@PnPnBundle/Resources/config/routing/default.yml"
+    prefix:   /
+
 pn_pn_jobs:
     resource: "@PnPnBundle/Resources/config/routing/job.yml"
     prefix:   /job
@@ -10,35 +14,9 @@ PnPnBundle_user:
     resource: "@PnPnBundle/Resources/config/routing/user.yml"
     prefix:   /user
 
-login:
-    pattern:   /login
-    defaults:  { _controller: PnPnBundle:Default:login }
-
-login_check:
-    pattern:   /login_check
-
-logout:
-    pattern:   /logout
-
-register:
-    pattern:   /register
-    defaults:  { _controller: PnPnBundle:Default:register }
-
-myprofile:
-    pattern:   /myprofile
-    defaults:  { _controller: PnPnBundle:Default:myprofileView }
-
-myprofile_edit:
-    pattern:   /myprofile/edit
-    defaults:  { _controller: PnPnBundle:Default:myprofileEdit }
-
 PnPnBundle_babysitter:
     resource: "@PnPnBundle/Resources/config/routing/babysitter.yml"
     prefix:   /babysitter
-
-pn_search:
-    pattern:   /search
-    defaults:  { _controller: PnPnBundle:Default:search }
 
 PnPnBundle_parent:
     resource: "@PnPnBundle/Resources/config/routing/pparent.yml"
@@ -51,4 +29,13 @@ PnPnBundle_dashboard:
 PnPnBundle_mooc:
     resource: "@PnPnBundle/Resources/config/routing/mooc.yml"
     prefix:   /mooc
+
+PnPnBundle_message:
+    resource: "@PnPnBundle/Resources/config/routing/message.yml"
+    prefix:   /message
+
+PnPnBundle_recommendation:
+    resource: "@PnPnBundle/Resources/config/routing/recommendation.yml"
+    prefix:   /recommendation
+
 

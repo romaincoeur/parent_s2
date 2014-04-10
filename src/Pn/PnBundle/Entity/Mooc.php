@@ -240,4 +240,13 @@ class Mooc
     {
         $this->setIsActivated(true);
     }
+
+    public function shortPresentation($maxLength)
+    {
+        if (strlen($this->presentation) <= $maxLength)
+            return $this->presentation."...";
+
+        $result = substr($this->presentation, 0, $maxLength);
+        return $result."...";
+    }
 }

@@ -1,0 +1,70 @@
+{# src/Pn/PnBundle/Resources/views/Dashboard/recommendations.html.twig #}
+
+{% extends "PnPnBundle:Dashboard:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Dashboard{% endblock %}
+
+{% block dashbody %}
+    <div class="wrap">
+        <div class="row">
+            <div class="menu-recommendation col-md-3">
+                <button id="btn-received" class="selected">Ils vous ont recommandés</button>
+                <button id="btn-given" style="border-bottom: none;border-top: none;">Vous les avez recommandés</button>
+                <button id="btn-newRecommend">Recommandez-les</button>
+                <p>Parent-nounou se veut une communauté basée sur la confiance. Chaque utilisateur est invité à recommander
+                des parents des nounous, des assitantes maternelles, des animateurs ou des jeunes filles au pair qu'il connaît
+                personnellement. Les personnes recommandées gagnent ainsi un capital de confiance sur notre site. A qui
+                souhaitez-vous faire cadeau de votre confiance ?</p>
+            </div>
+            <div id="list-received" class="col-md-9">
+                <a href="">
+                    <div class="job annonce">
+                        <div class="header">
+                            <p class="tarif">9€ / heure</p>
+                            <strong>Animatrice pour une soirée d'aniversaire&nbsp;</strong>
+                            <span class="balloon"></span>
+                            <span class="balloon"></span>
+                            <span class="balloon"></span>
+                        </div>
+                        <div class="body">
+                            <p>
+                                Nous cherchons une animatrice dynamique pour s'occuper d'une soirée d'anniversaire
+                            </p>
+                        </div>
+                        <div class="footer">
+
+                        </div>
+                    </div>
+                </a>
+                <a href="">
+                    <div class="job annonce">
+                        <div class="header">
+                            <p class="tarif">10€ / heure</p>
+                            <strong>Garde d'enfant à Paris ! URGENT !!!&nbsp;</strong>
+                        </div>
+                        <div class="body">
+                            <p>
+                                Nous cherchons une animatrice dynamique pour s'occuper d'une soirée d'anniversaire
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="">
+                    <div class="job annonce">
+                        <div class="header">
+                            <p class="tarif">11€ / heure</p>
+                            <strong>Garde d'enfant pour une soirée&nbsp;</strong>
+                            <span class="balloon"></span>
+                        </div>
+                        <div class="body">
+                            <p>
+                                Nous cherchons une animatrice dynamique pour s'occuper d'une soirée d'anniversaire
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

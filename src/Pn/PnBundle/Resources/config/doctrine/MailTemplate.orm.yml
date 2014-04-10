@@ -1,0 +1,21 @@
+# src/Pn/PnBundle/Resources/config/doctrine/MailTemplate.orm.yml
+Pn\PnBundle\Entity\MailTemplate:
+  type: entity
+  repositoryClass: Pn\PnBundle\Repository\MailTemplateRepository
+  table: mailtemplate
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    title:
+      type: string
+      length: 255
+      unique: true
+    object:
+      type: string
+      length: 255
+      nullable: true
+    body:
+      type: text
+      nullable: true

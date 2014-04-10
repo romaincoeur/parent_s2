@@ -129,22 +129,6 @@ a:hover
     color: #FFFFFF;
 }
 
-select
-{
-    width: 240px;
-    background-color: #666666;
-    padding-left: 20px;
-    height: 40px;
-}
-select::selection
-{
-    color: #FFFFFF;
-}
-select:focus
-{
-    color: #FFFFFF;
-}
-
 input
 {
     border-radius: 20px;
@@ -161,6 +145,33 @@ input[type="submit"]
 {
     background-color: #f7c937;
     color: #FFFFFF;
+}
+
+select
+{
+    border-radius: 20px;
+    padding-left: 20px;
+    height: 40px;
+    background-color: #ffffff;
+    border: solid #eeeeee 2px;
+}
+select::selection
+{
+    color: #BBBBBB;
+}
+select:focus
+{
+    color: #BBBBBB;
+}
+
+.bold
+{
+    font-weight: bold;
+}
+
+label
+{
+    font-weight: normal;
 }
 
 
@@ -764,6 +775,144 @@ aside a.btn
 }
 
 
+/***************Page profil edit des nounous*****************/
+
+.babysitter.profile-page.wrap
+{
+    position: relative;
+}
+
+.babysitter.profile-page button.apercu
+{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    border-radius: 20px;
+    border: none;
+    padding: 2px 10px 7px 40px;
+    font-weight: bold;
+    background: url('../images/icons/profil-apercu.png') no-repeat #e84355 10px 4px;
+}
+
+#pn_pnbundle_babysitter_user_firstname
+{
+    margin-left: 20px;
+}
+
+.babysitter input[type='text']
+{
+    padding: 5px 5px 8px 10px;
+    border: solid #888888 1px;
+    line-height: normal;
+}
+.babysitter input[type='number']
+{
+    padding: 5px 5px 8px 10px;
+    border: solid #888888 1px;
+    line-height: normal;
+}
+
+.babysitter.profile-page .description .header
+{
+    padding: 12px 20px
+}
+
+#pn_pnbundle_babysitter_rate_price
+{
+    width: 100px;
+}
+
+.babysitter.profile-page select
+{
+    border: solid #888888 1px;
+    padding: 4px 5px 7px 10px;
+    height: inherit;
+}
+
+.babysitter.profile-page .description .body
+{
+    padding-left: 130px;
+}
+
+.babysitter.profile-page .body textarea
+{
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+}
+
+#pn_pnbundle_babysitter_user_phone
+{
+    width: 220px;
+    line-height: 1;
+}
+
+#pn_pnbundle_babysitter_user_birthdate
+{
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#pn_pnbundle_babysitter_experience
+{
+    margin-top: 10px;
+    width: 50px;
+    padding-left: 15px;
+}
+
+#diplomas
+{
+    margin-top: 10px;
+}
+
+#diplomas li
+{
+    list-style-type: none;
+    padding-left: 24px;
+}
+
+#pn_pnbundle_babysitter_diplomas
+{
+    padding-left: 25px;
+}
+
+#pn_pnbundle_babysitter_presentation
+{
+    height: 106px;
+    width: 100%;
+    max-width: 100%;
+}
+
+#editBabysitterForm input[type='submit']
+{
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+#pn_pnbundle_babysitter_file
+{
+    position: absolute;
+}
+
+#pn_pnbundle_babysitter_user_phone
+{
+    color: #000000;
+}
+
+label[for="pn_pnbundle_babysitter_diplomas_1"]
+{
+    margin: -35px 0 0 18px;
+}
+
+#ageOfChildren li
+{
+    padding-left: 24px;
+}
+
+#languages li
+{
+    padding-left: 24px;
+}
 
 
 
@@ -847,34 +996,6 @@ table.calendar button
 
 
 
-/***************Page babysitter profile edit*****************/
-
-#pn_pnbundle_babysitter_presentation
-{
-    height: 106px;
-    width: 100%;
-}
-
-#editBabysitterForm input[type='submit']
-{
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
-#pn_pnbundle_babysitter_file
-{
-    position: absolute;
-}
-
-#pn_pnbundle_babysitter_user_phone
-{
-    color: #000000;
-}
-
-
-
-
 
 
 
@@ -925,6 +1046,36 @@ table.calendar button
     padding: 0 10px;
     width: inherit;
 }
+
+.menu-recommendation button
+{
+    background-color: #ffffff;
+    border: solid #eeeeee 3px;
+    width: 100%;
+    padding: 5px;
+    color: #BBBBBB;
+    font-weight: bold;
+    text-align: left;
+}
+.menu-recommendation button:hover
+{
+    background-color: #eeeeee;
+    color: #ffffff;
+}
+.menu-recommendation button.selected
+{
+    background-color: #eeeeee;
+    color: #ffffff;
+}
+
+.menu-recommendation p
+{
+    color: #888888;
+    line-height: 1.3;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
 
 
 
@@ -1029,6 +1180,15 @@ table.calendar button
     line-height: 1.8;
 }
 
+.modal-dialog input[type='email']
+{
+    border: solid #eeeeee 2px;
+    width: 100%;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    line-height: 1.8;
+}
+
 .modal-dialog input[type='password']
 {
     border: solid #eeeeee 2px;
@@ -1073,6 +1233,11 @@ table.calendar button
     background-color: #65c0e3;
 }
 
+#account_management .modal-dialog button[type="submit"]
+{
+    background-color: #e84355;
+}
+
 .revenu
 {
     height: inherit;
@@ -1102,6 +1267,67 @@ table.calendar button
 {
     background-color: #b093c4;
 }
+
+#tarifs .modal-dialog
+{
+    width: 700px;
+}
+
+#tarifs .modal-body
+{
+    height: 200px;
+}
+
+#tarifs .modal-body div.col-md-6:first-child
+{
+    border-right: solid lightgrey 1px;
+}
+
+#tarifs h4
+{
+    display: inline-block;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+#tarifs span.red
+{
+    float: right;
+}
+
+#contact .modal-dialog
+{
+    width: 700px;
+}
+
+#contact .modal-body .text
+{
+    border-bottom: solid #eeeeee 1px;
+    margin-bottom: 20px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+#contact .modal-body input[type="text"]
+{
+    width: 200px;
+    margin-right: 14px;
+}
+#contact .modal-body input[type="email"]
+{
+    width: 200px;
+}
+#contact .modal-body textarea
+{
+    border: solid #eeeeee 2px;
+    width: 100%;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    resize: none;
+}
+
 
 
 

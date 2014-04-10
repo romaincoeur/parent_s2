@@ -32,5 +32,11 @@ monolog:
 assetic:
     use_controller: true
 
-#swiftmailer:
-#    delivery_address: me@example.com
+swiftmailer:
+    transport:  smtp
+    encryption: ssl
+    auth_mode:  login
+    host:       trigone.o2switch.net
+    username:   contact@parent-nounou.fr
+    password:   Mura6151
+    delivery_address: coeurro@gmail.com

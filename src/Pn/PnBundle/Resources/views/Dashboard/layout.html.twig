@@ -8,19 +8,43 @@
         <div class="dashboard menu clearfix">
             {% if app.user.type == 'parent' %}
                 <div class="right">
-                    <a href="">Recommandations</a>
-                    <a href="{{ path('pn_dashboard_paiements') }}">Mes paiements</a>
+                    {% if app.request.requestUri == path('pn_dashboard_recommendations') %}
+                        <a href="" style="color: #BBBBBB;">Recommandations</a>
+                    {% else %}
+                        <a href="{{ path('pn_dashboard_recommendations') }}">Recommandations</a>
+                    {% endif %}
+                    {% if app.request.requestUri == path('pn_dashboard_paiements') %}
+                        <a href="" style="color: #BBBBBB;">Mes paiements</a>
+                    {% else %}
+                        <a href="{{ path('pn_dashboard_paiements') }}">Mes paiements</a>
+                    {% endif %}
                 </div>
                 <div class="left">
-                    <a href="{{ path('pn_dashboard') }}" style="color: #BBBBBB;">Annonces</a>
+                    {% if app.request.requestUri == path('pn_dashboard') %}
+                        <a href="" style="color: #BBBBBB;">Annonces</a>
+                    {% else %}
+                        <a href="{{ path('pn_dashboard') }}">Annonces</a>
+                    {% endif %}
                 </div>
             {% else %}
                 <div class="right">
-                    <a href="">Recommandations</a>
-                    <a href="{{ path('pn_dashboard_revenus') }}">Mes revenus</a>
+                    {% if app.request.requestUri == path('pn_dashboard_recommendations') %}
+                        <a href="" style="color: #BBBBBB;">Recommandations</a>
+                    {% else %}
+                        <a href="{{ path('pn_dashboard_recommendations') }}">Recommandations</a>
+                    {% endif %}
+                    {% if app.request.requestUri == path('pn_dashboard_revenus') %}
+                        <a href="" style="color: #BBBBBB;">Mes revenus</a>
+                    {% else %}
+                        <a href="{{ path('pn_dashboard_revenus') }}">Mes revenus</a>
+                    {% endif %}
                 </div>
                 <div class="left">
-                    <a href="{{ path('pn_dashboard') }}" style="color: #BBBBBB;">Annonces</a>
+                    {% if app.request.requestUri == path('pn_dashboard') %}
+                        <a href="" style="color: #BBBBBB;">Annonces</a>
+                    {% else %}
+                        <a href="{{ path('pn_dashboard') }}">Annonces</a>
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
