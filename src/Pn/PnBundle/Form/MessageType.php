@@ -15,11 +15,11 @@ class MessageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status')
-            ->add('body')
-            ->add('created_at')
-            ->add('sender')
-            ->add('receiver')
+            ->add('body', 'textarea', array(
+                'attr' => array(
+                    'placeholder' => 'Ecrivez un nouveau message',
+                )
+            ))
         ;
     }
     

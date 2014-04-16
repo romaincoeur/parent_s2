@@ -5,7 +5,7 @@
 $(function() {
 
     // Gestion des calendriers
-    $(".calendar button").click(function(){
+    /*$(".calendar button").click(function(){
         //alert($(this).css('background-color'));
         if ($(this).css('background-color') == 'rgb(255, 255, 255)')
         {
@@ -15,7 +15,7 @@ $(function() {
         {
             $(this).css('background-color','#ffffff');
         }
-    });
+    });*/
 
     $(".calendarForm").submit(function(e){
         e.preventDefault();
@@ -72,8 +72,8 @@ $(function() {
     });
 
 
-    // Inscription AJAX
-    function postForm( $form, callback ){
+    // Envoi de formulaire en AJAX
+    function postForm( $form, callback1, callback2 ){
 
         /*
          * Get all form values
@@ -91,10 +91,97 @@ $(function() {
             url         : $form.attr( 'action' ),
             data        : values,
             success     : function(data) {
-                callback( data );
+                callback1( data );
+            },
+            error     : function(data) {
+                callback2( data );
             }
         });
 
     }
+
+    // Inscription AJAX
+    $( '#registerForm' ).submit( function( e ){
+        e.preventDefault();
+
+        postForm(
+            $(this),
+            function( response ){
+                if (response.success)
+                {
+                    location.reload();
+                }
+                else
+                {
+                    $('#registerErrors').html(response.cause)
+                }
+            },
+            function(error){
+                $('#registerErrors').html(error)
+            }
+        );
+
+        return false;
+    });
+
+    // Gestion du compte
+    $( '#changePasswordForm' ).submit( function( e ){
+        e.preventDefault();
+
+        postForm(
+            $(this),
+            function( response ){
+                if (response.success)
+                {
+                    $( "#account_management button.close" ).trigger( "click" );
+                }
+                else
+                {
+                    $('#changePasswordErrors').html(response.cause)
+                }
+            },
+            function(error){
+                $('#changePasswordErrors').html(error)
+            }
+        );
+
+        return false;
+    });
+
+    // Affichage des conversations
+    $('.message-leftMenu .btn').click(function(){
+        $('.message-leftMenu .btn').removeClass('selected');
+        $(this).addClass('selected');
+        $('.conversation').removeClass('selected');
+        $('.conversation#'+$(this).attr('id')).addClass('selected');
+    })
+
+    // Envoi d'un message
+    $('.conversation form').submit(function(e){
+        e.preventDefault();
+
+        $('.conversation.selected textarea').css('background','url("../../bundles/pnpn/images/icons/ajax-loader.gif") no-repeat right white');
+        $('.conversation.selected input[type="submit"]').attr('disabled', true);
+
+        postForm(
+            $('.conversation.selected form'),
+            function(response){
+                $('#'+$('.conversation.selected form').attr('id')+' .message').last().after('' +
+                    '<div class="message to">' +
+                    '   <div class="bulle">' +
+                    '       <p>' + response.message + '</p>' +
+                    '   </div>' +
+                    '   <img class="arrow" src="/parent_s2/web/bundles/pnpn/images/icons/right-arrow.png" alt="right-arrow">' +
+                    '   <img src="/parent_s2/web/bundles/pnpn/images/illus/nounou.jpg" alt="nounou" style="height: 90px;">' +
+                    '</div>'
+                );
+                $('.conversation.selected textarea').css('background','white');
+                $('.conversation.selected input[type="submit"]').attr('disabled', false);
+            },
+            function (error){
+
+            }
+        );
+    })
 
 })

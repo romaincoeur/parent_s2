@@ -16,8 +16,8 @@ confirmation:
     pattern:   /confirmation/{token}
     defaults:  { _controller: PnPnBundle:Default:confirmation }
 
-myprofile:
-    pattern:   /myprofile
+myprofile_show:
+    pattern:   /myprofile/show
     defaults:  { _controller: PnPnBundle:Default:myprofileView }
 
 myprofile_edit:

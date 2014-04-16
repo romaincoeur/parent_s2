@@ -68,6 +68,10 @@ Pn\PnBundle\Entity\User:
     birthdate:
       type: date
       nullable: true
+    avatar:
+      type: string
+      length: 255
+      nullable: true
   oneToOne:
     babysitter:
       targetEntity: Babysitter
@@ -93,5 +97,8 @@ Pn\PnBundle\Entity\User:
       targetEntity: Recommendation
       mappedBy: receiver
   lifecycleCallbacks:
-    prePersist: [ setCreatedAtValue, setDefaultValues ]
-    preUpdate: [ setUpdatedAtValue ]
+    prePersist: [ preUpload, setCreatedAtValue, setDefaultValues ]
+    preUpdate: [ preUpload, setUpdatedAtValue ]
+    postPersist: [ upload ]
+    postUpdate: [ upload ]
+    postRemove: [ removeUpload ]

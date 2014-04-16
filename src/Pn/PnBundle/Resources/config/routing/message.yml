@@ -10,11 +10,6 @@ message_new:
     pattern:  /new
     defaults: { _controller: "PnPnBundle:Message:new" }
 
-message_create:
-    pattern:  /create
-    defaults: { _controller: "PnPnBundle:Message:create" }
-    requirements: { _method: post }
-
 message_edit:
     pattern:  /{id}/edit
     defaults: { _controller: "PnPnBundle:Message:edit" }
@@ -28,3 +23,8 @@ message_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "PnPnBundle:Message:delete" }
     requirements: { _method: post|delete }
+
+message_send:
+    pattern:  /send/{to}
+    defaults: { _controller: "PnPnBundle:Message:send" }
+    requirements: { _method: post|get }

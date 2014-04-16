@@ -299,6 +299,7 @@ class User implements UserInterface
     {
         return $this->updated_at;
     }
+
     /**
      * @ORM\PrePersist
      */
@@ -317,6 +318,7 @@ class User implements UserInterface
     {
         $this->updated_at = new \DateTime();
     }
+
     /**
      * @var string
      */
@@ -501,7 +503,9 @@ class User implements UserInterface
     {
         $this->is_activated = true;
         $this->setUsername($this->email);
+        if ($this->getBirthdate() == null) $this->setBirthdate(new \DateTime('1902-01-01'));
     }
+
     /**
      * @var \Pn\PnBundle\Entity\Pparent
      */
@@ -755,11 +759,11 @@ class User implements UserInterface
         return $this->confirmationToken;
     }
 
+
     /**
      * @var \DateTime
      */
     private $birthdate;
-
 
     /**
      * Set birthdate
@@ -782,5 +786,113 @@ class User implements UserInterface
     public function getBirthdate()
     {
         return $this->birthdate;
+    }
+
+    /**
+     * Get fullname
+     *
+     * @return string
+     */
+    public function getFullname()
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
+
+    /**
+     * Get virtual name
+     *
+     * @return string
+     */
+    public function getVirtualname()
+    {
+        return mb_strtolower($this->firstname.$this->lastname);
+    }
+    /**
+     * @var string
+     */
+    private $avatar;
+
+
+    /**
+     * Set avatar
+     *
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string 
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    public $file;
+
+    protected function getUploadDir()
+    {
+        return 'uploads/users';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->avatar ? null : $this->getUploadDir().'/'.$this->avatar;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->avatar ? null : $this->getUploadRootDir().'/'.$this->avatar;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function preUpload()
+    {
+        if (null !== $this->file) {
+            // do whatever you want to generate a unique name
+            $this->avatar = uniqid().'.'.$this->file->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->file->move($this->getUploadRootDir(), $this->avatar);
+
+        unset($this->file);
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
     }
 }

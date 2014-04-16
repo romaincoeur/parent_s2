@@ -22,11 +22,6 @@ class Babysitter
     /**
      * @var string
      */
-    private $hourlyrate;
-
-    /**
-     * @var string
-     */
     private $experience;
 
     /**
@@ -64,12 +59,651 @@ class Babysitter
      */
     private $mychildren;
 
-    /**
-     * @var \Pn\PnBundle\Entity\Babysittercategory
-     */
-    private $babysittercategory;
 
     public $file;
+
+    /**
+     * @var \Pn\PnBundle\Entity\User
+     */
+    private $user;
+
+    /**
+     * @var string
+     */
+    private $rate_price;
+
+    /**
+     * @var string
+     */
+    private $rate_type;
+
+    /**
+     * @var string
+     */
+    private $avatar;
+
+    /**
+     * @var string
+     */
+    private $video;
+
+    /**
+     * @var string
+     */
+    private $calendar;
+
+    /**
+     * @var \DateTime
+     */
+    private $created_at;
+
+    /**
+     * @var \DateTime
+     */
+    private $updated_at;
+
+    /**
+     * @var boolean
+     */
+    private $new;
+
+    /**
+     * @var string
+     */
+    private $category;
+
+    /**
+     * @var string
+     */
+    private $petitsplus;
+
+    /**
+     * @var string
+     */
+    private $particularite;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function __construct()
+    {
+        $this->diplomas = array();
+        $this->ageofchildren = array();
+        $this->languages = array();
+        $this->particularite = array();
+        $this->extraTasks = array();
+        $this->petitsplus = array();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'uploads/babysitters';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->avatar ? null : $this->getUploadDir().'/'.$this->avatar;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->avatar ? null : $this->getUploadRootDir().'/'.$this->avatar;
+    }
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function preUpload()
+    {
+        if (null !== $this->file) {
+            // do whatever you want to generate a unique name
+            $this->avatar = uniqid().'.'.$this->file->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->file->move($this->getUploadRootDir(), $this->avatar);
+
+        unset($this->file);
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
+    }
+
+    public static function getCategories()
+    {
+        return array(
+            'babysitter' => 'Babysitter',
+            'assistante' => 'Assistante maternelle',
+            'nounou' => 'Nounou à domicile',
+            'garde' => 'Garde partagée',
+            'aupair' => 'Fille au pair',
+            'animateur' => 'Animateur'
+        );
+    }
+
+    public static function getCategoryValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        if ($this->getCategory() == null) $this->setCategory('nounou');
+        if ($this->getExperience() == null) $this->setExperience(0);
+        if ($this->getRatePrice() == null) $this->setRatePrice(0);
+        if ($this->getRateType() == null) $this->setRateType('hour');
+        if ($this->getTrustpoints() == null) $this->setTrustpoints(0);
+        $this->setCalendar('[(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)]');
+    }
+
+    public static function getPetitspluss()
+    {
+        return array(
+            'repasmaison' => 'Repas cuisinés maison',
+            'bio' => 'Repas bio',
+            'promenade' => 'Promenade quotidienne',
+            'notv' => 'Zéro télé'
+        );
+    }
+
+    public static function getPetitsplusValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    public static function getParticularites()
+    {
+        return array(
+            'nonfumeur' => 'Non fumeur',
+            'animaux' => 'Pas d\'animaux domestiques',
+            'permis' => 'Avec permis de conduire',
+            'voiture' => 'Avec voiture',
+            'lettre' => 'Lettres de recommandation');
+    }
+
+    public static function getParticulariteValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    public function shortPresentation($maxLength)
+    {
+        if (strlen($this->presentation) <= $maxLength)
+            return $this->presentation."...";
+
+        $result = substr($this->presentation, 0, $maxLength);
+        return $result."...";
+    }
+
+    public function __toString()
+    {
+        return $this->getUser()->getFullname();
+    }
+
+    public static function getDiplomass()
+    {
+        return array(
+            'assistante' => 'Agrément assistante maternelle',
+            'bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
+        );
+    }
+
+    public static function getDiplomasValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    public static function getLanguagess()
+    {
+        return array(
+            'fr' => 'Francais',
+            'en' => 'Anglais',
+            'ge' => 'Allemand',
+            'it' => 'Italien',
+            'es' => 'Espagnol',
+            'ru' => 'Russe',
+            'po' => 'Portugais',
+            'ar' => 'Arabe',
+        );
+    }
+
+    public static function getLanguagesValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    public static function getAgeofchildrens()
+    {
+        return array(
+            0 => '0 à 1 an',
+            1 => '1 à 3 ans',
+            2 => '3 à 6 an',
+            3 => '6 à 10 ans',
+            4 => '10 ans et +',
+        );
+    }
+
+    public static function getAgeofchildrenValues()
+    {
+        return array_keys(self::getRateType());
+    }
+
+    public static function getExtraTaskss()
+    {
+        return array(
+            'cleaning' => 'Ménage',
+            'cooking' => 'Cuisine',
+            'ironing' => 'Repassage',
+            'homework' => 'Aide aux devoirs',
+        );
+    }
+
+    public static function getExtraTasksValues()
+    {
+        return array_keys(self::getExtraTaskss());
+    }
+
+    /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function addDiploma($diploma)
+    {
+        if (!$this->hasDiploma($diploma)) {
+            $this->diplomas[] = $diploma;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $diploma
+     */
+    public function hasDiploma($diploma)
+    {
+        return in_array($diploma, $this->diplomas, true);
+    }
+
+    /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function removeDiploma($diploma)
+    {
+        if (false !== $key = array_search($diploma, $this->diplomas, true)) {
+            unset($this->diplomas[$key]);
+            $this->diplomas = array_values($this->diplomas);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function switchDiploma($diploma)
+    {
+        if ($this->hasDiploma($diploma)) {
+            $this->removeDiploma($diploma);
+        }
+        else
+        {
+            $this->addDiploma($diploma);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return Babysitter
+     */
+    public function addLanguage($language)
+    {
+        if (!$this->hasLanguage($language)) {
+            $this->languages[] = $language;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function hasLanguage($language)
+    {
+        return in_array($language, $this->languages, true);
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return Babysitter
+     */
+    public function removeLanguage($language)
+    {
+        if (false !== $key = array_search($language, $this->languages, true)) {
+            unset($this->languages[$key]);
+            $this->languages = array_values($this->languages);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return Babysitter
+     */
+    public function switchLanguage($language)
+    {
+        if ($this->hasLanguage($language)) {
+            $this->removeLanguage($language);
+        }
+        else
+        {
+            $this->addLanguage($language);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $age
+     *
+     * @return Babysitter
+     */
+    public function addAgeOfChildren($age)
+    {
+        if (!$this->hasAgeOfChildren($age)) {
+            $this->ageofchildren[] = $age;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $age
+     */
+    public function hasAgeOfChildren($age)
+    {
+        return in_array($age, $this->ageofchildren, true);
+    }
+
+    /**
+     * @param string $age
+     *
+     * @return Babysitter
+     */
+    public function removeAgeOfChildren($age)
+    {
+        if (false !== $key = array_search($age, $this->ageofchildren, true)) {
+            unset($this->ageofchildren[$key]);
+            $this->ageofchildren = array_values($this->ageofchildren);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $age
+     *
+     * @return Babysitter
+     */
+    public function switchAgeOfChildren($age)
+    {
+        if ($this->hasAgeOfChildren($age)) {
+            $this->removeAgeOfChildren($age);
+        }
+        else
+        {
+            $this->addAgeOfChildren($age);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $particularite
+     *
+     * @return Babysitter
+     */
+    public function addParticularite($particularite)
+    {
+        if (!$this->hasParticularite($particularite)) {
+            $this->particularite[] = $particularite;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $particularite
+     */
+    public function hasParticularite($particularite)
+    {
+        return in_array($particularite, $this->particularite, true);
+    }
+
+    /**
+     * @param string $particularite
+     *
+     * @return Babysitter
+     */
+    public function removeParticularite($particularite)
+    {
+        if (false !== $key = array_search($particularite, $this->particularite, true)) {
+            unset($this->particularite[$key]);
+            $this->particularite = array_values($this->particularite);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $particularite
+     *
+     * @return Babysitter
+     */
+    public function switchParticularite($particularite)
+    {
+        if ($this->hasParticularite($particularite)) {
+            $this->removeParticularite($particularite);
+        }
+        else
+        {
+            $this->addParticularite($particularite);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $extraTask
+     *
+     * @return Babysitter
+     */
+    public function addExtraTask($extraTask)
+    {
+        if (!$this->hasExtraTask($extraTask)) {
+            $this->extraTasks[] = $extraTask;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $extraTask
+     */
+    public function hasExtraTask($extraTask)
+    {
+        return in_array($extraTask, $this->extraTasks, true);
+    }
+
+    /**
+     * @param string $extraTask
+     *
+     * @return Babysitter
+     */
+    public function removeExtraTask($extraTask)
+    {
+        if (false !== $key = array_search($extraTask, $this->extraTasks, true)) {
+            unset($this->extraTasks[$key]);
+            $this->extraTasks = array_values($this->extraTasks);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $extraTask
+     *
+     * @return Babysitter
+     */
+    public function switchExtraTask($extraTask)
+    {
+        if ($this->hasExtraTask($extraTask)) {
+            $this->removeExtraTask($extraTask);
+        }
+        else
+        {
+            $this->addExtraTask($extraTask);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $petitsPlus
+     *
+     * @return Babysitter
+     */
+    public function addPetitsPlus($petitsPlus)
+    {
+        if (!$this->hasPetitsPlus($petitsPlus)) {
+            $this->petitsplus[] = $petitsPlus;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $petitsPlus
+     */
+    public function hasPetitsPlus($petitsPlus)
+    {
+        return in_array($petitsPlus, $this->petitsplus, true);
+    }
+
+    /**
+     * @param string $petitsPlus
+     *
+     * @return Babysitter
+     */
+    public function removePetitsPlus($petitsPlus)
+    {
+        if (false !== $key = array_search($petitsPlus, $this->petitsplus, true)) {
+            unset($this->petitsplus[$key]);
+            $this->petitsplus = array_values($this->petitsplus);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $petitsPlus
+     *
+     * @return Babysitter
+     */
+    public function switchPetitsPlus($petitsPlus)
+    {
+        if ($this->hasPetitsPlus($petitsPlus)) {
+            $this->removePetitsPlus($petitsPlus);
+        }
+        else
+        {
+            $this->addPetitsPlus($petitsPlus);
+        }
+
+        return $this;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -174,8 +808,6 @@ class Babysitter
         return $this->anythingelse;
     }
 
-
-
     /**
      * Set availabilities
      *
@@ -269,49 +901,6 @@ class Babysitter
     }
 
     /**
-     * Set babysittercategory
-     *
-     * @param \Pn\PnBundle\Entity\Babysittercategory $babysittercategory
-     * @return Babysitter
-     */
-    public function setBabysittercategory(\Pn\PnBundle\Entity\Babysittercategory $babysittercategory = null)
-    {
-        $this->babysittercategory = $babysittercategory;
-
-        return $this;
-    }
-
-    /**
-     * Get babysittercategory
-     *
-     * @return \Pn\PnBundle\Entity\Babysittercategory
-     */
-    public function getBabysittercategory()
-    {
-        return $this->babysittercategory;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        // Add your code here
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue()
-    {
-        // Add your code here
-    }
-    /**
-     * @var \Pn\PnBundle\Entity\User
-     */
-    private $user;
-
-
-    /**
      * Set user
      *
      * @param \Pn\PnBundle\Entity\User $user
@@ -333,26 +922,6 @@ class Babysitter
     {
         return $this->user;
     }
-    /**
-     * @var string
-     */
-    private $rate_price;
-
-    /**
-     * @var string
-     */
-    private $rate_type;
-
-    /**
-     * @var string
-     */
-    private $avatar;
-
-    /**
-     * @var string
-     */
-    private $video;
-
 
     /**
      * Set rate_price
@@ -446,341 +1015,12 @@ class Babysitter
         return $this->video;
     }
 
-    public function getUserUsername()
-    {
-        return $this->user->getUsername();
-    }
-
-    protected function getUploadDir()
-    {
-        return 'uploads/babysitters';
-    }
-
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    public function getWebPath()
-    {
-        return null === $this->avatar ? null : $this->getUploadDir().'/'.$this->avatar;
-    }
-
-    public function getAbsolutePath()
-    {
-        return null === $this->avatar ? null : $this->getUploadRootDir().'/'.$this->avatar;
-    }
-
 
     /**
-     * @ORM\PrePersist
+     * @var array
      */
-    public function preUpload()
-    {
-        if (null !== $this->file) {
-            // do whatever you want to generate a unique name
-            $this->avatar = uniqid().'.'.$this->file->guessExtension();
-        }
-    }
+    private $extraTasks;
 
-    /**
-     * @ORM\PostPersist
-     */
-    public function upload()
-    {
-        if (null === $this->file) {
-            return;
-        }
-
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->file->move($this->getUploadRootDir(), $this->avatar);
-
-        unset($this->file);
-    }
-
-    /**
-     * @ORM\PostRemove
-     */
-    public function removeUpload()
-    {
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
-        }
-    }
-    /**
-     * @var string
-     */
-    private $calendar;
-
-
-    /**
-     * Set calendar
-     *
-     * @param string $calendar
-     * @return Babysitter
-     */
-    public function setCalendar($calendar)
-    {
-        $this->calendar = $calendar;
-
-        return $this;
-    }
-
-    /**
-     * Get calendar
-     *
-     * @return string
-     */
-    public function getCalendar()
-    {
-        return $this->calendar;
-    }
-
-
-    /**
-     * @var \DateTime
-     */
-    private $created_at;
-
-    /**
-     * @var \DateTime
-     */
-    private $updated_at;
-
-    /**
-     * @var boolean
-     */
-    private $new;
-
-
-    /**
-     * Set created_at
-     *
-     * @param \DateTime $createdAt
-     * @return Babysitter
-     */
-    public function setCreatedAt($createdAt)
-    {
-        $this->created_at = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get created_at
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
-
-    /**
-     * Set updated_at
-     *
-     * @param \DateTime $updatedAt
-     * @return Babysitter
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updated_at = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get updated_at
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedAt()
-    {
-        return $this->updated_at;
-    }
-
-    /**
-     * Set new
-     *
-     * @param boolean $new
-     * @return Babysitter
-     */
-    public function setNew($new)
-    {
-        $this->new = $new;
-
-        return $this;
-    }
-
-    /**
-     * Get new
-     *
-     * @return boolean
-     */
-    public function getNew()
-    {
-        return $this->new;
-    }
-    /**
-     * @var string
-     */
-    private $category;
-
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     * @return Babysitter
-     */
-    public function setCategory($category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        if ($this->category != null)
-            return $this->getCategories()[$this->category];
-        else
-            return "";
-    }
-
-    public static function getCategories()
-    {
-        return array(
-            'babysitter' => 'Babysitter',
-            'assistante' => 'Assistante maternelle',
-            'nounou' => 'Nounou à domicile',
-            'garde' => 'Garde partagée',
-            'aupair' => 'Fille au pair',
-            'animateur' => 'Animateur'
-        );
-    }
-
-    public static function getCategoryValues()
-    {
-        return array_keys(self::getRateType());
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setDefaultValues()
-    {
-        if ($this->getPresentation() == null) $this->setPresentation('Décrivez-vous en quelques lignes');
-        if ($this->getCategory() == null) $this->setCategory('nounou');
-        if ($this->getExperience() == null) $this->setExperience(0);
-        if ($this->getNew() == null) $this->setNew(true);
-        if ($this->getRatePrice() == null) $this->setRatePrice(0);
-        if ($this->getRateType() == null) $this->setRateType('hour');
-        if ($this->getTrustpoints() == null) $this->setTrustpoints(0);
-    }
-    /**
-     * @var string
-     */
-    private $petitsplus;
-
-
-    /**
-     * Set petitsplus
-     *
-     * @param string $petitsplus
-     * @return Babysitter
-     */
-    public function setPetitsplus($petitsplus)
-    {
-        $this->petitsplus = $petitsplus;
-
-        return $this;
-    }
-
-    /**
-     * Get petitsplus
-     *
-     * @return string
-     */
-    public function getPetitsplus()
-    {
-        return $this->petitsplus;
-    }
-
-    public static function getPetitspluss()
-    {
-        return array('repasmaison' => 'Repas cuisinés maison', 'bio' => 'Repas bio', 'promenade' => 'Promenade quotidienne', 'notv' => 'Zéro télé');
-    }
-
-    public static function getPetitsplusValues()
-    {
-        return array_keys(self::getRateType());
-    }
-
-    /**
-     * @var string
-     */
-    private $particularite;
-
-
-    /**
-     * Set particularite
-     *
-     * @param string $particularite
-     * @return Babysitter
-     */
-    public function setParticularite($particularite)
-    {
-        $this->particularite = $particularite;
-
-        return $this;
-    }
-
-    /**
-     * Get particularite
-     *
-     * @return string
-     */
-    public function getParticularite()
-    {
-        return $this->particularite;
-    }
-
-    public static function getParticularites()
-    {
-        return array(
-            'nonfumeur' => 'Non fumeur',
-            'animaux' => 'Pas d\'animaux domestiques',
-            'permis' => 'Avec permis de conduire',
-            'voiture' => 'Avec voiture',
-            'lettre' => 'Lettres de recommandation');
-    }
-
-    public static function getParticulariteValues()
-    {
-        return array_keys(self::getRateType());
-    }
-
-    public function shortPresentation($maxLength)
-    {
-        if (strlen($this->presentation) <= $maxLength)
-            return $this->presentation."...";
-
-        $result = substr($this->presentation, 0, $maxLength);
-        return $result."...";
-    }
-
-    public function __toString()
-    {
-        return $this->getUser()->getFirstname();
-    }
     /**
      * @var array
      */
@@ -790,86 +1030,6 @@ class Babysitter
      * @var array
      */
     private $languages;
-
-
-    /**
-     * Set diplomas
-     *
-     * @param array $diplomas
-     * @return Babysitter
-     */
-    public function setDiplomas($diplomas)
-    {
-        $this->diplomas = $diplomas;
-
-        return $this;
-    }
-
-    /**
-     * Get diplomas
-     *
-     * @return array 
-     */
-    public function getDiplomas()
-    {
-        return $this->diplomas;
-    }
-
-    public static function getDiplomass()
-    {
-        return array(
-            'assistante' => 'Agrément assistante maternelle',
-            'bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
-        );
-    }
-
-    public static function getDiplomasValues()
-    {
-        return array_keys(self::getRateType());
-    }
-
-    /**
-     * Set languages
-     *
-     * @param array $languages
-     * @return Babysitter
-     */
-    public function setLanguages($languages)
-    {
-        $this->languages = $languages;
-
-        return $this;
-    }
-
-    /**
-     * Get languages
-     *
-     * @return array 
-     */
-    public function getLanguages()
-    {
-        return $this->languages;
-    }
-
-    public static function getLanguagess()
-    {
-        return array(
-            'fr' => 'Francais',
-            'en' => 'Anglais',
-            'ge' => 'Allemand',
-            'it' => 'Italien',
-            'es' => 'Espagnol',
-            'ru' => 'Russe',
-            'po' => 'Portugais',
-            'ar' => 'Arabe',
-        );
-    }
-
-    public static function getLanguagesValues()
-    {
-        return array_keys(self::getRateType());
-    }
-
 
 
     /**
@@ -895,19 +1055,164 @@ class Babysitter
         return $this->ageofchildren;
     }
 
-    public static function getAgeofchildrens()
+    /**
+     * Set calendar
+     *
+     * @param string $calendar
+     * @return Babysitter
+     */
+    public function setCalendar($calendar)
     {
-        return array(
-            0 => '0 à 1 an',
-            1 => '1 à 3 ans',
-            2 => '3 à 6 an',
-            3 => '6 à 10 ans',
-            4 => '10 ans et +',
-        );
+        $this->calendar = $calendar;
+
+        return $this;
     }
 
-    public static function getAgeofchildrenValues()
+    /**
+     * Get calendar
+     *
+     * @return string 
+     */
+    public function getCalendar()
     {
-        return array_keys(self::getRateType());
+        return $this->calendar;
+    }
+
+    /**
+     * Set category
+     *
+     * @param string $category
+     * @return Babysitter
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return string 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set petitsplus
+     *
+     * @param array $petitsplus
+     * @return Babysitter
+     */
+    public function setPetitsplus($petitsplus)
+    {
+        $this->petitsplus = $petitsplus;
+
+        return $this;
+    }
+
+    /**
+     * Get petitsplus
+     *
+     * @return array 
+     */
+    public function getPetitsplus()
+    {
+        return $this->petitsplus;
+    }
+
+    /**
+     * Set extraTasks
+     *
+     * @param array $extraTasks
+     * @return Babysitter
+     */
+    public function setExtraTasks($extraTasks)
+    {
+        $this->extraTasks = $extraTasks;
+
+        return $this;
+    }
+
+    /**
+     * Get extraTasks
+     *
+     * @return array 
+     */
+    public function getExtraTasks()
+    {
+        return $this->extraTasks;
+    }
+
+    /**
+     * Set particularite
+     *
+     * @param array $particularite
+     * @return Babysitter
+     */
+    public function setParticularite($particularite)
+    {
+        $this->particularite = $particularite;
+
+        return $this;
+    }
+
+    /**
+     * Get particularite
+     *
+     * @return array 
+     */
+    public function getParticularite()
+    {
+        return $this->particularite;
+    }
+
+    /**
+     * Set diplomas
+     *
+     * @param array $diplomas
+     * @return Babysitter
+     */
+    public function setDiplomas($diplomas)
+    {
+        $this->diplomas = $diplomas;
+
+        return $this;
+    }
+
+    /**
+     * Get diplomas
+     *
+     * @return array 
+     */
+    public function getDiplomas()
+    {
+        return $this->diplomas;
+    }
+
+    /**
+     * Set languages
+     *
+     * @param array $languages
+     * @return Babysitter
+     */
+    public function setLanguages($languages)
+    {
+        $this->languages = $languages;
+
+        return $this;
+    }
+
+    /**
+     * Get languages
+     *
+     * @return array 
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
     }
 }

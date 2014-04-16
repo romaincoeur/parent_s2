@@ -174,4 +174,71 @@ class Message
             $this->created_at = new \DateTime();
         }
     }
+    /**
+     * @var boolean
+     */
+    private $read;
+
+
+    /**
+     * Set read
+     *
+     * @param boolean $read
+     * @return Message
+     */
+    public function setRead($read)
+    {
+        $this->read = $read;
+
+        return $this;
+    }
+
+    /**
+     * Get read
+     *
+     * @return boolean 
+     */
+    public function getRead()
+    {
+        return $this->read;
+    }
+    /**
+     * @var boolean
+     */
+    private $is_read;
+
+
+    /**
+     * Set is_read
+     *
+     * @param boolean $isRead
+     * @return Message
+     */
+    public function setIsRead($isRead)
+    {
+        $this->is_read = $isRead;
+
+        return $this;
+    }
+
+    /**
+     * Get is_read
+     *
+     * @return boolean 
+     */
+    public function getIsRead()
+    {
+        return $this->is_read;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setIsReadValue()
+    {
+        if(!$this->getIsRead())
+        {
+            $this->is_read = false;
+        }
+    }
 }

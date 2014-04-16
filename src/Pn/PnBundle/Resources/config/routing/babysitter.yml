@@ -33,3 +33,13 @@ babysitter_delete:
 babysitter_search:
     pattern:  /search/{search}
     defaults: { _controller: PnPnBundle:Babysitter:search, search: null }
+
+babysitter_update_field:
+    pattern:  /{id}/update_field
+    defaults: { _controller: "PnPnBundle:Babysitter:updateField" }
+    requirements: { _method: post|put|get }
+
+babysitter_updateCalendarAJAX:
+    pattern:  /{id}/updateCalendarAJAX
+    defaults: { _controller: "PnPnBundle:Babysitter:updateCalendarAJAX" }
+    requirements: { _method: post|put|get }

@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Pn\PnBundle\Entity\Babysitter;
 use Pn\PnBundle\Form\BabysitterType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * Babysitter controller.
@@ -25,8 +27,13 @@ class BabysitterController extends Controller
 
         $entities = $em->getRepository('PnPnBundle:Babysitter')->findAll();
 
+        // gestion du calendrier
+        $calendarService = $this->container->get('pn.calendar');
+        $calendar = $calendarService->newMatrix();
+
         return $this->render('PnPnBundle:Babysitter:index.html.twig', array(
             'entities' => $entities,
+            'calendarMatrix' => $calendar
         ));
     }
 
@@ -40,8 +47,13 @@ class BabysitterController extends Controller
 
         $entities = $em->getRepository('PnPnBundle:Babysitter')->getFromSearch($search);
 
+        // gestion du calendrier
+        $calendarService = $this->container->get('pn.calendar');
+        $calendar = $calendarService->newMatrix();
+
         return $this->render('PnPnBundle:Babysitter:index.html.twig', array(
             'entities' => $entities,
+            'calendarMatrix' => $calendar
         ));
     }
 
@@ -178,8 +190,6 @@ class BabysitterController extends Controller
         if ($form->isValid()){
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('babysitter_show', array('id' => $id)));
         }
 
         // gestion du calendrier
@@ -210,6 +220,7 @@ class BabysitterController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Babysitter entity.
      *
@@ -244,6 +255,7 @@ class BabysitterController extends Controller
             'calendarMatrix'    => $calendar
         ));
     }
+
     /**
      * Deletes a Babysitter entity.
      *
@@ -283,5 +295,175 @@ class BabysitterController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * Edits an existing Babysitter entity.
+     * AJAX
+     *
+     */
+    public function updateFieldAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
+        $user = $entity->getUser();
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Babysitter entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $parameter = $request->request->get('parameter');
+            $value = $request->request->get('value');
+        }
+        else
+        {
+            $parameter = $request->query->get('parameter');
+            $value = $request->query->get('value');
+        }
+
+        // Update Parameter
+        $response['success'] = false;
+        switch ($parameter){
+            case 'firstname':
+                $user->setFirstname($value);
+                break;
+            case 'lastname':
+                $user->setLastname($value);
+                break;
+            case 'rate_price':
+                $entity->setRatePrice($value);
+                break;
+            case 'rate_type':
+                $entity->setRateType($value);
+                break;
+            case 'presentation':
+                $entity->setPresentation($value);
+                break;
+            case 'phone':
+                $user->setPhone($value);
+                break;
+            case 'address':
+                $user->setAddress($value);
+                break;
+            case 'latitude':
+                $user->setLatitude($value);
+                break;
+            case 'longitude':
+                $user->setLongitude($value);
+                break;
+            case 'birthdate_day':
+                $birthdate = $user->getBirthdate();
+                $m = $birthdate->format('m');
+                $Y = $birthdate->format('Y');
+
+                $birthdate->setDate($Y , $m , $value);
+                $user->setBirthdate($birthdate);
+                break;
+            case 'birthdate_month':
+                $birthdate = $user->getBirthdate();
+                $d = $birthdate->format('d');
+                $Y = $birthdate->format('Y');
+
+                $birthdate->setDate($Y , $value , $d);
+                $user->setBirthdate($birthdate);
+                break;
+            case 'birthdate_year':
+                $birthdate = $user->getBirthdate();
+                $d = $birthdate->format('d');
+                $m = $birthdate->format('m');
+
+                $birthdate->setDate($value , $m , $d);
+                $user->setBirthdate($birthdate);
+                break;
+            case 'experience':
+                $entity->setExperience($value);
+                break;
+            case 'diplomas':
+                $entity->switchDiploma($value);
+                break;
+            case 'ageOfChildren':
+                $entity->switchAgeOfChildren($value);
+                break;
+            case 'languages':
+                $entity->switchLanguage($value);
+                break;
+            case 'particularite':
+                $entity->switchParticularite($value);
+                break;
+            case 'extraTasks':
+                $entity->switchExtraTask($value);
+                break;
+            case 'petitPlus':
+                $entity->switchPetitsPlus($value);
+                break;
+            default:
+                $response['success'] = false;
+                $response['message'] = 'wrong parameter';
+                return new JsonResponse( $response );
+        }
+
+        // Persist in DB
+        $em->persist($entity);
+        $em->persist($user);
+        $em->flush();
+
+        $response['success'] = true;
+        //$response['message'] = $user->getBirthdate()->format( 'd - m - Y');
+
+        // Response
+        return new JsonResponse( $response );
+    }
+
+    /**
+     * Edits a calendar.
+     * AJAX
+     *
+     */
+    public function updateCalendarAJAXAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $calendarService = $this->container->get('pn.calendar');
+
+        $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
+        $calendar = $calendarService->getMatrix($entity->getCalendar());
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Babysitter entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $id = $request->request->get('coords');
+            $value = $request->request->get('value');
+        }
+        else
+        {
+            $id = $request->query->get('coords');
+            $value = $request->query->get('value');
+        }
+        $x = explode("-", $id)[0];
+        $y = explode("-", $id)[1];
+
+        // Update Parameter
+        $response['success'] = false;
+
+        // Remplacer la valeur
+        $calendar[$x][$y] = $value;
+        $entity->setCalendar($calendarService->getString($calendar));
+
+        // Persist in DB
+        $em->persist($entity);
+        $em->flush();
+
+        $response['success'] = true;
+        $response['id'] = $id;
+
+        // Response
+        return new JsonResponse( $response );
     }
 }

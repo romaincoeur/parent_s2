@@ -336,7 +336,7 @@ class DefaultController extends Controller
 
         if ($select == 'nounou')
         {
-            return $this->redirect($this->generateUrl('babysitter', array('search' => $field)));
+            return $this->redirect($this->generateUrl('babysitter_search', array('search' => $field)));
         }
         else
         {

@@ -172,6 +172,15 @@ select:focus
 label
 {
     font-weight: normal;
+    line-height: 1;
+}
+
+.round
+{
+    border-radius: 20px;
+    height: 30px;
+    width: 30px;
+    border: none;
 }
 
 
@@ -193,9 +202,6 @@ header .btn
 header .connected .btn
 {
     background-color: lightgrey;
-    border-radius: 20px;
-    height: 35px;
-    width: 35px;
     padding: 0;
     margin-left: 5px;
 }
@@ -717,13 +723,6 @@ aside a.btn
     margin: 5px;
 }
 
-.pres-video
-{
-    height: 150px;
-    margin-bottom: 30px;
-    border: solid #eeeeee 3px;
-}
-
 .other
 {
     background-color: #eeeeee;
@@ -782,7 +781,7 @@ aside a.btn
     position: relative;
 }
 
-.babysitter.profile-page button.apercu
+.babysitter.profile-page div.apercu
 {
     position: absolute;
     top: 30px;
@@ -831,7 +830,7 @@ aside a.btn
 
 .babysitter.profile-page .description .body
 {
-    padding-left: 130px;
+    padding-left: 150px;
 }
 
 .babysitter.profile-page .body textarea
@@ -899,19 +898,78 @@ aside a.btn
     color: #000000;
 }
 
+input#pn_pnbundle_babysitter_diplomas_1
+{
+    float: left;
+}
+
 label[for="pn_pnbundle_babysitter_diplomas_1"]
 {
-    margin: -35px 0 0 18px;
+    display: inherit;
+    margin-left: 18px;
 }
 
 #ageOfChildren li
 {
     padding-left: 24px;
+    height: 20px;
 }
 
 #languages li
 {
     padding-left: 24px;
+    height: 20px;
+}
+
+#pn_pnbundle_babysitter_favoriteactivities
+{
+    width: 100%;
+}
+
+#pn_pnbundle_babysitter_hobbies
+{
+    width: 100%;
+}
+
+.other div
+{
+    margin-top: 10px;
+}
+
+.pres-video
+{
+    height: 150px;
+    margin-bottom: 30px;
+    /* border: solid #eeeeee 3px; */
+    background-color: gray;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    padding-top: 63px;
+}
+
+#profile_image_upload
+{
+    background-color: black;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+}
+
+#choose-photo
+{
+    position: absolute;
+    top: 0px;
+    right: 30px;
+}
+
+#uploadfile{
+    display: none;
+}
+
+.newupload
+{
+    cursor: pointer;
 }
 
 
@@ -985,6 +1043,118 @@ table.calendar button
     background-color: #ffffff;
 }
 
+
+
+
+
+
+
+
+
+
+
+/***************Page conversation*****************/
+
+.message-topMenu
+{
+    background-color: #eeeeee;
+    font-weight: bold;
+    margin-bottom: 30px;
+    padding: 7px 20px;
+}
+
+.message-topMenu a
+{
+    width: 150px;
+    font-weight: bold;
+}
+
+.message-leftMenu
+{
+    margin-bottom: 30px;
+}
+
+.message-leftMenu .btn
+{
+    background-color: #ffffff;
+    border: solid #eeeeee 3px;
+    width: 100%;
+    padding: 5px;
+    font-weight: bold;
+    text-align: left;
+    border-radius: 0;
+    color: black;
+    height: inherit;
+    margin-top: -3px;
+}
+.message-leftMenu .btn:hover
+{
+    background-color: #eeeeee;
+}
+.message-leftMenu .btn.selected
+{
+    background-color: #eeeeee;
+}
+
+.message-leftMenu .unread
+{
+    display: inline-block;
+    text-align: center;
+    padding-top: 4px;
+}
+
+.conversation textarea
+{
+    width: 100%;
+    border: solid #f7c937 3px;
+    max-width: 100%;
+    color: #000000;
+}
+
+.conversation input[type="submit"]
+{
+    width: 110px;
+}
+
+.conversation form
+{
+    margin-bottom: 30px;
+}
+
+.conversation .arrow
+{
+    width: 10px;
+}
+
+.message
+{
+    color: #888888;
+    margin-bottom: 20px;
+}
+
+.message p
+{
+    color: #000000;
+    font-weight: bold;
+}
+
+.message .bulle
+{
+    display: inline-block;
+    width: 608px;
+    border: solid #eeeeee 3px;
+    vertical-align: top;
+    padding: 20px;
+}
+
+.conversation
+{
+    display: none;
+}
+.conversation.selected
+{
+    display: block;
+}
 
 
 
@@ -1357,3 +1527,5 @@ footer .social-bar
 {
     float: right;
 }
+
+

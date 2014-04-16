@@ -12,6 +12,8 @@ Pn\PnBundle\Entity\Message:
       type: string
       length: 255
       nullable: true
+    is_read:
+      type: boolean
     body:
       type: text
       nullable: true
@@ -31,4 +33,4 @@ Pn\PnBundle\Entity\Message:
         name: receiver_id
         referencedColumnName: id
   lifecycleCallbacks:
-    prePersist: [ setCreatedAtValue ]
+    prePersist: [ setCreatedAtValue, setIsReadValue ]

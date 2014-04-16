@@ -45,13 +45,87 @@
                 {% for j in 1..7 %}
                     <td>
                     {% if matrix[i][j] %}
-                        <button type="button" style="background-color: lightgreen;"></button>
+                        <button type="button" id="{{ i }}-{{ j }}" style="background-color: lightgreen;"></button>
                     {% else %}
-                        <button type="button"></button>
+                        <button type="button" id="{{ i }}-{{ j }}" ></button>
                     {% endif %}
                     </td>
                 {% endfor %}
             </tr>
         {% endfor %}
     </table>
+{% endmacro %}
+
+{% macro sortTable() %}
+    <div class="yca">
+        <div id="availability_module">
+
+            <table class="availability ycaT">
+                <tbody><tr style="border-bottom:solid 4px #2f3639;">
+                    <th style="text-align:left; padding-left:11px; width:132px;">Jours</th>
+                    <th>L</th>
+                    <th>Ma</th>
+                    <th>Me</th>
+                    <th>J</th>
+                    <th>V</th>
+                    <th> S</th>
+                    <th>D</th>
+                </tr>
+
+                <tr>
+                    <td>Tôt le matin</td>
+                    <td class="checkbox "><input type="checkbox" name="availability[1][0]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[1][1]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[1][2]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[1][3]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[1][4]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[1][5]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[1][6]" id="" value="Yes"></td>
+                </tr>
+
+                <tr>
+                    <td>Matin</td>
+                    <td class="checkbox "><input type="checkbox" name="availability[2][0]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[2][1]" id="" value="Yes" checked="checked"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[2][2]" id="" value="Yes" checked="checked"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[2][3]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[2][4]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[2][5]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[2][6]" id="" value="Yes"></td>
+                </tr>
+                <tr>
+                    <td>Après-midi</td>
+                    <td class="checkbox "><input type="checkbox" name="availability[3][0]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[3][1]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[3][2]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[3][3]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[3][4]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[3][5]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[3][6]" id="" value="Yes"></td>
+                </tr>
+                <tr>
+                    <td>Soirée</td>
+                    <td class="checkbox "><input type="checkbox" name="availability[4][0]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[4][1]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[4][2]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[4][3]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[4][4]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[4][5]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[4][6]" id="" value="Yes"></td>
+                </tr>
+                <tr>
+                    <td>Nuit</td>
+                    <td class="checkbox "><input type="checkbox" name="availability[5][0]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[5][1]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[5][2]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[5][3]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[5][4]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[5][5]" id="" value="Yes"></td>
+                    <td class="checkbox "><input type="checkbox" name="availability[5][6]" id="" value="Yes"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
 {% endmacro %}

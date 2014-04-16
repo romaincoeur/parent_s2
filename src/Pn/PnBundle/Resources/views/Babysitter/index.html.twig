@@ -1,8 +1,14 @@
 {# src/Pn/PnBundle/Resources/views/Babysitter/index.html.twig #}
 
+{% import "PnPnBundle::calendar.html.twig" as calendar %}
 {% extends "PnPnBundle::layout.html.twig" %}
 
 {% block title %}{{ parent() }} - Annonces{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/availability.css') }}" type="text/css" />
+{% endblock %}
 
 {% block body %}
     <div class="maptool wrap">
@@ -11,7 +17,7 @@
         </div>
         <div class="searchForm">
             <form action="{{ path('pn_search') }}" method="post">
-                <select class="btn" name="select">
+                <select class="btn" name="searchType">
                     <option value="nounou">Je cherche une nounou</option>
                     <option value="job">Je cherche un job</option>
                 </select>
@@ -35,7 +41,7 @@
                     </div>
                     <div id="collapseOne" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            A développer
+                            {{ calendar.sortTable() }}
                         </div>
                     </div>
                 </div>
@@ -67,7 +73,10 @@
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
                         <div class="panel-body">
-                            A dév
+                            <input type="radio" name=experience value="0" checked>Pas d'exigence<br>
+                            <input type="radio" name=experience value="1" >1 an<br>
+                            <input type="radio" name=experience value="3" >3 ans<br>
+                            <input type="radio" name=experience value="10" >10 ans
                         </div>
                     </div>
                 </div>
@@ -81,7 +90,11 @@
                     </div>
                     <div id="collapseFour" class="panel-collapse collapse">
                         <div class="panel-body">
-                            A dév
+                            <input type="checkbox" name="0-1">0-1 an<br>
+                            <input type="checkbox" name="1-3">1-3 ans<br>
+                            <input type="checkbox" name="3-6">3-6 ans<br>
+                            <input type="checkbox" name="6-10">6-10 ans<br>
+                            <input type="checkbox" name="10+">Plus de 10 ans<br>
                         </div>
                     </div>
                 </div>
@@ -95,7 +108,12 @@
                     </div>
                     <div id="collapseFive" class="panel-collapse collapse">
                         <div class="panel-body">
-                            A dév
+                            <input type="checkbox" name="fr">Français<br>
+                            <input type="checkbox" name="en">Anglais<br>
+                            <input type="checkbox" name="it">Italien<br>
+                            <input type="checkbox" name="es">Espagnol<br>
+                            <input type="checkbox" name="ru">Russe<br>
+                            <input type="checkbox" name="other">Autre<br>
                         </div>
                     </div>
                 </div>
@@ -109,7 +127,11 @@
                     </div>
                     <div id="collapseSix" class="panel-collapse collapse">
                         <div class="panel-body">
-                            A dév
+                            <input type="checkbox" name="nonfumeur">Non fumeur<br>
+                            <input type="checkbox" name="animaux">Pas d'animaux domestiques<br>
+                            <input type="checkbox" name="permis">Avec permis de conduire<br>
+                            <input type="checkbox" name="voiture">Avec voiture<br>
+                            <input type="checkbox" name="lettre">Lettres de recommandation<br>
                         </div>
                     </div>
                 </div>
@@ -123,7 +145,10 @@
                     </div>
                     <div id="collapseSeven" class="panel-collapse collapse">
                         <div class="panel-body">
-                            A dév
+                            <input type="checkbox" name="repasmaison">Repas cuisinés maison<br>
+                            <input type="checkbox" name="bio">Repas bio<br>
+                            <input type="checkbox" name="promenade">Promenade quotidienne<br>
+                            <input type="checkbox" name="notv">Zéro télé<br>
                         </div>
                     </div>
                 </div>
@@ -137,7 +162,10 @@
                     </div>
                     <div id="collapseHeight" class="panel-collapse collapse">
                         <div class="panel-body">
-                            A dév
+                            <input type="checkbox" name="cleaning">Ménage<br>
+                            <input type="checkbox" name="cooking">Cuisine<br>
+                            <input type="checkbox" name="ironing">Repassage<br>
+                            <input type="checkbox" name="homework">Aide aux devoirs<br>
                         </div>
                     </div>
                 </div>
@@ -161,8 +189,14 @@
                             {% else %}
                                 <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="{{ entity.user.hiddenName }}" class="photo" style="height: 120px;">
                             {% endif %}
+                            {% if entity.ratePrice %}
                             <p class="tarif">{{ entity.ratePrice }}€ / {{ entity.rateType }}</p>
+                            {% endif %}
+                            {% if app.user %}
+                            <strong>{{ entity.user.fullName() }}&nbsp;</strong>
+                            {% else %}
                             <strong>{{ entity.user.hiddenName() }}&nbsp;</strong>
+                            {% endif %}
                             <span class="balloon"></span>
                             <span class="balloon"></span>
                             <span class="balloon"></span>
@@ -191,6 +225,7 @@
     <script type="text/javascript">
 
         var latlng = new google.maps.LatLng(48.8575162, 2.3426246);
+        var zoneMarqueurs = new google.maps.LatLngBounds();
         // paris : 48.8575162	2.3426246
         //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
         //de définir des options d'affichage de notre carte
@@ -213,6 +248,7 @@
             position: nounou_position{{ loop.index }},
             map: map
         });
+        zoneMarqueurs.extend(  nounou_m{{ loop.index }}.getPosition() );
         var nounou_contentm{{ loop.index }} = '' +
                 '<a href="{{ path('babysitter_show', {'id': entity.id}) }}">' +
                 '   <div class="mini-profile" style="margin-left: 0;">' +
@@ -240,6 +276,9 @@
         });
         {% endif %}
         {% endfor %}
+        {% if entities %}
+        map.fitBounds(zoneMarqueurs);
+        {% endif %}
 
     </script>
     <script type="text/javascript">
@@ -249,7 +288,7 @@
                     function() {
                         $(this).children(".header").css('background-color','#e84355');
                         {% if app.environment == 'dev' %}
-                        $(this).children(".header").children(".balloon").css('background-image','url(../../bundles/pnpn/images/icons/balloon-white.png)');
+                        $(this).children(".header").children(".balloon").css('background-image','url(../../../bundles/pnpn/images/icons/balloon-white.png)');
                         {% else %}
                         $(this).children(".header").children(".balloon").css('background-image','url(../bundles/pnpn/images/icons/balloon-white.png)');
                         {% endif %}
@@ -257,7 +296,7 @@
                     , function() {
                         $(this).children(".header").css('background-color','#eeeeee');
                         {% if app.environment == 'dev' %}
-                        $(this).children(".header").children(".balloon").css('background-image','url(../../bundles/pnpn/images/icons/balloon-red.png)');
+                        $(this).children(".header").children(".balloon").css('background-image','url(../../../bundles/pnpn/images/icons/balloon-red.png)');
                         {% else %}
                         $(this).children(".header").children(".balloon").css('background-image','url(../bundles/pnpn/images/icons/balloon-red.png)');
                         {% endif %}
@@ -265,6 +304,7 @@
         })
 
     </script>
+    <script type="text/javascript" src="{{ asset('bundles/pnpn/js/availability.js') }}"></script>
 {% endblock %}
 
 

@@ -42,9 +42,14 @@ Passerelle : La Sorcière Polluair et le petit peuple vert !");
         $babysitter_manue->setUser($em->merge($this->getReference('user-manue')));
         $babysitter_manue->setCategory('babysitter');
 
+        $babysitter_julie = new Babysitter();
+        $babysitter_julie->setUser($em->merge($this->getReference('user-julie')));
+        $babysitter_julie->setCategory('aupair');
+
         $em->persist($babysitter_romain);
         $em->persist($babysitter_sarah);
         $em->persist($babysitter_manue);
+        $em->persist($babysitter_julie);
 
         $em->flush();
     }

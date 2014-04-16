@@ -16,6 +16,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Pn\PnBundle\Entity\Babysitter;
 
 class BabysitterAdmin extends Admin
 {
@@ -28,20 +29,19 @@ class BabysitterAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
             ->add('file', 'file', array('label' => 'Avatar', 'required' => false))
             ->add('trustpoints','integer')
             ->add('presentation')
             ->add('rate_price')
             ->add('rate_type')
             ->add('category')
+            ->add('diplomas')
         ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
             ->add('trustpoints')
             ->add('rate_price')
             ->add('rate_type')
@@ -52,7 +52,6 @@ class BabysitterAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('userUsername')
-            ->add('id')
             ->add('category')
             ->add('trustpoints')
             ->add('rate_price')
@@ -71,12 +70,19 @@ class BabysitterAdmin extends Admin
     {
         $showMapper
             ->add('id')
+            ->add('userUsername')
             ->add('avatar')
             ->add('trustpoints')
             ->add('presentation')
             ->add('rate_price')
             ->add('rate_type')
             ->add('category')
+            ->add('diplomas', 'choice', array(
+                'choices'   => Babysitter::getDiplomass(),
+                'expanded' => true,
+                'multiple' => true,
+                'required'  => true,
+            ))
         ;
     }
 }

@@ -1,0 +1,310 @@
+.dash_sitter_inner {
+
+    float: left;
+    height: auto;
+    margin-bottom: 10px;
+    padding: 15px 0px 25px 0;
+    width: 94%;
+}
+
+.yca{ float:left;
+    width:96%;
+    height: auto;
+    border-radius:4px;
+
+
+    position:relative;
+    behavior:url(PIE.htc);
+}
+
+.ycaT{ border-collapse:collapse;
+    width:100%;
+    font-weight:bold;
+    color:#2f3639;
+    margin:0px;
+    border: 1px solid #ccc
+}
+
+.ycaT th{ text-align:center;
+    padding:10px 0px;
+    font-weight:bold;
+    color:#2f3639;
+    font-size:15px;
+    border:solid 1px #d5d7d7;
+    width:60px;
+    border-right:none;
+    border-bottom:none;
+    border-top:none;}
+
+.ycaT th span{ width:132px;
+    color:#2f3639;
+    font-size:24px;
+    float:left;
+    text-align:left;
+    padding-left:20px; }
+
+.ycaT td{
+    text-align:center;
+    padding:10px 0px;
+    font-weight:bold;
+    color:#2f3639;
+    font-size:14px;
+    border:solid 1px #d5d7d7;
+    width:60px;
+    border-right:none;
+    border-bottom:none;}
+
+.ycaT td span{}
+
+.ycaT th :first-child { text-align:left; }
+.ycaT td :first-child {  border-left:0px;   }
+
+
+
+.your_contact_us_div {
+    float: left;
+    padding: 10px ;
+    width: 100%;
+    font-family:nunitoregular;
+}
+
+.your_availability_div {
+    float: left;
+    padding: 40px 39px 10px;
+    width: 100%;
+}
+
+/*************  availability ***************************/
+.your_availability_div .dash_sitter_right{ float:left;}
+
+.avail_cats {
+    border-left: 1px solid #C8C8C8;
+    float: left;
+    height: 202px;
+    margin-left: 23px;
+    margin-top: 22px;
+    padding: 10px 0 0 13px;
+    position:relative;
+    behavior:url(PIE.htc);
+    width: 175px; }
+
+.avail_cats h4 {
+    color:#2f3639;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    padding-left: 10px;}
+
+.avail_cats ul {
+    height: auto; float:left;
+    margin: 0 0 3px;
+    padding: 15px 0px 0px 12px;
+    width:99%}
+
+.avail_cats ul li{ float:left; width:100%;
+    margin:2px 0px;}
+
+.avail_cats li input {
+    height: 13px;
+    margin: 0;
+    padding: 0;
+    float:left;
+    width: 13px;}
+
+.avail_cats li label {
+    float:left;
+    margin:0px 0px 0px 5px;}
+
+.avail_short_notice {
+    background: #E5F7FF;
+    height: 67px;
+    margin-top: 3px;
+    padding:10px 10px; width:90% !important;}
+
+.footnote {
+    color: #898989;
+    font-size: 9px;
+    line-height: 12px;
+    padding: 25px 10px 0;}
+
+.avail_legend {
+    clear: left;
+    height: 20px;
+    padding: 10px 0 0 3px; }
+
+
+.avail_legend ul {
+    height: auto; float:left;
+    margin: 0 0 3px;
+    padding: 0px 0px 0px 12px;
+    width:99%}
+
+.avail_legend ul li{
+    float:left;
+    width: auto;
+    margin:2px 10px 2px 0px;}
+
+.avail_legend li input {
+    height: 13px;
+    margin: 0;
+    padding: 0;
+    float:left;
+    width: 13px;}
+
+.avail_legend li label {
+    float:left;
+    margin:0px 0px 0px 5px;}
+
+.short_noticediv {
+    background: none repeat scroll 0 0 #E5F7FF;
+    border-radius: 5px 5px 5px 5px;
+    margin: 15px 0 15px -10px;
+    padding: 10px;
+    position:relative;
+    behavior:url(PIE.htc);
+    float:left;
+    width:100%;
+}
+
+.short_noticediv h2 {
+    color: #03acef;
+    font-size: 14px;
+    font-weight: bold;
+    float:left; width:100%;
+    padding:10px 0px;
+}
+
+.float_contain {
+    overflow: hidden;
+    width: 98%;
+    float:left;
+
+}
+.file{
+    float: left;
+    padding:10px 0px;}
+
+.job_post_sms_field ul { float:left;	}
+
+.job_post_sms_field ul li {
+    list-style: none outside none;
+    margin: 0 0 10px;
+    padding: 0 0 0 20px;
+    position: relative;
+    float:left;
+    width:750px;
+}
+
+.job_post_sms_field  p { float:left; width:710px;}
+.job_post_sms_field ul li span{ float:left; margin:3px 5px 0px 0px;}
+.float_contain { float:left;
+    padding:10px;}
+
+.input_texft {
+    border: 1px solid #CCCCCC;
+    height: 22px;
+    margin: 0;
+    outline: medium none;
+    padding: 2px;	}
+
+.your_availability_div .fromp label{ width:135px !important;}
+
+/************* end availability ***************************/
+
+
+#availability_module table td.checked, #availability_module table td.checked:hover {
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: #78AB46;
+    /*    background-image: url("../images/ritee_19.png");*/
+    background-origin: padding-box;
+    background-position: center 7px;
+    background-repeat: no-repeat;
+    background-size: auto auto;
+}
+
+#availability_module table td {
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-left-color-value: #ACACAC;
+    border-left-style-ltr-source: physical;
+    border-left-style-rtl-source: physical;
+    border-left-style-value: solid;
+    border-left-width-ltr-source: physical;
+    border-left-width-rtl-source: physical;
+    border-left-width-value: 1px;
+    border-top-color: #ACACAC;
+    border-top-style: solid;
+    border-top-width: 1px;
+    cursor: pointer;
+    font-size: 11px;
+    height: 24px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    text-align: center;
+    vertical-align: middle;
+    width: 36px;
+    font-size:16px;
+    height:40px;
+}
+#availability_module table th, #availability_module table td {
+    border-bottom-color: #DEDEDE;
+    border-left-color-ltr-source: physical;
+    border-left-color-rtl-source: physical;
+    border-left-color-value: #DEDEDE;
+    border-right-color-ltr-source: physical;
+    border-right-color-rtl-source: physical;
+    border-right-color-value: #DEDEDE;
+}
+body, tr, th, td {
+    color: #353C3F;
+    font-family: Arial,Helvetica,sans-serif;
+    /*line-height: 15px;*/
+}
+
+
+#availability_module table td input {
+    display: none;
+}
+
+.available_class{
+    border-color: #ACACAC;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 16px;
+    height: 40px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;float:left;background-color:#78AB46;
+}
+.unavailable_class{
+    border-color: #ACACAC;
+    border-style: solid;
+    border-width: 1px;
+    font-size: 16px;
+    height: 40px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+    text-align: center;
+    vertical-align: middle;
+    width: 60px;float:left;
+}
+
+.checkbox
+{
+    display: table-cell;
+}

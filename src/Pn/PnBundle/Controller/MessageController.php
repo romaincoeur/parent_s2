@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Pn\PnBundle\Entity\Message;
 use Pn\PnBundle\Form\MessageType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * Message controller.
@@ -21,49 +23,99 @@ class MessageController extends Controller
      */
     public function indexAction()
     {
+        $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PnPnBundle:Message')->findAll();
+        $entities = $em->getRepository('PnPnBundle:Message')->getConversations($user);
+
+
+        // Sort messages by conversation
+        $result = array();
+
+        foreach ($entities as $raw)
+        {
+            $interlocuteur = $raw->getSender()==$user ? $raw->getReceiver() : $raw->getSender();
+            if (!array_key_exists ( $interlocuteur->getVirtualname() , $result ))
+            {
+                $form = $this->createForm(new MessageType(), new Message(), array(
+                    'action' => $this->generateUrl('message_send',array('to' => $interlocuteur->getId())),
+                    'method' => 'POST',
+                ));
+                $result[$interlocuteur->getVirtualname()]['messages'] = array();
+                $result[$interlocuteur->getVirtualname()]['unread'] = 0;
+                $result[$interlocuteur->getVirtualname()]['object'] = $interlocuteur;
+                $result[$interlocuteur->getVirtualname()]['form'] = $form->createView();
+            }
+            array_push ( $result[$interlocuteur->getVirtualname()]['messages'] , $raw );
+        }
+
+
 
         return $this->render('PnPnBundle:Message:index.html.twig', array(
-            'entities' => $entities,
+            'conversations' => $result,
         ));
     }
     /**
      * Creates a new Message entity.
      *
      */
-    public function createAction(Request $request)
+    public function sendAction(Request $request, $to)
     {
+        $em = $this->getDoctrine()->getManager();
+        $sender = $this->getUser();
+        $receiver = $em->getRepository('PnPnBundle:User')->findOneById($to);
         $entity = new Message();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createForm(new MessageType(), $entity, array(
+            'action' => $this->generateUrl('message_send', array('to' => $to)),
+            'method' => 'POST',
+        ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $entity->setSender($sender);
+            $entity->setReceiver($receiver);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('message_show', array('id' => $entity->getId())));
+            // Envoyer un email de confirmation
+            $Url = $this->generateUrl('message', array(), true);
+            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('nouveaumessage');
+            $body = str_replace(
+                array('%SENDER', '%MESSAGE', '%URL'),
+                array($sender->getFirstname(), $entity->getBody(), $Url),
+                $mail->getBody()
+            );
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject($mail->getObject())
+                ->setFrom($this->container->getparameter('mailer.from'))
+                ->setTo($receiver->getEmail())
+                ->setBody($body)
+            ;
+            $message->getHeaders()->get('Content-Type')->setValue('text/html');
+
+            $this->get('mailer')->send($message);
+
+            $response['success'] = true;
+            $response['message'] = $entity->getBody();
+            return new JsonResponse( $response );
         }
 
-        return $this->render('PnPnBundle:Message:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $response['success'] = false;
+        return new JsonResponse( $response );
     }
 
     /**
-    * Creates a form to create a Message entity.
-    *
-    * @param Message $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to create a Message entity.
+     *
+     * @param Message $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createCreateForm(Message $entity)
     {
         $form = $this->createForm(new MessageType(), $entity, array(
-            'action' => $this->generateUrl('message_create'),
+            'action' => $this->generateUrl('message_send'),
             'method' => 'POST',
         ));
 
@@ -133,12 +185,12 @@ class MessageController extends Controller
     }
 
     /**
-    * Creates a form to edit a Message entity.
-    *
-    * @param Message $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Message entity.
+     *
+     * @param Message $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Message $entity)
     {
         $form = $this->createForm(new MessageType(), $entity, array(
@@ -218,6 +270,6 @@ class MessageController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
-        ;
+            ;
     }
 }

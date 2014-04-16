@@ -109,4 +109,60 @@ class MailTemplate
         return $this->body;
     }
 
+    /**
+     * @var string
+     */
+    private $virtuaTtitle;
+
+
+    /**
+     * Set virtuaTtitle
+     *
+     * @param string $virtuaTtitle
+     * @return MailTemplate
+     */
+    public function setVirtuaTtitle($virtuaTtitle)
+    {
+        $this->virtuaTtitle = $virtuaTtitle;
+
+        return $this;
+    }
+
+    /**
+     * Get virtuaTtitle
+     *
+     * @return string 
+     */
+    public function getVirtuaTtitle()
+    {
+        return $this->virtuaTtitle;
+    }
+    /**
+     * @var string
+     */
+    private $virtualTitle;
+
+
+    /**
+     * Set virtualTitle
+     *
+     * @param string $virtualTitle
+     * @return MailTemplate
+     */
+    public function setVirtualTitle($virtualTitle)
+    {
+        $this->virtualTitle = $virtualTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get virtualTitle
+     *
+     * @return string 
+     */
+    public function getVirtualTitle()
+    {
+        return $this->virtualTitle;
+    }
 }

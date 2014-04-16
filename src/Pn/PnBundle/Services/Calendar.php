@@ -53,4 +53,51 @@ class Calendar
         return array_fill(1, 24 ,array_fill(1, 7, false));
     }
 
+    public function getString($calendarMatrix)
+    {
+        $calendar = '[(';
+
+        foreach ($calendarMatrix as &$tab)
+        {
+            foreach ($tab as &$case)
+            {
+                if ($case)
+                    $calendar = $calendar.'1';
+                else
+                    $calendar = $calendar.'0';
+            }
+            $calendar = $calendar.')(';
+
+        }
+        $calendar = rtrim($calendar,'(').']';
+        return $calendar;
+    }
+
+    public function newString()
+    {
+        return '[(0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)
+        (0000000)]';
+    }
 }

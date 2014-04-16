@@ -11,6 +11,9 @@ Pn\PnBundle\Entity\MailTemplate:
     title:
       type: string
       length: 255
+    virtualTitle:
+      type: string
+      length: 255
       unique: true
     object:
       type: string

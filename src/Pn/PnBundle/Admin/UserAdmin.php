@@ -32,6 +32,7 @@ class UserAdmin extends Admin
             ->add('lastname')
             ->add('email')
             ->add('type')
+            ->add('birthdate')
             ->add('address')
             ->add('latitude')
             ->add('longitude')
@@ -81,6 +82,7 @@ class UserAdmin extends Admin
             ->add('lastname')
             ->add('email')
             ->add('type')
+            ->add('birthdate')
             ->add('address')
             ->add('latitude')
             ->add('longitude')
@@ -90,6 +92,7 @@ class UserAdmin extends Admin
             ->add('is_activated')
             ->add('confirmed')
             ->add('confirmationToken')
+
         ;
     }
 }

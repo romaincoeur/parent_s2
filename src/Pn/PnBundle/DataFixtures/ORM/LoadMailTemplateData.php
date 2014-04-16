@@ -20,6 +20,7 @@ class LoadMailTemplateData extends AbstractFixture implements OrderedFixtureInte
     {
         $mail1 = new MailTemplate();
         $mail1->setTitle('mail de confirmation');
+        $mail1->setVirtualTitle('maildeconfirmation');
         $mail1->setObject('Parent-nounou - Mail de confirmation');
         $mail1->setBody('
         Soyez le bienvenu !<br>
@@ -28,13 +29,25 @@ class LoadMailTemplateData extends AbstractFixture implements OrderedFixtureInte
 
         $mail2 = new MailTemplate();
         $mail2->setTitle('mail de bienvenue');
+        $mail2->setVirtualTitle('maildebienvenue');
         $mail2->setObject('Bienvenue sur Parent-nounou.fr');
         $mail2->setBody('
         Soyez le bienvenu !<br>
         ');
 
+        $mail3 = new MailTemplate();
+        $mail3->setTitle('nouveau message');
+        $mail3->setVirtualTitle('nouveaumessage');
+        $mail3->setObject('Vous avez un nouveau message !');
+        $mail3->setBody('
+        %SENDER vous a envoyé un message : <br>
+        %MESSAGE <br>
+        cliquez <a href="%URL">ici</a> pour lui répondre.
+        ');
+
         $em->persist($mail1);
         $em->persist($mail2);
+        $em->persist($mail3);
 
         $em->flush();
     }

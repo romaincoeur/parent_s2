@@ -13,11 +13,11 @@
                     {% else %}
                         <a href="{{ path('pn_dashboard_recommendations') }}">Recommandations</a>
                     {% endif %}
-                    {% if app.request.requestUri == path('pn_dashboard_paiements') %}
+                    {#{% if app.request.requestUri == path('pn_dashboard_paiements') %}
                         <a href="" style="color: #BBBBBB;">Mes paiements</a>
                     {% else %}
                         <a href="{{ path('pn_dashboard_paiements') }}">Mes paiements</a>
-                    {% endif %}
+                    {% endif %}#}
                 </div>
                 <div class="left">
                     {% if app.request.requestUri == path('pn_dashboard') %}
@@ -33,11 +33,11 @@
                     {% else %}
                         <a href="{{ path('pn_dashboard_recommendations') }}">Recommandations</a>
                     {% endif %}
-                    {% if app.request.requestUri == path('pn_dashboard_revenus') %}
+                    {#{% if app.request.requestUri == path('pn_dashboard_revenus') %}
                         <a href="" style="color: #BBBBBB;">Mes revenus</a>
                     {% else %}
                         <a href="{{ path('pn_dashboard_revenus') }}">Mes revenus</a>
-                    {% endif %}
+                    {% endif %}#}
                 </div>
                 <div class="left">
                     {% if app.request.requestUri == path('pn_dashboard') %}

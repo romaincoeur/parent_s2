@@ -100,10 +100,30 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $encodedPassword = $encoder->encodePassword('azerty', $user_manu->getSalt());
         $user_manu->setPassword($encodedPassword);
 
+        $user_julie = new User();
+        $user_julie->setType('nounou');
+        $user_julie->setFirstname('Julie');
+        $user_julie->setLastname('Mousse');
+        $user_julie->setEmail('julie.mousse@gmail.com');
+        $user_julie->setIsActivated(true);
+        $user_julie->setPhone("06 34 46 77 87");
+        $user_julie->setLatitude(49.25416601);
+        $user_julie->setLongitude(4.03211587);
+        $user_julie->setAddress('Centre-Ville, 51100 Reims, France');
+        $user_julie->setConfirmed(true);
+        $user_julie->setConfirmationToken('');
+        // 48.8500050	2.3353719
+
+        // set password
+        $encoder = $factory->getEncoder($user_julie);
+        $encodedPassword = $encoder->encodePassword('azerty', $user_julie->getSalt());
+        $user_julie->setPassword($encodedPassword);
+
         $em->persist($user1);
         $em->persist($user2);
         $em->persist($user_sarah);
         $em->persist($user_manu);
+        $em->persist($user_julie);
 
         $em->flush();
 
@@ -111,6 +131,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $this->addReference('user-anna', $user2);
         $this->addReference('user-sarah', $user_sarah);
         $this->addReference('user-manue', $user_manu);
+        $this->addReference('user-julie', $user_julie);
     }
 
     public function getOrder()

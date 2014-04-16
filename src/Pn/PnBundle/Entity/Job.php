@@ -94,11 +94,6 @@ class Job
      */
     private $updated_at;
 
-    /**
-     * @var \Pn\PnBundle\Entity\Babysittercategory
-     */
-    private $babysittercategory;
-
 
     /**
      * Get id
@@ -478,28 +473,7 @@ class Job
         return $this->updated_at;
     }
 
-    /**
-     * Set babysittercategory
-     *
-     * @param \Pn\PnBundle\Entity\Babysittercategory $babysittercategory
-     * @return Job
-     */
-    public function setBabysittercategory(\Pn\PnBundle\Entity\Babysittercategory $babysittercategory = null)
-    {
-        $this->babysittercategory = $babysittercategory;
 
-        return $this;
-    }
-
-    /**
-     * Get babysittercategory
-     *
-     * @return \Pn\PnBundle\Entity\Babysittercategory 
-     */
-    public function getBabysittercategory()
-    {
-        return $this->babysittercategory;
-    }
     /**
      * @ORM\PrePersist
      */

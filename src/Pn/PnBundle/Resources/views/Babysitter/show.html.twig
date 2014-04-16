@@ -26,7 +26,9 @@
                     {% endif %}
                 </div>
                 <div class="right">
+                    {% if entity.ratePrice %}
                     <div class="tarif">{{ entity.ratePrice }}€ / {{ entity.rateType }}</div>
+                    {% endif %}
                     {% if (app.user) and (app.user.type == 'nounou') %}
                         {% if app.user.babysitter.id == id %}
                             <a href="{{ path('myprofile_edit') }}" class="btn bg-yellow engage">edit</a>
@@ -36,6 +38,10 @@
                             </button>
                             {#<button class="btn bg-yellow engage">engager</button>#}
                         {% endif %}
+                    {% else %}
+                        <button class="btn bg-yellow icon">
+                            <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
+                        </button>
                     {% endif %}
                 </div>
                 {% if app.user %}
@@ -57,15 +63,15 @@
             <div class="col-md-4">
                 {% if app.user %}
                     <div class="coords">
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.user.phone }}&nbsp;<img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.user.phone }}&nbsp;<img src="{{ asset('bundles/pnpn/images/icons/check.png') }}" alt="vérifié"><br>
                     </div>
                 {% endif %}
                 <div class="details">
-                    <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="telephone"> Paris, 14e <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="telephone"> 20 ans <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="telephone"> {{ entity.experience }} ans d'expérience <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="telephone"> Paris, 14e <img src="{{ asset('bundles/pnpn/images/icons/check.png') }}" alt="vérifié"><br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="telephone"> 20 ans <img src="{{ asset('bundles/pnpn/images/icons/check.png') }}" alt="vérifié"><br>
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="telephone"> {{ entity.experience }} ans d'expérience <img src="{{ asset('bundles/pnpn/images/icons/check.png') }}" alt="vérifié"> <br>
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="telephone"> Agrément assistante maternelle <br>
-                    Brevet d'aptitude aux fonctions d'animateur <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
+                    Brevet d'aptitude aux fonctions d'animateur <img src="{{ asset('bundles/pnpn/images/icons/check.png') }}" alt="vérifié"> <br>
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="telephone"> Prise en charge des enfants de 0 à 1 an, 1 à 3 ans, 4 à 6 ans <br>
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone"> Français, Italien <br>
                 </div>
@@ -123,7 +129,7 @@
         </div>
 
         <div class="recommandations">
-            <div class="banner bg-red"><h4>Mes recommandations</h4></div>
+            <div class="banner bg-red"><h4>Recommandations</h4></div>
             <form action="" method="post">
                 <input type="search" placeholder="Ecrivez une recommandation">
                 <input type="submit" value="publier">

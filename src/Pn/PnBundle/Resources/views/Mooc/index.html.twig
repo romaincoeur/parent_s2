@@ -21,7 +21,7 @@
 
         <div class="list row">
 
-            <div class="col-md-4">
+            {#<div class="col-md-4">
                 <div class="mooc-mini new">
                     <div class="header">
                         <img src="{{ asset('bundles/pnpn/images/icons/alaune.png') }}" alt="a la une">
@@ -36,7 +36,7 @@
                         <input type="checkbox">Organisation professionnel<br>
                     </div>
                 </div>
-            </div>
+            </div>#}
 
             {% for entity in entities %}
                 <a href="{{ path('mooc_show', { 'id': entity.id }) }}">

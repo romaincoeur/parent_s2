@@ -5,248 +5,523 @@
 
 {% block title %}{{ parent() }} - Profil{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/crop.css') }}" type="text/css" />
+{% endblock %}
+
 {% block body %}
     <div class="profile-page babysitter wrap">
 
-        <form class="calendarForm" id="editBabysitterForm" action="{{ path('babysitter_edit', {'id': id}) }}" method="post" {{ form_enctype(form) }}>
 
-            <div id="map" style="height: 180px;">
-                Veuillez patienter pendant le chargement de la carte...
-            </div>
-            <a href="{{ path('myprofile') }}"><button class="apercu bg-red white">apercu de votre profil</button></a>
+        <div id="map" style="height: 180px;">
+            Veuillez patienter pendant le chargement de la carte...
+        </div>
+        <a href="{{ path('myprofile_show') }}"><div class="apercu bg-red white">apercu de votre profil</div></a>
 
 
-            <div class="description">
-                <div class="header">
-                    <div class="left">
-                        {% if entity.avatar %}
-                            <img class="profile-picture" src="{{ asset('uploads/babysitters/' ~ entity.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">
-                        {% else %}
-                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
-                        {% endif %}
-                        {{ form_row(form.file) }}
-                    </div>
-                    <div class="right">
-                        <div class="tarif">{{ form_errors(form.rate_price) }}{{ form_widget(form.rate_price) }}€ / {{ form_errors(form.rate_type) }}{{ form_widget(form.rate_type) }}</div>
-                    </div>
-                    {{ form_errors(form.user.firstname) }}
-                    {{ form_widget(form.user.firstname) }}
-                    {{ form_errors(form.user.lastname) }}
-                    {{ form_widget(form.user.lastname) }}
-                </div>
-                <div class="body">
-                    {{ form_errors(form.presentation) }}
-                    {{ form_widget(form.presentation) }}
-                </div>
-            </div>
-
-            {{ form_errors(form) }}
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="coords">
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ form_widget(form.user.phone) }}&nbsp;<br>
-                    </div>
-                    <div class="details">
-                        <div id="address">
-                            <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="marker">
-                            {{ form_errors(form.user.address) }}
-                            {{ form_widget(form.user.address) }}
-                        </div>
-                        <div id="birthdate">
-                            <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier">
-                            {{ form_errors(form.user.birthdate) }}
-                            {{ form_widget(form.user.birthdate) }}
-                        </div>
-                        <div id="experience">
-                            <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
-                            {{ form_widget(form.experience) }} ans d'expérience
-                        </div>
-                        <div id="diplomas">
-                            <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
-                            <b>Vos diplomes</b>
-                            {{ form_errors(form.diplomas) }}
-                            {% for child in form.diplomas %}
-                                <li style="list-style-type: none;">
-                                    {{ form_widget(child) }}
-                                    {{ form_label(child) }}
-                                </li>
-                            {% endfor %}
-                        </div>
-                        <div id="ageOfChildren">
-                            <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age">
-                            <b>Âges des enfants pris en charge</b>
-                            {{ form_errors(form.ageOfChildren) }}
-                            {% for child in form.ageOfChildren %}
-                                <li style="list-style-type: none;">
-                                    {{ form_widget(child) }}
-                                    {{ form_label(child) }}
-                                </li>
-                            {% endfor %}
-                        </div>
-                        <div id="languages">
-                            <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="languages">
-                            <b>Langues parlées</b>
-                            {{ form_errors(form.languages) }}
-                            {% for child in form.languages %}
-                                <li style="list-style-type: none;">
-                                    {{ form_widget(child) }}
-                                    {{ form_label(child) }}
-                                </li>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 calendar">
-                    {{ calendar.editTable(calendarMatrix) }}
-                </div>
-                <div class="col-md-4">
-                    {% if entity.video %}
-                        <div class="pres-video">
-                            <p>video</p>
-                        </div>
+        <div class="description">
+            <div class="header">
+                <div class="left" style="position: relative; ">
+                    {% if entity.avatar %}
+                        <img class="profile-picture" src="{{ asset('uploads/babysitters/' ~ entity.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">
+                    {% else %}
+                        <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
                     {% endif %}
-                    <div class="other">
-                        <div id="favoriteactivities">
-                            <b>Mes activités préférées avec les enfants :</b>
-                            {{ form_widget(form.favoriteactivities) }}
-                        </div>
+                    <div id="choose-photo" class="dropdown">
+                        <button type="button" class="btn choose-photo-button js-dropdown-toggle dropdown-toggle" id="profile_image_upload" data-toggle="dropdown">
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-modif2.png') }}" alt="modif profile">
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="profile_image_upload" style="list-style-type: none; top: 40px;">
+                            <li id="photo-choose-existing" class="photo-choose-existing upload-photo" role="presentation">
+                                <input type="file" class="uploadfile" id="uploadfile">
+                                <div class="newupload">Changer de photo</div>
+                            </li>
+                            <li id="photo-delete-image" class="" role="presentation">
+                                <button type="button" class="dropdown-link" role="menuitem">Supprimer</button>
+                            </li>
+                        </ul>
+                    </div>
 
-                        <div id="hobbies">
-                            <b>Mes loisirs :</b> <br>
-                            {{ form_widget(form.hobbies) }}
-                        </div>
+                    <div class="modal fade" id="cropDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog" style="width: 600px;">
+                            <div class="modal-content">
 
-                        <div id="extratasks">
-                            <b>Tâches supplémentaire :</b>
-                            {{ form_widget(form.anythingelse) }}
-                        </div>
+                                <div class="modal-header bg-red">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                    <h3 id="myModalLabel">Changer la photo</h3>
+                                </div>
+                                <div class="modal-body">
 
-                        <div id="petitsplus">
-                            <b>Les petits plus :</b>
-                            {{ form_errors(form.petitsplus) }}
-                            {% for child in form.petitsplus %}
-                                <li style="list-style-type: none;">
-                                    {{ form_widget(child) }}
-                                    {{ form_label(child) }}
-                                </li>
-                            {% endfor %}
-                        </div>
+                                    <div class="example">
 
-                        <div id="particularite">
-                            <b>Particularités :</b>
-                            {{ form_errors(form.particularite) }}
-                            {% for child in form.particularite %}
-                                <li style="list-style-type: none;">
-                                    {{ form_widget(child) }}
-                                    {{ form_label(child) }}
-                                </li>
-                            {% endfor %}
+                                        <div class="default">
+                                            <div class="cropMain">
+
+                                            </div>
+                                            <div class="cropSlider noUi-target">
+
+                                            </div>
+                                            <button class="cropButton" id="cropButton">Valider</button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                </div>
+                <div class="right">
+                    <div class="tarif">{{ form_errors(form.rate_price) }}{{ form_widget(form.rate_price) }}€ / {{ form_errors(form.rate_type) }}{{ form_widget(form.rate_type) }}</div>
+                </div>
+                {{ form_errors(form.user.firstname) }}
+                {{ form_widget(form.user.firstname) }}
+                {{ form_errors(form.user.lastname) }}
+                {{ form_widget(form.user.lastname) }}
+            </div>
+            <div class="body">
+                {{ form_errors(form.presentation) }}
+                {{ form_widget(form.presentation) }}
+            </div>
+        </div>
+
+        {{ form_errors(form) }}
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="coords">
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ form_widget(form.user.phone) }}&nbsp;<br>
+                </div>
+                <div class="details">
+                    <div id="address">
+                        <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="marker">
+                        {{ form_errors(form.user.address) }}
+                        {{ form_widget(form.user.address) }}
+                    </div>
+                    <div id="birthdate">
+                        <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier">
+                        {{ form_errors(form.user.birthdate) }}
+                        {{ form_widget(form.user.birthdate) }}
+                    </div>
+                    <div id="experience">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
+                        {{ form_widget(form.experience) }} ans d'expérience
+                    </div>
+                    <div id="diplomas">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
+                        <b>Vos diplomes</b>
+                        {{ form_errors(form.diplomas) }}
+                        {% for child in form.diplomas %}
+                            <li style="list-style-type: none;">
+                                {{ form_widget(child) }}
+                                {{ form_label(child) }}
+                            </li>
+                        {% endfor %}
+                    </div>
+                    <div id="ageOfChildren">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age">
+                        <b>Âges des enfants pris en charge</b>
+                        {{ form_errors(form.ageOfChildren) }}
+                        {% for child in form.ageOfChildren %}
+                            <li style="list-style-type: none;">
+                                {{ form_widget(child) }}
+                                {{ form_label(child) }}
+                            </li>
+                        {% endfor %}
+                    </div>
+                    <div id="languages">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="languages">
+                        <b>Langues parlées</b>
+                        {{ form_errors(form.languages) }}
+                        {% for child in form.languages %}
+                            <li style="list-style-type: none;">
+                                {{ form_widget(child) }}
+                                {{ form_label(child) }}
+                            </li>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+            <div class="col-md-4 calendar">
+                {{ calendar.editTable(calendarMatrix) }}
+            </div>
+            <div class="col-md-4 right-panel">
+                <div class="pres-video">
+                    <p>+ Ajouter une vidéo de présentation</p>
+                </div>
+                <div class="other">
+                    <div id="favoriteactivities" style="margin-top: 0;">
+                        {{ form_errors(form.favoriteactivities) }}
+                        {{ form_widget(form.favoriteactivities) }}
+                    </div>
 
-            {{ form_rest(form) }}
+                    <div id="hobbies">
+                        {{ form_errors(form.hobbies) }}
+                        {{ form_widget(form.hobbies) }}
+                    </div>
 
-            <input type="submit" value="Enregistrer">
+                    <div id="particularite">
+                        <b>Atouts :</b>
+                        {{ form_errors(form.particularite) }}
+                        {% for child in form.particularite %}
+                            <li style="list-style-type: none;">
+                                {{ form_widget(child) }}
+                                {{ form_label(child) }}
+                            </li>
+                        {% endfor %}
+                    </div>
 
-        </form>
+                    <div id="extratasks">
+                        <b>Tâches supplémentaire :</b>
+                        {{ form_errors(form.extraTasks) }}
+                        {% for child in form.extraTasks %}
+                            <li style="list-style-type: none;">
+                                {{ form_widget(child) }}
+                                {{ form_label(child) }}
+                            </li>
+                        {% endfor %}
+                    </div>
+
+                    <div id="petitsplus">
+                        <b>Les petits plus :</b>
+                        {{ form_errors(form.petitsplus) }}
+                        {% for child in form.petitsplus %}
+                            <li style="list-style-type: none;">
+                                {{ form_widget(child) }}
+                                {{ form_label(child) }}
+                            </li>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
-        var geocoder;
-        var carte;
-        var marqueur;
 
-        function init_map() {
-            geocoder = new google.maps.Geocoder();
-            {% if entity.user.latitude and entity.user.longitude %}
-            var latlng = new google.maps.LatLng({{ entity.user.latitude }}, {{ entity.user.longitude }});
-            {% else %}
-            var latlng = new google.maps.LatLng(48.8575162,	2.3426246);
-            {% endif %}
-            // paris : 48.8575162	2.3426246
-            //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
-            //de définir des options d'affichage de notre carte
-            var options = {
-                center: latlng,
-                zoom: 13,
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-            };
+        $(function() {
+            var geocoder;
+            var carte;
+            var marqueur;
+
+            function init_map() {
+                geocoder = new google.maps.Geocoder();
+                {% if entity.user.latitude and entity.user.longitude %}
+                var latlng = new google.maps.LatLng({{ entity.user.latitude }}, {{ entity.user.longitude }});
+                {% else %}
+                var latlng = new google.maps.LatLng(48.8575162,	2.3426246);
+                {% endif %}
+                // paris : 48.8575162	2.3426246
+                //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
+                //de définir des options d'affichage de notre carte
+                var options = {
+                    center: latlng,
+                    zoom: 13,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
 
 //constructeur de la carte qui prend en paramêtre le conteneur HTML
 //dans lequel la carte doit s'afficher et les options
-            carte = new google.maps.Map(document.getElementById("map"), options);
+                carte = new google.maps.Map(document.getElementById("map"), options);
 
 
 
 //création du marqueur
-            marqueur = new google.maps.Marker({
-                {% if entity.user.latitude and entity.user.longitude %}
-                position: new google.maps.LatLng({{ entity.user.latitude }}, {{ entity.user.longitude }}),
-                {% else %}
-                position: new google.maps.LatLng(48.8567,2.3508),
-                {% endif %}
-                draggable:true,
-                map: carte
-            });
+                marqueur = new google.maps.Marker({
+                    {% if entity.user.latitude and entity.user.longitude %}
+                    position: new google.maps.LatLng({{ entity.user.latitude }}, {{ entity.user.longitude }}),
+                    {% else %}
+                    position: new google.maps.LatLng(48.8567,2.3508),
+                    {% endif %}
+                    draggable:true,
+                    map: carte
+                });
 
-            google.maps.event.addListener(marqueur, 'dragend', function(event) {
-                carte.setCenter(marqueur.getPosition());
-                setAddressFromMap(marqueur.getPosition());
-            });
+                google.maps.event.addListener(marqueur, 'dragend', function(event) {
+                    carte.setCenter(marqueur.getPosition());
+                    setAddressFromMap(marqueur.getPosition());
+                });
 
-            google.maps.event.addListener(carte, 'dragend', function() {
-                marqueur.setPosition(carte.getCenter());
-                setAddressFromMap(carte.getCenter());
-            });
+                google.maps.event.addListener(carte, 'dragend', function() {
+                    marqueur.setPosition(carte.getCenter());
+                    setAddressFromMap(carte.getCenter());
+                });
 
-            google.maps.event.addListener(carte, 'zoom_changed', function() {
-                marqueur.setPosition(carte.getCenter());
-                setAddressFromMap(carte.getCenter());
-            });
-        }
-
-
-        init_map();
-        $('#map').animate({marginTop: "0",opacity: 'show'}, 700, function() {init_map();});
+                google.maps.event.addListener(carte, 'zoom_changed', function() {
+                    marqueur.setPosition(carte.getCenter());
+                    setAddressFromMap(carte.getCenter());
+                });
+            }
 
 
-        function setAddressFromText() {
-            var address = document.getElementById('pn_pnbundle_babysitter_user_address').value;
-            geocoder.geocode( { 'address': address}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    carte.setCenter(results[0].geometry.location);
-                    carte.setZoom(19);
-                    marqueur.setPosition(results[0].geometry.location);
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
+            init_map();
+            $('#map').animate({marginTop: "0",opacity: 'show'}, 700, function() {init_map();});
 
 
-        function setAddressFromMap(latlng) {
-            geocoder.geocode({'latLng': latlng}, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-                        document.getElementById('pn_pnbundle_babysitter_user_address').value = results[1].formatted_address;
+            function setAddressFromText() {
+                var address = document.getElementById('pn_pnbundle_babysitter_user_address').value;
+                geocoder.geocode( { 'address': address}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        carte.setCenter(results[0].geometry.location);
+                        carte.setZoom(19);
+                        marqueur.setPosition(results[0].geometry.location);
                     } else {
-                        document.getElementById('pn_pnbundle_babysitter_user_address').value = 'Pas d\'adresse trouvée';
+                        alert('Geocode was not successful for the following reason: ' + status);
                     }
-                } else {
-                    document.getElementById('pn_pnbundle_babysitter_user_address').value = status;
+                });
+            }
+
+
+            function setAddressFromMap(latlng) {
+                geocoder.geocode({'latLng': latlng}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[1]) {
+                            document.getElementById('pn_pnbundle_babysitter_user_address').value = results[1].formatted_address;
+                            updateField('pn_pnbundle_babysitter_user_address', 'address', $('#pn_pnbundle_babysitter_user_address').val());
+                        } else {
+                            document.getElementById('pn_pnbundle_babysitter_user_address').value = 'Pas d\'adresse trouvée';
+                        }
+                    } else {
+                        document.getElementById('pn_pnbundle_babysitter_user_address').value = status;
+                    }
+                    document.getElementById('pn_pnbundle_babysitter_user_latitude').value = latlng.lat();
+                    document.getElementById('pn_pnbundle_babysitter_user_longitude').value = latlng.lng();
+                    updateField('pn_pnbundle_babysitter_user_latitude', 'latitude', $('#pn_pnbundle_babysitter_user_latitude').val());
+                    updateField('pn_pnbundle_babysitter_user_longitude', 'longitude', $('#pn_pnbundle_babysitter_user_longitude').val());
+                });
+            }
+        })
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            // update a field with AJAX method
+            function updateField( $fieldId, $parameter, $value ){
+
+                $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat right white');
+
+                $.ajax({
+                    type        : "POST",
+                    url         : "{{ path('babysitter_update_field', { 'id': entity.id}) }}",
+                    data        : { parameter: $parameter, value: $value },
+                    success     : function(response) {
+                        if (response.success)
+                        {
+                            $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/check.png') }}") no-repeat right white');
+                        }
+                        else
+                        {
+                            $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/error.png') }}") no-repeat right white');
+                        }
+                        if (response.message)
+                        {
+                            alert(response.message);
+                        }
+                    },
+                    error     : function() {
+                        $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/error.png') }}") no-repeat right white');
+                    }
+                });
+
+            }
+
+            // update the calendar with AJAX method
+            function updateCalendar( coords, value, callback1, callback2 ){
+
+                $.ajax({
+                    type        : "POST",
+                    url         : "{{ path('babysitter_updateCalendarAJAX', { 'id': entity.id}) }}",
+                    data        : { coords: coords, value: value },
+                    success     : function(data) {
+                        callback1(data);
+                    },
+                    error     : function(data) {
+                        callback2(data);
+                    }
+                });
+
+            }
+
+            // mapping fields to AJAX Upload
+
+            $('#pn_pnbundle_babysitter_user_firstname').change(function(){
+                updateField($(this).attr('id'), 'firstname', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_user_lastname').change(function(){
+                updateField($(this).attr('id'), 'lastname', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_rate_price').change(function(){
+                updateField($(this).attr('id'), 'rate_price', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_rate_type').change(function(){
+                updateField($(this).attr('id'), 'rate_type', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_presentation').change(function(){
+                updateField($(this).attr('id'), 'presentation', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_user_phone').change(function(){
+                updateField($(this).attr('id'), 'phone', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_user_address').change(function(){
+                updateField($(this).attr('id'), 'address', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_user_birthdate_day').change(function(){
+                updateField($(this).attr('id'), 'birthdate_day', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_user_birthdate_month').change(function(){
+                updateField($(this).attr('id'), 'birthdate_month', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_user_birthdate_year').change(function(){
+                updateField($(this).attr('id'), 'birthdate_year', $(this).val());
+            })
+            $('#pn_pnbundle_babysitter_experience').change(function(){
+                updateField($(this).attr('id'), 'experience', $(this).val());
+            })
+            $('input[name="pn_pnbundle_babysitter[diplomas][]"]').change(function(){
+                updateField('diplomas', 'diplomas', $(this).val())
+            })
+            $('input[name="pn_pnbundle_babysitter[ageOfChildren][]"]').change(function(){
+                updateField('ageOfChildren', 'ageOfChildren', $(this).val())
+            })
+            $('input[name="pn_pnbundle_babysitter[languages][]"]').change(function(){
+                updateField('languages', 'languages', $(this).val())
+            })
+            $('input[name="pn_pnbundle_babysitter[particularite][]"]').change(function(){
+                updateField('particularite', 'particularite', $(this).val())
+            })
+            $('input[name="pn_pnbundle_babysitter[extraTasks][]"]').change(function(){
+                updateField('extratasks', 'extraTasks', $(this).val())
+            })
+            $('input[name="pn_pnbundle_babysitter[petitsplus][]"]').change(function(){
+                updateField('petitsplus', 'petitPlus', $(this).val())
+            })
+
+
+            // Calendar AJAX update and feedback
+            $(".calendar button").click(function(){
+
+                if ($(this).css('background-color') == 'rgb(255, 255, 255)')
+                {
+                    $(this).css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat center white');
+                    updateCalendar(
+                            $(this).attr('id'),
+                            1,
+                            function(response){
+                                if (response.success)
+                                {
+                                    $('#'+response.id).css('background','lightgreen');
+                                }
+                                else
+                                {
+                                    $('#'+response.id).css('background','url("{{ asset('bundles/pnpn/images/icons/error.gif') }}") no-repeat center white');
+                                }
+                            },
+                            function(response)
+                            {
+                                $('#'+response.id).css('background','url("{{ asset('bundles/pnpn/images/icons/error.gif') }}") no-repeat center white');
+                            }
+                    )
+
                 }
-                document.getElementById('pn_pnbundle_babysitter_user_latitude').value = latlng.lat();
-                document.getElementById('pn_pnbundle_babysitter_user_longitude').value = latlng.lng();
+                else
+                {
+                    $(this).css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat center lightgreen');
+                    updateCalendar(
+                            $(this).attr('id'),
+                            0,
+                            function(response){
+                                if (response.success)
+                                {
+                                    $('#'+response.id).css('background','white');
+                                }
+                                else
+                                {
+                                    $('#'+response.id).css('background','url("{{ asset('bundles/pnpn/images/icons/error.gif') }}") no-repeat center lightgreen');
+                                }
+                            },
+                            function(error){
+                                $('#'+response.id).css('background','url("{{ asset('bundles/pnpn/images/icons/error.gif') }}") no-repeat center lightgreen');
+                            }
+                    )
+
+                }
             });
-        }
+        })
+
+    </script>
+    <script src="{{ asset('bundles/pnpn/js/crop.min.js') }}"></script>
+    <script>
+        $(function() {
+            function loadImageFile(){
+                $('#cropDialog').modal('show');
+                if(document.getElementById("uploadfile").files.length===0)
+                    return;
+                var e=document.getElementById("uploadfile").files[0];
+                if(!rFilter.test(e.type))
+                {return}
+                oFReader.readAsDataURL(e)
+            }
+
+            $('#cropDialog').modal({ show: false})
+            var one=new CROP;
+            one.init(".default");
+            one.loadImg("{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}");
+
+            $("button#cropButton").on("click", function(e){
+                e.preventDefault();
+                $('#cropDialog').modal({ show: false});
+                alert('salut');
+                /*            $("canvas").remove();
+                 $(".header").after('<canvas width="240" height="240" id="canvas"/>');
+                 var e=document.getElementById("canvas").getContext("2d"),
+                 t=new Image,n=coordinates(one).w,
+                 r=coordinates(one).h,
+                 i=coordinates(one).x,
+                 s=coordinates(one).y,
+                 o=240,u=240;
+                 t.src=coordinates(one).image;
+
+                 t.onload=function(){
+                 e.drawImage(t,i,s,n,r,0,0,o,u);
+                 $("canvas").addClass("output").show().delay("4000").fadeOut("slow")
+                 }*/
+            });
+
+            // Map designed upload button to input type=file
+            $("body").on("click",".newupload",function(){
+                $(".uploadfile").click()
+            });
+
+            $("input#uploadfile").change(function(){
+                loadImageFile();
+                $(".uploadfile").wrap("<form>").closest("form").get(0).reset();
+                $(".uploadfile").unwrap()
+            });
+
+            oFReader=new FileReader,rFilter=/^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+            oFReader.onload=function(e){
+                $(".example").html('' +
+                        '<div class="default">' +
+                        '   <div class="cropMain"></div>' +
+                        '   <div class="cropSlider"></div>' +
+                        '   <button class="cropButton">Valider</button>' +
+                        '</div>'
+                );
+                one=new CROP;
+                one.init(".default");
+                one.loadImg(e.target.result)
+            }
+        })
     </script>
 {% endblock %}
 
