@@ -20,7 +20,41 @@
             </div>
             <div class="modal-body">
                 <div id="registerErrors"></div>
-                {{ render(controller("PnPnBundle:Default:Register")) }}
+
+                <form id="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(register_form) }}>
+
+                    {{ form_errors(register_form.type) }}
+                    {{ form_widget(register_form.type) }}
+
+                    <div class="info">
+                        <p>L\'inscription pour les parents coute 9€50 payable en une fois, valable à vie.</p>
+                    </div>
+
+                    {{ form_errors(register_form.firstname) }}
+                    {{ form_widget(register_form.firstname) }}
+
+                    {{ form_errors(register_form.lastname) }}
+                    {{ form_widget(register_form.lastname) }}
+
+                    {{ form_errors(register_form.email) }}
+                    {{ form_widget(register_form.email) }}
+
+                    {{ form_errors(register_form.rawPassword.first) }}
+                    {{ form_widget(register_form.rawPassword.first) }}
+
+                    {{ form_errors(register_form.rawPassword.second) }}
+                    {{ form_widget(register_form.rawPassword.second) }}
+
+                    {{ form_errors(register_form.babysitter) }}
+                    {{ form_widget(register_form.babysitter) }}
+
+
+                    {{ form_rest(register_form) }}
+
+                    <button type="submit">Inscription</button>
+
+
+                </form>
             </div>
         </div>
     </div>

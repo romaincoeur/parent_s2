@@ -55,11 +55,11 @@
                     </div>
                     <div id="collapseTwo" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <input type="checkbox" name="babysitter">Baby sitter<br>
-                            <input type="checkbox" name="assistanteMaternelle">Assistante maternelle<br>
-                            <input type="checkbox" name="animatrice">Animatrice<br>
-                            <input type="checkbox" name="nounou">Nounou à domicile<br>
-                            <input type="checkbox" name="filleaupair">Jeune fille au pair<br>
+                            <input type="checkbox" name="category[babysitter]" checked="checked">Baby sitter<br>
+                            <input type="checkbox" name="category[assistanteMaternelle]" checked="checked">Assistante maternelle<br>
+                            <input type="checkbox" name="category[animatrice]" checked="checked">Animatrice<br>
+                            <input type="checkbox" name="category[nounou]" checked="checked">Nounou à domicile<br>
+                            <input type="checkbox" name="category[aupair]" checked="checked">Jeune fille au pair<br>
                         </div>
                     </div>
                 </div>
@@ -73,10 +73,10 @@
                     </div>
                     <div id="collapseThree" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <input type="radio" name=experience value="0" checked>Pas d'exigence<br>
-                            <input type="radio" name=experience value="1" >1 an<br>
-                            <input type="radio" name=experience value="3" >3 ans<br>
-                            <input type="radio" name=experience value="10" >10 ans
+                            <input type="radio" name=experience value=0 checked>Pas d'exigence<br>
+                            <input type="radio" name=experience value=1 >1 an<br>
+                            <input type="radio" name=experience value=3 >3 ans<br>
+                            <input type="radio" name=experience value=10 >10 ans
                         </div>
                     </div>
                 </div>
@@ -90,11 +90,11 @@
                     </div>
                     <div id="collapseFour" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <input type="checkbox" name="0-1">0-1 an<br>
-                            <input type="checkbox" name="1-3">1-3 ans<br>
-                            <input type="checkbox" name="3-6">3-6 ans<br>
-                            <input type="checkbox" name="6-10">6-10 ans<br>
-                            <input type="checkbox" name="10+">Plus de 10 ans<br>
+                            <input type="checkbox" name="age[0-1]">0-1 an<br>
+                            <input type="checkbox" name="age[1-3]">1-3 ans<br>
+                            <input type="checkbox" name="age[3-6]">3-6 ans<br>
+                            <input type="checkbox" name="age[6-10]">6-10 ans<br>
+                            <input type="checkbox" name="age[10+]">Plus de 10 ans<br>
                         </div>
                     </div>
                 </div>
@@ -108,12 +108,12 @@
                     </div>
                     <div id="collapseFive" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <input type="checkbox" name="fr">Français<br>
-                            <input type="checkbox" name="en">Anglais<br>
-                            <input type="checkbox" name="it">Italien<br>
-                            <input type="checkbox" name="es">Espagnol<br>
-                            <input type="checkbox" name="ru">Russe<br>
-                            <input type="checkbox" name="other">Autre<br>
+                            <input type="checkbox" name="language[fr]">Français<br>
+                            <input type="checkbox" name="language[en]">Anglais<br>
+                            <input type="checkbox" name="language[it]">Italien<br>
+                            <input type="checkbox" name="language[es]">Espagnol<br>
+                            <input type="checkbox" name="language[ru]">Russe<br>
+                            <input type="checkbox" name="language[other]">Autre<br>
                         </div>
                     </div>
                 </div>
@@ -127,11 +127,11 @@
                     </div>
                     <div id="collapseSix" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <input type="checkbox" name="nonfumeur">Non fumeur<br>
-                            <input type="checkbox" name="animaux">Pas d'animaux domestiques<br>
-                            <input type="checkbox" name="permis">Avec permis de conduire<br>
-                            <input type="checkbox" name="voiture">Avec voiture<br>
-                            <input type="checkbox" name="lettre">Lettres de recommandation<br>
+                            <input type="checkbox" name="particularite[nonfumeur]">Non fumeur<br>
+                            <input type="checkbox" name="particularite[animaux]">Pas d'animaux domestiques<br>
+                            <input type="checkbox" name="particularite[permis]">Avec permis de conduire<br>
+                            <input type="checkbox" name="particularite[voiture]">Avec voiture<br>
+                            <input type="checkbox" name="particularite[lettre]">Lettres de recommandation<br>
                         </div>
                     </div>
                 </div>
@@ -145,10 +145,10 @@
                     </div>
                     <div id="collapseSeven" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <input type="checkbox" name="repasmaison">Repas cuisinés maison<br>
-                            <input type="checkbox" name="bio">Repas bio<br>
-                            <input type="checkbox" name="promenade">Promenade quotidienne<br>
-                            <input type="checkbox" name="notv">Zéro télé<br>
+                            <input type="checkbox" name="petitplus[repasmaison]">Repas cuisinés maison<br>
+                            <input type="checkbox" name="petitplus[bio]">Repas bio<br>
+                            <input type="checkbox" name="petitplus[promenade]">Promenade quotidienne<br>
+                            <input type="checkbox" name="petitplus[notv]">Zéro télé<br>
                         </div>
                     </div>
                 </div>
@@ -162,10 +162,10 @@
                     </div>
                     <div id="collapseHeight" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <input type="checkbox" name="cleaning">Ménage<br>
-                            <input type="checkbox" name="cooking">Cuisine<br>
-                            <input type="checkbox" name="ironing">Repassage<br>
-                            <input type="checkbox" name="homework">Aide aux devoirs<br>
+                            <input type="checkbox" name="extraTask[cleaning]">Ménage<br>
+                            <input type="checkbox" name="extraTask[cooking]">Cuisine<br>
+                            <input type="checkbox" name="extraTask[ironing]">Repassage<br>
+                            <input type="checkbox" name="extraTask[homework]">Aide aux devoirs<br>
                         </div>
                     </div>
                 </div>
@@ -182,7 +182,16 @@
         <div class="profiles">
             {% for entity in entities %}
                 <a href="{{ path('babysitter_show', {'id': entity.id}) }}">
-                    <div class="profile">
+                    <div class="profile" id="{{ entity.id }}"
+                         data-calendar="{{ entity.calendar }}"
+                         data-trustpoints="{{ entity.trustpoints }}"
+                         data-category="{{ entity.category }}"
+                         data-experience="{{ entity.experience }}"
+                         data-age={% autoescape false %}'{{ entity.getAgeOfChildren()|json_encode() }}'{% endautoescape %}
+                         data-language="{{ entity.getLanguages()|json_encode() }}"
+                         data-particularite="{{ entity.getParticularite()|json_encode() }}"
+                         data-petitplus="{{ entity.getPetitsPlus()|json_encode() }}"
+                         data-extraTasks="{{ entity.getExtraTasks()|json_encode() }}">
                         <div class="header">
                             {% if entity.avatar %}
                                 <img class="photo" src="{{ asset('uploads/babysitters/' ~ entity.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">
@@ -190,12 +199,12 @@
                                 <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="{{ entity.user.hiddenName }}" class="photo" style="height: 120px;">
                             {% endif %}
                             {% if entity.ratePrice %}
-                            <p class="tarif">{{ entity.ratePrice }}€ / {{ entity.rateType }}</p>
+                                <p class="tarif">{{ entity.ratePrice }}€ / {{ entity.rateType }}</p>
                             {% endif %}
                             {% if app.user %}
-                            <strong>{{ entity.user.fullName() }}&nbsp;</strong>
+                                <strong>{{ entity.user.fullName() }}&nbsp;</strong>
                             {% else %}
-                            <strong>{{ entity.user.hiddenName() }}&nbsp;</strong>
+                                <strong>{{ entity.user.hiddenName() }}&nbsp;</strong>
                             {% endif %}
                             <span class="balloon"></span>
                             <span class="balloon"></span>
@@ -221,6 +230,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
 
@@ -288,7 +298,7 @@
                     function() {
                         $(this).children(".header").css('background-color','#e84355');
                         {% if app.environment == 'dev' %}
-                        $(this).children(".header").children(".balloon").css('background-image','url(../../../bundles/pnpn/images/icons/balloon-white.png)');
+                        $(this).children(".header").children(".balloon").css('background-image','url(/parent_s2/web/bundles/pnpn/images/icons/balloon-white.png)');
                         {% else %}
                         $(this).children(".header").children(".balloon").css('background-image','url(../bundles/pnpn/images/icons/balloon-white.png)');
                         {% endif %}
@@ -296,7 +306,7 @@
                     , function() {
                         $(this).children(".header").css('background-color','#eeeeee');
                         {% if app.environment == 'dev' %}
-                        $(this).children(".header").children(".balloon").css('background-image','url(../../../bundles/pnpn/images/icons/balloon-red.png)');
+                        $(this).children(".header").children(".balloon").css('background-image','url(/parent_s2/web/bundles/pnpn/images/icons/balloon-red.png)');
                         {% else %}
                         $(this).children(".header").children(".balloon").css('background-image','url(../bundles/pnpn/images/icons/balloon-red.png)');
                         {% endif %}

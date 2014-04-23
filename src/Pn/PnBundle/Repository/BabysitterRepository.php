@@ -30,4 +30,21 @@ class BabysitterRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function findAllOrderedByTrustpoints($max = null)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->leftJoin('b.user', 'u')
+            ->orderBy('b.trustpoints', 'DESC');
+
+        if($max)
+        {
+            $qb->setMaxResults($max);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

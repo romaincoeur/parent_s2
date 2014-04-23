@@ -46,34 +46,18 @@
 
     <div class="news wrap">
         <img src="{{ asset('bundles/pnpn/images/illus/parents-nounou2.png') }}" alt="enfants et nounou" style="height: 360px; margin-top: 40px;">
-        {% for mooc in moocs %}
+        {% for entity in articles %}
             <div class="new">
                 <div class="header">
-                    {% if mooc.getCategory()=='new' %}
-                    <img src="{{ asset('bundles/pnpn/images/icons/alaune.png') }}" alt="a la une">
-                    {% elseif mooc.getCategory()=='alimentation' %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/badge-alimentation.png') }}" alt="badge-alimentation">
-                    {% elseif mooc.getCategory()=='baby' %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/badge-baby.png') }}" alt="badge-baby">
-                    {% elseif mooc.getCategory()=='dialogue' %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/badge-dialogue.png') }}" alt="badge-dialogue">
-                    {% elseif mooc.getCategory()=='droit' %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/badge-droit.png') }}" alt="badge-droit">
-                    {% elseif mooc.getCategory()=='eveil' %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/badge-eveil.png') }}" alt="badge-eveil">
-                    {% elseif mooc.getCategory()=='prevention' %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/badge-prevention.png') }}" alt="badge-prevention">
-                    {% elseif mooc.getCategory()=='psycho' %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/badge-psycho.png') }}" alt="badge-psycho">
-                    {% elseif mooc.getCategory()=='sante' %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/badge-sante.png') }}" alt="badge-sante">
+                    {% if entity.category %}
+                    <img src="{{ asset('bundles/pnpn/images/badges/' ~ entity.category.icon) }}" alt="{{ entity.category.name }}">
                     {% endif %}
                     <div class="title">
-                        <h5>{{ mooc.title }}</h5>
+                        <h5>{{ entity.title }}</h5>
                     </div>
                 </div>
                 <div class="body">
-                    <p>{{ mooc.shortPresentation(90) }}<a href="{{ path('mooc_show', {'id': mooc.id}) }}" class="blue">lire la suite</a> </p>
+                    <p>{{ entity.shortPresentation(120) }}<a href="{{ path('blog_article_show', {'id': entity.id}) }}" class="blue">&nbsp;lire la suite</a> </p>
                 </div>
             </div>
         {% endfor %}

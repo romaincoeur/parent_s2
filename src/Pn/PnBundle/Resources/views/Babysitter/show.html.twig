@@ -130,34 +130,30 @@
 
         <div class="recommandations">
             <div class="banner bg-red"><h4>Recommandations</h4></div>
-            <form action="" method="post">
-                <input type="search" placeholder="Ecrivez une recommandation">
+            <form action="{{ path('recommendation_send',{ 'to':entity.user.id }) }}" method="post" id="new_recommendation" {{ form_enctype(recommendation_form) }}>
+                {{ form_errors(recommendation_form.body) }}
+                {{ form_widget(recommendation_form.body, { 'attr': {'placeholder': 'Ecrivez une recommandation'} }) }}
+
+                {{ form_rest(recommendation_form) }}
                 <input type="submit" value="publier">
             </form>
+            {% for recommendation in entity.user.receivedRecommendations %}
             <div class="recommandation">
                 <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
-                <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icon/left-arrow.png') }}" alt="left-arrow">
+                <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
                 <div class="bulle">
-                    <p>Sarah est une de mes amies. Nous avons travaillé ensemble dans un centre de loisir l'année derniere. Elle
-                        s'occupait des activités artisitiques. Les enfants étaient tres réceptifs à ses conseils et elle n'a jamais eu
-                        besoin de gronder qui que ce soit. Nous étions tres impressionnés.</p>
-                    <span class="red">Louis D.</span> Baby sitter. Posté le 19 mars 2013
+                    <p>{{ recommendation.body }}</p>
+                    <span class="red">{{ recommendation.giver.hiddenName }}</span> {{ recommendation.giver.type }}. Posté le {{ recommendation.createdAt|date('d-m-Y')  }}
                 </div>
             </div>
-            <div class="recommandation">
-                <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
-                <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icon/left-arrow.png') }}" alt="left-arrow">
-                <div class="bulle">
-                    <p>Sarah est une fille tres gentille et tres agréable. Les enfants l'adorent et nous aussi.</p>
-                    <span class="red">Julie B.</span> Parent. Posté le 20 février 2014
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
 

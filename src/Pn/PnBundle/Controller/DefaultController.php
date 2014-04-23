@@ -23,14 +23,14 @@ class DefaultController extends Controller
 
         $babysitters = $em->getRepository('PnPnBundle:User')->getLastBabysitters(3);
 
-        $moocs = $em->getRepository('PnPnBundle:Mooc')->getLatest(4);
+        $articles = $em->getRepository('PnBlogBundle:Article')->getLatest(4);
 
         $nounous = $em->getRepository('PnPnBundle:Babysitter')->findAll();
 
         return $this->render('PnPnBundle:Default:index.html.twig', array(
             'babysitters' => $babysitters,
             'nounous' => $nounous,
-            'moocs' => $moocs
+            'articles' => $articles
         ));
     }
 
@@ -64,7 +64,13 @@ class DefaultController extends Controller
         $user = $this->getUser();
         if ($user === null)
         {
-            return $this->render('PnPnBundle:Default:notconnected.html.twig');
+            $entity = new User();
+            $form = $this->createCreateForm($entity);
+
+            return $this->render('PnPnBundle:Default:notconnected.html.twig', array(
+                'entity' => $entity,
+                'register_form'   => $form->createView(),
+            ));
         }
         else
         {

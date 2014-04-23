@@ -15,11 +15,7 @@ class RecommendationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('status')
             ->add('body')
-            ->add('created_at')
-            ->add('giver')
-            ->add('receiver')
         ;
     }
     

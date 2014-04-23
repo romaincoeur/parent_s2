@@ -4,19 +4,6 @@
 
 $(function() {
 
-    // Gestion des calendriers
-    /*$(".calendar button").click(function(){
-        //alert($(this).css('background-color'));
-        if ($(this).css('background-color') == 'rgb(255, 255, 255)')
-        {
-            $(this).css('background-color','lightgreen');
-        }
-        else
-        {
-            $(this).css('background-color','#ffffff');
-        }
-    });*/
-
     $(".calendarForm").submit(function(e){
         e.preventDefault();
         var form = this;
@@ -177,6 +164,35 @@ $(function() {
                 );
                 $('.conversation.selected textarea').css('background','white');
                 $('.conversation.selected input[type="submit"]').attr('disabled', false);
+            },
+            function (error){
+
+            }
+        );
+    })
+
+
+    // Envoi d'une recommandation
+    $('form#new_recommendation').submit(function(e){
+        e.preventDefault();
+
+        $('form#new_recommendation textarea').css('background','url("../../bundles/pnpn/images/icons/ajax-loader.gif") no-repeat right white');
+        $('form#new_recommendation input[type="submit"]').attr('disabled', true);
+
+        postForm(
+            $('form#new_recommendation'),
+            function(response){
+                $('#new_recommendation').after('' +
+                    '<div class="recommandation">' +
+                    '   <img src="/parent_s2/web/bundles/pnpn/images/illus/nounou.jpg" alt="nounou" style="height: 90px;">' +
+                    '   <img class="left-arrow" src="/parent_s2/web/bundles/pnpn/images/icons/left-arrow.png" alt="left-arrow">' +
+                    '   <div class="bulle">' +
+                    '       <p>' + response.message + '</p>' +
+                    '   </div>' +
+                    '</div>'
+                );
+                $('form#new_recommendation textarea').css('background','white');
+                $('form#new_recommendation input[type="submit"]').attr('disabled', false);
             },
             function (error){
 

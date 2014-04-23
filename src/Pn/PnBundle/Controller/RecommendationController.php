@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Pn\PnBundle\Entity\Recommendation;
 use Pn\PnBundle\Form\RecommendationType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 /**
  * Recommendation controller.
@@ -29,63 +31,62 @@ class RecommendationController extends Controller
             'entities' => $entities,
         ));
     }
+
     /**
      * Creates a new Recommendation entity.
      *
      */
-    public function createAction(Request $request)
+    public function sendAction(Request $request, $to)
     {
+        $em = $this->getDoctrine()->getManager();
+        $sender = $this->getUser();
+        $receiver = $em->getRepository('PnPnBundle:User')->findOneById($to);
         $entity = new Recommendation();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createForm(new RecommendationType(), $entity, array(
+            'action' => $this->generateUrl('recommendation_send', array('to' => $to)),
+            'method' => 'POST',
+        ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $entity->setGiver($sender);
+            $entity->setReceiver($receiver);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('recommendation_show', array('id' => $entity->getId())));
+            // Envoyer un email de confirmation
+            $Url = $this->generateUrl('message', array(), true);
+            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('nouveaumessage');
+            $body = str_replace(
+                array('%SENDER', '%MESSAGE', '%URL'),
+                array($sender->getFirstname(), $entity->getBody(), $Url),
+                $mail->getBody()
+            );
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject($mail->getObject())
+                ->setFrom($this->container->getparameter('mailer.from'))
+                ->setTo($receiver->getEmail())
+                ->setBody($body)
+            ;
+            $message->getHeaders()->get('Content-Type')->setValue('text/html');
+
+            $this->get('mailer')->send($message);
+
+            $response['success'] = true;
+            $response['message'] = $entity->getBody();
+            return new JsonResponse( $response );
         }
 
-        return $this->render('PnPnBundle:Recommendation:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
+        $response['success'] = false;
+        return new JsonResponse( $response );
     }
 
-    /**
-    * Creates a form to create a Recommendation entity.
-    *
-    * @param Recommendation $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Recommendation $entity)
-    {
-        $form = $this->createForm(new RecommendationType(), $entity, array(
-            'action' => $this->generateUrl('recommendation_create'),
-            'method' => 'POST',
-        ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
 
-        return $form;
-    }
 
-    /**
-     * Displays a form to create a new Recommendation entity.
-     *
-     */
-    public function newAction()
-    {
-        $entity = new Recommendation();
-        $form   = $this->createCreateForm($entity);
 
-        return $this->render('PnPnBundle:Recommendation:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        ));
-    }
+
 
     /**
      * Finds and displays a Recommendation entity.

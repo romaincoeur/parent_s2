@@ -1,3 +1,7 @@
+pn_blog:
+    resource: "@PnBlogBundle/Resources/config/routing.yml"
+    prefix:   /blog
+
 pn_pn:
     resource: "@PnPnBundle/Resources/config/routing.yml"
     prefix:   /

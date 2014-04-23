@@ -119,11 +119,43 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $encodedPassword = $encoder->encodePassword('azerty', $user_julie->getSalt());
         $user_julie->setPassword($encodedPassword);
 
+
         $em->persist($user1);
         $em->persist($user2);
         $em->persist($user_sarah);
         $em->persist($user_manu);
         $em->persist($user_julie);
+
+
+        $lon_min = -1.0522795;
+        $lon_max = 6.7260408;
+        $lat_min = 42.4838724;
+        $lat_max = 49.6637400;
+        for ($i=1;$i<=10;$i++)
+        {
+            $user_test = new User();
+            $user_test->setType('nounou');
+            $user_test->setFirstname('test');
+            $user_test->setLastname($i);
+            $user_test->setEmail('test.'.$i.'@gmail.com');
+            $user_test->setIsActivated(true);
+            $user_test->setPhone("06 34 4".$i." 77 87");
+            $user_test->setLatitude((mt_rand() / mt_getrandmax())*($lat_max-$lat_min) + $lat_min);
+            $user_test->setLongitude((mt_rand() / mt_getrandmax())*($lon_max-$lon_min) + $lon_min);
+            $user_test->setAddress('');
+            $user_test->setConfirmed(true);
+            $user_test->setConfirmationToken('');
+            // 48.8500050	2.3353719
+
+            // set password
+            $encoder = $factory->getEncoder($user_test);
+            $encodedPassword = $encoder->encodePassword('azerty', $user_test->getSalt());
+            $user_test->setPassword($encodedPassword);
+
+            $em->persist($user_test);
+            $this->addReference('user-test'.$i, $user_test);
+        }
+
 
         $em->flush();
 

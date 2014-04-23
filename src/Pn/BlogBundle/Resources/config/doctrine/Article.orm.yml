@@ -1,0 +1,35 @@
+# src/Pn/BlogBundle/Resources/config/doctrine/Article.orm.yml
+Pn\BlogBundle\Entity\Article:
+  type: entity
+  repositoryClass: Pn\BlogBundle\Repository\ArticleRepository
+  table: blog_article
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    title:
+      type: string
+      length: 255
+      nullable: true
+    presentation:
+      type: text
+      nullable: true
+    is_activated:
+      type: boolean
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
+      nullable: true
+  manyToOne:
+    category:
+      targetEntity: Category
+      inversedBy: articles
+      joinColumn:
+        name: blog_category_id
+        referencedColumnName: id
+  lifecycleCallbacks:
+    prePersist: [ setCreatedAtValue, setDefaultValues ]
+    preUpdate: [ setUpdatedAtValue ]

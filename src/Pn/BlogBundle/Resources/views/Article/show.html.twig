@@ -1,0 +1,109 @@
+{# src/Pn/BlogBundle/Resources/views/Article/show.html.twig #}
+
+
+{% extends "PnPnBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/pnblog/css/style.css') }}" type="text/css" />
+{% endblock %}
+
+{% block body %}
+    <div class="blog wrap">
+        <div class="header clearfix">
+            <img class="icon" src="{{ asset('bundles/pnpn/images/badges/' ~ entity.category.icon) }}" alt="a la une">
+            <h1>{{ entity.title }}</h1>
+        </div>
+        <article>
+            {{ entity.presentation }}
+        </article>
+    </div>
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Article</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ entity.title }}</td>
+            </tr>
+            <tr>
+                <th>Presentation</th>
+                <td>{{ entity.presentation }}</td>
+            </tr>
+            <tr>
+                <th>Is_activated</th>
+                <td>{{ entity.isactivated }}</td>
+            </tr>
+            <tr>
+                <th>Created_at</th>
+                <td>{{ entity.createdat|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Updated_at</th>
+                <td>{{ entity.updatedat|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('blog_article') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}
+#}

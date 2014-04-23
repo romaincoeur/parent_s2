@@ -241,7 +241,7 @@ class Babysitter
         if ($this->getRatePrice() == null) $this->setRatePrice(0);
         if ($this->getRateType() == null) $this->setRateType('hour');
         if ($this->getTrustpoints() == null) $this->setTrustpoints(0);
-        $this->setCalendar('[(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        if ($this->calendar == null) $this->setCalendar('[(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
         (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
         (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
         (0000000)(0000000)]');

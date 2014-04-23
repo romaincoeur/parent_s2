@@ -2,12 +2,14 @@
 
 namespace Pn\PnBundle\Controller;
 
+use Proxies\__CG__\Pn\PnBundle\Entity\Recommendation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Pn\PnBundle\Entity\Babysitter;
 use Pn\PnBundle\Form\BabysitterType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Pn\PnBundle\Form\RecommendationType;
 
 
 /**
@@ -25,7 +27,7 @@ class BabysitterController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PnPnBundle:Babysitter')->findAll();
+        $entities = $em->getRepository('PnPnBundle:Babysitter')->findAllOrderedByTrustpoints();
 
         // gestion du calendrier
         $calendarService = $this->container->get('pn.calendar');
@@ -126,46 +128,29 @@ class BabysitterController extends Controller
      */
     public function showAction($id)
     {
+        // Get babysitter from DB
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
-
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Babysitter entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
+        // Get the calendar and transform it to matrix
+        $calendarService = $this->container->get('pn.calendar');
+        $calendar = $calendarService->getMatrix($entity->getCalendar());
 
-        $calendarStr = str_split($entity->getCalendar(),1);
+        // Configure the recommendation form
+        $form = $this->createForm(new RecommendationType(), new Recommendation(), array(
+            'action' => $this->generateUrl('recommendation_send',array('to' => $id)),
+            'method' => 'POST',
+        ));
 
-        $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
-
-        $i = 1;
-        $j = 1;
-        foreach ($calendarStr as &$c)
-        {
-            if ($c == ')')
-            {
-                $j = 1;
-                $i++;
-                continue;
-            }
-            if ($c == '0')
-            {
-                $j++;
-            }
-            if ($c == '1')
-            {
-                $calendar[$i][$j] = true;
-                $j++;
-            }
-        }
 
         return $this->render('PnPnBundle:Babysitter:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
             'calendarMatrix' => $calendar,
-            'id' => $id
+            'id' => $id,
+            'recommendation_form' => $form->createView()
         ));
     }
 

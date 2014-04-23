@@ -28,3 +28,8 @@ recommendation_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "PnPnBundle:Recommendation:delete" }
     requirements: { _method: post|delete }
+
+recommendation_send:
+    pattern:  /send/{to}
+    defaults: { _controller: "PnPnBundle:Recommendation:send" }
+    requirements: { _method: post|get }
