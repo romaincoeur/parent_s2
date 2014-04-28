@@ -6,6 +6,10 @@ pn_pn_default:
     resource: "@PnPnBundle/Resources/config/routing/default.yml"
     prefix:   /
 
+pn_pn_security:
+    resource: "@PnPnBundle/Resources/config/routing/security.yml"
+    prefix:   /
+
 pn_pn_jobs:
     resource: "@PnPnBundle/Resources/config/routing/job.yml"
     prefix:   /job

@@ -1,0 +1,25 @@
+login:
+    pattern:   /login
+    defaults:  { _controller: PnPnBundle:Security:login }
+
+login_check:
+    pattern:   /login_check
+
+logout:
+    pattern:   /logout
+
+register:
+    pattern:   /register
+    defaults:  { _controller: PnPnBundle:Security:register }
+
+confirmation:
+    pattern:   /confirmation/{token}
+    defaults:  { _controller: PnPnBundle:Security:confirmation }
+
+pn_change_password:
+    pattern:   /changePassword
+    defaults:  { _controller: PnPnBundle:Security:changePassword }
+
+reset_password:
+    pattern:   /resetPassword
+    defaults:  { _controller: PnPnBundle:Security:resetPassword }

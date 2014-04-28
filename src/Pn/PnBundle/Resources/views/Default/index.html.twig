@@ -22,24 +22,28 @@
     </div>
 
     <div class="present big-wrap">
-        <div class="row">
+        <div class="wrap">
             <h3>Avec Parent Nounou, vous êtes à un clic de la famille ou de la nounou de vos rêves !</h3>
         </div>
         <div class="big-banner">
-            <div class="col-md-4 topic">
-                <img src="{{ asset('bundles/pnpn/images/icons/present-search.png') }}" alt="present-search">
-                <h5>Des recherches efficaces</h5>
-                <p>J'identifie rapidement ma nounou selon mes criteres et les recomandations</p>
-            </div>
-            <div class="col-md-4 topic">
-                <img src="{{ asset('bundles/pnpn/images/icons/present-confiance.png') }}" alt="present-confiance">
-                <h5>La confiance à l'honneur</h5>
-                <p>Un système de points de confiance met en valeur les nounous expérimentées</p>
-            </div>
-            <div class="col-md-4 topic">
-                <img src="{{ asset('bundles/pnpn/images/icons/present-badge.png') }}" alt="present-badge">
-                <h5>E-formations rapides</h5>
-                <p>De nombreux conseils et vidéos m'aident à mieux m'occuper des enfants.</p>
+            <div class="wrap">
+                <div class="row">
+                    <div class="col-md-4 topic">
+                        <img src="{{ asset('bundles/pnpn/images/icons/present-search.png') }}" alt="present-search">
+                        <h5>Des recherches efficaces</h5>
+                        <p>J'identifie rapidement ma nounou selon mes criteres et les recomandations</p>
+                    </div>
+                    <div class="col-md-4 topic">
+                        <img src="{{ asset('bundles/pnpn/images/icons/present-confiance.png') }}" alt="present-confiance">
+                        <h5>La confiance à l'honneur</h5>
+                        <p>Un système de points de confiance met en valeur les nounous expérimentées</p>
+                    </div>
+                    <div class="col-md-4 topic">
+                        <img src="{{ asset('bundles/pnpn/images/icons/present-badge.png') }}" alt="present-badge">
+                        <h5>E-formations rapides</h5>
+                        <p>De nombreux conseils et vidéos m'aident à mieux m'occuper des enfants.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -47,26 +51,29 @@
     <div class="news wrap">
         <img src="{{ asset('bundles/pnpn/images/illus/parents-nounou2.png') }}" alt="enfants et nounou" style="height: 360px; margin-top: 40px;">
         {% for entity in articles %}
-            <div class="new">
-                <div class="header">
-                    {% if entity.category %}
-                    <img src="{{ asset('bundles/pnpn/images/badges/' ~ entity.category.icon) }}" alt="{{ entity.category.name }}">
-                    {% endif %}
-                    <div class="title">
-                        <h5>{{ entity.title }}</h5>
+            <a href="{{ path('blog_article_show', {'id': entity.id}) }}">
+                <div class="new">
+                    <div class="header">
+                        {% if entity.category %}
+                            <img src="{{ asset('bundles/pnpn/images/badges/' ~ entity.category.icon) }}" alt="{{ entity.category.name }}">
+                        {% endif %}
+                        <div class="title">
+                            <h5>{{ entity.title }}</h5>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <p>{{ entity.shortPresentation(300) | truncate(120, true, '...') }}</p>
                     </div>
                 </div>
-                <div class="body">
-                    <p>{{ entity.shortPresentation(120) }}<a href="{{ path('blog_article_show', {'id': entity.id}) }}" class="blue">&nbsp;lire la suite</a> </p>
-                </div>
-            </div>
+            </a>
         {% endfor %}
-
     </div>
 
     <div class="mini-profiles">
         <div class="banner big-wrap">
-            <h4>Dernières nounou inscrites</h4>
+            <div class="wrap">
+                <h4>Dernières nounou inscrites</h4>
+            </div>
         </div>
         <div class="wrap">
             {% for babysitter in babysitters %}
@@ -151,6 +158,14 @@
 
         $(function() {
             $('.mini-profile').hover(
+                    function() {
+                        $(this).children(".header").css('background-color','#e84355');
+                    }
+                    , function() {
+                        $(this).children(".header").css('background-color','#eeeeee');
+                    });
+
+            $('.new').hover(
                     function() {
                         $(this).children(".header").css('background-color','#e84355');
                     }

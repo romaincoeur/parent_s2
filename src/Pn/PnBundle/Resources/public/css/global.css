@@ -2,6 +2,7 @@
 
 /***************element principaux du corps de page*****************/
 
+
 .bg-blue
 {
     background-color: #65c0e3;
@@ -17,6 +18,11 @@
 .bg-red
 {
     background-color: #e84355;
+}
+
+.bg-facebookblue
+{
+    background-color: #175fad;
 }
 
 .blue
@@ -50,6 +56,7 @@
 body
 {
     font-family: 'Josefin Sans', sans-serif;
+    font-size: 16px;
 }
 
 .btn
@@ -59,6 +66,7 @@ body
     height: 30px;
     color: #FFFFFF;
     padding: 3px;
+    font-size: 17px;
 }
 .btn:hover
 {
@@ -73,7 +81,7 @@ body
 
 .big-wrap
 {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: auto;
 }
 
@@ -183,6 +191,18 @@ label
     border: none;
 }
 
+h4
+{
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 5px;
+}
+
+h5
+{
+    font-size: 16px;
+}
+
 
 
 
@@ -273,6 +293,7 @@ header .connected .btn:hover
     width: 500px;
     padding-left: 20px;
     border: solid #d9d9d9 1px;
+    vertical-align: bottom;
 }
 
 .searchForm .submit
@@ -283,22 +304,17 @@ header .connected .btn:hover
     padding-left: 20px;
 }
 
-.present .row
-{
-    height: 100px;
-    text-align: center;
-}
-
 .present h3
 {
     margin: 40px 0;
     color: #65c0e3;
+    text-align: center;
 }
 
 .present .big-banner
 {
-    background-color: #eeeeee;
-    height: 140px;
+    background: url("../images/icons/ban-large-grey.png") no-repeat;
+    height: 150px;
 }
 
 .present img
@@ -310,7 +326,7 @@ header .connected .btn:hover
 
 .present h5
 {
-    margin-top: 30px;
+    margin-top: 23px;
     font-weight: bold;
 }
 
@@ -338,6 +354,11 @@ header .connected .btn:hover
     margin: 40px 30px 0 0;
     height: 160px;
     vertical-align: top;
+}
+.new:hover
+{
+    border-color: #e84355;
+    color: #000000;
 }
 
 .new .header
@@ -376,10 +397,10 @@ header .connected .btn:hover
 
 .mini-profiles .banner
 {
-    height: 60px;
+    height: 70px;
     text-align: center;
     padding-top: 10px;
-    background-color: #e84355;
+    background: url("../images/icons/ban-large-red.png") no-repeat;
     margin-top: 30px;
     margin-bottom: 30px;
     color: #FFFFFF;
@@ -1097,6 +1118,7 @@ table.calendar button
     color: black;
     height: inherit;
     margin-top: -3px;
+    font-size: 14px;
 }
 .message-leftMenu .btn:hover
 {
@@ -1152,7 +1174,7 @@ table.calendar button
 .message .bulle
 {
     display: inline-block;
-    width: 608px;
+    width: 611px;
     border: solid #eeeeee 3px;
     vertical-align: top;
     padding: 20px;
@@ -1165,6 +1187,50 @@ table.calendar button
 .conversation.selected
 {
     display: block;
+}
+
+.left-arrow
+{
+    margin-right: -5px;
+}
+
+.right-arrow
+{
+    margin-left: -5px;
+}
+
+#newConversation ul
+{
+    overflow-y: scroll;
+    height: 200px;
+    margin-top: 20px;
+    list-style-type: none;
+    background-color: white;
+    border-radius: 20px;
+    padding-left: 0;
+}
+
+#newConversation li
+{
+    padding-left: 20px;
+}
+#newConversation li:hover
+{
+    cursor: pointer;
+    background-color: #e84355;
+    color: #FFFFFF;
+}
+
+#newConversation button.cancel
+{
+    display: block;
+    margin: auto;
+    border-radius: 20px;
+    width: 100px;
+    height: 30px;
+    color: #FFFFFF;
+    padding: 3px;
+    border: none;
 }
 
 
@@ -1392,6 +1458,7 @@ table.calendar button
 #login .modal-dialog button[type="submit"]
 {
     background-color: #b093c4;
+    padding: 8px 20px 5px 20px;
 }
 
 #login .modal-dialog a#mdp_oublie
@@ -1539,4 +1606,11 @@ footer .social-bar
     float: right;
 }
 
+footer .social-bar .icon
+{
+    display: inline-block;
+    border-radius: 20px;
+    height: 40px;
+    width: 40px;
+}
 

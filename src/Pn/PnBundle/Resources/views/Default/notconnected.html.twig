@@ -69,18 +69,15 @@
                 <h3 id="myModalLabel">Connexion</h3>
             </div>
             <div class="modal-body">
-{#                {% if error %}
-                    <div>{{ error.message }}</div>
-                {% endif %}#}
-
-                <form action="{{ path('login_check') }}" method="post">
+                <form id="form-login" action="{{ path('login_check') }}" method="post">
                     <input type="text" id="username" name="_username" placeholder="E-mail"/>
 
                     <input type="password" id="password" name="_password" placeholder="Mot de passe"/>
 
-                    <input type="checkbox" id="remember_me"> Garder ma session active<br>
+                    <input type="checkbox" id="remember_me" name="remember_me" checked>
+                    <label for="remember_me">Garder ma session active</label>
 
-                    <button type="submit">Connexion</button>
+                    <button type="submit" class="sf-button">Connexion</button>
                     <a href="" id="mdp_oublie">mot de passe oublié ?</a>
                 </form>
             </div>

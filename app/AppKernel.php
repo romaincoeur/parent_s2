@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Pn\BlogBundle\PnBlogBundle(),
+            new Divi\AjaxLoginBundle\DiviAjaxLoginBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

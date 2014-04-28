@@ -39,4 +39,21 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * List all the users except those who are in the array $arr
+     *
+     * @param $ids
+     */
+    public function findAllExcept($ids)
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $query = $qb->select('u')
+            ->where($qb->expr()->notIn('u.id', $ids))
+            ->getQuery();
+
+
+        return $query->getResult();
+    }
 }

@@ -45,9 +45,20 @@ class LoadMailTemplateData extends AbstractFixture implements OrderedFixtureInte
         cliquez <a href="%URL">ici</a> pour lui répondre.
         ');
 
+        $mail4 = new MailTemplate();
+        $mail4->setTitle('Mail d\'oubli de mot de passe');
+        $mail4->setVirtualTitle('resetPasswordMail');
+        $mail4->setObject('Parent-nounou.fr - Demande de mot de passe');
+        $mail4->setBody('
+        Votre mot de passe a été réinitialisé. <br>
+        Votre nouveau mot de passe est : <br>
+        %PASSWORD
+        ');
+
         $em->persist($mail1);
         $em->persist($mail2);
         $em->persist($mail3);
+        $em->persist($mail4);
 
         $em->flush();
     }

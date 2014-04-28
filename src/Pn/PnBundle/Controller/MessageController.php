@@ -21,10 +21,11 @@ class MessageController extends Controller
      * Lists all Message entities.
      *
      */
-    public function indexAction()
+    public function indexAction($conv = null)
     {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
+        $exceptIds = array($user->getId());
 
         $entities = $em->getRepository('PnPnBundle:Message')->getConversations($user);
 
@@ -45,21 +46,131 @@ class MessageController extends Controller
                 $result[$interlocuteur->getVirtualname()]['unread'] = 0;
                 $result[$interlocuteur->getVirtualname()]['object'] = $interlocuteur;
                 $result[$interlocuteur->getVirtualname()]['form'] = $form->createView();
+
+                array_push ( $exceptIds, $interlocuteur->getId() );
             }
             array_push ( $result[$interlocuteur->getVirtualname()]['messages'] , $raw );
         }
 
-
+        // Get users for new conversation
+        $users = $em->getRepository('PnPnBundle:User')->findAllExcept($exceptIds);
 
         return $this->render('PnPnBundle:Message:index.html.twig', array(
             'conversations' => $result,
+            'users' => $users,
+            'conv' => $conv
         ));
     }
+
     /**
      * Creates a new Message entity.
      *
      */
     public function sendAction(Request $request, $to)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sender = $this->getUser();
+        $receiver = $em->getRepository('PnPnBundle:User')->findOneById($to);
+        $entity = new Message();
+        $form = $this->createForm(new MessageType(), $entity, array(
+            'action' => $this->generateUrl('message_send', array('to' => $to)),
+            'method' => 'POST',
+        ));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $entity->setSender($sender);
+            $entity->setReceiver($receiver);
+            $em->persist($entity);
+            $em->flush();
+
+            // Envoyer un email de confirmation
+            $Url = $this->generateUrl('message', array(), true);
+            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('nouveaumessage');
+            $body = str_replace(
+                array('%SENDER', '%MESSAGE', '%URL'),
+                array($sender->getFirstname(), $entity->getBody(), $Url),
+                $mail->getBody()
+            );
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject($mail->getObject())
+                ->setFrom($this->container->getparameter('mailer.from'))
+                ->setTo($receiver->getEmail())
+                ->setBody($body)
+            ;
+            $message->getHeaders()->get('Content-Type')->setValue('text/html');
+
+            $this->get('mailer')->send($message);
+
+            $response['success'] = true;
+            $response['message'] = $entity->getBody();
+            return new JsonResponse( $response );
+        }
+
+        $response['success'] = false;
+        return new JsonResponse( $response );
+    }
+
+    /**
+     * Creates a new Message entity.
+     *
+     */
+    public function newConversationAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $sender = $this->getUser();
+        $receiverID = $request->request->get('userId');
+        $receiver = $em->getRepository('PnPnBundle:User')->findOneById($receiverID);
+        $entity = new Message();
+        $form = $this->createForm(new MessageType(), $entity, array(
+            'action' => $this->generateUrl('message_send', array('to' => $receiverID)),
+            'method' => 'POST',
+        ));
+        $form->handleRequest($request);
+
+        try {
+            $entity->setSender($sender);
+            $entity->setReceiver($receiver);
+            $em->persist($entity);
+            $em->flush();
+
+            // Envoyer un email de confirmation
+            $Url = $this->generateUrl('message', array(), true);
+            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('nouveaumessage');
+            $body = str_replace(
+                array('%SENDER', '%MESSAGE', '%URL'),
+                array($sender->getFirstname(), $entity->getBody(), $Url),
+                $mail->getBody()
+            );
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject($mail->getObject())
+                ->setFrom($this->container->getparameter('mailer.from'))
+                ->setTo($receiver->getEmail())
+                ->setBody($body)
+            ;
+            $message->getHeaders()->get('Content-Type')->setValue('text/html');
+
+            $this->get('mailer')->send($message);
+
+            $response['success'] = true;
+            $response['message'] = $entity->getBody();
+            return new JsonResponse( $response );
+        }
+        catch (\Exception $e)
+        {
+            $response['success'] = false;
+            $response['error'] = toString($e);
+            return new JsonResponse( $response );
+        }
+    }
+
+    /**
+     * Creates a new Message entity.
+     *
+     */
+    public function deleteConversationAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $sender = $this->getUser();

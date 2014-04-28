@@ -6,81 +6,107 @@
 {% block title %}{{ parent() }} - Messagerie{% endblock %}
 
 {% block body %}
-<div class="wrap">
-    <div class="message-topMenu clearfix">
-        <div class="right">
-            <a href="" class="btn bg-yellow white">Rédiger un message</a>
-        </div>
-        <div class="left">
-            <span style="color: #BBBBBB;">Vos conversations</span>
+    <div class="wrap">
+        <div class="message-topMenu clearfix">
+            {#<div class="right">
+                <a href="" class="btn bg-yellow white">Rédiger un message</a>
+            </div>#}
+            <div class="left">
+                <span style="color: #BBBBBB;">Vos conversations</span>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="wrap">
-    <div class="row">
-        <div class="message-leftMenu col-md-3">
-            {% for key,conversation in conversations %}
-            <div id="{{ key }}" class="btn {% if loop.first %}selected{% endif %} clearfix">
-                <div class="right">
-                    {% if conversation.unread != 0 %}
-                        <div class="unread bg-red white round">{{ conversation.unread }}</div>
-                    {% endif %}
-                    <button class="delete bg-red round">
-                        <img src="{{ asset('bundles/pnpn/images/icon/bin.png') }}" alt="corbeille">
-                    </button>
-                </div>
-                <div class="left">
-                    {{ conversation.object.fullname }}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-
-        {% for key,conversation in conversations %}
-            <div class="conversation {% if loop.first %}selected{% endif %} col-md-9" id="{{ key }}">
-                {% for message in conversation.messages %}
-                    {% if message.receiver == app.user %}
-                        <div class="message from">
-                            {% if message.sender.avatar %}
-                                <img class="profile-picture" src="{{ asset('uploads/users/' ~ message.sender.avatar) }}" alt="photo de profil de {{ message.sender.firstname }}" style="height: 120px;">
-                            {% else %}
-                                <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+    <div class="wrap">
+        <div class="row">
+            <div class="message-leftMenu col-md-3">
+                {% for key,conversation in conversations %}
+                    <div id="{{ key }}" class="btn conversationButton {% if loop.first and not conv %}selected{% endif %} {% if conv == key %} selected {% endif %}clearfix">
+                        <div class="left">
+                            {{ conversation.object.fullname }}
+                        </div>
+                        <div class="right">
+                            {% if conversation.unread != 0 %}
+                                <div class="unread bg-red white round">{{ conversation.unread }}</div>
                             {% endif %}
-                            <img class="arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
-                            <div class="bulle">
-                                <p>{{ message.body }}</p>
-                                Le {{ message.createdAt|date("d/m/Y \\à H\\hi") }}
-                            </div>
+                            <button class="delete bg-red round white unconfirmed" data-id="{{ key }}">
+                                <img src="{{ asset('bundles/pnpn/images/icons/trash.png') }}" alt="corbeille">
+                            </button>
                         </div>
-                    {% else %}
-                        <div class="message to">
-                            <div class="bulle">
-                                <p>{{ message.body }}</p>
-                                Le {{ message.createdAt|date("d/m/Y \\à H\\hi") }}
-                            </div>
-                            <img class="arrow" src="{{ asset('bundles/pnpn/images/icons/right-arrow.png') }}" alt="right-arrow">
-                            <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
-                        </div>
-                    {% endif %}
+                    </div>
                 {% endfor %}
-                <form action="{{ path('message_send',{ 'to':conversation.object.id }) }}" method="post" id="{{ key }}" {{ form_enctype(conversation.form) }}>
-                    {{ form_errors(conversation.form.body) }}
-                    {{ form_widget(conversation.form.body, { 'attr': {'placeholder': 'Envoyer un message à ' ~ conversation.object.firstname } }) }}
-
-                    {{ form_rest(conversation.form) }}
-                    <input type="submit" value="Envoyer">
-                </form>
+                <div id="newConversation" class="btn clearfix">
+                    <div class="reduce">
+                        <div class="right">
+                            <div class="unread bg-red white round"><div style="font-size: 30px; margin-top: -10px;">+</div></div>
+                        </div>
+                        <div class="left">
+                            <span class="title">Nouvelle conversation</span>
+                        </div>
+                    </div>
+                    <div class="expand" style="display: none;">
+                        <span class="title">Sélectionner un destinataire</span>
+                        <ul>
+                            {% for user in users %}
+                            <li
+                                    data-firstname="{{ user.firstname }}"
+                                    data-virtualName="{{ user.virtualName }}"
+                                    data-id="{{ user.id }}"
+                                    >{{ user.fullname }}</li>
+                            {% endfor %}
+                        </ul>
+                        <button class="cancel bg-yellow white">Annuler</button>
+                    </div>
+                </div>
             </div>
-        {% endfor %}
 
+            {% for key,conversation in conversations %}
+                <div class="conversation {% if loop.first and not conv %}selected{% endif %} {% if conv == key %} selected {% endif %} col-md-9" id="{{ key }}">
+                    {% for message in conversation.messages %}
+                        {% if message.receiver == app.user %}
+                            <div class="message from">
+                                {% if message.sender.avatar %}
+                                    <img class="profile-picture" src="{{ asset('uploads/users/' ~ message.sender.avatar) }}" alt="photo de profil de {{ message.sender.firstname }}" style="height: 120px;">
+                                {% else %}
+                                    <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+                                {% endif %}
+                                <img class="arrow left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
+                                <div class="bulle">
+                                    <p>{{ message.body }}</p>
+                                    Le {{ message.createdAt|date("d/m/Y \\à H\\hi") }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="message to">
+                                <div class="bulle">
+                                    <p>{{ message.body }}</p>
+                                    Le {{ message.createdAt|date("d/m/Y \\à H\\hi") }}
+                                </div>
+                                <img class="arrow right-arrow" src="{{ asset('bundles/pnpn/images/icons/right-arrow.png') }}" alt="right-arrow">
+                                <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <form action="{{ path('message_send',{ 'to':conversation.object.id }) }}" method="post" id="{{ key }}" {{ form_enctype(conversation.form) }}>
+                        {{ form_errors(conversation.form.body) }}
+                        {{ form_widget(conversation.form.body, { 'attr': {'placeholder': 'Envoyer un message à ' ~ conversation.object.firstname } }) }}
+
+                        {{ form_rest(conversation.form) }}
+                        <input type="submit" value="Envoyer">
+                    </form>
+                </div>
+            {% endfor %}
+
+        </div>
     </div>
-</div>
 
 {% endblock %}
 
 
-
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'PnPnBundle:Javascript:message.html.twig' %}
+{% endblock %}
 
 
 

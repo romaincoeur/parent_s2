@@ -1,0 +1,212 @@
+<script type="text/javascript">
+/**
+ * Created by romain on 27/03/14.
+ */
+
+// Envoi de formulaire en AJAX
+function postForm( $form, callback1, callback2 ){
+
+    /*
+     * Get all form values
+     */
+    var values = {};
+    $.each( $form.serializeArray(), function(i, field) {
+        values[field.name] = field.value;
+    });
+
+    /*
+     * Throw the form values to the server!
+     */
+    $.ajax({
+        type        : $form.attr( 'method' ),
+        url         : $form.attr( 'action' ),
+        data        : values,
+        success     : function(data) {
+            callback1( data );
+        },
+        error     : function(data) {
+            callback2( data );
+        }
+    });
+
+}
+
+$(function() {
+
+    $(".calendarForm").submit(function(e){
+        e.preventDefault();
+        var form = this;
+        var calendar = '[(';
+        $('.calendar button').each(function(index){
+            if (index%7 == 0 && index != 0) calendar += ')(';
+            if ($(this).css('background-color') == 'rgb(255, 255, 255)')
+            {
+                calendar += '0';
+            }
+            else
+            {
+                calendar += '1';
+            }
+        });
+        calendar += ')]';
+        //$('#pn_pnbundle_job_calendar').val(calendar);
+        $('#pn_pnbundle_babysitter_calendar').val(calendar);
+
+        form.submit(); // submit bypassing the jQuery bound event
+    });
+
+    // Gestion du formulaire d'inscription
+    $('#registerForm input').on('change', function() {
+        if ($('form input[type=radio]:checked').val() == 'parent')
+        {
+            $('#registerForm .info p').html('L\'inscription pour les parents coute 9€50 payable en une fois, valable à vie.');
+            $('#pn_pnbundle_user_babysitter').css('display','none');
+        }
+        if ($('form input[type=radio]:checked').val() == 'nounou')
+        {
+            $('#registerForm .info p').html('L\'inscription est complètement gratuite pour les nounous.');
+            $('#pn_pnbundle_user_babysitter').css('display','block');
+        }
+    });
+
+
+    // Menu de la page recommandations
+    $('#btn-received').click(function(){
+        $('#btn-given').removeClass('selected');
+        $('#btn-newRecommend').removeClass('selected');
+        $(this).addClass('selected');
+    })
+    $('#btn-given').click(function(){
+        $('#btn-received').removeClass('selected');
+        $('#btn-newRecommend').removeClass('selected');
+        $(this).addClass('selected');
+    })
+    $('#btn-newRecommend').click(function(){
+        $('#btn-given').removeClass('selected');
+        $('#btn-received').removeClass('selected');
+        $(this).addClass('selected');
+    });
+
+    // Inscription AJAX
+    $( '#registerForm' ).submit( function( e ){
+        e.preventDefault();
+
+        postForm(
+                $(this),
+                function( response ){
+                    if (response.success)
+                    {
+                        location.reload();
+                    }
+                    else
+                    {
+                        $('#registerErrors').html(response.cause)
+                    }
+                },
+                function(error){
+                    $('#registerErrors').html(error)
+                }
+        );
+
+        return false;
+    });
+
+    // Login and reset password AJAX
+    $('#form-login').submit(function (e) {
+        e.preventDefault();
+
+        var $this = $(e.currentTarget),
+                inputs = {};
+
+        // Send all form's inputs
+        $.each($this.find('input'), function (i, item) {
+            var $item = $(item);
+            inputs[$item.attr('name')] = $item.val();
+        });
+
+        // Send form into ajax
+        $.ajax({
+            url: $this.attr('action'),
+            type: 'POST',
+            dataType: 'json',
+            data: inputs,
+            success: function (data) {
+                if (data.has_error) {
+                    // Insert your error process
+                    alert(data.error);
+                }
+                else {
+                    // Insert your success process
+                    window.location.reload();
+                }
+            }
+        });
+    });
+
+    // mot de passe oublié
+    $('a#mdp_oublie').click( function(e){
+        e.preventDefault();
+        $('form#form-login').attr('action','{{ path('reset_password') }}');
+        $('#password').css('display','none');
+        $('#remember_me').css('display','none');
+        $('form#form-login label').css('display','none');
+        $('#mdp_oublie').css('display','none');
+        $('#username').before('<p>Entrez votre email pour recevoir un nouveau mot de passe</p>')
+        $('form#form-login button[type="submit"]').css('width','100%').html('Recevoir un nouveau mot de passe')
+    })
+
+    // Gestion du compte
+    $( '#changePasswordForm' ).submit( function( e ){
+        e.preventDefault();
+
+        postForm(
+                $(this),
+                function( response ){
+                    if (response.success)
+                    {
+                        $( "#account_management button.close" ).trigger( "click" );
+                    }
+                    else
+                    {
+                        $('#changePasswordErrors').html(response.cause)
+                    }
+                },
+                function(error){
+                    $('#changePasswordErrors').html(error)
+                }
+        );
+
+        return false;
+    });
+
+
+    // Envoi d'une recommandation
+    $('form#new_recommendation').submit(function(e){
+        e.preventDefault();
+
+        $('form#new_recommendation textarea').css('background','url("../../bundles/pnpn/images/icons/ajax-loader.gif") no-repeat right white');
+        $('form#new_recommendation input[type="submit"]').attr('disabled', true);
+
+        postForm(
+                $('form#new_recommendation'),
+                function(response){
+                    $('#new_recommendation').after('' +
+                            '<div class="recommandation">' +
+                            '   <img src="/parent_s2/web/bundles/pnpn/images/illus/nounou.jpg" alt="nounou" style="height: 90px;">' +
+                            '   <img class="left-arrow" src="/parent_s2/web/bundles/pnpn/images/icons/left-arrow.png" alt="left-arrow">' +
+                            '   <div class="bulle">' +
+                            '       <p>' + response.message + '</p>' +
+                            '   </div>' +
+                            '</div>'
+                    );
+                    $('form#new_recommendation textarea').css('background','white');
+                    $('form#new_recommendation input[type="submit"]').attr('disabled', false);
+                },
+                function (error){
+
+                }
+        );
+    })
+
+})
+</script>

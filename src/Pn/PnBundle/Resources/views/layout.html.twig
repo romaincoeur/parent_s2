@@ -34,9 +34,21 @@
     <div class="wrap">
         <div class="social-bar">
 
-            <a href=""><img src="{{ asset('bundles/pnpn/images/icons/social-twitter.png') }}"></a>
-            <a href=""><img src="{{ asset('bundles/pnpn/images/icons/social-facebook.png') }}"></a>
-            <a href=""><img src="{{ asset('bundles/pnpn/images/icons/social-google.png') }}"></a>
+            <a href="https://twitter.com/ParentNounou" target="_blank">
+                <div class="icon bg-blue">
+                    <img src="{{ asset('bundles/pnpn/images/icons/social-twitter.png') }}">
+                </div>
+            </a>
+            <a href="https://www.facebook.com/parent.nounou" target="_blank">
+                <div class="icon bg-facebookblue">
+                    <img src="{{ asset('bundles/pnpn/images/icons/social-facebook.png') }}">
+                </div>
+            </a>
+            <a href="https://plus.google.com/110107023333606538211" rel="publisher" target="_blank">
+                <div class="icon bg-red">
+                    <img src="{{ asset('bundles/pnpn/images/icons/social-google.png') }}">
+                </div>
+            </a>
         </div>
         <div class="pages">
             <a href="{{ path('pn_job_annonces') }}" class="red" style="padding-left: 0; border-left: 0">Annonces</a>
@@ -121,10 +133,9 @@
     <script type="text/javascript" src="{{ asset('bundles/pnpn/js/jquery.js') }}"></script>
     {% else %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    {% endif
-    %}
+    {% endif %}
     <script type="text/javascript" src="{{ asset('bundles/pnpn/js/bootstrap.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/pnpn/js/parentnounou.js') }}"></script>
+    {% include 'PnPnBundle:Javascript:script.html.twig' %}
 {% endblock %}
 
 </body>

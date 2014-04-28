@@ -29,7 +29,8 @@
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "knplabs/knp-menu-bundle": ">=1.1.0,<2.0.x-dev",
-        "sonata-project/core-bundle": "~2.2@dev"
+        "sonata-project/core-bundle": "~2.2@dev",
+        "divi/ajax-login-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

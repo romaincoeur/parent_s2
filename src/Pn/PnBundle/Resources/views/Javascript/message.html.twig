@@ -1,0 +1,219 @@
+<script type="text/javascript">
+    /**
+     * Created by romain on 27/03/14.
+     */
+
+
+
+    $(function() {
+
+        function collapseRemoveButtons(){
+            $('button.delete.armed').animate({
+                width: "30px"
+            }, 300, function() {
+                $(this).html('<img src="{{ asset('bundles/pnpn/images/icons/trash.png') }}" alt="corbeille">');
+                $(this).removeClass('armed');
+            });
+        }
+
+        function removeConversation(id){
+            if ($('#' + id + ' button.delete').hasClass('armed'))
+            {
+                if ($('div.conversationButton#' + id).hasClass('new'))
+                {
+                    // suppression du bouton dans le menu des conversations
+                    $('div.conversationButton#' + id).remove();
+
+                    // suppression du corps de la conversation
+                    $('div.conversation#' + id).remove();
+                }
+                else
+                {
+                    $.ajax()
+                }
+            }
+            else
+            {
+                collapseRemoveButtons();
+
+                $('#' + id + ' button.delete').html('Supprimer la conversation ?');
+                $('#' + id + ' button.delete').animate({
+                    width: "200px"
+                }, 300, function() {
+                    $('#' + id + ' button.delete').addClass('armed');
+                });
+            }
+        }
+
+        function sendMessage(){
+            $('.conversation.selected textarea').css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat right white');
+            $('.conversation.selected input[type="submit"]').attr('disabled', true);
+
+            postForm(
+                    $('.conversation.selected form'),
+                    function(response){
+                        $('#'+$('.conversation.selected form').attr('id')+' .message').last().after('' +
+                                '<div class="message to">' +
+                                '   <div class="bulle">' +
+                                '       <p>' + response.message + '</p>' +
+                                '   </div>' +
+                                '   <img class="arrow right-arrow" src="/parent_s2/web/bundles/pnpn/images/icons/right-arrow.png" alt="right-arrow">' +
+                                '   <img src="/parent_s2/web/bundles/pnpn/images/illus/nounou.jpg" alt="nounou" style="height: 90px;">' +
+                                '</div>'
+                        );
+                        $('.conversation.selected textarea').css('background','white');
+                        $('.conversation.selected input[type="submit"]').attr('disabled', false);
+                    },
+                    function (error){
+
+                    }
+            );
+        }
+
+        // Envoi d'un message
+        $('.conversation form').submit(function(e){
+            e.preventDefault();
+
+            sendMessage();
+        })
+
+        // Affichage des conversations
+        $('.message-leftMenu .conversationButton').click(function(){
+
+            collapseRemoveButtons();
+
+
+            $('.message-leftMenu .btn').removeClass('selected');
+            $('.conversation').removeClass('selected');
+            $(this).addClass('selected');
+            $('.conversation#'+$(this).attr('id')).addClass('selected');
+
+            if ($('#newConversation .expand').css('display') == 'block')
+            {
+                $('#newConversation .title').trigger('click');
+            }
+        })
+
+        // New conversation menu - select user
+        $('#newConversation .title').click(function(){
+            collapseRemoveButtons();
+            if ($('#newConversation .expand').css('display') == 'block')
+            {
+                $('#newConversation').css('cursor','pointer').css('background-color','#ffffff');
+
+                $('#newConversation').animate({
+                    height: "46px"
+                }, 300, function() {
+                    $('#newConversation .expand').css('display','none');
+                    $('#newConversation .reduce').css('display','block');
+                });
+            }
+            else
+            {
+                $('#newConversation').css('cursor','default').css('background-color','#eeeeee');
+
+                $('#newConversation').animate({
+                    height: "300px"
+                }, 300, function() {
+                    $('#newConversation .reduce').css('display','none');
+                    $('#newConversation .expand').css('display','block');
+                });
+            }
+        })
+
+        // Cancel new conversation
+        $('#newConversation .expand button.cancel').click(function(){
+            $('#newConversation .title').trigger('click');
+        })
+
+        // New conversation
+        $('#newConversation ul li').click(function(){
+            var virtualName = $(this).data('virtualname');
+
+            $('.message-leftMenu .btn').removeClass('selected');
+            $('.conversation').removeClass('selected');
+
+            // Ajout du bouton dans le menu des conversations
+            $('#newConversation').before('' +
+                    '<div id="' + virtualName + '" class="btn conversationButton selected clearfix new">' +
+                    '   <div class="left">' +
+                    $(this).html() +
+                    '   </div>' +
+                    '   <div class="right">' +
+                    '       <button class="delete bg-red round white" data-id="'+ virtualName +'">' +
+                    '           <img src="{{ asset('bundles/pnpn/images/icons/trash.png') }}" alt="corbeille">' +
+                    '       </button>' +
+                    '   </div>' +
+                    '</div>'
+            );
+
+            // ajout du corps de la conversation
+            $('.conversation').last().after('' +
+                    '<div class="conversation selected col-md-9" id="' + virtualName + '">' +
+                    '   <form action="{{ path('pn_new_conversation') }}" method="post" id="' + virtualName + '">' +
+                    '       <textarea id="pn_pnbundle_message_body" name="pn_pnbundle_message[body]" required="required" placeholder="Envoyer un message à ' + $(this).data('firstname') + '"></textarea>' +
+                    '       <input type="hidden" name="userId" value="' + $(this).data('id') + '">' +
+                    '       <input type="submit" value="Envoyer">' +
+                    '   </form>' +
+                    '</div>'
+            );
+
+            // repli du menu de selection du destinataire
+            $('#newConversation .title').trigger('click');
+
+            // Ajout du listener
+            $('.message-leftMenu .conversationButton.new:last').click(function(){
+
+                $('.message-leftMenu .btn').removeClass('selected');
+                $('.conversation').removeClass('selected');
+                $(this).addClass('selected');
+                $('.conversation#'+$(this).attr('id')).addClass('selected');
+
+                if ($('#newConversation .expand').css('display') == 'block')
+                {
+                    $('#newConversation .title').trigger('click');
+                }
+            })
+
+            // Ajout du listener de suppression
+            $('#' + virtualName + ' button.delete').click(function(){
+                removeConversation($(this).data('id'));
+            });
+
+            // Ajout du listener d'envoi de formulaire
+            $('.conversation form#' + virtualName).submit(function(e){
+                e.preventDefault();
+
+                $('.conversation.selected textarea').css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat right white');
+                $('.conversation.selected input[type="submit"]').attr('disabled', true);
+
+                postForm(
+                        $('.conversation.selected form'),
+                        function(response){
+                            if (response.success)
+                            {
+                                $(location).attr('href',"{{ path('message') }}/" + virtualName);
+                            }
+                            else
+                            {
+                                $('.conversation.selected textarea').css('background','white');
+                                $('.conversation.selected input[type="submit"]').attr('disabled', false);
+                                alert(response.error)
+                            }
+                        },
+                        function (error){
+                            $('.conversation.selected textarea').css('background','white');
+                            $('.conversation.selected input[type="submit"]').attr('disabled', false);
+                            alert('erreur' + error)
+                        }
+                );
+            })
+        })
+
+        // Remove button
+        $('button.delete').click(function(){
+            removeConversation($(this).data('id'));
+        });
+
+    })
+</script>
