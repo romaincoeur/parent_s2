@@ -20,21 +20,6 @@
     <div class="wrap">
         <div class="row">
             <div class="message-leftMenu col-md-3">
-                {% for key,conversation in conversations %}
-                    <div id="{{ key }}" class="btn conversationButton {% if loop.first and not conv %}selected{% endif %} {% if conv == key %} selected {% endif %}clearfix">
-                        <div class="left">
-                            {{ conversation.object.fullname }}
-                        </div>
-                        <div class="right">
-                            {% if conversation.unread != 0 %}
-                                <div class="unread bg-red white round">{{ conversation.unread }}</div>
-                            {% endif %}
-                            <button class="delete bg-red round white unconfirmed" data-id="{{ key }}">
-                                <img src="{{ asset('bundles/pnpn/images/icons/trash.png') }}" alt="corbeille">
-                            </button>
-                        </div>
-                    </div>
-                {% endfor %}
                 <div id="newConversation" class="btn clearfix">
                     <div class="reduce">
                         <div class="right">
@@ -48,16 +33,28 @@
                         <span class="title">Sélectionner un destinataire</span>
                         <ul>
                             {% for user in users %}
-                            <li
-                                    data-firstname="{{ user.firstname }}"
-                                    data-virtualName="{{ user.virtualName }}"
-                                    data-id="{{ user.id }}"
-                                    >{{ user.fullname }}</li>
+                                <li
+                                        data-firstname="{{ user.firstname }}"
+                                        data-virtualName="{{ user.virtualName }}"
+                                        data-id="{{ user.id }}"
+                                        >{{ user.fullname }}</li>
                             {% endfor %}
                         </ul>
                         <button class="cancel bg-yellow white">Annuler</button>
                     </div>
                 </div>
+                {% for key,conversation in conversations %}
+                    <div id="{{ key }}" class="btn conversationButton {% if loop.first and not conv %}selected{% endif %} {% if conv == key %} selected {% endif %}clearfix">
+                        <div class="left">
+                            {{ conversation.object.fullname }}
+                        </div>
+                        <div class="right">
+                            {% if conversation.unread != 0 %}
+                                <div class="unread bg-red white round">{{ conversation.unread }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
 
             {% for key,conversation in conversations %}

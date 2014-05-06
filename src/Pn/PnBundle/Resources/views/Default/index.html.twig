@@ -23,25 +23,25 @@
 
     <div class="present big-wrap">
         <div class="wrap">
-            <h3>Avec Parent Nounou, vous êtes à un clic de la famille ou de la nounou de vos rêves !</h3>
+            <h3>La meilleure façon de trouver ma nounou ou baby-sitter !</h3>
         </div>
         <div class="big-banner">
             <div class="wrap">
                 <div class="row">
                     <div class="col-md-4 topic">
                         <img src="{{ asset('bundles/pnpn/images/icons/present-search.png') }}" alt="present-search">
-                        <h5>Des recherches efficaces</h5>
-                        <p>J'identifie rapidement ma nounou selon mes criteres et les recomandations</p>
+                        <h5>Nounous qualifiées</h5>
+                        <p>Nous présélectionnons nos nounous et baby-sitters grâce à un moteur de recherche intelligent</p>
                     </div>
                     <div class="col-md-4 topic">
-                        <img src="{{ asset('bundles/pnpn/images/icons/present-confiance.png') }}" alt="present-confiance">
-                        <h5>La confiance à l'honneur</h5>
-                        <p>Un système de points de confiance met en valeur les nounous expérimentées</p>
+                        <img src="{{ asset('bundles/pnpn/images/icons/present-badge.png') }}" alt="present-confiance">
+                        <h5>E-certification</h5>
+                        <p>Nous accompagnons nos nounous et baby-sitters dans leur formation continue</p>
                     </div>
                     <div class="col-md-4 topic">
-                        <img src="{{ asset('bundles/pnpn/images/icons/present-badge.png') }}" alt="present-badge">
-                        <h5>E-formations rapides</h5>
-                        <p>De nombreux conseils et vidéos m'aident à mieux m'occuper des enfants.</p>
+                        <img src="{{ asset('bundles/pnpn/images/icons/present-confiance.png') }}" alt="present-badge">
+                        <h5>Garde d'enfants entre parents (bientôt)</h5>
+                        <p>Nos "parents-nounous" s'entraident dans la garde de leurs enfants</p>
                     </div>
                 </div>
             </div>
@@ -80,8 +80,8 @@
                 <a href="{{ path('babysitter_show', {'id': babysitter.babysitter.id}) }}">
                     <div class="mini-profile">
                         <div class="header">
-                            {% if babysitter.babysitter.avatar %}
-                                <img class="profile-picture" src="{{ asset('uploads/babysitters/' ~ babysitter.babysitter.avatar) }}" alt="photo de profil de {{ babysitter.firstname }}" style="height: 120px;">
+                            {% if babysitter.avatar %}
+                                <img class="profile-picture" src="{{ asset('uploads/users/' ~ babysitter.avatar) }}" alt="photo de profil de {{ babysitter.firstname }}" style="height: 120px;">
                             {% else %}
                                 <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
                             {% endif %}
@@ -118,20 +118,30 @@
         //dans lequel la carte doit s'afficher et les options
         var map = new google.maps.Map(document.getElementById("map"), options);
 
+        //Chargement des icones
+        var icon_grey = "{{ asset('bundles/pnpn/images/markers/marqueur-grey.png') }}";
+        var icon_jaune = "{{ asset('bundles/pnpn/images/markers/marqueur-jaune.png') }}";
+        var icon_rouge = "{{ asset('bundles/pnpn/images/markers/marqueur-rouge.png') }}";
+
         //Positionnement des nounou
         {% for entity in nounous %}
         {% if entity.user.latitude and entity.user.longitude %}
         var nounou_position{{ loop.index }} = new google.maps.LatLng({{ entity.user.latitude }},{{ entity.user.longitude }});
         var nounou_m{{ loop.index }} = new google.maps.Marker({
             position: nounou_position{{ loop.index }},
-            map: map
+            map: map,
+        {% if entity.user == app.user %}
+            icon: icon_rouge,
+        {% else %}
+            icon: icon_grey,
+        {% endif %}
         });
         var nounou_contentm{{ loop.index }} = '' +
                 '<a href="{{ path('babysitter_show', {'id': entity.id}) }}">' +
                 '   <div class="mini-profile" style="margin-left: 0;">' +
                 '       <div class="header">' +
-                {% if entity.avatar %}
-                '           <img class="profile-picture" src="{{ asset('uploads/babysitters/' ~ entity.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">' +
+                {% if entity.user.avatar %}
+                '           <img class="profile-picture" src="{{ asset('uploads/users/' ~ entity.user.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">' +
                 {% else %}
                 '           <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">' +
                 {% endif %}
@@ -139,7 +149,7 @@
                 '           <p>Paris</p>' +
                 '       </div>' +
                 '       <div class="body">' +
-                '           <p>{{ entity.category }}</p>' +
+                '           <p>{{ entity.getCategories[entity.category] }}</p>' +
                 '       </div>' +
                 '   </div>' +
                 '</a>';
@@ -149,6 +159,46 @@
         });
         google.maps.event.addListener(nounou_m{{ loop.index }}, 'click', function() {
             nounou_info{{ loop.index }}.open(map,nounou_m{{ loop.index }});
+        });
+        {% endif %}
+        {% endfor %}
+
+        //Positionnement des parents
+        {% for entity in parents %}
+        {% if entity.user.latitude and entity.user.longitude %}
+        var parent_position{{ loop.index }} = new google.maps.LatLng({{ entity.user.latitude }},{{ entity.user.longitude }});
+        var parent_m{{ loop.index }} = new google.maps.Marker({
+            position: parent_position{{ loop.index }},
+            map: map,
+            {% if entity.user == app.user %}
+            icon: icon_rouge,
+            {% else %}
+            icon: icon_jaune,
+            {% endif %}
+        });
+        var parent_contentm{{ loop.index }} = '' +
+                '<a href="{{ path('pparent_show', {'id': entity.id}) }}">' +
+                '   <div class="mini-profile" style="margin-left: 0;">' +
+                '       <div class="header">' +
+                {% if entity.user.avatar %}
+                '           <img class="profile-picture" src="{{ asset('uploads/users/' ~ entity.user.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">' +
+                {% else %}
+                '           <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 120px;">' +
+                {% endif %}
+                '           <strong>{{ entity.user.getHiddenName() }}</strong>' +
+                '           <p>Paris</p>' +
+                '       </div>' +
+                '       <div class="body">' +
+                '           <p>Parent</p>' +
+                '       </div>' +
+                '   </div>' +
+                '</a>';
+        var parent_info{{ loop.index }} = new google.maps.InfoWindow({
+            content  : parent_contentm{{ loop.index }},
+            position : parent_position{{ loop.index }}
+        });
+        google.maps.event.addListener(parent_m{{ loop.index }}, 'click', function() {
+            parent_info{{ loop.index }}.open(map,parent_m{{ loop.index }});
         });
         {% endif %}
         {% endfor %}

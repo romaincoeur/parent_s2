@@ -16,7 +16,9 @@
             });
         }
 
+        // @Deprecated
         function removeConversation(id){
+            console.warn('removeConversation is deprecated. A conversation is not supposed to be removed anymore.');
             if ($('#' + id + ' button.delete').hasClass('armed'))
             {
                 if ($('div.conversationButton#' + id).hasClass('new'))
@@ -95,11 +97,17 @@
         })
 
         // New conversation menu - select user
-        $('#newConversation .title').click(function(){
+        $('#newConversation').click(function(){
             collapseRemoveButtons();
             if ($('#newConversation .expand').css('display') == 'block')
             {
                 $('#newConversation').css('cursor','pointer').css('background-color','#ffffff');
+                $('#newConversation').hover(function() {
+                    $( this ).css('background-color','#eeeeee');
+                },
+                function() {
+                    $( this ).css('background-color','#ffffff');
+                });
 
                 $('#newConversation').animate({
                     height: "46px"
@@ -134,7 +142,7 @@
             $('.conversation').removeClass('selected');
 
             // Ajout du bouton dans le menu des conversations
-            $('#newConversation').before('' +
+            $('#newConversation').after('' +
                     '<div id="' + virtualName + '" class="btn conversationButton selected clearfix new">' +
                     '   <div class="left">' +
                     $(this).html() +
@@ -177,7 +185,10 @@
 
             // Ajout du listener de suppression
             $('#' + virtualName + ' button.delete').click(function(){
-                removeConversation($(this).data('id'));
+                // suppression du bouton dans le menu des conversations
+                $('div.conversationButton#' + $(this).data('id')).remove();
+                // suppression du corps de la conversation
+                $('div.conversation#' + $(this).data('id')).remove();
             });
 
             // Ajout du listener d'envoi de formulaire
@@ -211,6 +222,7 @@
         })
 
         // Remove button
+        // @Deprecated
         $('button.delete').click(function(){
             removeConversation($(this).data('id'));
         });

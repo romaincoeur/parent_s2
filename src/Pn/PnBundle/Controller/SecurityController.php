@@ -2,7 +2,9 @@
 
 namespace Pn\PnBundle\Controller;
 
+use Pn\PnBundle\Entity\Babysitter;
 use Pn\PnBundle\Entity\Pparent;
+use Pn\PnBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 use Pn\PnBundle\Entity\User;
@@ -39,84 +41,91 @@ class SecurityController extends Controller
     public function registerAction(Request $request)
     {
         $entity = new User();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createForm(new UserType(), $entity, array(
+            'action' => $this->generateUrl('register'),
+            'method' => 'POST',
+        ));
         $form->handleRequest($request);
 
         if ($form->isValid()) {
 
-            try
+            $em = $this->getDoctrine()->getManager();
+
+            // encode password
+            $factory = $this->get('security.encoder_factory');
+            $encoder = $factory->getEncoder($entity);
+            $encodedPassword = $encoder->encodePassword($form["rawPassword"]->getData(), $entity->getSalt());
+            $entity->setPassword($encodedPassword);
+
+            if ($form["type"]->getData() == 'nounou')
             {
-                $em = $this->getDoctrine()->getManager();
+                $babysitter = new Babysitter();
+                $babysitter->setUser($entity);
+                $babysitter->setCategory($form["secondType"]->getData());
+                $em->persist($babysitter);
+            }
+            elseif ($form["type"]->getData() == 'parent')
+            {
+                $parent = new Pparent();
+                $parent->setUser($entity);
+                $em->persist($parent);
+            }
 
-                // encode password
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($entity);
-                $encodedPassword = $encoder->encodePassword($form["rawPassword"]->getData(), $entity->getSalt());
-                $entity->setPassword($encodedPassword);
-
-                if ($form["type"]->getData() == 'nounou')
-                {
-                    $em->persist($entity->getBabysitter());
-                }
-                elseif ($form["type"]->getData() == 'parent')
-                {
-                    $parent = new Pparent();
-                    $parent->setUser($entity);
-                    $em->persist($parent);
-                }
-
-                // enregistrement en BDD
+            // enregistrement en BDD
+            try {
                 $em->persist($entity);
                 $em->flush();
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                $response['success'] = false;
+                $response['cause'] = 'Un utilisateur utilise deja cet email';
+                return new JsonResponse( $response );
+            }
 
-                // Correction du bug de clef étrangere
-                // Maniere peu délicate
+            // Correction du bug de clef étrangere
+            // Maniere peu délicate
+            /*if ($form["type"]->getData() == 'nounou')
+            {
                 $babysitter = $entity->getBabysitter();
                 $babysitter->setUser($entity);
                 $em->persist($babysitter);
                 $em->flush();
+            }*/
 
-                // Envoyer un email de confirmation
-                $confirmationUrl = $this->generateUrl('confirmation', array('token' => $entity->getConfirmationToken()), true);
-                $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('maildeconfirmation');
+            // Envoyer un email de confirmation
+            $confirmationUrl = $this->generateUrl('confirmation', array('token' => $entity->getConfirmationToken()), true);
+            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('maildeconfirmation');
 
-                $message = \Swift_Message::newInstance()
-                    ->setSubject($mail->getObject())
-                    ->setFrom($this->container->getparameter('mailer.from'))
-                    ->setTo($entity->getEmail())
-                    ->setBody(str_replace('%URL', $confirmationUrl, $mail->getBody()))
-                ;
-                $message->getHeaders()->get('Content-Type')->setValue('text/html');
+            $message = \Swift_Message::newInstance()
+                ->setSubject($mail->getObject())
+                ->setFrom($this->container->getparameter('mailer.from'))
+                ->setTo($entity->getEmail())
+                ->setBody(str_replace('%URL', $confirmationUrl, $mail->getBody()))
+            ;
+            $message->getHeaders()->get('Content-Type')->setValue('text/html');
 
-                $this->get('mailer')->send($message);
+            $this->get('mailer')->send($message);
 
-                // Connexion
-                $token = new UsernamePasswordToken($entity, null, 'main', $entity->getRoles());
-                $this->get('security.context')->setToken($token);
+            // Connexion
+            $token = new UsernamePasswordToken($entity, null, 'main', $entity->getRoles());
+            $this->get('security.context')->setToken($token);
 
-                // Response
-                $response['success'] = true;
-                return new JsonResponse( $response );
-            }
-            catch (\Exception $e)
-            {
-                $response['success'] = false;
-                $response['cause'] = $e;
-                return new JsonResponse( $response );
-            }
+            // Response
+            $response['success'] = true;
+            return new JsonResponse( $response );
+
         }
 
         if ($request->isXmlHttpRequest())
         {
             $response['success'] = false;
-            $response['cause'] = 'Formulaire invalide';
+            $response['cause'] = $this->getErrorsAsString($form);
             return new JsonResponse( $response );
         }
         else
         {
             return $this->render('PnPnBundle:Default:register.html.twig', array(
                 'entity' => $entity,
-                'form'   => $form->createView(),
+                'register_form'   => $form->createView()
             ));
         }
     }
@@ -276,5 +285,35 @@ class SecurityController extends Controller
         return $string;
     }
 
+    public function getErrorsAsArray($form)
+    {
+        $errors = array();
+        foreach ($form->getErrors() as $error) {
+            $errors[] = $error->getMessage();
+        }
 
+        foreach ($form->all() as $key => $child) {
+            if ($err = $this->getErrorsAsArray($child)) {
+                $errors[$key] = $err;
+            }
+        }
+
+        return $errors;
+    }
+
+    public function getErrorsAsString($form)
+    {
+        $errors = "";
+        foreach ($form->getErrors() as $error) {
+            $errors .= $error->getMessage()."\n";
+        }
+
+        foreach ($form->all() as $key => $child) {
+            if ($err = $this->getErrorsAsString($child)) {
+                $errors .= $err;
+            }
+        }
+
+        return $errors;
+    }
 }

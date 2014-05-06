@@ -9,141 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Babysitter
 {
-    /**
-     * @var integer
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $presentation;
-
-    /**
-     * @var string
-     */
-    private $experience;
-
-    /**
-     * @var integer
-     */
-    private $trustpoints;
-
-    /**
-     * @var string
-     */
-    private $anythingelse;
-
-    /**
-     * @var string
-     */
-    private $ageofchildren;
-
-    /**
-     * @var array
-     */
-    private $availabilities;
-
-    /**
-     * @var string
-     */
-    private $favoriteactivities;
-
-    /**
-     * @var string
-     */
-    private $hobbies;
-
-    /**
-     * @var string
-     */
-    private $mychildren;
-
-
-    public $file;
-
-    /**
-     * @var \Pn\PnBundle\Entity\User
-     */
-    private $user;
-
-    /**
-     * @var string
-     */
-    private $rate_price;
-
-    /**
-     * @var string
-     */
-    private $rate_type;
-
-    /**
-     * @var string
-     */
-    private $avatar;
-
-    /**
-     * @var string
-     */
-    private $video;
-
-    /**
-     * @var string
-     */
-    private $calendar;
-
-    /**
-     * @var \DateTime
-     */
-    private $created_at;
-
-    /**
-     * @var \DateTime
-     */
-    private $updated_at;
-
-    /**
-     * @var boolean
-     */
-    private $new;
-
-    /**
-     * @var string
-     */
-    private $category;
-
-    /**
-     * @var string
-     */
-    private $petitsplus;
-
-    /**
-     * @var string
-     */
-    private $particularite;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function __construct()
     {
@@ -162,19 +27,23 @@ class Babysitter
 
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../../web/uploads/babysitters'.$this->getUploadDir();
     }
 
     public function getWebPath()
     {
-        return null === $this->avatar ? null : $this->getUploadDir().'/'.$this->avatar;
+        return null === $this->video ? null : $this->getUploadDir().'/'.$this->video;
     }
 
     public function getAbsolutePath()
     {
-        return null === $this->avatar ? null : $this->getUploadRootDir().'/'.$this->avatar;
+        return null === $this->video ? null : $this->getUploadRootDir().'/'.$this->video;
     }
 
+    /**
+     * @var string
+     */
+    private $file;
 
     /**
      * @ORM\PrePersist
@@ -183,7 +52,7 @@ class Babysitter
     {
         if (null !== $this->file) {
             // do whatever you want to generate a unique name
-            $this->avatar = uniqid().'.'.$this->file->guessExtension();
+            $this->video = uniqid().'.'.$this->file->guessExtension();
         }
     }
 
@@ -199,7 +68,7 @@ class Babysitter
         // if there is an error when moving the file, an exception will
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
-        $this->file->move($this->getUploadRootDir(), $this->avatar);
+        $this->file->move($this->getUploadRootDir(), $this->video);
 
         unset($this->file);
     }
@@ -228,7 +97,7 @@ class Babysitter
 
     public static function getCategoryValues()
     {
-        return array_keys(self::getRateType());
+        return array_keys(self::getCategories());
     }
 
     /**
@@ -259,7 +128,7 @@ class Babysitter
 
     public static function getPetitsplusValues()
     {
-        return array_keys(self::getRateType());
+        return array_keys(self::getPetitspluss());
     }
 
     public static function getParticularites()
@@ -274,7 +143,7 @@ class Babysitter
 
     public static function getParticulariteValues()
     {
-        return array_keys(self::getRateType());
+        return array_keys(self::getParticularites());
     }
 
     public function shortPresentation($maxLength)
@@ -301,7 +170,7 @@ class Babysitter
 
     public static function getDiplomasValues()
     {
-        return array_keys(self::getRateType());
+        return array_keys(self::getDiplomass());
     }
 
     public static function getLanguagess()
@@ -320,7 +189,7 @@ class Babysitter
 
     public static function getLanguagesValues()
     {
-        return array_keys(self::getRateType());
+        return array_keys(self::getLanguagess());
     }
 
     public static function getAgeofchildrens()
@@ -336,7 +205,7 @@ class Babysitter
 
     public static function getAgeofchildrenValues()
     {
-        return array_keys(self::getRateType());
+        return array_keys(self::getAgeofchildrens());
     }
 
     public static function getExtraTaskss()
@@ -684,6 +553,41 @@ class Babysitter
         return $this;
     }
 
+    /**
+     * Update and return trustpoints
+     *
+     * @return Integer
+     */
+    public function computeTrustpoints($values)
+    {
+        $result = 0;
+
+        # Trustpoints Profile
+        if ($this->user->getFirstname() != null) $result += $values['profile']['firstname'];
+        if ($this->user->getLastname() != null) $result += $values['profile']['lastname'];
+        if ($this->user->getBirthdate() != null) $result += $values['profile']['birthdate'];
+        if ($this->user->getPostcode() != null) $result += $values['profile']['postcode'];
+        if ($this->user->getCity() != null) $result += $values['profile']['city'];
+        if ($this->user->getAddress() != null) $result += $values['profile']['address'];
+        if ($this->user->getPhone() != null) $result += $values['profile']['phone'];
+        if ($this->user->getAvatar() != null) $result += $values['profile']['avatar'];
+
+        # trustpoints babysitter
+        if ($this->getMychildren() != null) $result += $values['babysitter']['children'];
+        if ($this->getFavoriteactivities() != null) $result += $values['babysitter']['favoriteActivity'];
+        if ($this->getLanguages() != null) $result += $values['babysitter']['languages'];
+        if ($this->getHobbies() != null) $result += $values['babysitter']['hobbies'];
+        if ($this->getParticularite() != null) $result += $values['babysitter']['smoke'];
+        if ($this->getPresentation() != null) $result += $values['babysitter']['presentation'];
+        if ($this->getDiplomas() != null) $result += $values['babysitter']['diplomas'];
+        if ($this->getCategory() != null) $result += $values['babysitter']['category'];
+        if ($this->getAgeofchildren() != null) $result += $values['babysitter']['ageOfChildren'];
+        if ($this->getCalendar() != null) $result += $values['babysitter']['calendar'];
+        if ($this->getRatePrice() != null) $result += $values['babysitter']['priceRate'];
+
+        $this->setTrustpoints($result);
+        return $result;
+    }
 
 
 
@@ -704,12 +608,118 @@ class Babysitter
 
 
 
+
+
+
+
+
+// GENERATED CODE
+    
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var string
+     */
+    private $presentation;
+
+    /**
+     * @var string
+     */
+    private $rate_price;
+
+    /**
+     * @var string
+     */
+    private $rate_type;
+
+    /**
+     * @var string
+     */
+    private $video;
+
+    /**
+     * @var integer
+     */
+    private $experience;
+
+    /**
+     * @var integer
+     */
+    private $trustpoints;
+
+    /**
+     * @var string
+     */
+    private $anythingelse;
+
+    /**
+     * @var array
+     */
+    private $ageofchildren;
+
+    /**
+     * @var string
+     */
+    private $favoriteactivities;
+
+    /**
+     * @var string
+     */
+    private $hobbies;
+
+    /**
+     * @var string
+     */
+    private $mychildren;
+
+    /**
+     * @var string
+     */
+    private $calendar;
+
+    /**
+     * @var string
+     */
+    private $category;
+
+    /**
+     * @var array
+     */
+    private $petitsplus;
+
+    /**
+     * @var array
+     */
+    private $extraTasks;
+
+    /**
+     * @var array
+     */
+    private $particularite;
+
+    /**
+     * @var array
+     */
+    private $diplomas;
+
+    /**
+     * @var array
+     */
+    private $languages;
+
+    /**
+     * @var \Pn\PnBundle\Entity\User
+     */
+    private $user;
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -732,195 +742,11 @@ class Babysitter
     /**
      * Get presentation
      *
-     * @return string
+     * @return string 
      */
     public function getPresentation()
     {
         return $this->presentation;
-    }
-
-    /**
-     * Set experience
-     *
-     * @param string $experience
-     * @return Babysitter
-     */
-    public function setExperience($experience)
-    {
-        $this->experience = $experience;
-
-        return $this;
-    }
-
-    /**
-     * Get experience
-     *
-     * @return string
-     */
-    public function getExperience()
-    {
-        return $this->experience;
-    }
-
-    /**
-     * Set trustpoints
-     *
-     * @param integer $trustpoints
-     * @return Babysitter
-     */
-    public function setTrustpoints($trustpoints)
-    {
-        $this->trustpoints = $trustpoints;
-
-        return $this;
-    }
-
-    /**
-     * Get trustpoints
-     *
-     * @return integer
-     */
-    public function getTrustpoints()
-    {
-        return $this->trustpoints;
-    }
-
-    /**
-     * Set anythingelse
-     *
-     * @param string $anythingelse
-     * @return Babysitter
-     */
-    public function setAnythingelse($anythingelse)
-    {
-        $this->anythingelse = $anythingelse;
-
-        return $this;
-    }
-
-    /**
-     * Get anythingelse
-     *
-     * @return string
-     */
-    public function getAnythingelse()
-    {
-        return $this->anythingelse;
-    }
-
-    /**
-     * Set availabilities
-     *
-     * @param array $availabilities
-     * @return Babysitter
-     */
-    public function setAvailabilities($availabilities)
-    {
-        $this->availabilities = $availabilities;
-
-        return $this;
-    }
-
-    /**
-     * Get availabilities
-     *
-     * @return array
-     */
-    public function getAvailabilities()
-    {
-        return $this->availabilities;
-    }
-
-    /**
-     * Set favoriteactivities
-     *
-     * @param string $favoriteactivities
-     * @return Babysitter
-     */
-    public function setFavoriteactivities($favoriteactivities)
-    {
-        $this->favoriteactivities = $favoriteactivities;
-
-        return $this;
-    }
-
-    /**
-     * Get favoriteactivities
-     *
-     * @return string
-     */
-    public function getFavoriteactivities()
-    {
-        return $this->favoriteactivities;
-    }
-
-    /**
-     * Set hobbies
-     *
-     * @param string $hobbies
-     * @return Babysitter
-     */
-    public function setHobbies($hobbies)
-    {
-        $this->hobbies = $hobbies;
-
-        return $this;
-    }
-
-    /**
-     * Get hobbies
-     *
-     * @return string
-     */
-    public function getHobbies()
-    {
-        return $this->hobbies;
-    }
-
-    /**
-     * Set mychildren
-     *
-     * @param string $mychildren
-     * @return Babysitter
-     */
-    public function setMychildren($mychildren)
-    {
-        $this->mychildren = $mychildren;
-
-        return $this;
-    }
-
-    /**
-     * Get mychildren
-     *
-     * @return string
-     */
-    public function getMychildren()
-    {
-        return $this->mychildren;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \Pn\PnBundle\Entity\User $user
-     * @return Babysitter
-     */
-    public function setUser(\Pn\PnBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Pn\PnBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 
     /**
@@ -939,7 +765,7 @@ class Babysitter
     /**
      * Get rate_price
      *
-     * @return string
+     * @return string 
      */
     public function getRatePrice()
     {
@@ -962,34 +788,11 @@ class Babysitter
     /**
      * Get rate_type
      *
-     * @return string
+     * @return string 
      */
     public function getRateType()
     {
         return $this->rate_type;
-    }
-
-    /**
-     * Set avatar
-     *
-     * @param string $avatar
-     * @return Babysitter
-     */
-    public function setAvatar($avatar)
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
-    /**
-     * Get avatar
-     *
-     * @return string
-     */
-    public function getAvatar()
-    {
-        return $this->avatar;
     }
 
     /**
@@ -1008,29 +811,81 @@ class Babysitter
     /**
      * Get video
      *
-     * @return string
+     * @return string 
      */
     public function getVideo()
     {
         return $this->video;
     }
 
+    /**
+     * Set experience
+     *
+     * @param integer $experience
+     * @return Babysitter
+     */
+    public function setExperience($experience)
+    {
+        $this->experience = $experience;
+
+        return $this;
+    }
 
     /**
-     * @var array
+     * Get experience
+     *
+     * @return integer 
      */
-    private $extraTasks;
+    public function getExperience()
+    {
+        return $this->experience;
+    }
 
     /**
-     * @var array
+     * Set trustpoints
+     *
+     * @param integer $trustpoints
+     * @return Babysitter
      */
-    private $diplomas;
+    public function setTrustpoints($trustpoints)
+    {
+        $this->trustpoints = $trustpoints;
+
+        return $this;
+    }
 
     /**
-     * @var array
+     * Get trustpoints
+     *
+     * @return integer 
      */
-    private $languages;
+    public function getTrustpoints()
+    {
+        return $this->trustpoints;
+    }
 
+    /**
+     * Set anythingelse
+     *
+     * @param string $anythingelse
+     * @return Babysitter
+     */
+    public function setAnythingelse($anythingelse)
+    {
+        $this->anythingelse = $anythingelse;
+
+        return $this;
+    }
+
+    /**
+     * Get anythingelse
+     *
+     * @return string 
+     */
+    public function getAnythingelse()
+    {
+        return $this->anythingelse;
+    }
 
     /**
      * Set ageofchildren
@@ -1053,6 +908,75 @@ class Babysitter
     public function getAgeofchildren()
     {
         return $this->ageofchildren;
+    }
+
+    /**
+     * Set favoriteactivities
+     *
+     * @param string $favoriteactivities
+     * @return Babysitter
+     */
+    public function setFavoriteactivities($favoriteactivities)
+    {
+        $this->favoriteactivities = $favoriteactivities;
+
+        return $this;
+    }
+
+    /**
+     * Get favoriteactivities
+     *
+     * @return string 
+     */
+    public function getFavoriteactivities()
+    {
+        return $this->favoriteactivities;
+    }
+
+    /**
+     * Set hobbies
+     *
+     * @param string $hobbies
+     * @return Babysitter
+     */
+    public function setHobbies($hobbies)
+    {
+        $this->hobbies = $hobbies;
+
+        return $this;
+    }
+
+    /**
+     * Get hobbies
+     *
+     * @return string 
+     */
+    public function getHobbies()
+    {
+        return $this->hobbies;
+    }
+
+    /**
+     * Set mychildren
+     *
+     * @param string $mychildren
+     * @return Babysitter
+     */
+    public function setMychildren($mychildren)
+    {
+        $this->mychildren = $mychildren;
+
+        return $this;
+    }
+
+    /**
+     * Get mychildren
+     *
+     * @return string 
+     */
+    public function getMychildren()
+    {
+        return $this->mychildren;
     }
 
     /**
@@ -1214,5 +1138,28 @@ class Babysitter
     public function getLanguages()
     {
         return $this->languages;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Pn\PnBundle\Entity\User $user
+     * @return Babysitter
+     */
+    public function setUser(\Pn\PnBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Pn\PnBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

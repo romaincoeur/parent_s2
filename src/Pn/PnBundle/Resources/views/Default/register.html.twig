@@ -1,36 +1,38 @@
+<div class="alert alert-success" id="registerSuccess" style="display: none;"></div>
+<div class="alert alert-danger" id="registerErrors" style="display: none;"></div>
 
-<form id="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
 
-    {{ form_errors(form.type) }}
-    {{ form_widget(form.type) }}
+<form id="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(register_form) }}>
+
+    {{ form_errors(register_form.type) }}
+    {{ form_widget(register_form.type) }}
 
     <div class="info">
-        <p>L\'inscription pour les parents coute 9€50 payable en une fois, valable à vie.</p>
+        <p>L'inscription est gratuite pendant la phase test du site. </p>
     </div>
 
-    {{ form_errors(form.firstname) }}
-    {{ form_widget(form.firstname) }}
+    {{ form_errors(register_form.firstname) }}
+    {{ form_widget(register_form.firstname) }}
 
-    {{ form_errors(form.lastname) }}
-    {{ form_widget(form.lastname) }}
+    {{ form_errors(register_form.lastname) }}
+    {{ form_widget(register_form.lastname) }}
 
-    {{ form_errors(form.email) }}
-    {{ form_widget(form.email) }}
+    {{ form_errors(register_form.email) }}
+    {{ form_widget(register_form.email) }}
 
-    {{ form_errors(form.rawPassword.first) }}
-    {{ form_widget(form.rawPassword.first) }}
+    {{ form_errors(register_form.rawPassword.first) }}
+    {{ form_widget(register_form.rawPassword.first) }}
 
-    {{ form_errors(form.rawPassword.second) }}
-    {{ form_widget(form.rawPassword.second) }}
+    {{ form_errors(register_form.rawPassword.second) }}
+    {{ form_widget(register_form.rawPassword.second) }}
 
-    {{ form_errors(form.babysitter) }}
-    {{ form_widget(form.babysitter) }}
+    {{ form_errors(register_form.secondType) }}
+    {{ form_widget(register_form.secondType) }}
 
 
-    {{ form_rest(form) }}
+    {{ form_rest(register_form) }}
 
     <button type="submit">Inscription</button>
-    <div></div>
 
 
 </form>

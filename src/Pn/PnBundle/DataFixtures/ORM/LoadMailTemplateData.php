@@ -55,10 +55,21 @@ class LoadMailTemplateData extends AbstractFixture implements OrderedFixtureInte
         %PASSWORD
         ');
 
+        $mail5 = new MailTemplate();
+        $mail5->setTitle('Mail de contact');
+        $mail5->setVirtualTitle('contactMail');
+        $mail5->setObject('Message de contact');
+        $mail5->setBody('
+        Utilisateur : %FIRSTNAME %LASTNAME <br>
+        Email : %EMAIL <br>
+        Message : %MESSAGE <br>
+        ');
+
         $em->persist($mail1);
         $em->persist($mail2);
         $em->persist($mail3);
         $em->persist($mail4);
+        $em->persist($mail5);
 
         $em->flush();
     }

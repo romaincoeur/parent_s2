@@ -62,16 +62,29 @@ var CROP=function(){
         };
 
         this.loadImg=function(e){
-            var t=this;this.eles.img.attr("src",e).load(function(){
-                t.imgSize()
-            })
+            var t=this;
+            if ($('#cropDialog').css('display')=='none')
+            {
+                setTimeout(function(){
+                        t.eles.img.attr("src",e).load(function(){
+                            t.imgSize()
+                        })
+                    },
+                    100);
+            }
+            else
+            {
+                this.eles.img.attr("src",e).load(function(){
+                    t.imgSize()
+                });
+            }
         };
 
         this.imgSize=function(){
             var e = this.eles.img,
                 t = {
-                    w:e.css("width","").width(),
-                    h:e.css("height","").height()
+                    w:this.eles.img.width(),
+                    h:this.eles.img.height()
                 },
                 n = this.eles.container;
             var r = {

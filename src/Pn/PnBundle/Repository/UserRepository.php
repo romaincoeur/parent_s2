@@ -25,6 +25,19 @@ class UserRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function getLastUpdatedBabysitters($number = 3)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->where('b.type = \'nounou\'')
+            ->orderBy('b.updated_at', 'DESC')
+            ->setMaxResults($number);
+
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
     public function getBabysitterFromSearch($search, $max = null)
     {
         $qb = $this->createQueryBuilder('b')

@@ -28,3 +28,8 @@ user_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "PnPnBundle:User:delete" }
     requirements: { _method: post|delete }
+
+pn_avatarUpload:
+    pattern:  /avatarUpload
+    defaults: { _controller: "PnPnBundle:User:avatarUploadAJAX" }
+    requirements: { _method: post|put|get }

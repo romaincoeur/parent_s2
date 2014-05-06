@@ -1,0 +1,25 @@
+
+<div id="registerErrors"></div>
+
+<form id="contactForm" action="{{ path('pn_contact') }}" method="post" {{ form_enctype(contact_form) }}>
+
+    {{ form_errors(contact_form.firstname) }}
+    {{ form_widget(contact_form.firstname) }}
+
+    {{ form_errors(contact_form.lastname) }}
+    {{ form_widget(contact_form.lastname) }}
+
+    {{ form_errors(contact_form.email) }}
+    {{ form_widget(contact_form.email) }}
+
+    <!-- rows="4" placeholder="Votre message" -->
+    {{ form_errors(contact_form.message) }}
+    {{ form_widget(contact_form.message) }}
+
+
+    {{ form_rest(contact_form) }}
+
+    <button type="submit" class="bg-blue">Envoyer</button>
+
+
+</form>

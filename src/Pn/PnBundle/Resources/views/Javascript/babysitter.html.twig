@@ -1,0 +1,424 @@
+<script>
+
+$(document).ready(function(){
+
+    {% if app.environment == 'dev' %}
+    $.fn.ajaxSubmit.debug = true;
+
+    $(document).ajaxError(function(ev,xhr,o,err) {
+        alert(err);
+        if (window.console && window.console.log) console.log(err);
+    });
+    {% endif %}
+
+    // update a field with AJAX method
+    function updateField( $fieldId, $parameter, $value ){
+
+        $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat right white');
+
+        $.ajax({
+            type        : "POST",
+            url         : "{{ path('babysitter_update_field', { 'id': entity.id}) }}",
+            data        : { parameter: $parameter, value: $value },
+            success     : function(response) {
+                if (response.success)
+                {
+                    $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/check.png') }}") no-repeat right white');
+                }
+                else
+                {
+                    $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/error.png') }}") no-repeat right white');
+                }
+                if (response.message)
+                {
+                    alert(response.message);
+                }
+            },
+            error     : function() {
+                $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/error.png') }}") no-repeat right white');
+            }
+        });
+
+    }
+
+    // update the calendar with AJAX method
+    function updateCalendar( coords, value, callback1, callback2 ){
+
+        $.ajax({
+            type        : "POST",
+            url         : "{{ path('babysitter_updateCalendarAJAX', { 'id': entity.id}) }}",
+            data        : { coords: coords, value: value },
+            success     : function(data) {
+                callback1(data);
+            },
+            error     : function(data) {
+                callback2(data);
+            }
+        });
+
+    }
+
+    // mapping fields to AJAX Upload
+
+    $('#pn_pnbundle_babysitter_user_firstname').change(function(){
+        updateField($(this).attr('id'), 'firstname', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_user_lastname').change(function(){
+        updateField($(this).attr('id'), 'lastname', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_rate_price').change(function(){
+        updateField($(this).attr('id'), 'rate_price', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_rate_type').change(function(){
+        updateField($(this).attr('id'), 'rate_type', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_presentation').change(function(){
+        updateField($(this).attr('id'), 'presentation', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_user_phone').change(function(){
+        updateField($(this).attr('id'), 'phone', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_user_address').change(function(){
+        updateField($(this).attr('id'), 'address', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_user_birthdate_day').change(function(){
+        updateField($(this).attr('id'), 'birthdate_day', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_user_birthdate_month').change(function(){
+        updateField($(this).attr('id'), 'birthdate_month', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_user_birthdate_year').change(function(){
+        updateField($(this).attr('id'), 'birthdate_year', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_experience').change(function(){
+        updateField($(this).attr('id'), 'experience', $(this).val());
+    })
+    $('input[name="pn_pnbundle_babysitter[diplomas][]"]').change(function(){
+        updateField('diplomas', 'diplomas', $(this).val())
+    })
+    $('input[name="pn_pnbundle_babysitter[ageOfChildren][]"]').change(function(){
+        updateField('ageOfChildren', 'ageOfChildren', $(this).val())
+    })
+    $('input[name="pn_pnbundle_babysitter[languages][]"]').change(function(){
+        updateField('languages', 'languages', $(this).val())
+    })
+    $('input[name="pn_pnbundle_babysitter[particularite][]"]').change(function(){
+        updateField('particularite', 'particularite', $(this).val())
+    })
+    $('input[name="pn_pnbundle_babysitter[extraTasks][]"]').change(function(){
+        updateField('extratasks', 'extraTasks', $(this).val())
+    })
+    $('input[name="pn_pnbundle_babysitter[petitsplus][]"]').change(function(){
+        updateField('petitsplus', 'petitPlus', $(this).val())
+    })
+    $('#pn_pnbundle_babysitter_favoriteactivities').change(function(){
+        updateField($(this).attr('id'), 'favoriteactivities', $(this).val());
+    })
+    $('#pn_pnbundle_babysitter_hobbies').change(function(){
+        updateField($(this).attr('id'), 'hobbies', $(this).val());
+    })
+
+
+    // Calendar AJAX update and feedback
+    $(".calendar button").click(function(){
+
+        if ($(this).css('background-color') == 'rgb(255, 255, 255)')
+        {
+            $(this).css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat center white');
+            updateCalendar(
+                    $(this).attr('id'),
+                    1,
+                    function(response){
+                        if (response.success)
+                        {
+                            $('#'+response.id).css('background','lightgreen');
+                        }
+                        else
+                        {
+                            $('#'+response.id).css('background','url("{{ asset('bundles/pnpn/images/icons/error.gif') }}") no-repeat center white');
+                        }
+                    },
+                    function(response)
+                    {
+                        $('#'+response.id).css('background','url("{{ asset('bundles/pnpn/images/icons/error.gif') }}") no-repeat center white');
+                    }
+            )
+
+        }
+        else
+        {
+            $(this).css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat center lightgreen');
+            updateCalendar(
+                    $(this).attr('id'),
+                    0,
+                    function(response){
+                        if (response.success)
+                        {
+                            $('#'+response.id).css('background','white');
+                        }
+                        else
+                        {
+                            $('#'+response.id).css('background','url("{{ asset('bundles/pnpn/images/icons/error.gif') }}") no-repeat center lightgreen');
+                        }
+                    },
+                    function(error){
+                        $('#'+response.id).css('background','url("{{ asset('bundles/pnpn/images/icons/error.gif') }}") no-repeat center lightgreen');
+                    }
+            )
+
+        }
+    });
+
+
+})
+
+
+
+
+
+
+
+// Crop functions
+$(function() {
+
+    function loadImageFile(){
+        $('#cropDialog').modal('show');
+        if(document.getElementById("uploadfile").files.length===0)
+            return;
+        var e=document.getElementById("uploadfile").files[0];
+        if(!rFilter.test(e.type))
+        {return}
+        oFReader.readAsDataURL(e)
+    }
+
+    $('#cropDialog').modal({ show: false})
+    var one=new CROP;
+    one.init(".default");
+    one.loadImg("{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}");
+
+    // Map designed upload button to input type=file
+    $("body").on("click",".newupload",function(){
+        $(".uploadfile").click()
+    });
+
+    $("input#uploadfile").change(function(){
+        loadImageFile();
+        /*$(".uploadfile").wrap("<form>").closest("form").get(0).reset();
+        $(".uploadfile").unwrap()*/
+    });
+
+    oFReader=new FileReader,rFilter=/^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+    oFReader.onload=function(e){
+        $(".example").html('' +
+                '<div class="default">' +
+                '   <div class="cropMain"></div>' +
+                '   <div class="cropSlider"></div>' +
+                '   <div id="output"></div>' +
+                '   <button class="cropButton" id="cropButton">Valider</button>' +
+                '</div>'
+        );
+        one=new CROP;
+        one.init(".default");
+        one.loadImg(e.target.result);
+        $("#cropButton").click(function(){
+            //console.log(coordinates(one));
+
+            // update coord fields
+            $('#avatarUploadForm input#x').val(coordinates(one).x);
+            $('#avatarUploadForm input#y').val(coordinates(one).y);
+            $('#avatarUploadForm input#w').val(coordinates(one).w);
+            $('#avatarUploadForm input#h').val(coordinates(one).h);
+
+            var options = {
+                target:   '#output',   // target element(s) to be updated with server response
+                beforeSubmit:  beforeSubmit,  // pre-submit callback
+                success: function(data) {
+                    if (data.success)
+                    {
+                        $('img.profile-picture').attr('src', '{{ asset('uploads/users') }}/' + data.imgUrl);
+                        $('#cropAjaxLoader').remove();
+                        $( "#cropDialog button.close" ).trigger( "click" );
+                    }
+                    else
+                    {
+                        $('#output').html(data.message);
+                        $('#cropAjaxLoader').remove();
+                    }
+                },
+                error: function(error){
+                    $('#output').html(error);
+                    $('#cropAjaxLoader').remove();
+                },
+                resetForm: true        // reset the form after successful submit
+            };
+
+            $('#avatarUploadForm').ajaxSubmit(options);  //Ajax Submit form
+
+            //e.preventDefault();
+            //$('#cropDialog').modal({ show: false});
+
+            /*            $("canvas").remove();
+             $(".header").after('<canvas width="240" height="240" id="canvas"/>');
+             var e=document.getElementById("canvas").getContext("2d"),
+             t=new Image
+             n=coordinates(one).w,
+             r=coordinates(one).h,
+             i=coordinates(one).x,
+             s=coordinates(one).y,
+             o=240,u=240;
+             t.src=coordinates(one).image;
+
+             t.onload=function(){
+             e.drawImage(t,i,s,n,r,0,0,o,u);
+             $("canvas").addClass("output").show().delay("4000").fadeOut("slow")
+             }*/
+        });
+
+    }
+
+    //function to check file size before uploading.
+    function beforeSubmit(){
+        //check whether browser fully supports all File API
+        if (window.File && window.FileReader && window.FileList && window.Blob)
+        {
+
+            if( !$('#uploadfile').val()) //check empty input filed
+            {
+                $("#output").html("Veuillez sélectionner une image");
+                return false
+            }
+
+            var fsize = $('#uploadfile')[0].files[0].size; //get file size
+            var ftype = $('#uploadfile')[0].files[0].type; // get file type
+
+
+            //allow only valid image file types
+            switch(ftype)
+            {
+                case 'image/png': case 'image/gif': case 'image/jpeg': case 'image/pjpeg':
+                break;
+                default:
+                    $("#output").html("<b>"+ftype+"</b> Unsupported file type!");
+                    return false
+            }
+
+            //Allowed file size is less than 1 MB (1048576)
+            if(fsize>1048576)
+            {
+                $("#output").html("<b>"+fsize +"</b> Too big Image file! <br />Please reduce the size of your photo using an image editor.");
+                return false
+            }
+
+            $('#cropButton').before("<img src='{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}' alt='ajax-loader' id='cropAjaxLoader'>").hide(); //hide submit button
+            $("#output").html("");
+        }
+        else
+        {
+            //Output error to older unsupported browsers that doesn't support HTML5 File API
+            $("#output").html("Please upgrade your browser, because your current browser lacks some new features we need!");
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+    // Video upload
+
+    // Map designed upload button to input type=file
+    $("body").on("click",".newvideo",function(){
+        $("#videoUploadfile").click()
+    });
+
+    $("input#videoUploadfile").change(function(){
+        var options = {
+            target:   '#videoOutput',   // target element(s) to be updated with server response
+            beforeSubmit:  videoBeforeSubmit,  // pre-submit callback
+            success: function(data) {
+                if (data.success)
+                {
+                    if ($('video').length == 0)
+                    {
+                        $('.newvideo').removeClass('btn').removeClass('pres-video').html(
+                                '<video src={{ asset('uploads/babysitters') }}/' + data.videoUrl + '></video>' +
+                                '<div class="btn bg-red changeVideo">Changer la vidéo</div>' +
+                                '<div id="progressbox" style="display: none;"><div id="progressbar"></div ><div id="statustxt">0%</div></div>' +
+                                '<div id="videoOutput"></div>'
+                        );
+                    }
+                    else
+                    {
+                        $('video').attr('src', '{{ asset('uploads/babysitters') }}/' + data.videoUrl);
+                    }
+
+                    //$('img.profile-picture').attr('src', '{{ asset('uploads/users') }}/' + data.imgUrl);
+                    $('#videoAjaxLoader').remove();
+                    $('#progressbox').hide();
+                }
+                else
+                {
+                    $('#videoOutput').html(data.message);
+                    $('#videoAjaxLoader').remove();
+                }
+            },
+            error: function(error){
+                $('#videoOutput').html(error);
+                $('#videoAjaxLoader').remove();
+            },
+            uploadProgress: OnProgress,
+            resetForm: true        // reset the form after successful submit
+        };
+        $('#videoUploadForm').ajaxSubmit(options);
+        //$('#videoUploadForm').submit();
+    });
+
+    function videoBeforeSubmit(){
+        //check whether client browser fully supports all File API
+        if (window.File && window.FileReader && window.FileList && window.Blob)
+        {
+            var fsize = $('#videoUploadfile')[0].files[0].size; //get file size
+            var ftype = $('#videoUploadfile')[0].files[0].type; // get file type
+            //allow file types
+            switch(ftype)
+            {
+                case 'video/mp4':
+                case 'video/webm':
+                case 'video/ogg':
+                    break;
+                default:
+                    $("#output").html("<b>"+ftype+"</b> Unsupported file type!");
+                    return false;
+            }
+
+            //Allowed file size is less than 100 MB (1048576 = 1 mb)
+            if(fsize>104857600)
+            {
+                alert("<b>"+fsize +"</b> La vidéo est trop volumineuse <br />Les vidéos doivent faire moins de 10 Mo.");
+                return false;
+            }
+        }
+        else
+        {
+            //Error for older unsupported browsers that doesn't support HTML5 File API
+            alert("Veuillez mettre à jour votre navigateur web. Votre navigateur actuel ne suppporte pas certaines " +
+                    "fonctionalités dont parent-nounou à besoin pour fonctionner.");
+            return false;
+        }
+    }
+
+    function OnProgress(event, position, total, percentComplete)
+    {
+        //Progress bar
+        $('#progressbox').show();
+        $('#progressbar').width(percentComplete + '%') //update progressbar percent complete
+        $('#statustxt').html(percentComplete + '%'); //update status text
+        if(percentComplete>50)
+        {
+            $('#statustxt').css('color','#000'); //change status text to white after 50%
+        }
+    }
+})
+</script>

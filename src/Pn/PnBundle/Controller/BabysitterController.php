@@ -2,6 +2,7 @@
 
 namespace Pn\PnBundle\Controller;
 
+use FOS\UserBundle\Entity\User;
 use Proxies\__CG__\Pn\PnBundle\Entity\Recommendation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -84,12 +85,12 @@ class BabysitterController extends Controller
     }
 
     /**
-    * Creates a form to create a Babysitter entity.
-    *
-    * @param Babysitter $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to create a Babysitter entity.
+     *
+     * @param Babysitter $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createCreateForm(Babysitter $entity)
     {
         $form = $this->createForm(new BabysitterType(), $entity, array(
@@ -190,12 +191,12 @@ class BabysitterController extends Controller
     }
 
     /**
-    * Creates a form to edit a Babysitter entity.
-    *
-    * @param Babysitter $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Babysitter entity.
+     *
+     * @param Babysitter $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Babysitter $entity)
     {
         $form = $this->createForm(new BabysitterType(), $entity, array(
@@ -279,7 +280,7 @@ class BabysitterController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
-        ;
+            ;
     }
 
     /**
@@ -342,27 +343,27 @@ class BabysitterController extends Controller
                 break;
             case 'birthdate_day':
                 $birthdate = $user->getBirthdate();
+                $d = $value;
                 $m = $birthdate->format('m');
                 $Y = $birthdate->format('Y');
 
-                $birthdate->setDate($Y , $m , $value);
-                $user->setBirthdate($birthdate);
+                $user->setBirthdate(new \DateTime($Y.'-'.$m.'-'.$d));
                 break;
             case 'birthdate_month':
                 $birthdate = $user->getBirthdate();
                 $d = $birthdate->format('d');
+                $m = $value;
                 $Y = $birthdate->format('Y');
 
-                $birthdate->setDate($Y , $value , $d);
-                $user->setBirthdate($birthdate);
+                $user->setBirthdate(new \DateTime($Y.'-'.$m.'-'.$d));
                 break;
             case 'birthdate_year':
                 $birthdate = $user->getBirthdate();
                 $d = $birthdate->format('d');
                 $m = $birthdate->format('m');
+                $Y = $value;
 
-                $birthdate->setDate($value , $m , $d);
-                $user->setBirthdate($birthdate);
+                $user->setBirthdate(new \DateTime($Y.'-'.$m.'-'.$d));
                 break;
             case 'experience':
                 $entity->setExperience($value);
@@ -385,11 +386,19 @@ class BabysitterController extends Controller
             case 'petitPlus':
                 $entity->switchPetitsPlus($value);
                 break;
+            case 'favoriteactivities':
+                $entity->setFavoriteActivities($value);
+                break;
+            case 'hobbies':
+                $entity->setHobbies($value);
+                break;
             default:
                 $response['success'] = false;
                 $response['message'] = 'wrong parameter';
                 return new JsonResponse( $response );
         }
+
+        $this->updateTrustpoints($entity);
 
         // Persist in DB
         $em->persist($entity);
@@ -441,6 +450,8 @@ class BabysitterController extends Controller
         $calendar[$x][$y] = $value;
         $entity->setCalendar($calendarService->getString($calendar));
 
+        $this->updateTrustpoints($entity);
+
         // Persist in DB
         $em->persist($entity);
         $em->flush();
@@ -450,5 +461,173 @@ class BabysitterController extends Controller
 
         // Response
         return new JsonResponse( $response );
+    }
+
+    /**
+     * Edits the address from Google Geocoder.
+     * AJAX
+     *
+     */
+    public function updateAddressAJAXAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Babysitter entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $addressTab = json_decode($request->request->get('value'), true);
+            $latitude = $request->request->get('latitude');
+            $longitude = $request->request->get('longitude');
+        }
+        else
+        {
+            $addressTab = json_decode($request->query->get('value'), true);
+            $latitude = $request->query->get('latitude');
+            $longitude = $request->query->get('longitude');
+        }
+
+        // Remplacer les valeurs
+        $entity->getUser()->setAddress($addressTab['formatted_address']);
+        $entity->getUser()->setLatitude($latitude);
+        $entity->getUser()->setLongitude($longitude);
+        /*foreach ($addressTab['address_components'] as $component)
+        {
+            if (preg_match ('\d{2}', $component['short_name']) == 1) $entity->getUser()->setDepartement($component['short_name']);
+            if (preg_match ('\d{5}', $component['short_name']) == 1) $entity->getUser()->setPostCode($component['short_name']);
+        }*/
+
+        $this->updateTrustpoints($entity);
+
+        // Persist in DB
+        $em->persist($entity);
+        $em->flush();
+
+        $response['success'] = true;
+        //$response['message'] = $request->request->get('value');
+
+        // Response
+        return new JsonResponse( $response );
+    }
+
+    /**
+     * Upload a presentation video.
+     * AJAX
+     *
+     */
+    public function videoUploadAJAXAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        if (!$user) {
+            die('Veuillez vous reconnecter s\'il vous plait');
+        }
+
+        $entity = $user->getBabysitter();
+
+        if (!$entity) {
+            die('Seules les nounous peuvent télécharger des vidéos.');
+        }
+
+        if(isset($_FILES["videoUploadfile"]) && $_FILES["videoUploadfile"]["error"]== UPLOAD_ERR_OK)
+        {
+            ############ Edit settings ##############
+            $UploadDirectory    = __DIR__.'/../../../../web/uploads/babysitters/'; //specify upload directory ends with / (slash)
+            ##########################################
+
+            /*
+            Note : You will run into errors or blank page if "memory_limit" or "upload_max_filesize" is set to low in "php.ini".
+            Open "php.ini" file, and search for "memory_limit" or "upload_max_filesize" limit
+            and set them adequately, also check "post_max_size".
+            */
+
+            //check if this is an ajax request
+            /*if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
+                die();
+            }*/
+
+
+            //Is file size is less than allowed size.
+            if ($_FILES["videoUploadfile"]["size"] > 104857600) {
+                die("File size is too big!");
+            }
+
+            //allowed file type Server side check
+            switch(strtolower($_FILES['videoUploadfile']['type']))
+            {
+                //allowed file types
+                case 'video/mp4':
+                case 'video/webm':
+                case 'video/ogg':
+                    break;
+                default:
+                    die('Unsupported File!'); //output error
+            }
+
+            $File_Name          = strtolower($_FILES['videoUploadfile']['name']);
+            $File_Ext           = substr($File_Name, strrpos($File_Name, '.')); //get file extention
+            $Random_Number      = rand(0, 999999999); //Random number to be added to name.
+            $NewFileName        = $Random_Number.$File_Ext; //new file name
+
+            if(!move_uploaded_file($_FILES['videoUploadfile']['tmp_name'], $UploadDirectory.$NewFileName ))
+            {
+                die('error uploading File!');
+            }
+
+            $entity->setVideo($NewFileName);
+
+            $this->updateTrustpoints($entity);
+
+            // Persist in DB
+            $em->persist($entity);
+            $em->flush();
+
+            // Response
+            $response['success'] = true;
+            $response['videoUrl'] = $entity->getVideo();
+            return new JsonResponse( $response );
+
+        }
+        else
+        {
+            die('Something wrong with upload!');
+        }
+    }
+
+    private function updateTrustpoints(Babysitter $user)
+    {
+        $values = array(
+            'profile' => array(
+                'firstname' => $this->container->getparameter('trustpoints.profile.firstname'),
+                'lastname' => $this->container->getparameter('trustpoints.profile.lastname'),
+                'birthdate' => $this->container->getparameter('trustpoints.profile.birthdate'),
+                'postcode' => $this->container->getparameter('trustpoints.profile.postcode'),
+                'city' => $this->container->getparameter('trustpoints.profile.city'),
+                'address' => $this->container->getparameter('trustpoints.profile.address'),
+                'phone' => $this->container->getparameter('trustpoints.profile.phone'),
+                'avatar' => $this->container->getparameter('trustpoints.profile.avatar'),
+            ),
+            'babysitter' => array(
+                'children' => $this->container->getparameter('trustpoints.babysitter.children'),
+                'favoriteActivity' => $this->container->getparameter('trustpoints.babysitter.favoriteActivity'),
+                'languages' => $this->container->getparameter('trustpoints.babysitter.languages'),
+                'hobbies' => $this->container->getparameter('trustpoints.babysitter.hobbies'),
+                'smoke' => $this->container->getparameter('trustpoints.babysitter.smoke'),
+                'presentation' => $this->container->getparameter('trustpoints.babysitter.presentation'),
+                'diplomas' => $this->container->getparameter('trustpoints.babysitter.diplomas'),
+                'category' => $this->container->getparameter('trustpoints.babysitter.category'),
+                'ageOfChildren' => $this->container->getparameter('trustpoints.babysitter.ageOfChildren'),
+                'calendar' => $this->container->getparameter('trustpoints.babysitter.calendar'),
+                'priceRate' => $this->container->getparameter('trustpoints.babysitter.priceRate'),
+            ),
+        );
+
+        return $user->computeTrustpoints($values);
     }
 }

@@ -33,6 +33,7 @@ function postForm( $form, callback1, callback2 ){
 
 $(function() {
 
+    // Calendar submit
     $(".calendarForm").submit(function(e){
         e.preventDefault();
         var form = this;
@@ -59,13 +60,13 @@ $(function() {
     $('#registerForm input').on('change', function() {
         if ($('form input[type=radio]:checked').val() == 'parent')
         {
-            $('#registerForm .info p').html('L\'inscription pour les parents coute 9€50 payable en une fois, valable à vie.');
-            $('#pn_pnbundle_user_babysitter').css('display','none');
+            $('#registerForm .info p').html('L\'inscription est gratuite pendant la phase test du site.');
+            $('#pn_pnbundle_user_secondType').css('display','none');
         }
         if ($('form input[type=radio]:checked').val() == 'nounou')
         {
             $('#registerForm .info p').html('L\'inscription est complètement gratuite pour les nounous.');
-            $('#pn_pnbundle_user_babysitter').css('display','block');
+            $('#pn_pnbundle_user_secondType').css('display','block');
         }
     });
 
@@ -90,6 +91,9 @@ $(function() {
     // Inscription AJAX
     $( '#registerForm' ).submit( function( e ){
         e.preventDefault();
+        $( '#registerForm button[type="submit"]').after('<img src="{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}" alt="ajax-loader" id="ajax-loader">');
+        $('#registerErrors').css('display','none');
+        $('#registerSuccess').css('display','none');
 
         postForm(
                 $(this),
@@ -100,11 +104,36 @@ $(function() {
                     }
                     else
                     {
-                        $('#registerErrors').html(response.cause)
+                        $('#registerErrors').html(response.cause).css('display','block');
+
+                        /*else
+                         {
+                         var errorsArr = $.parseJSON(response.cause);
+                         var errorsStr = '';
+                         for(var k in errorsArr) {
+                         for(var l in errorsArr[k]) {
+                         if (typeof errorsArr[k][l] == Array)
+                         {
+                         errorsStr += errorsArr[k][l][0];
+                         }
+                         else
+                         {
+                         errorsStr += errorsArr[k][l];
+                         }
+                         }
+                         }
+                         if (errorsStr == '')
+                         {
+                         errorsStr = 'Erreur inconnue';
+                         }
+                         $('#registerErrors').html(errorsStr).css('display','block');
+                         }*/
                     }
+                    $('#ajax-loader').remove();
                 },
                 function(error){
-                    $('#registerErrors').html(error)
+                    $('#registerErrors').html(error.statusText).css('display','block');
+                    $('#ajax-loader').remove();
                 }
         );
 
@@ -158,27 +187,41 @@ $(function() {
     // Gestion du compte
     $( '#changePasswordForm' ).submit( function( e ){
         e.preventDefault();
+        $( '#changePasswordForm button[type="submit"]').after('<img src="{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}" alt="ajax-loader" id="ajax-loader">');
+        $('#changePasswordErrors').css('display','none');
+        $('#changePasswordSuccess').css('display','none');
 
         postForm(
                 $(this),
                 function( response ){
                     if (response.success)
                     {
-                        $( "#account_management button.close" ).trigger( "click" );
+                        setTimeout(
+                                function()
+                                {
+                                    $('#changePasswordSuccess').html("Votre nouveau mot de passe est activé").css('display','block');
+                                }, 1000);
+                        //$( "#account_management button.close" ).trigger( "click" );
+
+                        // Effacer les champs du formulaire
+                        $(':input','#changePasswordForm')
+                                .not(':button, :submit, :reset, :hidden')
+                                .val('');
                     }
                     else
                     {
-                        $('#changePasswordErrors').html(response.cause)
+                        $('#changePasswordErrors').html(response.cause).css('display','block');
                     }
+                    $('#ajax-loader').remove();
                 },
                 function(error){
-                    $('#changePasswordErrors').html(error)
+                    $('#changePasswordErrors').html(error).css('display','block');
+                    $('#ajax-loader').remove();
                 }
         );
 
         return false;
     });
-
 
     // Envoi d'une recommandation
     $('form#new_recommendation').submit(function(e){
@@ -207,6 +250,30 @@ $(function() {
                 }
         );
     })
+
+    // Envoi du formulaire de contact
+    $( '#contactForm' ).submit( function( e ){
+        e.preventDefault();
+
+        postForm(
+                $(this),
+                function( response ){
+                    if (response.success)
+                    {
+                        $( "#contact button.close" ).trigger( "click" );
+                    }
+                    else
+                    {
+                        $('#contactErrors').html(response.cause)
+                    }
+                },
+                function(error){
+                    $('#contactErrors').html(error)
+                }
+        );
+
+        return false;
+    });
 
 })
 </script>

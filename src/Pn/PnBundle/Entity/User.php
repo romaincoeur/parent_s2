@@ -12,6 +12,229 @@ use Symfony\Component\Security\Core\Util\SecureRandom;
 class User implements UserInterface
 {
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->sent_messages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->received_messages = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->confirmed = false;
+        $generator = new SecureRandom();
+        $this->confirmationToken = $generator->nextBytes(10);
+    }
+
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_ADMIN');
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+    public function equals(UserInterface $user)
+    {
+        return $user->getUsername() == $this->getUsername();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if(!$this->getCreatedAt())
+        {
+            $this->created_at = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updated_at = new \DateTime();
+    }
+
+    public static function getsecondTypes()
+    {
+        return array(
+            'babysitter' => 'Babysitter',
+            'assistante' => 'Assistante maternelle',
+            'nounou' => 'Nounou à domicile',
+            'garde' => 'Garde partagée',
+            'aupair' => 'Fille au pair',
+            'animateur' => 'Animateur'
+        );
+    }
+
+    public static function getsecondTypeValues()
+    {
+        return array_keys(self::getsecondTypes());
+    }
+
+        public function getHiddenName()
+    {
+        return $this->getFirstname().' '.substr($this->getLastname(),0,1).'.';
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        $this->is_activated = true;
+        $this->setUsername($this->email);
+        if ($this->getBirthdate() == null) $this->setBirthdate(new \DateTime('1902-01-01'));
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
+
+    /**
+     * Get fullname
+     *
+     * @return string
+     */
+    public function getFullname()
+    {
+        return $this->firstname.' '.$this->lastname;
+    }
+
+    /**
+     * Get virtual name
+     *
+     * @return string
+     */
+    public function getVirtualname()
+    {
+        return mb_strtolower($this->firstname.$this->lastname);
+    }
+
+    public $file;
+
+    protected function getUploadDir()
+    {
+        return 'uploads/users';
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->avatar ? null : $this->getUploadDir().'/'.$this->avatar;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->avatar ? null : $this->getUploadRootDir().'/'.$this->avatar;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function preUpload()
+    {
+        if (null !== $this->file) {
+            // do whatever you want to generate a unique name
+            $this->avatar = uniqid().'.'.$this->file->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist
+     */
+    public function upload()
+    {
+        if (null === $this->file) {
+            return;
+        }
+
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
+        $this->file->move($this->getUploadRootDir(), $this->avatar);
+
+        unset($this->file);
+    }
+
+    /**
+     * @ORM\PostRemove
+     */
+    public function removeUpload()
+    {
+        if ($file = $this->getAbsolutePath()) {
+            unlink($file);
+        }
+    }
+
+    public function age()
+    {
+        if ($this->birthdate == null)
+            return null;
+        $today = explode('.',date("d.m.Y"));
+        if ($today[1] < $this->birthdate->format('m') || ($today[1] == $this->birthdate->format('m') && $today[0] < $this->birthdate->format('d')))
+            return $today[2] - $this->birthdate->format('Y') - 1;
+        else
+            return $today[2] - $this->birthdate->format('Y');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// GENERATED CODE
+    /**
      * @var integer
      */
     private $id;
@@ -25,6 +248,121 @@ class User implements UserInterface
      * @var string
      */
     private $password;
+
+    /**
+     * @var string
+     */
+    private $rawPassword;
+
+    /**
+     * @var string
+     */
+    private $type;
+
+    /**
+     * @var string
+     */
+    private $secondType;
+
+    /**
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @var string
+     */
+    private $firstname;
+
+    /**
+     * @var string
+     */
+    private $lastname;
+
+    /**
+     * @var string
+     */
+    private $phone;
+
+    /**
+     * @var boolean
+     */
+    private $is_activated;
+
+    /**
+     * @var \DateTime
+     */
+    private $created_at;
+
+    /**
+     * @var \DateTime
+     */
+    private $updated_at;
+
+    /**
+     * @var string
+     */
+    private $address;
+
+    /**
+     * @var string
+     */
+    private $latitude;
+
+    /**
+     * @var string
+     */
+    private $longitude;
+
+    /**
+     * @var boolean
+     */
+    private $confirmed;
+
+    /**
+     * @var string
+     */
+    private $confirmationToken;
+
+    /**
+     * @var \DateTime
+     */
+    private $birthdate;
+
+    /**
+     * @var string
+     */
+    private $avatar;
+
+    /**
+     * @var \Pn\PnBundle\Entity\Babysitter
+     */
+    private $babysitter;
+
+    /**
+     * @var \Pn\PnBundle\Entity\Pparent
+     */
+    private $parent;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $sent_messages;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $received_messages;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $given_recommendations;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $received_recommendations;
 
 
     /**
@@ -51,16 +389,6 @@ class User implements UserInterface
     }
 
     /**
-     * Get username
-     *
-     * @return string 
-     */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
      * Set password
      *
      * @param string $password
@@ -74,45 +402,27 @@ class User implements UserInterface
     }
 
     /**
-     * Get password
+     * Set rawPassword
+     *
+     * @param string $rawPassword
+     * @return User
+     */
+    public function setRawPassword($rawPassword)
+    {
+        $this->rawPassword = $rawPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get rawPassword
      *
      * @return string 
      */
-    public function getPassword()
+    public function getRawPassword()
     {
-        return $this->password;
+        return $this->rawPassword;
     }
-
-
-    public function getRoles()
-    {
-        return array('ROLE_ADMIN');
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function eraseCredentials()
-    {
-
-    }
-
-    public function equals(UserInterface $user)
-    {
-        return $user->getUsername() == $this->getUsername();
-    }
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $email;
-
 
     /**
      * Set type
@@ -138,6 +448,29 @@ class User implements UserInterface
     }
 
     /**
+     * Set secondType
+     *
+     * @param string $secondType
+     * @return User
+     */
+    public function setSecondType($secondType)
+    {
+        $this->secondType = $secondType;
+
+        return $this;
+    }
+
+    /**
+     * Get secondType
+     *
+     * @return string 
+     */
+    public function getSecondType()
+    {
+        return $this->secondType;
+    }
+
+    /**
      * Set email
      *
      * @param string $email
@@ -159,31 +492,6 @@ class User implements UserInterface
     {
         return $this->email;
     }
-    /**
-     * @var string
-     */
-    private $firstname;
-
-    /**
-     * @var string
-     */
-    private $lastname;
-
-    /**
-     * @var boolean
-     */
-    private $is_activated;
-
-    /**
-     * @var \DateTime
-     */
-    private $created_at;
-
-    /**
-     * @var \DateTime
-     */
-    private $updated_at;
-
 
     /**
      * Set firstname
@@ -229,6 +537,29 @@ class User implements UserInterface
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     * @return User
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string 
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
@@ -301,123 +632,6 @@ class User implements UserInterface
     }
 
     /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        if(!$this->getCreatedAt())
-        {
-            $this->created_at = new \DateTime();
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue()
-    {
-        $this->updated_at = new \DateTime();
-    }
-
-    /**
-     * @var string
-     */
-    private $rawPassword;
-
-
-    /**
-     * Set rawPassword
-     *
-     * @param string $rawPassword
-     * @return User
-     */
-    public function setRawPassword($rawPassword)
-    {
-        $this->rawPassword = $rawPassword;
-
-        return $this;
-    }
-
-    /**
-     * Get rawPassword
-     *
-     * @return string 
-     */
-    public function getRawPassword()
-    {
-        return $this->rawPassword;
-    }
-
-
-    /**
-     * @var \Pn\PnBundle\Entity\Babysitter
-     */
-    private $babysitter;
-
-
-    /**
-     * Set babysitter
-     *
-     * @param \Pn\PnBundle\Entity\Babysitter $babysitter
-     * @return User
-     */
-    public function setBabysitter(\Pn\PnBundle\Entity\Babysitter $babysitter = null)
-    {
-        $this->babysitter = $babysitter;
-
-        return $this;
-    }
-
-    /**
-     * Get babysitter
-     *
-     * @return \Pn\PnBundle\Entity\Babysitter 
-     */
-    public function getBabysitter()
-    {
-        return $this->babysitter;
-    }
-    /**
-     * @var string
-     */
-    private $phone;
-
-
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     * @return User
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string 
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    public function getHiddenName()
-    {
-        return $this->getFirstname().' '.substr($this->getLastname(),0,1).'.';
-    }
-
-    /**
-     * @var string
-     */
-    private $address;
-
-
-    /**
      * Set address
      *
      * @param string $address
@@ -439,16 +653,6 @@ class User implements UserInterface
     {
         return $this->address;
     }
-    /**
-     * @var string
-     */
-    private $latitude;
-
-    /**
-     * @var string
-     */
-    private $longitude;
-
 
     /**
      * Set latitude
@@ -497,20 +701,119 @@ class User implements UserInterface
     }
 
     /**
-     * @ORM\PrePersist
+     * Set confirmed
+     *
+     * @param boolean $confirmed
+     * @return User
      */
-    public function setDefaultValues()
+    public function setConfirmed($confirmed)
     {
-        $this->is_activated = true;
-        $this->setUsername($this->email);
-        if ($this->getBirthdate() == null) $this->setBirthdate(new \DateTime('1902-01-01'));
+        $this->confirmed = $confirmed;
+
+        return $this;
     }
 
     /**
-     * @var \Pn\PnBundle\Entity\Pparent
+     * Get confirmed
+     *
+     * @return boolean 
      */
-    private $parent;
+    public function getConfirmed()
+    {
+        return $this->confirmed;
+    }
 
+    /**
+     * Set confirmationToken
+     *
+     * @param string $confirmationToken
+     * @return User
+     */
+    public function setConfirmationToken($confirmationToken)
+    {
+        $this->confirmationToken = $confirmationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get confirmationToken
+     *
+     * @return string 
+     */
+    public function getConfirmationToken()
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * Set birthdate
+     *
+     * @param \DateTime $birthdate
+     * @return User
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthdate
+     *
+     * @return \DateTime 
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    /**
+     * Set avatar
+     *
+     * @param string $avatar
+     * @return User
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string 
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Set babysitter
+     *
+     * @param \Pn\PnBundle\Entity\Babysitter $babysitter
+     * @return User
+     */
+    public function setBabysitter(\Pn\PnBundle\Entity\Babysitter $babysitter = null)
+    {
+        $this->babysitter = $babysitter;
+
+        return $this;
+    }
+
+    /**
+     * Get babysitter
+     *
+     * @return \Pn\PnBundle\Entity\Babysitter 
+     */
+    public function getBabysitter()
+    {
+        return $this->babysitter;
+    }
 
     /**
      * Set parent
@@ -528,37 +831,11 @@ class User implements UserInterface
     /**
      * Get parent
      *
-     * @return \Pn\PnBundle\Entity\Pparent
+     * @return \Pn\PnBundle\Entity\Pparent 
      */
     public function getParent()
     {
         return $this->parent;
-    }
-
-    public function __toString()
-    {
-        return $this->getUsername();
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $sent_messages;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $received_messages;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->sent_messages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->received_messages = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->confirmed = false;
-        $generator = new SecureRandom();
-        $this->confirmationToken = $generator->nextBytes(10);
     }
 
     /**
@@ -626,16 +903,6 @@ class User implements UserInterface
     {
         return $this->received_messages;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $given_recommendations;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $received_recommendations;
-
 
     /**
      * Add given_recommendations
@@ -703,196 +970,87 @@ class User implements UserInterface
         return $this->received_recommendations;
     }
     /**
-     * @var boolean
+     * @var string
      */
-    private $confirmed;
+    private $postcode;
 
     /**
      * @var string
      */
-    private $confirmationToken;
+    private $city;
 
 
     /**
-     * Set confirmed
+     * Set postcode
      *
-     * @param boolean $confirmed
+     * @param string $postcode
      * @return User
      */
-    public function setConfirmed($confirmed)
+    public function setPostcode($postcode)
     {
-        $this->confirmed = $confirmed;
+        $this->postcode = $postcode;
 
         return $this;
     }
 
     /**
-     * Get confirmed
-     *
-     * @return boolean 
-     */
-    public function getConfirmed()
-    {
-        return $this->confirmed;
-    }
-
-    /**
-     * Set confirmationToken
-     *
-     * @param string $confirmationToken
-     * @return User
-     */
-    public function setConfirmationToken($confirmationToken)
-    {
-        $this->confirmationToken = $confirmationToken;
-
-        return $this;
-    }
-
-    /**
-     * Get confirmationToken
+     * Get postcode
      *
      * @return string 
      */
-    public function getConfirmationToken()
+    public function getPostcode()
     {
-        return $this->confirmationToken;
+        return $this->postcode;
     }
 
-
     /**
-     * @var \DateTime
-     */
-    private $birthdate;
-
-    /**
-     * Set birthdate
+     * Set city
      *
-     * @param \DateTime $birthdate
+     * @param string $city
      * @return User
      */
-    public function setBirthdate($birthdate)
+    public function setCity($city)
     {
-        $this->birthdate = $birthdate;
+        $this->city = $city;
 
         return $this;
     }
 
     /**
-     * Get birthdate
+     * Get city
      *
-     * @return \DateTime 
+     * @return string 
      */
-    public function getBirthdate()
+    public function getCity()
     {
-        return $this->birthdate;
-    }
-
-    /**
-     * Get fullname
-     *
-     * @return string
-     */
-    public function getFullname()
-    {
-        return $this->firstname.' '.$this->lastname;
-    }
-
-    /**
-     * Get virtual name
-     *
-     * @return string
-     */
-    public function getVirtualname()
-    {
-        return mb_strtolower($this->firstname.$this->lastname);
+        return $this->city;
     }
     /**
      * @var string
      */
-    private $avatar;
+    private $departement;
 
 
     /**
-     * Set avatar
+     * Set departement
      *
-     * @param string $avatar
+     * @param string $departement
      * @return User
      */
-    public function setAvatar($avatar)
+    public function setDepartement($departement)
     {
-        $this->avatar = $avatar;
+        $this->departement = $departement;
 
         return $this;
     }
 
     /**
-     * Get avatar
+     * Get departement
      *
      * @return string 
      */
-    public function getAvatar()
+    public function getDepartement()
     {
-        return $this->avatar;
-    }
-
-    public $file;
-
-    protected function getUploadDir()
-    {
-        return 'uploads/users';
-    }
-
-    protected function getUploadRootDir()
-    {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
-    }
-
-    public function getWebPath()
-    {
-        return null === $this->avatar ? null : $this->getUploadDir().'/'.$this->avatar;
-    }
-
-    public function getAbsolutePath()
-    {
-        return null === $this->avatar ? null : $this->getUploadRootDir().'/'.$this->avatar;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function preUpload()
-    {
-        if (null !== $this->file) {
-            // do whatever you want to generate a unique name
-            $this->avatar = uniqid().'.'.$this->file->guessExtension();
-        }
-    }
-
-    /**
-     * @ORM\PostPersist
-     */
-    public function upload()
-    {
-        if (null === $this->file) {
-            return;
-        }
-
-        // if there is an error when moving the file, an exception will
-        // be automatically thrown by move(). This will properly prevent
-        // the entity from being persisted to the database on error
-        $this->file->move($this->getUploadRootDir(), $this->avatar);
-
-        unset($this->file);
-    }
-
-    /**
-     * @ORM\PostRemove
-     */
-    public function removeUpload()
-    {
-        if ($file = $this->getAbsolutePath()) {
-            unlink($file);
-        }
+        return $this->departement;
     }
 }

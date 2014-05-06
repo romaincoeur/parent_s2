@@ -22,6 +22,10 @@ Pn\PnBundle\Entity\User:
     type:
       type: string
       length: 255
+    secondType:
+      type: string
+      length: 255
+      nullable: true
     email:
       type: string
       length: 255
@@ -47,6 +51,18 @@ Pn\PnBundle\Entity\User:
       type: datetime
       nullable: true
     address:
+      type: string
+      length: 255
+      nullable: true
+    postcode:
+      type: string
+      length: 255
+      nullable: true
+    departement:
+      type: string
+      length: 255
+      nullable: true
+    city:
       type: string
       length: 255
       nullable: true

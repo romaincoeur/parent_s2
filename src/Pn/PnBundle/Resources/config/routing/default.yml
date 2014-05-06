@@ -10,3 +10,11 @@ myprofile_edit:
 pn_search:
     pattern:   /search
     defaults:  { _controller: PnPnBundle:Default:search }
+
+pn_contact:
+    pattern:   /contact
+    defaults:  { _controller: PnPnBundle:Default:contact }
+
+pn_team:
+    pattern:   /team
+    defaults:  { _controller: PnPnBundle:Default:team }

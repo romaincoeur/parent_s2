@@ -67,6 +67,7 @@ body
     color: #FFFFFF;
     padding: 3px;
     font-size: 17px;
+    font-weight: bold;
 }
 .btn:hover
 {
@@ -120,7 +121,7 @@ a:hover
 
 .favorite
 {
-    background-image: url('../images/icons/favorite.png');
+    background-image: url('../images/icons/fav.png');
     margin: -10px -126px;
     vertical-align: top;
     border: none;
@@ -203,11 +204,23 @@ h5
     font-size: 16px;
 }
 
+video
+{
+    width: 100%;
+    margin-bottom: 25px;
+}
+
 
 
 
 
 /***************Header*****************/
+
+.construction
+{
+    text-align: center;
+    background-color: #eeeeee;
+}
 
 header
 {
@@ -230,11 +243,27 @@ header .connected .btn:hover
     background-color: #e84355;
 }
 
+.circle
+{
+    width: 180px;
+    height: 130px;
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    margin-left: -90px;
+    padding: 0 50px 50px 50px;
+    background-color: white;
+    z-index: 2;
+    border-bottom-left-radius: 90px;
+    border-bottom-right-radius: 90px;
+}
+
 .logo
 {
     display: block;
     width: 410px;
-    margin: 20px auto;
+    margin: 45px auto;
+    position: relative;
 }
 
 .logo h2
@@ -244,6 +273,9 @@ header .connected .btn:hover
     margin: 0 30px;
     font-size: 30px;
     vertical-align: middle;
+    font-weight: bold;
+    z-index: 3;
+    position: relative;
 }
 
 
@@ -294,6 +326,7 @@ header .connected .btn:hover
     padding-left: 20px;
     border: solid #d9d9d9 1px;
     vertical-align: bottom;
+    font-size: 17px;
 }
 
 .searchForm .submit
@@ -313,7 +346,7 @@ header .connected .btn:hover
 
 .present .big-banner
 {
-    background: url("../images/icons/ban-large-grey.png") no-repeat;
+    background: url("../images/banners/ban-large-grey.png") no-repeat;
     height: 150px;
 }
 
@@ -326,7 +359,7 @@ header .connected .btn:hover
 
 .present h5
 {
-    margin-top: 23px;
+    margin-top: 15px;
     font-weight: bold;
 }
 
@@ -400,7 +433,7 @@ header .connected .btn:hover
     height: 70px;
     text-align: center;
     padding-top: 10px;
-    background: url("../images/icons/ban-large-red.png") no-repeat;
+    background: url("../images/banners/ban-large-red.png") no-repeat;
     margin-top: 30px;
     margin-bottom: 30px;
     color: #FFFFFF;
@@ -510,7 +543,7 @@ aside a.btn
 .profiles
 {
     display: inline-block;
-    width: 626px;
+    width: 625px;
     margin-top: 45px;
     vertical-align: top;
 }
@@ -575,10 +608,16 @@ aside a.btn
     vertical-align: bottom;
 }
 
-.fixedMenu
+.affix
 {
     position: fixed;
     top: -40px;
+}
+
+.affix-bottom
+{
+    position: absolute;
+    bottom: 0px;
 }
 
 
@@ -805,6 +844,18 @@ aside a.btn
     padding: 20px;
 }
 
+.babysitter.profile-page div.edit
+{
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    border-radius: 20px;
+    border: none;
+    padding: 5px 10px 4px 40px;
+    font-weight: bold;
+    background: url('../images/icons/profil-modif.png') no-repeat #e84355 10px 4px;
+}
+
 
 /***************Page profil edit des nounous*****************/
 
@@ -820,7 +871,7 @@ aside a.btn
     right: 30px;
     border-radius: 20px;
     border: none;
-    padding: 2px 10px 7px 40px;
+    padding: 5px 10px 4px 40px;
     font-weight: bold;
     background: url('../images/icons/profil-apercu.png') no-repeat #e84355 10px 4px;
 }
@@ -832,13 +883,13 @@ aside a.btn
 
 .babysitter input[type='text']
 {
-    padding: 5px 5px 8px 10px;
+    padding: 7px 20px 6px 10px;
     border: solid #888888 1px;
     line-height: normal;
 }
 .babysitter input[type='number']
 {
-    padding: 5px 5px 8px 10px;
+    padding: 7px 5px 6px 10px;
     border: solid #888888 1px;
     line-height: normal;
 }
@@ -875,6 +926,11 @@ aside a.btn
 {
     width: 220px;
     line-height: 1;
+}
+
+#pn_pnbundle_babysitter_user_address
+{
+    width: 241px;
 }
 
 #pn_pnbundle_babysitter_user_birthdate
@@ -978,21 +1034,20 @@ label[for="pn_pnbundle_babysitter_diplomas_1"]
     color: white;
     font-weight: bold;
     padding-top: 63px;
-}
-
-#profile_image_upload
-{
-    background-color: black;
-    width: 40px;
-    height: 40px;
-    position: absolute;
+    width: 100%;
+    border-radius: 0;
 }
 
 #choose-photo
 {
-    position: absolute;
     top: 0px;
-    right: 30px;
+    right: -5px;
+    background-color: black;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    border-radius: 20px;
+    padding: 4px 0;
 }
 
 #uploadfile{
@@ -1002,6 +1057,45 @@ label[for="pn_pnbundle_babysitter_diplomas_1"]
 .newupload
 {
     cursor: pointer;
+    width: 40px;
+}
+
+#videoUploadfile{
+    display: none;
+}
+
+.newvideo
+{
+    position: relative;
+}
+
+.changeVideo
+{
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    left: 50%;
+    margin-left: -63px;
+    width: inherit;
+}
+
+.infobox-wrapper {
+    display:none;
+}
+#infobox {
+    border:2px solid black;
+    margin-top: 8px;
+    background:#333;
+    color:#FFF;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:12px;
+    padding: .5em 1em;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    text-shadow:0 -1px #000000;
+    -webkit-box-shadow: 0 0  8px #000;
+    box-shadow: 0 0 8px #000;
 }
 
 
@@ -1116,7 +1210,7 @@ table.calendar button
     text-align: left;
     border-radius: 0;
     color: black;
-    height: inherit;
+    height: 46px;
     margin-top: -3px;
     font-size: 14px;
 }
@@ -1368,13 +1462,27 @@ table.calendar button
 
 
 
+/***************Blog*****************/
+.blog .header .right a
+{
+    padding-right: 10px;
+    height: inherit;
+    width: inherit;
+}
+
+
+
+
+
+
+
 
 
 /***************Popups*****************/
 
-.modal-dialog
+.modal-dialog.small
 {
-    width: 300px;
+    width: 342px;
     border-radius: 0;
 }
 
@@ -1386,6 +1494,10 @@ table.calendar button
 .modal-header
 {
     text-align: center;
+    margin-left: -60px;
+    height: 70px;
+    border: none;
+    padding: 18px 80px;
 }
 
 .modal-header h3
@@ -1411,6 +1523,36 @@ table.calendar button
     color: #888888;
     padding: 30px;
     font-size: 16px;
+}
+
+.modal-header.medium
+{
+    width: 810px;
+}
+
+.modal-header.small
+{
+    width: 460px;
+}
+
+.modal-header.medium.bg-blue
+{
+    background: url("../images/banners/ban-medium-blue.png") no-repeat;
+}
+
+.modal-header.small.bg-blue
+{
+    background: url("../images/banners/ban-small-blue.png") no-repeat;
+}
+
+.modal-header.small.bg-purple
+{
+    background: url("../images/banners/ban-small-purple.png") no-repeat;
+}
+
+.modal-header.small.bg-red
+{
+    background: url("../images/banners/ban-small-red.png") no-repeat;
 }
 
 .modal-dialog input[type='radio']
@@ -1452,7 +1594,7 @@ table.calendar button
     font-weight: bold;
     border-radius: 20px;
     border: none;
-    padding: 5px 20px 10px;
+    padding: 9px 20px 6px;
 }
 
 #login .modal-dialog button[type="submit"]
@@ -1479,6 +1621,11 @@ table.calendar button
 #register .modal-dialog button[type="submit"]
 {
     background-color: #65c0e3;
+}
+
+#pn_pnbundle_user_secondType
+{
+    display: none;
 }
 
 #account_management .modal-dialog button[type="submit"]
@@ -1511,11 +1658,6 @@ table.calendar button
     color: #BBBBBB;
 }
 
-#login .modal-header
-{
-    background-color: #b093c4;
-}
-
 #tarifs .modal-dialog
 {
     width: 700px;
@@ -1546,7 +1688,7 @@ table.calendar button
 
 #contact .modal-dialog
 {
-    width: 700px;
+    width: 693px;
 }
 
 #contact .modal-body .text
@@ -1557,10 +1699,15 @@ table.calendar button
     padding-bottom: 20px;
 }
 
+#contact .modal-body input
+{
+    font-weight: bold;
+}
+
 #contact .modal-body input[type="text"]
 {
     width: 200px;
-    margin-right: 14px;
+    margin-right: 10px;
 }
 #contact .modal-body input[type="email"]
 {
@@ -1570,11 +1717,19 @@ table.calendar button
 {
     border: solid #eeeeee 2px;
     width: 100%;
-    padding-left: 15px;
+    padding: 15px 20px;
     margin-bottom: 10px;
     border-radius: 20px;
     resize: none;
+    font-weight: bold;
 }
+
+#contact input#contact_email
+{
+    margin-right: 0;
+}
+
+
 
 
 
@@ -1613,4 +1768,5 @@ footer .social-bar .icon
     height: 40px;
     width: 40px;
 }
+
 

@@ -1,7 +1,7 @@
 
 
 <div class="row wrap connected">
-    <a href="{{ path('pn_dashboard') }}" title="Tableau de bord" class="btn left round" style="margin-left: 0"><img src="{{ asset('bundles/pnpn/images/icons/menu-tab.png') }}" alt="menu tab"></a>
+    <a href="{{ path('pn_pn_homepage') }}" title="Page d'accueil" class="btn left round" style="margin-left: 0"><img src="{{ asset('bundles/pnpn/images/icons/menu-tab.png') }}" alt="menu tab"></a>
     <a href="{{ path('myprofile_edit') }}" title="Mon profil" class="btn left round"><img src="{{ asset('bundles/pnpn/images/icons/menu-profile.png') }}" alt="menu profile"></a>
     <a href="{{ path('mooc') }}" title="Espace Formation" class="btn left round"><img src="{{ asset('bundles/pnpn/images/icons/menu-formations.png') }}" alt="menu formations"></a>
     <a href="{{ path('logout') }}" title="Déconnexion" class="btn right round"><img src="{{ asset('bundles/pnpn/images/icons/menu-signout.png') }}" alt="menu signout"></a>
@@ -9,20 +9,24 @@
     <a href="{{ path('message') }}" title="Messages" class="btn right round"><img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="menu message"></a>
     <a href="{{ path('pn_pn_homepage') }}" title="Page d'accueil">
         <div class="logo">
-            <h2 style="    text-align: right;">Parent</h2>
-            <img src="{{ asset('bundles/pnpn/images/illus/logo.jpg') }}" alt="logo" height="80px" style="border: dashed lightgrey 1px;">
-            <h2>Nounou</h2>
+            <h2 style="text-align: right; margin-left: 48px;">Parent</h2>
+            <div class="circle">
+                <img src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="logo" height="80px" style="border: dashed lightgrey 1px; border-radius: 40px;">
+            </div>
+            <h2 style="float: right; margin-top: -30px;">Nounou</h2>
         </div>
     </a>
 </div>
 
 
 <div class="modal fade" id="account_management" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog small">
         <div class="modal-content">
-            <div class="modal-header bg-red white">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
-                <h3 id="register">Gestion du compte</h3>
+            <div class="modal-header bg-red small">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    <img src="{{ asset('bundles/pnpn/images/icons/croix.png') }}">
+                </button>
+                <h3>Gestion du compte</h3>
             </div>
             <div class="modal-body">
                 {{ render(controller("PnPnBundle:Security:ChangePassword")) }}

@@ -10,8 +10,8 @@
 /*---------------------------------------------------------*/
 
 .default .cropMain {
-    width:320px;
-    height:320px;
+    width:228px;
+    height:240px;
 }
 
 
@@ -25,7 +25,9 @@
     box-shadow:inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
-.cropMain .crop-img { position: absolute }
+.cropMain .crop-img {
+    position: absolute;
+}
 
 .cropMain .crop-container {
     overflow: hidden;
@@ -183,3 +185,4 @@
     -webkit-box-shadow: inset 0 3px 5px #e6e6e6;
     box-shadow: inset 0 3px 5px #e6e6e6;
 }
+

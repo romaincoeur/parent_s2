@@ -2,17 +2,14 @@
 
 namespace Pn\PnBundle\Controller;
 
-use Pn\PnBundle\Entity\Babysitter;
-use Pn\PnBundle\Entity\Pparent;
+use Pn\PnBundle\Form\ContactType;
+use Pn\PnBundle\Form\Model\Contact;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use Pn\PnBundle\Entity\User;
-use Symfony\Component\HttpFoundation\Request;
 use Pn\PnBundle\Form\UserType;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Pn\PnBundle\Form\ChangePasswordType;
-use Pn\PnBundle\Form\Model\ChangePassword;
 
 
 class DefaultController extends Controller
@@ -21,16 +18,19 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $babysitters = $em->getRepository('PnPnBundle:User')->getLastBabysitters(3);
+        $babysitters = $em->getRepository('PnPnBundle:User')->getLastUpdatedBabysitters(3);
 
         $articles = $em->getRepository('PnBlogBundle:Article')->getLatest(4);
 
         $nounous = $em->getRepository('PnPnBundle:Babysitter')->findAll();
 
+        $parents = $em->getRepository('PnPnBundle:Pparent')->findAll();
+
         return $this->render('PnPnBundle:Default:index.html.twig', array(
             'babysitters' => $babysitters,
             'nounous' => $nounous,
-            'articles' => $articles
+            'articles' => $articles,
+            'parents' => $parents
         ));
     }
 
@@ -45,11 +45,9 @@ class DefaultController extends Controller
         if ($user === null)
         {
             $entity = new User();
-            $form = $this->createCreateForm($entity);
 
             return $this->render('PnPnBundle:Default:notconnected.html.twig', array(
                 'entity' => $entity,
-                'register_form'   => $form->createView(),
             ));
         }
         else
@@ -73,6 +71,54 @@ class DefaultController extends Controller
         ));
 
         return $form;
+    }
+
+    public function contactAction(Request $request)
+    {
+        $contactModel = new Contact();
+        $form = $this->createForm(new ContactType(), $contactModel);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            // Envoyer un email de contact
+            $Url = $this->generateUrl('message', array(), true);
+            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('contactMail');
+            $body = str_replace(
+                array('%FIRSTNAME', '%LASTNAME', '%EMAIL', '%MESSAGE'),
+                array($form["firstname"]->getData(), $form["lastname"]->getData(), $form["email"]->getData(), $form["message"]->getData()),
+                $mail->getBody()
+            );
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject($mail->getObject())
+                ->setFrom($this->container->getparameter('mailer.from'))
+                ->setTo($this->container->getparameter('mailer.from'))
+                ->setBody($body)
+            ;
+            $message->getHeaders()->get('Content-Type')->setValue('text/html');
+
+            $this->get('mailer')->send($message);
+
+            // Response
+            $response['success'] = true;
+            return new JsonResponse( $response );
+        }
+
+        if ($request->isXmlHttpRequest())
+        {
+            $response['success'] = false;
+            $response['cause'] = 'Formulaire invalide';
+            return new JsonResponse( $response );
+        }
+        else
+        {
+            return $this->render('PnPnBundle:Default:contact.html.twig', array(
+                'contact_form' => $form->createView(),
+            ));
+        }
     }
 
     public function myprofileViewAction()
@@ -153,4 +199,11 @@ class DefaultController extends Controller
             return $this->redirect($this->generateUrl('pn_job', array('search' => $field)));
         }
     }
+
+    public function teamAction()
+    {
+
+        return $this->render('PnPnBundle:Default:team.html.twig');
+    }
+
 }

@@ -37,9 +37,19 @@ babysitter_search:
 babysitter_update_field:
     pattern:  /{id}/update_field
     defaults: { _controller: "PnPnBundle:Babysitter:updateField" }
-    requirements: { _method: post|put|get }
+    requirements: { _method: post|put }
 
 babysitter_updateCalendarAJAX:
     pattern:  /{id}/updateCalendarAJAX
     defaults: { _controller: "PnPnBundle:Babysitter:updateCalendarAJAX" }
+    requirements: { _method: post|put }
+
+pn_babysitter_updateAddress:
+    pattern:  /{id}/updateAddress
+    defaults: { _controller: "PnPnBundle:Babysitter:updateAddressAJAX" }
+    requirements: { _method: post|put }
+
+pn_babysitter_videoUpload:
+    pattern:  /videoUpload
+    defaults: { _controller: "PnPnBundle:Babysitter:videoUploadAJAX" }
     requirements: { _method: post|put|get }

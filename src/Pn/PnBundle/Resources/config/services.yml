@@ -2,6 +2,49 @@ parameters:
 #    pn_pn.example.class: Pn\PnBundle\Example
     mailer.from: contact@parent-nounou.fr
 
+    # Trustpoints Profile
+    trustpoints.profile.firstname: 2
+    trustpoints.profile.lastname: 2
+    trustpoints.profile.birthdate: 2
+    trustpoints.profile.postcode: 2
+    trustpoints.profile.city: 2
+    trustpoints.profile.address: 2
+    trustpoints.profile.phone: 2
+    trustpoints.profile.avatar: 10
+    trustpoints.profile.extraPicture: 3
+
+    # trustpoints babysitter
+    trustpoints.babysitter.children: 1
+    trustpoints.babysitter.favoriteActivity: 1
+    trustpoints.babysitter.languages: 1
+    trustpoints.babysitter.hobbies: 1
+    trustpoints.babysitter.smoke: 1
+    trustpoints.babysitter.drvingLicense: 1
+    trustpoints.babysitter.car: 1
+    trustpoints.babysitter.pets: 1
+    trustpoints.babysitter.recommandations: 1
+    trustpoints.babysitter.presentation: 3
+    trustpoints.babysitter.experience: 2
+    trustpoints.babysitter.diplomas: 1
+    trustpoints.babysitter.category: 2
+    trustpoints.babysitter.ageOfChildren: 1
+    trustpoints.babysitter.calendar: 3
+    trustpoints.babysitter.priceRate: 1
+    trustpoints.babysitter.checkID: 10
+    trustpoints.babysitter.checkAge: 10
+    trustpoints.babysitter.checkPhone: 15
+    trustpoints.babysitter.checkEmail: 15
+    trustpoints.babysitter.checkDiplomas: 10
+
+    #  Ballons
+    baloon.1: 10    # >=10
+    baloon.2: 20    # >=20
+    baloon.3: 30    # >=30
+    baloon.4: 40    # >=40
+    baloon.5: 50    # >=50
+
+
+
 services:
 
     pn.pn.admin.job:
@@ -42,3 +85,6 @@ services:
 
     pn.calendar:
         class: Pn\PnBundle\Services\Calendar
+
+    pn.crop:
+        class: Pn\PnBundle\Services\Crop

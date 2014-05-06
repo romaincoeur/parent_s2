@@ -35,7 +35,9 @@ class BabysitterType extends AbstractType
                 'expanded' => false,
                 'required'  => false,
             ))
-            ->add('experience')
+            ->add('experience', 'integer',array(
+                'attr' => array('min' => 0)
+            ))
             ->add('extraTasks', 'choice', array(
                 'choices'   => Babysitter::getExtraTaskss(),
                 'expanded' => true,

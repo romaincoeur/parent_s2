@@ -17,9 +17,11 @@
     <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
 
     <!-- favicon-->
-    <link rel="icon" type="image/png" href="{{ asset('bundles/pnpn/images/icons/balloon-red.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('bundles/pnpn/images/favicon.png') }}">
 </head>
 <body>
+
+<div class="construction">Ce site est en contruction - Merci de votre compréhension</div>
 
 <header>
     {{ render(controller("PnPnBundle:Default:header")) }}
@@ -56,10 +58,10 @@
             <a href="{{ path('pn_blog') }}" class="red">Blog</a>
             <a href="">CGU</a>
             {#<a href="#tarifs" role="button" data-toggle="modal">Tarifs</a>#}
-            <a href="">Presse</a>
+            <a href="{{ path('pn_team') }}">Equipe</a>
             <a href="#contact" role="button" data-toggle="modal">Contact</a>
 
-            <div class="modal fade" id="tarifs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            {#<div class="modal fade" id="tarifs" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
 
@@ -93,14 +95,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>#}
 
             <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
 
-                        <div class="modal-header bg-blue">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                        <div class="modal-header bg-blue medium">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                <img src="{{ asset('bundles/pnpn/images/icons/croix.png') }}">
+                            </button>
                             <h3 id="myModalLabel">Contact</h3>
                         </div>
                         <div class="modal-body">
@@ -108,16 +112,7 @@
                                 <p>Une question ? Un avis ? Un simple petit mot ? Appelez-nous ou laissez-nous un message !</p>
                                 <p class="bold">01 56 78 98 09</p>
                             </div>
-
-                            <form action="" method="post">
-                                <input type="text" id="firstname" name="_firstname" placeholder="Prénom *"/>
-                                <input type="text" id="lastname" name="_lastname" placeholder="Nom *"/>
-                                <input type="email" id="email" name="_email" placeholder="E-mail *"/>
-
-                                <textarea rows="4" placeholder="Votre message"></textarea>
-
-                                <button type="submit" class="bg-blue">Envoyer</button>
-                            </form>
+                            {{ render(controller("PnPnBundle:Default:contact")) }}
                         </div>
                     </div>
                 </div>

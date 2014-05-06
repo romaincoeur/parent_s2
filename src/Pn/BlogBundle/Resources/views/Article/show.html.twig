@@ -11,8 +11,16 @@
 {% block body %}
     <div class="blog wrap">
         <div class="header clearfix">
-            <img class="icon" src="{{ asset('bundles/pnpn/images/badges/' ~ entity.category.icon) }}" alt="a la une">
-            <h1>{{ entity.title }}</h1>
+            <div class="left">
+                <img class="icon" src="{{ asset('bundles/pnpn/images/badges/' ~ entity.category.icon) }}" alt="a la une">
+                <h1>{{ entity.title }}</h1>
+            </div>
+            {#<div class="right">
+                <a href="" class="btn bg-red white">
+                    <img src="{{ asset('bundles/pnpn/images/icons/menu-formations.png') }}" alt="test">
+                    passe le test
+                </a>
+            </div>#}
         </div>
         <article>
             {{ entity.presentation }}

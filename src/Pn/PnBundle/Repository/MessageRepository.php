@@ -26,7 +26,7 @@ class MessageRepository extends EntityRepository
             ->setParameter('user', $user)
             ->orWhere('m.receiver = :user')
             ->setParameter('user', $user)
-            ->orderBy('m.created_at', 'ASC');
+            ->orderBy('m.created_at', 'DESC');
 
         $rawResults = $qb->getQuery()->getResult();
 

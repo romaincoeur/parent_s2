@@ -2,10 +2,10 @@
 
 namespace Pn\PnBundle\Form;
 
+use Pn\PnBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pn\PnBundle\Form\BabysitterCategoryType;
 
 class UserType extends AbstractType
 {
@@ -34,7 +34,7 @@ class UserType extends AbstractType
             )
             ->add('rawPassword', 'repeated', array(
                 'type' => 'password',
-                'invalid_message' => 'mot de passe invalide',
+                'invalid_message' => 'Vérifiez que les mots de passe correspondent',
                 'options' => array('required' => true),
                 'first_options' => array('label' => 'Mot de passe', 'attr' => array(
                         'placeholder' => 'Mot de passe',
@@ -49,7 +49,11 @@ class UserType extends AbstractType
                 'required'  => true,
                 'data' => 'parent',
             ))
-            ->add('babysitter', new BabysitterCategoryType())
+            ->add('secondType', 'choice', array(
+                'choices'   => User::getsecondTypes(),
+                'expanded' => false,
+                'required'  => true,
+            ))
         ;
     }
     
