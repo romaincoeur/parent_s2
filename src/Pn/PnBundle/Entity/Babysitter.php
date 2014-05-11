@@ -83,21 +83,18 @@ class Babysitter
         }
     }
 
-    public static function getCategories()
+    public function shortPresentation($maxLength)
     {
-        return array(
-            'babysitter' => 'Babysitter',
-            'assistante' => 'Assistante maternelle',
-            'nounou' => 'Nounou à domicile',
-            'garde' => 'Garde partagée',
-            'aupair' => 'Fille au pair',
-            'animateur' => 'Animateur'
-        );
+        if (strlen($this->presentation) <= $maxLength)
+            return $this->presentation."...";
+
+        $result = substr($this->presentation, 0, $maxLength);
+        return $result."...";
     }
 
-    public static function getCategoryValues()
+    public function __toString()
     {
-        return array_keys(self::getCategories());
+        return $this->getUser()->getFullname();
     }
 
     /**
@@ -116,6 +113,24 @@ class Babysitter
         (0000000)(0000000)]');
     }
 
+    public static function getCategories()
+    {
+        return array(
+            'babysitter' => 'Babysitter',
+            'assistante' => 'Assistante maternelle',
+            'nounou' => 'Nounou à domicile',
+            'garde' => 'Garde partagée',
+            'aupair' => 'Fille au pair',
+            'animateur' => 'Animateur'
+        );
+    }
+
+    public static function getCategoryValues()
+    {
+        return array_keys(self::getCategories());
+    }
+
+
     public static function getPetitspluss()
     {
         return array(
@@ -131,6 +146,62 @@ class Babysitter
         return array_keys(self::getPetitspluss());
     }
 
+    /**
+     * @param string $petitsPlus
+     *
+     * @return Babysitter
+     */
+    public function addPetitsPlus($petitsPlus)
+    {
+        if (!$this->hasPetitsPlus($petitsPlus)) {
+            $this->petitsplus[] = $petitsPlus;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $petitsPlus
+     */
+    public function hasPetitsPlus($petitsPlus)
+    {
+        return in_array($petitsPlus, $this->petitsplus, true);
+    }
+
+    /**
+     * @param string $petitsPlus
+     *
+     * @return Babysitter
+     */
+    public function removePetitsPlus($petitsPlus)
+    {
+        if (false !== $key = array_search($petitsPlus, $this->petitsplus, true)) {
+            unset($this->petitsplus[$key]);
+            $this->petitsplus = array_values($this->petitsplus);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $petitsPlus
+     *
+     * @return Babysitter
+     */
+    public function switchPetitsPlus($petitsPlus)
+    {
+        if ($this->hasPetitsPlus($petitsPlus)) {
+            $this->removePetitsPlus($petitsPlus);
+        }
+        else
+        {
+            $this->addPetitsPlus($petitsPlus);
+        }
+
+        return $this;
+    }
+
+
     public static function getParticularites()
     {
         return array(
@@ -144,248 +215,6 @@ class Babysitter
     public static function getParticulariteValues()
     {
         return array_keys(self::getParticularites());
-    }
-
-    public function shortPresentation($maxLength)
-    {
-        if (strlen($this->presentation) <= $maxLength)
-            return $this->presentation."...";
-
-        $result = substr($this->presentation, 0, $maxLength);
-        return $result."...";
-    }
-
-    public function __toString()
-    {
-        return $this->getUser()->getFullname();
-    }
-
-    public static function getDiplomass()
-    {
-        return array(
-            'assistante' => 'Agrément assistante maternelle',
-            'bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
-        );
-    }
-
-    public static function getDiplomasValues()
-    {
-        return array_keys(self::getDiplomass());
-    }
-
-    public static function getLanguagess()
-    {
-        return array(
-            'fr' => 'Francais',
-            'en' => 'Anglais',
-            'ge' => 'Allemand',
-            'it' => 'Italien',
-            'es' => 'Espagnol',
-            'ru' => 'Russe',
-            'po' => 'Portugais',
-            'ar' => 'Arabe',
-        );
-    }
-
-    public static function getLanguagesValues()
-    {
-        return array_keys(self::getLanguagess());
-    }
-
-    public static function getAgeofchildrens()
-    {
-        return array(
-            0 => '0 à 1 an',
-            1 => '1 à 3 ans',
-            2 => '3 à 6 an',
-            3 => '6 à 10 ans',
-            4 => '10 ans et +',
-        );
-    }
-
-    public static function getAgeofchildrenValues()
-    {
-        return array_keys(self::getAgeofchildrens());
-    }
-
-    public static function getExtraTaskss()
-    {
-        return array(
-            'cleaning' => 'Ménage',
-            'cooking' => 'Cuisine',
-            'ironing' => 'Repassage',
-            'homework' => 'Aide aux devoirs',
-        );
-    }
-
-    public static function getExtraTasksValues()
-    {
-        return array_keys(self::getExtraTaskss());
-    }
-
-    /**
-     * @param string $diploma
-     *
-     * @return Babysitter
-     */
-    public function addDiploma($diploma)
-    {
-        if (!$this->hasDiploma($diploma)) {
-            $this->diplomas[] = $diploma;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $diploma
-     */
-    public function hasDiploma($diploma)
-    {
-        return in_array($diploma, $this->diplomas, true);
-    }
-
-    /**
-     * @param string $diploma
-     *
-     * @return Babysitter
-     */
-    public function removeDiploma($diploma)
-    {
-        if (false !== $key = array_search($diploma, $this->diplomas, true)) {
-            unset($this->diplomas[$key]);
-            $this->diplomas = array_values($this->diplomas);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $diploma
-     *
-     * @return Babysitter
-     */
-    public function switchDiploma($diploma)
-    {
-        if ($this->hasDiploma($diploma)) {
-            $this->removeDiploma($diploma);
-        }
-        else
-        {
-            $this->addDiploma($diploma);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return Babysitter
-     */
-    public function addLanguage($language)
-    {
-        if (!$this->hasLanguage($language)) {
-            $this->languages[] = $language;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $language
-     */
-    public function hasLanguage($language)
-    {
-        return in_array($language, $this->languages, true);
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return Babysitter
-     */
-    public function removeLanguage($language)
-    {
-        if (false !== $key = array_search($language, $this->languages, true)) {
-            unset($this->languages[$key]);
-            $this->languages = array_values($this->languages);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $language
-     *
-     * @return Babysitter
-     */
-    public function switchLanguage($language)
-    {
-        if ($this->hasLanguage($language)) {
-            $this->removeLanguage($language);
-        }
-        else
-        {
-            $this->addLanguage($language);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $age
-     *
-     * @return Babysitter
-     */
-    public function addAgeOfChildren($age)
-    {
-        if (!$this->hasAgeOfChildren($age)) {
-            $this->ageofchildren[] = $age;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $age
-     */
-    public function hasAgeOfChildren($age)
-    {
-        return in_array($age, $this->ageofchildren, true);
-    }
-
-    /**
-     * @param string $age
-     *
-     * @return Babysitter
-     */
-    public function removeAgeOfChildren($age)
-    {
-        if (false !== $key = array_search($age, $this->ageofchildren, true)) {
-            unset($this->ageofchildren[$key]);
-            $this->ageofchildren = array_values($this->ageofchildren);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $age
-     *
-     * @return Babysitter
-     */
-    public function switchAgeOfChildren($age)
-    {
-        if ($this->hasAgeOfChildren($age)) {
-            $this->removeAgeOfChildren($age);
-        }
-        else
-        {
-            $this->addAgeOfChildren($age);
-        }
-
-        return $this;
     }
 
     /**
@@ -443,6 +272,234 @@ class Babysitter
         return $this;
     }
 
+    public static function getDiplomass()
+    {
+        return array(
+            'assistante' => 'Agrément assistante maternelle',
+            'bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
+        );
+    }
+
+    public static function getDiplomasValues()
+    {
+        return array_keys(self::getDiplomass());
+    }
+
+    /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function addDiploma($diploma)
+    {
+        if (!$this->hasDiploma($diploma)) {
+            $this->diplomas[] = $diploma;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $diploma
+     */
+    public function hasDiploma($diploma)
+    {
+        return in_array($diploma, $this->diplomas, true);
+    }
+
+    /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function removeDiploma($diploma)
+    {
+        if (false !== $key = array_search($diploma, $this->diplomas, true)) {
+            unset($this->diplomas[$key]);
+            $this->diplomas = array_values($this->diplomas);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function switchDiploma($diploma)
+    {
+        if ($this->hasDiploma($diploma)) {
+            $this->removeDiploma($diploma);
+        }
+        else
+        {
+            $this->addDiploma($diploma);
+        }
+
+        return $this;
+    }
+
+    public static function getLanguagess()
+    {
+        return array(
+            'fr' => 'Francais',
+            'en' => 'Anglais',
+            'ge' => 'Allemand',
+            'it' => 'Italien',
+            'es' => 'Espagnol',
+            'ru' => 'Russe',
+            'po' => 'Portugais',
+            'ar' => 'Arabe',
+        );
+    }
+
+    public static function getLanguagesValues()
+    {
+        return array_keys(self::getLanguagess());
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return Babysitter
+     */
+    public function addLanguage($language)
+    {
+        if (!$this->hasLanguage($language)) {
+            $this->languages[] = $language;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function hasLanguage($language)
+    {
+        return in_array($language, $this->languages, true);
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return Babysitter
+     */
+    public function removeLanguage($language)
+    {
+        if (false !== $key = array_search($language, $this->languages, true)) {
+            unset($this->languages[$key]);
+            $this->languages = array_values($this->languages);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $language
+     *
+     * @return Babysitter
+     */
+    public function switchLanguage($language)
+    {
+        if ($this->hasLanguage($language)) {
+            $this->removeLanguage($language);
+        }
+        else
+        {
+            $this->addLanguage($language);
+        }
+
+        return $this;
+    }
+
+    public static function getAgeofchildrens()
+    {
+        return array(
+            0 => '0 à 1 an',
+            1 => '1 à 3 ans',
+            2 => '3 à 6 an',
+            3 => '6 à 10 ans',
+            4 => '10 ans et +',
+        );
+    }
+
+    public static function getAgeofchildrenValues()
+    {
+        return array_keys(self::getAgeofchildrens());
+    }
+
+    /**
+     * @param string $age
+     *
+     * @return Babysitter
+     */
+    public function addAgeOfChildren($age)
+    {
+        if (!$this->hasAgeOfChildren($age)) {
+            $this->ageofchildren[] = $age;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $age
+     */
+    public function hasAgeOfChildren($age)
+    {
+        return in_array($age, $this->ageofchildren, true);
+    }
+
+    /**
+     * @param string $age
+     *
+     * @return Babysitter
+     */
+    public function removeAgeOfChildren($age)
+    {
+        if (false !== $key = array_search($age, $this->ageofchildren, true)) {
+            unset($this->ageofchildren[$key]);
+            $this->ageofchildren = array_values($this->ageofchildren);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $age
+     *
+     * @return Babysitter
+     */
+    public function switchAgeOfChildren($age)
+    {
+        if ($this->hasAgeOfChildren($age)) {
+            $this->removeAgeOfChildren($age);
+        }
+        else
+        {
+            $this->addAgeOfChildren($age);
+        }
+
+        return $this;
+    }
+
+    public static function getExtraTaskss()
+    {
+        return array(
+            'cleaning' => 'Ménage',
+            'cooking' => 'Cuisine',
+            'ironing' => 'Repassage',
+            'homework' => 'Aide aux devoirs',
+        );
+    }
+
+    public static function getExtraTasksValues()
+    {
+        return array_keys(self::getExtraTaskss());
+    }
+
     /**
      * @param string $extraTask
      *
@@ -493,61 +550,6 @@ class Babysitter
         else
         {
             $this->addExtraTask($extraTask);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $petitsPlus
-     *
-     * @return Babysitter
-     */
-    public function addPetitsPlus($petitsPlus)
-    {
-        if (!$this->hasPetitsPlus($petitsPlus)) {
-            $this->petitsplus[] = $petitsPlus;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $petitsPlus
-     */
-    public function hasPetitsPlus($petitsPlus)
-    {
-        return in_array($petitsPlus, $this->petitsplus, true);
-    }
-
-    /**
-     * @param string $petitsPlus
-     *
-     * @return Babysitter
-     */
-    public function removePetitsPlus($petitsPlus)
-    {
-        if (false !== $key = array_search($petitsPlus, $this->petitsplus, true)) {
-            unset($this->petitsplus[$key]);
-            $this->petitsplus = array_values($this->petitsplus);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param string $petitsPlus
-     *
-     * @return Babysitter
-     */
-    public function switchPetitsPlus($petitsPlus)
-    {
-        if ($this->hasPetitsPlus($petitsPlus)) {
-            $this->removePetitsPlus($petitsPlus);
-        }
-        else
-        {
-            $this->addPetitsPlus($petitsPlus);
         }
 
         return $this;

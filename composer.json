@@ -25,12 +25,14 @@
         "sonata-project/jquery-bundle": "1.8.x-dev",
         "sonata-project/exporter": "~1.0",
         "sonata-project/block-bundle": "dev-master",
+        "sonata-project/datagrid-bundle": "2.2.*@dev",
         "sonata-project/user-bundle": "dev-master",
         "sonata-project/admin-bundle": "dev-master",
         "sonata-project/doctrine-orm-admin-bundle": "dev-master",
         "knplabs/knp-menu-bundle": ">=1.1.0,<2.0.x-dev",
         "sonata-project/core-bundle": "~2.2@dev",
-        "divi/ajax-login-bundle": "dev-master"
+        "divi/ajax-login-bundle": "dev-master",
+        "winzou/console-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

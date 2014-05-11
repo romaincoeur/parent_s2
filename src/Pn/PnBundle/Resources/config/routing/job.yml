@@ -37,3 +37,18 @@ pn_job_search:
 pn_job_annonces:
     pattern:  /annonces
     defaults: { _controller: "PnPnBundle:Job:annonces" }
+
+pn_job_updateAddress:
+    pattern:  /{id}/updateAddress
+    defaults: { _controller: "PnPnBundle:Job:updateAddressAJAX" }
+    requirements: { _method: post|put }
+
+pn_job_updateField:
+    pattern:  /{id}/updateField
+    defaults: { _controller: "PnPnBundle:Job:updateFieldAJAX" }
+    requirements: { _method: post|put|get }
+
+pn_job_updateCalendar:
+    pattern:  /{id}/updateCalendar
+    defaults: { _controller: "PnPnBundle:Job:updateCalendardAJAX" }
+    requirements: { _method: post|put }

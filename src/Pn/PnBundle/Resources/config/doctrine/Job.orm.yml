@@ -11,6 +11,7 @@ Pn\PnBundle\Entity\Job:
     title:
       type: string
       length: 255
+      nullable: true
     status:
       type: string
       length: 255
@@ -24,12 +25,18 @@ Pn\PnBundle\Entity\Job:
       nullable: true
     latitude:
       type: decimal
+      length: 10
+      scale: 8
       nullable: true
     longitude:
       type: decimal
+      length: 10
+      scale: 8
       nullable: true
     rate_price:
       type: decimal
+      length: 5
+      scale: 2
       nullable: true
     rate_type:
       type: string
@@ -66,6 +73,34 @@ Pn\PnBundle\Entity\Job:
       nullable: true
     experience:
       type: integer
+      nullable: true
+    start:
+      type: date
+      nullable: true
+    end:
+      type: date
+      nullable: true
+    diplomas:
+      type: array
+      nullable: true
+    ageofchildren:
+      type: array
+      nullable: true
+    languages:
+      type: array
+      nullable: true
+    petitsplus:
+      type: array
+      nullable: true
+    extraTasks:
+      type: array
+      nullable: true
+    particularite:
+      type: array
+      nullable: true
+    phone:
+      type: string
+      length: 255
       nullable: true
   manyToOne:
     parent:

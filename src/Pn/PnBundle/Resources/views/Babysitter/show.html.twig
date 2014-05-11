@@ -97,11 +97,17 @@
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age des enfants">
                     Prise en charge des enfants&nbsp;
                     {% for pp in entity.ageOfChildren %}
-                    de&nbsp;{{ entity.ageOfChildrens[pp] }},&nbsp;
+                    de&nbsp;{{ entity.ageOfChildrens[pp] }}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
                     {% endfor %}<br>
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone">
                     {% for pp in entity.languages %}
-                    {{ entity.getLanguagess[pp] }},&nbsp;
+                    {{ entity.getLanguagess[pp] }}
+                    {% if not loop.last %}
+                        ,&nbsp;
+                    {% endif %}
                     {% endfor %}<br>
                 </div>
                 {#<div class="badges">

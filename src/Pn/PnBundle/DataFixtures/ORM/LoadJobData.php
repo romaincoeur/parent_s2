@@ -37,7 +37,6 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
         $job1->setHowToApply('Send your resume to fabien.potencier [at] sensio.com');
         $job1->setIsPublic(true);
         $job1->setIsActivated(true);
-        $job1->setToken('job_sensio_labs');
         $job1->setExpiresAt(new \DateTime('2012-10-10'));
 
         $job2 = new Job();
@@ -48,7 +47,6 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
         $job2->setHowToApply('Send your resume to fabien.potencier [at] sensio.com');
         $job2->setIsPublic(true);
         $job2->setIsActivated(true);
-        $job2->setToken('job_extreme_sensio');
         $job2->setExpiresAt(new \DateTime('2012-10-10'));
 
 

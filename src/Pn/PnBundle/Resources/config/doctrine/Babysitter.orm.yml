@@ -13,6 +13,8 @@ Pn\PnBundle\Entity\Babysitter:
       nullable: true
     rate_price:
       type: decimal
+      length: 5
+      scale: 2
       nullable: true
     rate_type:
       type: string

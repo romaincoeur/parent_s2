@@ -32,13 +32,13 @@ class UserAdmin extends Admin
             ->add('lastname')
             ->add('email')
             ->add('type')
-            ->add('birthdate')
+            ->add('birthdate', 'birthday')
             ->add('address')
+            ->add('city')
+            ->add('postcode')
             ->add('latitude')
             ->add('longitude')
             ->add('phone')
-            ->add('created_at')
-            ->add('updated_at')
             ->add('is_activated')
         ;
     }

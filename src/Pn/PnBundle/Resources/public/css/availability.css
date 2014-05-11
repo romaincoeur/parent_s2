@@ -7,41 +7,44 @@
     width: 94%;
 }
 
-.yca{ float:left;
+.yca
+{
+    float:left;
     width:96%;
     height: auto;
     border-radius:4px;
-
-
     position:relative;
-    behavior:url(PIE.htc);
 }
 
-.ycaT{ border-collapse:collapse;
+.ycaT
+{
+    border-collapse:collapse;
     width:100%;
     font-weight:bold;
     color:#2f3639;
     margin:0px;
-    border: 1px solid #ccc
 }
 
-.ycaT th{ text-align:center;
+.ycaT th
+{
+    text-align:center;
     padding:10px 0px;
     font-weight:bold;
     color:#2f3639;
     font-size:15px;
-    border:solid 1px #d5d7d7;
     width:60px;
-    border-right:none;
-    border-bottom:none;
-    border-top:none;}
+    border: solid #eeeeee 3px;
+}
 
-.ycaT th span{ width:132px;
+.ycaT th span
+{
+    width:132px;
     color:#2f3639;
     font-size:24px;
     float:left;
     text-align:left;
-    padding-left:20px; }
+    padding-left:20px;
+}
 
 .ycaT td{
     text-align:center;
@@ -85,7 +88,6 @@
     margin-top: 22px;
     padding: 10px 0 0 13px;
     position:relative;
-    behavior:url(PIE.htc);
     width: 175px; }
 
 .avail_cats h4 {
@@ -161,7 +163,6 @@
     margin: 15px 0 15px -10px;
     padding: 10px;
     position:relative;
-    behavior:url(PIE.htc);
     float:left;
     width:100%;
 }
@@ -215,7 +216,7 @@
 #availability_module table td.checked, #availability_module table td.checked:hover {
     background-attachment: scroll;
     background-clip: border-box;
-    background-color: #78AB46;
+    background-color: lightgreen;
     /*    background-image: url("../images/ritee_19.png");*/
     background-origin: padding-box;
     background-position: center 7px;
@@ -224,18 +225,6 @@
 }
 
 #availability_module table td {
-    border-left-color-ltr-source: physical;
-    border-left-color-rtl-source: physical;
-    border-left-color-value: #ACACAC;
-    border-left-style-ltr-source: physical;
-    border-left-style-rtl-source: physical;
-    border-left-style-value: solid;
-    border-left-width-ltr-source: physical;
-    border-left-width-rtl-source: physical;
-    border-left-width-value: 1px;
-    border-top-color: #ACACAC;
-    border-top-style: solid;
-    border-top-width: 1px;
     cursor: pointer;
     font-size: 11px;
     height: 24px;
@@ -250,17 +239,11 @@
     width: 36px;
     font-size:16px;
     height:40px;
+    border: solid #eeeeee 3px;
 }
-#availability_module table th, #availability_module table td {
-    border-bottom-color: #DEDEDE;
-    border-left-color-ltr-source: physical;
-    border-left-color-rtl-source: physical;
-    border-left-color-value: #DEDEDE;
-    border-right-color-ltr-source: physical;
-    border-right-color-rtl-source: physical;
-    border-right-color-value: #DEDEDE;
-}
-body, tr, th, td {
+
+body, tr, th, td
+{
     color: #353C3F;
     /*line-height: 15px;*/
 }

@@ -234,6 +234,7 @@ class User implements UserInterface
 
 
 // GENERATED CODE
+    
     /**
      * @var integer
      */
@@ -303,6 +304,21 @@ class User implements UserInterface
      * @var string
      */
     private $address;
+
+    /**
+     * @var string
+     */
+    private $postcode;
+
+    /**
+     * @var string
+     */
+    private $departement;
+
+    /**
+     * @var string
+     */
+    private $city;
 
     /**
      * @var string
@@ -655,6 +671,75 @@ class User implements UserInterface
     }
 
     /**
+     * Set postcode
+     *
+     * @param string $postcode
+     * @return User
+     */
+    public function setPostcode($postcode)
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    /**
+     * Get postcode
+     *
+     * @return string 
+     */
+    public function getPostcode()
+    {
+        return $this->postcode;
+    }
+
+    /**
+     * Set departement
+     *
+     * @param string $departement
+     * @return User
+     */
+    public function setDepartement($departement)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return string 
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return User
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
      * Set latitude
      *
      * @param string $latitude
@@ -968,89 +1053,5 @@ class User implements UserInterface
     public function getReceivedRecommendations()
     {
         return $this->received_recommendations;
-    }
-    /**
-     * @var string
-     */
-    private $postcode;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-
-    /**
-     * Set postcode
-     *
-     * @param string $postcode
-     * @return User
-     */
-    public function setPostcode($postcode)
-    {
-        $this->postcode = $postcode;
-
-        return $this;
-    }
-
-    /**
-     * Get postcode
-     *
-     * @return string 
-     */
-    public function getPostcode()
-    {
-        return $this->postcode;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return User
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string 
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-    /**
-     * @var string
-     */
-    private $departement;
-
-
-    /**
-     * Set departement
-     *
-     * @param string $departement
-     * @return User
-     */
-    public function setDepartement($departement)
-    {
-        $this->departement = $departement;
-
-        return $this;
-    }
-
-    /**
-     * Get departement
-     *
-     * @return string 
-     */
-    public function getDepartement()
-    {
-        return $this->departement;
     }
 }

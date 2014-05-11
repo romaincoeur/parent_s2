@@ -743,11 +743,6 @@ aside a.btn
     vertical-align: middle;
 }
 
-.description .header .right
-{
-    margin-top: -5px;
-}
-
 .description .body
 {
     padding: 20px 20px 20px 154px;
@@ -798,7 +793,7 @@ aside a.btn
 
 .recommandations textarea
 {
-    width: 816px;
+    width: 815px;
     margin-right: 30px;
     margin-left: 0;
     border-radius: 20px;
@@ -864,7 +859,7 @@ aside a.btn
     position: relative;
 }
 
-.babysitter.profile-page div.apercu
+.edit-page div.apercu
 {
     position: absolute;
     top: 30px;
@@ -881,20 +876,20 @@ aside a.btn
     margin-left: 20px;
 }
 
-.babysitter input[type='text']
+.edit-page input[type='text']
 {
     padding: 7px 20px 6px 10px;
     border: solid #888888 1px;
     line-height: normal;
 }
-.babysitter input[type='number']
+.edit-page input[type='number']
 {
     padding: 7px 5px 6px 10px;
     border: solid #888888 1px;
     line-height: normal;
 }
 
-.babysitter.profile-page .description .header
+.edit-page .description .header
 {
     padding: 12px 20px
 }
@@ -904,19 +899,20 @@ aside a.btn
     width: 100px;
 }
 
-.babysitter.profile-page select
+.edit-page select
 {
     border: solid #888888 1px;
     padding: 4px 5px 7px 10px;
     height: inherit;
+    vertical-align: bottom;
 }
 
-.babysitter.profile-page .description .body
+.edit-page .description .body
 {
     padding-left: 150px;
 }
 
-.babysitter.profile-page .body textarea
+.edit-page .body textarea
 {
     border-radius: 20px;
     padding: 5px 10px 5px 10px;
@@ -926,6 +922,7 @@ aside a.btn
 {
     width: 220px;
     line-height: 1;
+    color: #000000;
 }
 
 #pn_pnbundle_babysitter_user_address
@@ -979,11 +976,6 @@ aside a.btn
 #pn_pnbundle_babysitter_file
 {
     position: absolute;
-}
-
-#pn_pnbundle_babysitter_user_phone
-{
-    color: #000000;
 }
 
 input#pn_pnbundle_babysitter_diplomas_1
@@ -1109,11 +1101,6 @@ label[for="pn_pnbundle_babysitter_diplomas_1"]
 
 /***************Page job*****************/
 
-.job-show .description .body
-{
-    padding: 20px;
-}
-
 table.calendar
 {
     background-color: #eeeeee;
@@ -1154,19 +1141,89 @@ table.calendar td.on
     margin-bottom: 30px;
 }
 
-.job-edit form input[type='submit']
-{
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-}
-
 table.calendar button
 {
     width: 100%;
     height: 100%;
     border: none;
     background-color: #ffffff;
+}
+
+
+
+
+
+
+
+
+
+
+/***************Page job edit*****************/
+.job-edit
+{
+    position: relative;
+}
+
+#pn_pnbundle_job_title
+{
+    margin-left: 20px;
+    width: 300px;
+}
+
+#pn_pnbundle_job_description
+{
+    height: 106px;
+    width: 100%;
+    max-width: 100%;
+}
+
+#pn_pnbundle_job_phone
+{
+    width: 220px;
+    line-height: 1;
+    color: #000000;
+}
+
+#pn_pnbundle_job_rate_price
+{
+    width: 100px;
+}
+
+#pn_pnbundle_job_start
+{
+    width: 210px;
+    display: inline;
+    vertical-align: middle;
+}
+
+#pn_pnbundle_job_end
+{
+    width: 210px;
+    display: inline;
+    vertical-align: middle;
+}
+
+#pn_pnbundle_job_experience
+{
+    margin-top: 10px;
+    width: 50px;
+    padding-left: 15px;
+}
+
+#pn_pnbundle_job_address
+{
+    width: 241px;
+}
+
+label[for='pn_pnbundle_job_diplomas_1']
+{
+    display: inherit;
+    margin-left: 18px;
+}
+
+#pn_pnbundle_job_diplomas_1
+{
+    float: left;
 }
 
 

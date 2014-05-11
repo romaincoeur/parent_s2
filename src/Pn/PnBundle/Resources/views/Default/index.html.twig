@@ -86,10 +86,10 @@
                                 <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
                             {% endif %}
                             <strong>{{ babysitter.getHiddenName() }}</strong>
-                            <p>Paris</p>
+                            <p>{{ babysitter.city }}</p>
                         </div>
                         <div class="body">
-                            <p>{{ babysitter.babysitter.category }}</p>
+                            <p>{{ babysitter.babysitter.getCategories[babysitter.babysitter.category] }}</p>
                         </div>
                     </div>
                 </a>

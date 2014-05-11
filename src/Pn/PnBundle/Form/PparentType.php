@@ -18,7 +18,9 @@ class PparentType extends AbstractType
             ->add('nbChildren')
             ->add('trustpoints')
             ->add('calendar')
-            ->add('user')
+            ->add('user', new UserFullType(), array(
+                'label' => false
+            ))
         ;
     }
     

@@ -3,7 +3,7 @@
 {% macro viewTable(matrix) %}
     <table class="calendar">
         <tr>
-            <th>h/d</th>
+            <th>h/j</th>
             <th>l</th>
             <th>m</th>
             <th>m</th>
@@ -30,7 +30,7 @@
 {% macro editTable(matrix) %}
     <table class="calendar">
         <tr>
-            <th>h/d</th>
+            <th>h/j</th>
             <th>l</th>
             <th>m</th>
             <th>m</th>
@@ -44,11 +44,11 @@
                 <td>{{ i }}</td>
                 {% for j in 1..7 %}
                     <td>
-                    {% if matrix[i][j] %}
-                        <button type="button" id="{{ i }}-{{ j }}" style="background-color: lightgreen;"></button>
-                    {% else %}
-                        <button type="button" id="{{ i }}-{{ j }}" ></button>
-                    {% endif %}
+                        {% if matrix[i][j] %}
+                            <button type="button" id="{{ i }}-{{ j }}" style="background-color: lightgreen;"></button>
+                        {% else %}
+                            <button type="button" id="{{ i }}-{{ j }}" ></button>
+                        {% endif %}
                     </td>
                 {% endfor %}
             </tr>
@@ -61,19 +61,20 @@
         <div id="availability_module">
 
             <table class="availability ycaT">
-                <tbody><tr style="border-bottom:solid 4px #2f3639;">
-                    <th style="text-align:left; padding-left:11px; width:132px;">Jours</th>
+                <tbody>
+                <tr style="background-color: #eeeeee; font-weight: bold;">
+                    <th style="text-align:left; padding-left:11px; width:132px;">h/j</th>
                     <th>L</th>
-                    <th>Ma</th>
-                    <th>Me</th>
+                    <th>M</th>
+                    <th>M</th>
                     <th>J</th>
                     <th>V</th>
-                    <th> S</th>
+                    <th>S</th>
                     <th>D</th>
                 </tr>
 
                 <tr>
-                    <td>Tôt le matin</td>
+                    <td style="cursor: default; font-weight: normal; background-color: #eeeeee;">Tôt le matin</td>
                     <td class="checkbox "><input type="checkbox" name="availability[1][0]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[1][1]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[1][2]" id="" value="Yes"></td>
@@ -84,7 +85,7 @@
                 </tr>
 
                 <tr>
-                    <td>Matin</td>
+                    <td style="cursor: default; font-weight: normal; background-color: #eeeeee;">Matin</td>
                     <td class="checkbox "><input type="checkbox" name="availability[2][0]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[2][1]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[2][2]" id="" value="Yes"></td>
@@ -94,7 +95,7 @@
                     <td class="checkbox "><input type="checkbox" name="availability[2][6]" id="" value="Yes"></td>
                 </tr>
                 <tr>
-                    <td>Après-midi</td>
+                    <td style="cursor: default; font-weight: normal; background-color: #eeeeee;">Après-midi</td>
                     <td class="checkbox "><input type="checkbox" name="availability[3][0]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[3][1]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[3][2]" id="" value="Yes"></td>
@@ -104,7 +105,7 @@
                     <td class="checkbox "><input type="checkbox" name="availability[3][6]" id="" value="Yes"></td>
                 </tr>
                 <tr>
-                    <td>Soirée</td>
+                    <td style="cursor: default; font-weight: normal; background-color: #eeeeee;">Soirée</td>
                     <td class="checkbox "><input type="checkbox" name="availability[4][0]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[4][1]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[4][2]" id="" value="Yes"></td>
@@ -114,7 +115,7 @@
                     <td class="checkbox "><input type="checkbox" name="availability[4][6]" id="" value="Yes"></td>
                 </tr>
                 <tr>
-                    <td>Nuit</td>
+                    <td style="cursor: default; font-weight: normal; background-color: #eeeeee;">Nuit</td>
                     <td class="checkbox "><input type="checkbox" name="availability[5][0]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[5][1]" id="" value="Yes"></td>
                     <td class="checkbox "><input type="checkbox" name="availability[5][2]" id="" value="Yes"></td>

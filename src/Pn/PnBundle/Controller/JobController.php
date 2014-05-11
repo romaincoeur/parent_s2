@@ -2,6 +2,7 @@
 
 namespace Pn\PnBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -110,16 +111,18 @@ class JobController extends Controller
      */
     public function newAction()
     {
+        $em = $this->getDoctrine()->getManager();
         $entity = new Job();
-        $form   = $this->createCreateForm($entity);
 
-        $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
+        // gestion du calendrier
+        $calendarService = $this->container->get('pn.calendar');
+        $entity->setCalendar($calendarService->newString());
 
-        return $this->render('PnPnBundle:Job:new.html.twig', array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-            'calendarMatrix' => $calendar
-        ));
+        $entity->setParent($this->getUser()->getParent());
+        $em->persist($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('pn_job_edit', array('id' => $entity->getId())));
     }
 
     /**
@@ -263,5 +266,251 @@ class JobController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     * Edits the address from Google Geocoder.
+     * AJAX
+     *
+     */
+    public function updateAddressAJAXAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('PnPnBundle:Job')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Job entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $addressTab = json_decode($request->request->get('value'), true);
+            $latitude = $request->request->get('latitude');
+            $longitude = $request->request->get('longitude');
+        }
+        else
+        {
+            $addressTab = json_decode($request->query->get('value'), true);
+            $latitude = $request->query->get('latitude');
+            $longitude = $request->query->get('longitude');
+        }
+
+        // Remplacer les valeurs
+        $entity->setAddress($addressTab['formatted_address']);
+        $entity->setLatitude($latitude);
+        $entity->setLongitude($longitude);
+        /*foreach ($addressTab['address_components'] as $component)
+        {
+            if (preg_match ('\d{2}', $component['short_name']) == 1) $entity->getUser()->setDepartement($component['short_name']);
+            if (preg_match ('\d{5}', $component['short_name']) == 1) $entity->getUser()->setPostCode($component['short_name']);
+        }*/
+
+        // Persist in DB
+        $em->persist($entity);
+        $em->flush();
+
+        $response['success'] = true;
+        //$response['message'] = $request->request->get('value');
+
+        // Response
+        return new JsonResponse( $response );
+    }
+
+    /**
+     * Edits an existing Babysitter entity.
+     * AJAX
+     *
+     */
+    public function updateFieldAJAXAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('PnPnBundle:Job')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Job entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $parameter = $request->request->get('parameter');
+            $value = $request->request->get('value');
+        }
+        else
+        {
+            $parameter = $request->query->get('parameter');
+            $value = $request->query->get('value');
+        }
+
+        // Update Parameter
+        $response['success'] = false;
+        switch ($parameter){
+            case 'title':
+                $entity->setTitle($value);
+                break;
+            case 'rate_price':
+                $entity->setRatePrice($value);
+                break;
+            case 'rate_type':
+                $entity->setRateType($value);
+                break;
+            case 'description':
+                $entity->setDescription($value);
+                break;
+            case 'phone':
+                $entity->setPhone($value);
+                break;
+            case 'address':
+                $entity->setAddress($value);
+                break;
+            case 'latitude':
+                $entity->setLatitude($value);
+                break;
+            case 'longitude':
+                $entity->setLongitude($value);
+                break;
+            case 'start_day':
+                $start = $entity->getStart();
+                $d = $value;
+                $m = $start->format('m');
+                $Y = $start->format('Y');
+
+                $entity->setStart(new \DateTime($Y.'-'.$m.'-'.$d));
+                break;
+            case 'start_month':
+                $start = $entity->getStart();
+                $d = $start->format('d');
+                $m = $value;
+                $Y = $start->format('Y');
+
+                $entity->setStart(new \DateTime($Y.'-'.$m.'-'.$d));
+                break;
+            case 'start_year':
+                $start = $entity->getStart();
+                $d = $start->format('d');
+                $m = $start->format('m');
+                $Y = $value;
+
+                $entity->setStart(new \DateTime($Y.'-'.$m.'-'.$d));
+                break;
+            case 'end_day':
+                $end = $entity->getEnd();
+                $d = $value;
+                $m = $end->format('m');
+                $Y = $end->format('Y');
+
+                $entity->setEnd(new \DateTime($Y.'-'.$m.'-'.$d));
+                break;
+            case 'end_month':
+                $end = $entity->getEnd();
+                $d = $end->format('d');
+                $m = $value;
+                $Y = $end->format('Y');
+
+                $entity->setEnd(new \DateTime($Y.'-'.$m.'-'.$d));
+                break;
+            case 'end_year':
+                $end = $entity->getEnd();
+                $d = $end->format('d');
+                $m = $end->format('m');
+                $Y = $value;
+
+                $entity->setEnd(new \DateTime($Y.'-'.$m.'-'.$d));
+                break;
+            case 'experience':
+                $entity->setExperience($value);
+                break;
+            case 'diplomas':
+                $entity->switchDiploma($value);
+                break;
+            case 'ageOfChildren':
+                $entity->switchAgeOfChildren($value);
+                break;
+            case 'languages':
+                $entity->switchLanguage($value);
+                break;
+            case 'particularite':
+                $entity->switchParticularite($value);
+                break;
+            case 'extraTasks':
+                $entity->switchExtraTask($value);
+                break;
+            case 'petitPlus':
+                $entity->switchPetitsPlus($value);
+                break;
+            case 'favoriteactivities':
+                $entity->setFavoriteActivities($value);
+                break;
+            case 'hobbies':
+                $entity->setHobbies($value);
+                break;
+            default:
+                $response['success'] = false;
+                $response['message'] = 'wrong parameter';
+                return new JsonResponse( $response );
+        }
+
+        // Persist in DB
+        $em->persist($entity);
+        $em->flush();
+
+        $response['success'] = true;
+        //$response['message'] = $user->getBirthdate()->format( 'd - m - Y');
+
+        // Response
+        return new JsonResponse( $response );
+    }
+
+    /**
+     * Edits a calendar.
+     * AJAX
+     *
+     */
+    public function updateCalendarAJAXAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $calendarService = $this->container->get('pn.calendar');
+
+        $entity = $em->getRepository('PnPnBundle:Job')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Job entity.');
+        }
+
+        $calendar = $calendarService->getMatrix($entity->getCalendar());
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $id = $request->request->get('coords');
+            $value = $request->request->get('value');
+        }
+        else
+        {
+            $id = $request->query->get('coords');
+            $value = $request->query->get('value');
+        }
+        $x = explode("-", $id)[0];
+        $y = explode("-", $id)[1];
+
+        // Update Parameter
+        $response['success'] = false;
+
+        // Remplacer la valeur
+        $calendar[$x][$y] = $value;
+        $entity->setCalendar($calendarService->getString($calendar));
+
+        // Persist in DB
+        $em->persist($entity);
+        $em->flush();
+
+        $response['success'] = true;
+        $response['id'] = $id;
+
+        // Response
+        return new JsonResponse( $response );
     }
 }

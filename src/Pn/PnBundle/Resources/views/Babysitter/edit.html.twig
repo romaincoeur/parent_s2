@@ -11,16 +11,16 @@
 {% endblock %}
 
 {% block body %}
-    <div class="profile-page babysitter wrap">
+    <div class="profile-page babysitter wrap edit-page">
 
 
         <div id="map" style="height: 180px;">
             Veuillez patienter pendant le chargement de la carte...
         </div>
-        <a href="{{ path('myprofile_show') }}"><div class="apercu bg-red white">apercu de votre profil</div></a>
+        <a href="{{ path('myprofile_show') }}"><div class="apercu bg-red white">aperçu de votre profil</div></a>
         <div class="infobox-wrapper">
             <div id="infobox">
-                Déplacez moi pour indiquer votre addresse.
+                Déplacez moi pour indiquer votre adresse.
             </div>
         </div>
 
@@ -342,7 +342,7 @@
                 geocoder.geocode( { 'address': address}, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         carte.setCenter(results[0].geometry.location);
-                        carte.setZoom(19);
+                        carte.setZoom(17);
                         marqueur.setPosition(results[0].geometry.location);
                         setAddressFromMap(results[0].geometry.location);
                     } else {

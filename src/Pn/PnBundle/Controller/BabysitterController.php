@@ -423,11 +423,12 @@ class BabysitterController extends Controller
         $calendarService = $this->container->get('pn.calendar');
 
         $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
-        $calendar = $calendarService->getMatrix($entity->getCalendar());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Babysitter entity.');
         }
+
+        $calendar = $calendarService->getMatrix($entity->getCalendar());
 
         // Get data
         if ($request->getMethod()=='POST')
