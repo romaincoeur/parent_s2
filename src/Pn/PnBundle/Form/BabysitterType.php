@@ -2,11 +2,10 @@
 
 namespace Pn\PnBundle\Form;
 
+use Pn\PnBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pn\PnBundle\Entity\Job;
-use Pn\PnBundle\Entity\Babysitter;
 
 
 class BabysitterType extends AbstractType
@@ -31,7 +30,7 @@ class BabysitterType extends AbstractType
                 'required'  => false,
             ))
             ->add('rate_type', 'choice', array(
-                'choices'   => Job::getRateTypes(),
+                'choices'   => User::getRateTypes(),
                 'expanded' => false,
                 'required'  => false,
             ))
@@ -39,7 +38,7 @@ class BabysitterType extends AbstractType
                 'attr' => array('min' => 0)
             ))
             ->add('extraTasks', 'choice', array(
-                'choices'   => Babysitter::getExtraTaskss(),
+                'choices'   => User::getExtraTaskss(),
                 'expanded' => true,
                 'multiple' => true,
                 'required'  => false,
@@ -61,31 +60,31 @@ class BabysitterType extends AbstractType
             ))
             ->add('calendar', 'hidden')
             ->add('petitsplus', 'choice', array(
-                'choices'   => Babysitter::getPetitspluss(),
+                'choices'   => User::getPetitspluss(),
                 'expanded' => true,
                 'multiple' => true,
                 'required'  => false,
             ))
             ->add('particularite', 'choice', array(
-                'choices'   => Babysitter::getParticularites(),
+                'choices'   => User::getParticularites(),
                 'expanded' => true,
                 'multiple' => true,
                 'required'  => false,
             ))
             ->add('diplomas', 'choice', array(
-                'choices'   => Babysitter::getDiplomass(),
+                'choices'   => User::getDiplomass(),
                 'expanded' => true,
                 'multiple' => true,
                 'required'  => false,
             ))
             ->add('ageOfChildren', 'choice', array(
-                'choices'   => Babysitter::getAgeofchildrens(),
+                'choices'   => User::getAgeofchildrens(),
                 'expanded' => true,
                 'multiple' => true,
                 'required'  => false,
             ))
             ->add('languages', 'choice', array(
-                'choices'   => Babysitter::getLanguagess(),
+                'choices'   => User::getLanguagess(),
                 'expanded' => true,
                 'multiple' => true,
                 'required'  => false,

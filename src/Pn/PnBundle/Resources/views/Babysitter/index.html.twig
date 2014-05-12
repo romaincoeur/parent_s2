@@ -40,7 +40,7 @@
                     </h4>
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in">
-                    <div class="panel-body">
+                    <div class="panel-body" style="margin-left: 0;">
                         {{ calendar.sortTable() }}
                     </div>
                 </div>
@@ -177,7 +177,7 @@
 
         {% if app.user %}
             {% if app.user.type == 'nounou' %}
-                <a href="{{ path('myprofile_edit') }}" class="btn bg-yellow white">Modifiez votre annonce !</a>
+                <a href="{{ path('myprofile_edit') }}" class="btn bg-yellow white">Complétez votre profil !</a>
             {% else %}
                 <a href="{{ path('myprofile_edit') }}" class="btn bg-yellow white">Publiez votre annonce !</a>
             {% endif %}
@@ -205,7 +205,7 @@
                             <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="{{ entity.user.hiddenName }}" class="photo" style="height: 120px;">
                         {% endif %}
                         {% if entity.ratePrice %}
-                            <p class="tarif">{{ entity.ratePrice }}€ / {{ entity.rateType }}</p>
+                            <p class="tarif">{{ entity.ratePrice }}€ / {{ entity.user.rateTypes[entity.rateType] }}</p>
                         {% endif %}
                         {% if app.user %}
                             <strong>{{ entity.user.fullName() }}&nbsp;</strong>
@@ -239,7 +239,7 @@
                                 {% if entity.languages %}
                                     <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="laguages">
                                     {% for pp in entity.languages %}
-                                        {{ entity.getLanguagess[pp] }}
+                                        {{ entity.user.getLanguagess[pp] }}
                                         {% if not loop.last %}
                                             ,&nbsp;
                                         {% endif %}
@@ -311,7 +311,7 @@
                 '           <p>Paris</p>' +
                 '       </div>' +
                 '       <div class="body">' +
-                '           <p>{{ entity.getCategories[entity.category] }}</p>' +
+                '           <p>{{ entity.user.getCategories[entity.category] }}</p>' +
                 '       </div>' +
                 '   </div>' +
                 '</a>';

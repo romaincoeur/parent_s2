@@ -20,6 +20,23 @@ class Babysitter
         $this->petitsplus = array();
     }
 
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        if ($this->getCategory() == null) $this->setCategory('nounou');
+        if ($this->getExperience() == null) $this->setExperience(0);
+        if ($this->getRatePrice() == null) $this->setRatePrice(0);
+        if ($this->getRateType() == null) $this->setRateType('hour');
+        if ($this->getTrustpoints() == null) $this->setTrustpoints(0);
+        if ($this->calendar == null) $this->setCalendar('[(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)]');
+    }
+
     protected function getUploadDir()
     {
         return 'uploads/babysitters';
@@ -97,50 +114,6 @@ class Babysitter
         return $this->getUser()->getFullname();
     }
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function setDefaultValues()
-    {
-        if ($this->getCategory() == null) $this->setCategory('nounou');
-        if ($this->getExperience() == null) $this->setExperience(0);
-        if ($this->getRatePrice() == null) $this->setRatePrice(0);
-        if ($this->getRateType() == null) $this->setRateType('hour');
-        if ($this->getTrustpoints() == null) $this->setTrustpoints(0);
-        if ($this->calendar == null) $this->setCalendar('[(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
-        (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
-        (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
-        (0000000)(0000000)]');
-    }
-
-    public static function getCategories()
-    {
-        return array(
-            'babysitter' => 'Babysitter',
-            'assistante' => 'Assistante maternelle',
-            'nounou' => 'Nounou à domicile',
-            'garde' => 'Garde partagée',
-            'aupair' => 'Fille au pair',
-            'animateur' => 'Animateur'
-        );
-    }
-
-    public static function getCategoryValues()
-    {
-        return array_keys(self::getCategories());
-    }
-
-
-    public static function getPetitspluss()
-    {
-        return array(
-            'repasmaison' => 'Repas cuisinés maison',
-            'bio' => 'Repas bio',
-            'promenade' => 'Promenade quotidienne',
-            'notv' => 'Zéro télé'
-        );
-    }
-
     public static function getPetitsplusValues()
     {
         return array_keys(self::getPetitspluss());
@@ -201,22 +174,6 @@ class Babysitter
         return $this;
     }
 
-
-    public static function getParticularites()
-    {
-        return array(
-            'nonfumeur' => 'Non fumeur',
-            'animaux' => 'Pas d\'animaux domestiques',
-            'permis' => 'Avec permis de conduire',
-            'voiture' => 'Avec voiture',
-            'lettre' => 'Lettres de recommandation');
-    }
-
-    public static function getParticulariteValues()
-    {
-        return array_keys(self::getParticularites());
-    }
-
     /**
      * @param string $particularite
      *
@@ -270,19 +227,6 @@ class Babysitter
         }
 
         return $this;
-    }
-
-    public static function getDiplomass()
-    {
-        return array(
-            'assistante' => 'Agrément assistante maternelle',
-            'bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
-        );
-    }
-
-    public static function getDiplomasValues()
-    {
-        return array_keys(self::getDiplomass());
     }
 
     /**
@@ -340,25 +284,6 @@ class Babysitter
         return $this;
     }
 
-    public static function getLanguagess()
-    {
-        return array(
-            'fr' => 'Francais',
-            'en' => 'Anglais',
-            'ge' => 'Allemand',
-            'it' => 'Italien',
-            'es' => 'Espagnol',
-            'ru' => 'Russe',
-            'po' => 'Portugais',
-            'ar' => 'Arabe',
-        );
-    }
-
-    public static function getLanguagesValues()
-    {
-        return array_keys(self::getLanguagess());
-    }
-
     /**
      * @param string $language
      *
@@ -414,22 +339,6 @@ class Babysitter
         return $this;
     }
 
-    public static function getAgeofchildrens()
-    {
-        return array(
-            0 => '0 à 1 an',
-            1 => '1 à 3 ans',
-            2 => '3 à 6 an',
-            3 => '6 à 10 ans',
-            4 => '10 ans et +',
-        );
-    }
-
-    public static function getAgeofchildrenValues()
-    {
-        return array_keys(self::getAgeofchildrens());
-    }
-
     /**
      * @param string $age
      *
@@ -483,21 +392,6 @@ class Babysitter
         }
 
         return $this;
-    }
-
-    public static function getExtraTaskss()
-    {
-        return array(
-            'cleaning' => 'Ménage',
-            'cooking' => 'Cuisine',
-            'ironing' => 'Repassage',
-            'homework' => 'Aide aux devoirs',
-        );
-    }
-
-    public static function getExtraTasksValues()
-    {
-        return array_keys(self::getExtraTaskss());
     }
 
     /**

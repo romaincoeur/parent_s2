@@ -441,8 +441,9 @@ class BabysitterController extends Controller
             $id = $request->query->get('coords');
             $value = $request->query->get('value');
         }
-        $x = explode("-", $id)[0];
-        $y = explode("-", $id)[1];
+        $tab = explode("-", $id);
+        $x = $tab[0];
+        $y = $tab[1];
 
         // Update Parameter
         $response['success'] = false;

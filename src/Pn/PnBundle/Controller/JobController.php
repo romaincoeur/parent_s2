@@ -2,6 +2,8 @@
 
 namespace Pn\PnBundle\Controller;
 
+use Pn\PnBundle\Entity\Recommendation;
+use Pn\PnBundle\Form\RecommendationType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,7 +41,7 @@ class JobController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PnPnBundle:Job')->findOneByStatus('annonce');
+        $entities = $em->getRepository('PnPnBundle:Job')->findByStatus('annonce');
 
         return $this->render('PnPnBundle:Job:index.html.twig', array(
             'entities' => $entities,
@@ -145,10 +147,16 @@ class JobController extends Controller
         $calendarService = $this->container->get('pn.calendar');
         $calendar = $calendarService->getMatrix($entity->getCalendar());
 
+        // Configure the recommendation form
+        $form = $this->createForm(new RecommendationType(), new Recommendation(), array(
+            'action' => $this->generateUrl('recommendation_send',array('to' => $id)),
+            'method' => 'POST',
+        ));
+
         return $this->render('PnPnBundle:Job:show.html.twig', array(
             'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
-            'calendarMatrix' => $calendar
+            'calendarMatrix' => $calendar,
+            'recommendation_form' => $form->createView()
         ));
     }
 
@@ -493,8 +501,9 @@ class JobController extends Controller
             $id = $request->query->get('coords');
             $value = $request->query->get('value');
         }
-        $x = explode("-", $id)[0];
-        $y = explode("-", $id)[1];
+        $tab = explode("-", $id);
+        $x = $tab[0];
+        $y = $tab[1];
 
         // Update Parameter
         $response['success'] = false;

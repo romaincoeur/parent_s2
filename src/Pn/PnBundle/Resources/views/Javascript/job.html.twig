@@ -96,32 +96,26 @@ $(document).ready(function(){
     $('#pn_pnbundle_job_end_year').change(function(){
         updateField($(this).attr('id'), 'end_year', $(this).val());
     })
-    $('#pn_pnbundle_babysitter_experience').change(function(){
+    $('#pn_pnbundle_job_experience').change(function(){
         updateField($(this).attr('id'), 'experience', $(this).val());
     })
-    $('input[name="pn_pnbundle_babysitter[diplomas][]"]').change(function(){
+    $('input[name="pn_pnbundle_job[diplomas][]"]').change(function(){
         updateField('diplomas', 'diplomas', $(this).val())
     })
-    $('input[name="pn_pnbundle_babysitter[ageOfChildren][]"]').change(function(){
+    $('input[name="pn_pnbundle_job[ageOfChildren][]"]').change(function(){
         updateField('ageOfChildren', 'ageOfChildren', $(this).val())
     })
-    $('input[name="pn_pnbundle_babysitter[languages][]"]').change(function(){
+    $('input[name="pn_pnbundle_job[languages][]"]').change(function(){
         updateField('languages', 'languages', $(this).val())
     })
-    $('input[name="pn_pnbundle_babysitter[particularite][]"]').change(function(){
+    $('input[name="pn_pnbundle_job[particularite][]"]').change(function(){
         updateField('particularite', 'particularite', $(this).val())
     })
-    $('input[name="pn_pnbundle_babysitter[extraTasks][]"]').change(function(){
+    $('input[name="pn_pnbundle_job[extraTasks][]"]').change(function(){
         updateField('extratasks', 'extraTasks', $(this).val())
     })
-    $('input[name="pn_pnbundle_babysitter[petitsplus][]"]').change(function(){
+    $('input[name="pn_pnbundle_job[petitsplus][]"]').change(function(){
         updateField('petitsplus', 'petitPlus', $(this).val())
-    })
-    $('#pn_pnbundle_babysitter_favoriteactivities').change(function(){
-        updateField($(this).attr('id'), 'favoriteactivities', $(this).val());
-    })
-    $('#pn_pnbundle_babysitter_hobbies').change(function(){
-        updateField($(this).attr('id'), 'hobbies', $(this).val());
     })
 
 

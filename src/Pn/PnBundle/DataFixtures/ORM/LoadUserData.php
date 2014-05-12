@@ -53,8 +53,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user2->setLastname('Stepanoff');
         $user2->setEmail('anna.stepanoff@gmail.com');
         $user2->setIsActivated(true);
-        $user2->setLatitude(48.8592950);
-        $user2->setLongitude(2.3586750);
         $user2->setConfirmed(true);
         $user2->setConfirmationToken('');
 
@@ -119,12 +117,30 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $encodedPassword = $encoder->encodePassword('azerty', $user_julie->getSalt());
         $user_julie->setPassword($encodedPassword);
 
+        $user_tom = new User();
+        $user_tom->setType('parent');
+        $user_tom->setFirstname('Tom');
+        $user_tom->setLastname('Edgery');
+        $user_tom->setEmail('tom.edgery@gmail.com');
+        $user_tom->setIsActivated(true);
+        $user_tom->setPhone("06 34 26 76 87");
+        $user_tom->setConfirmed(true);
+        $user_tom->setConfirmationToken('');
+        // 48.8500050	2.3353719
+
+        // set password
+        $encoder = $factory->getEncoder($user_tom);
+        $encodedPassword = $encoder->encodePassword('azerty', $user_tom->getSalt());
+        $user_tom->setPassword($encodedPassword);
+
+
 
         $em->persist($user1);
         $em->persist($user2);
         $em->persist($user_sarah);
         $em->persist($user_manu);
         $em->persist($user_julie);
+        $em->persist($user_tom);
 
 
         $lon_min = -1.0522795;
@@ -164,10 +180,11 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $this->addReference('user-sarah', $user_sarah);
         $this->addReference('user-manue', $user_manu);
         $this->addReference('user-julie', $user_julie);
+        $this->addReference('user-tom', $user_tom);
     }
 
     public function getOrder()
     {
-        return 3; // the order in which fixtures will be loaded
+        return 1; // the order in which fixtures will be loaded
     }
 }

@@ -89,7 +89,7 @@
                             <p>{{ babysitter.city }}</p>
                         </div>
                         <div class="body">
-                            <p>{{ babysitter.babysitter.getCategories[babysitter.babysitter.category] }}</p>
+                            <p>{{ babysitter.getCategories[babysitter.babysitter.category] }}</p>
                         </div>
                     </div>
                 </a>
@@ -149,7 +149,7 @@
                 '           <p>Paris</p>' +
                 '       </div>' +
                 '       <div class="body">' +
-                '           <p>{{ entity.getCategories[entity.category] }}</p>' +
+                '           <p>{{ entity.user.getCategories[entity.category] }}</p>' +
                 '       </div>' +
                 '   </div>' +
                 '</a>';
@@ -163,29 +163,29 @@
         {% endif %}
         {% endfor %}
 
-        //Positionnement des parents
-        {% for entity in parents %}
-        {% if entity.user.latitude and entity.user.longitude %}
-        var parent_position{{ loop.index }} = new google.maps.LatLng({{ entity.user.latitude }},{{ entity.user.longitude }});
-        var parent_m{{ loop.index }} = new google.maps.Marker({
-            position: parent_position{{ loop.index }},
+        //Positionnement des jobs
+        {% for entity in jobs %}
+        {% if entity.latitude and entity.longitude %}
+        var job_position{{ loop.index }} = new google.maps.LatLng({{ entity.latitude }},{{ entity.longitude }});
+        var job_m{{ loop.index }} = new google.maps.Marker({
+            position: job_position{{ loop.index }},
             map: map,
-            {% if entity.user == app.user %}
+            {% if entity.parent.user == app.user %}
             icon: icon_rouge,
             {% else %}
             icon: icon_jaune,
             {% endif %}
         });
-        var parent_contentm{{ loop.index }} = '' +
-                '<a href="{{ path('pparent_show', {'id': entity.id}) }}">' +
+        var job_contentm{{ loop.index }} = '' +
+                '<a href="{{ path('pn_job_show', {'id': entity.id}) }}">' +
                 '   <div class="mini-profile" style="margin-left: 0;">' +
                 '       <div class="header">' +
-                {% if entity.user.avatar %}
-                '           <img class="profile-picture" src="{{ asset('uploads/users/' ~ entity.user.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">' +
+                {% if entity.parent.user.avatar %}
+                '           <img class="profile-picture" src="{{ asset('uploads/users/' ~ entity.parent.user.avatar) }}" alt="photo de profil de {{ entity.parent.user.firstname }}" style="height: 120px;">' +
                 {% else %}
                 '           <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 120px;">' +
                 {% endif %}
-                '           <strong>{{ entity.user.getHiddenName() }}</strong>' +
+                '           <strong>{{ entity.parent.user.getHiddenName() }}</strong>' +
                 '           <p>Paris</p>' +
                 '       </div>' +
                 '       <div class="body">' +
@@ -193,12 +193,12 @@
                 '       </div>' +
                 '   </div>' +
                 '</a>';
-        var parent_info{{ loop.index }} = new google.maps.InfoWindow({
-            content  : parent_contentm{{ loop.index }},
-            position : parent_position{{ loop.index }}
+        var job_info{{ loop.index }} = new google.maps.InfoWindow({
+            content  : job_contentm{{ loop.index }},
+            position : job_position{{ loop.index }}
         });
-        google.maps.event.addListener(parent_m{{ loop.index }}, 'click', function() {
-            parent_info{{ loop.index }}.open(map,parent_m{{ loop.index }});
+        google.maps.event.addListener(job_m{{ loop.index }}, 'click', function() {
+            job_info{{ loop.index }}.open(map,job_m{{ loop.index }});
         });
         {% endif %}
         {% endfor %}

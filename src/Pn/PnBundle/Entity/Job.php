@@ -10,6 +10,33 @@ use Doctrine\ORM\Mapping as ORM;
 class Job
 {
 
+    public function __construct()
+    {
+        $this->diplomas = array();
+        $this->ageofchildren = array();
+        $this->languages = array();
+        $this->particularite = array();
+        $this->extraTasks = array();
+        $this->petitsplus = array();
+    }
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        $this->setStatus('annonce');
+        if ($this->getCategory() == null) $this->setCategory('nounou');
+        if ($this->getExperience() == null) $this->setExperience(0);
+        if ($this->getStart() == null) $this->setStart(new \DateTime());
+        if ($this->getEnd() == null) $this->setEnd(new \DateTime());
+        if ($this->calendar == null) $this->setCalendar('[(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)(0000000)
+        (0000000)(0000000)]');
+    }
+
     /**
      * @ORM\PrePersist
      */
@@ -29,16 +56,6 @@ class Job
         $this->updated_at = new \DateTime();
     }
 
-    public static function getRateTypes()
-    {
-        return array('hour' => 'Heure', 'month' => 'Mois', 'forfait' => 'Forfait');
-    }
-
-    public static function getRateTypeValues()
-    {
-        return array_keys(self::getRateTypes());
-    }
-
     public static function getStatuses()
     {
         return array('annonce' => 'Annonces', 'job' => 'Job', 'facture' => 'Facture');
@@ -52,18 +69,6 @@ class Job
      * @var integer
      */
     private $experience;
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setDefaultValues()
-    {
-        $this->setStatus('annonce');
-        if ($this->getCategory() == null) $this->setCategory('nounou');
-        if ($this->getExperience() == null) $this->setExperience(0);
-        if ($this->getRatePrice() == null) $this->setRatePrice(0);
-        if ($this->getRateType() == null) $this->setRateType('hour');
-    }
 
     public function shortDescription($maxLength)
     {

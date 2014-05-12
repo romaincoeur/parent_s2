@@ -24,6 +24,16 @@ class User implements UserInterface
     }
 
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        $this->is_activated = true;
+        $this->setUsername($this->email);
+        if ($this->getBirthdate() == null) $this->setBirthdate(new \DateTime('1902-01-01'));
+    }
+
     public function getUsername()
     {
         return $this->username;
@@ -93,16 +103,6 @@ class User implements UserInterface
         public function getHiddenName()
     {
         return $this->getFirstname().' '.substr($this->getLastname(),0,1).'.';
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setDefaultValues()
-    {
-        $this->is_activated = true;
-        $this->setUsername($this->email);
-        if ($this->getBirthdate() == null) $this->setBirthdate(new \DateTime('1902-01-01'));
     }
 
     public function __toString()
@@ -199,6 +199,122 @@ class User implements UserInterface
             return $today[2] - $this->birthdate->format('Y') - 1;
         else
             return $today[2] - $this->birthdate->format('Y');
+    }
+
+    public static function getDiplomass()
+    {
+        return array(
+            'assistante' => 'Agrément assistante maternelle',
+            'bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
+        );
+    }
+
+    public static function getDiplomasValues()
+    {
+        return array_keys(self::getDiplomass());
+    }
+
+    public static function getParticularites()
+    {
+        return array(
+            'nonfumeur' => 'Non fumeur',
+            'animaux' => 'Pas d\'animaux domestiques',
+            'permis' => 'Avec permis de conduire',
+            'voiture' => 'Avec voiture',
+            'lettre' => 'Lettres de recommandation');
+    }
+
+    public static function getParticulariteValues()
+    {
+        return array_keys(self::getParticularites());
+    }
+
+    public static function getCategories()
+    {
+        return array(
+            'babysitter' => 'Babysitter',
+            'assistante' => 'Assistante maternelle',
+            'nounou' => 'Nounou à domicile',
+            'garde' => 'Garde partagée',
+            'aupair' => 'Fille au pair',
+            'animateur' => 'Animateur'
+        );
+    }
+
+    public static function getCategoryValues()
+    {
+        return array_keys(self::getCategories());
+    }
+
+
+    public static function getPetitspluss()
+    {
+        return array(
+            'repasmaison' => 'Repas cuisinés maison',
+            'bio' => 'Repas bio',
+            'promenade' => 'Promenade quotidienne',
+            'notv' => 'Zéro télé'
+        );
+    }
+
+    public static function getLanguagess()
+    {
+        return array(
+            'fr' => 'Francais',
+            'en' => 'Anglais',
+            'ge' => 'Allemand',
+            'it' => 'Italien',
+            'es' => 'Espagnol',
+            'ru' => 'Russe',
+            'po' => 'Portugais',
+            'ar' => 'Arabe',
+        );
+    }
+
+    public static function getLanguagesValues()
+    {
+        return array_keys(self::getLanguagess());
+    }
+
+    public static function getAgeofchildrens()
+    {
+        return array(
+            0 => '0 à 1 an',
+            1 => '1 à 3 ans',
+            2 => '3 à 6 an',
+            3 => '6 à 10 ans',
+            4 => '10 ans et +',
+        );
+    }
+
+    public static function getAgeofchildrenValues()
+    {
+        return array_keys(self::getAgeofchildrens());
+    }
+
+    public static function getExtraTaskss()
+    {
+        return array(
+            'cleaning' => 'Ménage',
+            'cooking' => 'Cuisine',
+            'ironing' => 'Repassage',
+            'homework' => 'Aide aux devoirs',
+        );
+    }
+
+    public static function getExtraTasksValues()
+    {
+        return array_keys(self::getExtraTaskss());
+    }
+
+    public static function getRateTypes()
+    {
+        return array('hour' => 'Heure', 'month' => 'Mois', 'forfait' => 'Forfait');
+    }
+
+    public static function getRateTypeValues()
+    {
+        return array_keys(self::getRateTypes());
     }
 
 

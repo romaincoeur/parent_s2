@@ -9,6 +9,56 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Pparent
 {
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->jobs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+    public function __toString()
+    {
+        return $this->getUser()->getHiddenName();
+    }
+
+    public function getCurrentJob()
+    {
+        return $this->jobs->last();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // GENERATED CODE
+
     /**
      * @var integer
      */
@@ -148,13 +198,7 @@ class Pparent
      */
     private $jobs;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->jobs = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
     /**
      * Add jobs
@@ -187,10 +231,5 @@ class Pparent
     public function getJobs()
     {
         return $this->jobs;
-    }
-
-    public function __toString()
-    {
-        return $this->getUser()->getHiddenName();
     }
 }

@@ -38,6 +38,7 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
         $job1->setIsPublic(true);
         $job1->setIsActivated(true);
         $job1->setExpiresAt(new \DateTime('2012-10-10'));
+        $job1->setParent($em->merge($this->getReference('parent-anna')));
 
         $job2 = new Job();
         $job2->setTitle('Babysitter réguliere à domicile');
@@ -48,6 +49,7 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
         $job2->setIsPublic(true);
         $job2->setIsActivated(true);
         $job2->setExpiresAt(new \DateTime('2012-10-10'));
+        $job2->setParent($em->merge($this->getReference('parent-tom')));
 
 
         $em->persist($job1);
@@ -58,6 +60,6 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
 
     public function getOrder()
     {
-        return 2; // the order in which fixtures will be loaded
+        return 3; // the order in which fixtures will be loaded
     }
 }

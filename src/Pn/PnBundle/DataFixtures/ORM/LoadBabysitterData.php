@@ -33,7 +33,7 @@ class LoadBabysitterData extends AbstractFixture implements OrderedFixtureInterf
         $babysitter_sarah = new Babysitter();
         $babysitter_sarah->setUser($em->merge($this->getReference('user-sarah')));
         $babysitter_sarah->setRatePrice(10);
-        $babysitter_sarah->setRateType('heure');
+        $babysitter_sarah->setRateType('hour');
         $babysitter_sarah->setPresentation("Je m'appelle Clémentine, j'ai 28 ans, je suis animatrice pour enfants et
 comédienne. J'ai mon BAFA, et j'ai été cheftaine scout et animatrice de centre de loisir pendant plusieurs années. A
 présent, je propose des animations de goûter d'anniversaire : je maquille les enfants puis j'organise des jeux sur un

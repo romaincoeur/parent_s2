@@ -23,16 +23,32 @@ class LoadMailTemplateData extends AbstractFixture implements OrderedFixtureInte
         $mail1->setVirtualTitle('maildeconfirmation');
         $mail1->setObject('Parent-nounou - Mail de confirmation');
         $mail1->setBody('
-        Soyez le bienvenu !<br>
-        Pour confirmer votre inscription à Parent-nou cliqez <a href="%URL">ici</a>.
+        Bonjour %FIRSTNAME,<br>
+        Bienvenu sur parent-nounou.fr – communauté des parents, nounous et baby-sitters soucieux du bien-être et de l’éveil de leurs enfants.<br>
+        <br>
+        Confirmez votre adresse email en cliquant <a href="%URL">ici</a>.<br>
+        <br>
+        Voici vos identifiants<br>
+        Identifiant email : %EMAIL<br>
+        <br>
+        A bientôt,<br>
+        L’équipe de parent-nounou.fr
         ');
+
+
 
         $mail2 = new MailTemplate();
         $mail2->setTitle('mail de bienvenue');
         $mail2->setVirtualTitle('maildebienvenue');
         $mail2->setObject('Bienvenue sur Parent-nounou.fr');
         $mail2->setBody('
-        Soyez le bienvenu !<br>
+        Bonjour %FIRSTNAME,<br>
+        <br>
+        Nous sommes heureux de vous compter parmi les membres de notre communauté des nounous, baby-sitters et parents soucieux du bien-être et de l’éveil de l’enfant.<br>
+        <br>
+        N\'hésitez pas à nous contacter, si vous avez des questions ou avez besoin de notre aide.<br>
+        <br>
+        L\'équipe de parent-nounou.fr
         ');
 
         $mail3 = new MailTemplate();
@@ -50,9 +66,14 @@ class LoadMailTemplateData extends AbstractFixture implements OrderedFixtureInte
         $mail4->setVirtualTitle('resetPasswordMail');
         $mail4->setObject('Parent-nounou.fr - Demande de mot de passe');
         $mail4->setBody('
-        Votre mot de passe a été réinitialisé. <br>
-        Votre nouveau mot de passe est : <br>
-        %PASSWORD
+        Bonjour %FIRSTNAME,<br>
+        <br>
+        Voici votre identifiant et votre nouveau mot de passe.<br>
+        Identifiant email : %EMAIL<br>
+        Mot de passe : %PASSWORD<br>
+        <br>
+        A bientôt,<br>
+        L\'équipe de parent-nounou.fr<br>
         ');
 
         $mail5 = new MailTemplate();

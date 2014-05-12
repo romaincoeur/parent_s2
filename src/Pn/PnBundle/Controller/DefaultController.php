@@ -24,13 +24,13 @@ class DefaultController extends Controller
 
         $nounous = $em->getRepository('PnPnBundle:Babysitter')->findAll();
 
-        $parents = $em->getRepository('PnPnBundle:Pparent')->findAll();
+        $jobs = $em->getRepository('PnPnBundle:Job')->findAll();
 
         return $this->render('PnPnBundle:Default:index.html.twig', array(
             'babysitters' => $babysitters,
             'nounous' => $nounous,
             'articles' => $articles,
-            'parents' => $parents
+            'jobs' => $jobs
         ));
     }
 
@@ -172,7 +172,18 @@ class DefaultController extends Controller
         }
         elseif ($type == 'parent')
         {
-            return $this->redirect($this->generateUrl('pn_job_new'));
+            $parent = $this->getUser()->getParent();
+            $em = $this->getDoctrine()->getManager();
+            $currentAnnonce = $em->getRepository('PnPnBundle:Job')->getAnnonce($parent);
+
+            if ($currentAnnonce == null)
+            {
+                return $this->redirect($this->generateUrl('pn_job_new'));
+            }
+            else
+            {
+                return $this->redirect($this->generateUrl('pn_job_edit', array('id' => $currentAnnonce[0]->getId())));
+            }
         }
         else
         {

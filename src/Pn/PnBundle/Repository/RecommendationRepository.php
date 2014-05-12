@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class RecommendationRepository extends EntityRepository
 {
+
+    public function getRecommandations($user)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->where('r.receiver LIKE :user')
+            ->setParameter('user', $user)
+            ->orderBy('b.created_at', 'DESC');
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
+
 }

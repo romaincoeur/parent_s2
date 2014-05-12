@@ -21,13 +21,20 @@ class LoadParentData extends AbstractFixture implements OrderedFixtureInterface
         $parent_anna = new Pparent();
         $parent_anna->setUser($em->merge($this->getReference('user-anna')));
 
+        $parent_tom = new Pparent();
+        $parent_tom->setUser($em->merge($this->getReference('user-tom')));
+
         $em->persist($parent_anna);
+        $em->persist($parent_tom);
 
         $em->flush();
+
+        $this->addReference('parent-anna', $parent_anna);
+        $this->addReference('parent-tom', $parent_tom);
     }
 
     public function getOrder()
     {
-        return 5; // the order in which fixtures will be loaded
+        return 2; // the order in which fixtures will be loaded
     }
 }

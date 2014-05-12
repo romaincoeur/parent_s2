@@ -46,9 +46,9 @@ pn_job_updateAddress:
 pn_job_updateField:
     pattern:  /{id}/updateField
     defaults: { _controller: "PnPnBundle:Job:updateFieldAJAX" }
-    requirements: { _method: post|put|get }
+    requirements: { _method: post|put }
 
 pn_job_updateCalendar:
     pattern:  /{id}/updateCalendar
-    defaults: { _controller: "PnPnBundle:Job:updateCalendardAJAX" }
-    requirements: { _method: post|put }
+    defaults: { _controller: "PnPnBundle:Job:updateCalendarAJAX" }
+    requirements: { _method: post|put|get }

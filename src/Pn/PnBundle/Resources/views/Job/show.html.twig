@@ -6,119 +6,145 @@
 {% block title %}{{ parent() }} - Annonce1{% endblock %}
 
 {% block body %}
-    <div class="job-show wrap">
+    <div class="profile-page parent">
 
-        <div id="map" style="height: 180px;">
-            Veuillez patienter pendant le chargement de la carte...
-        </div>
+        <div class="wrap">
 
-
-        <div class="description">
-            <div class="header">
-                <div class="right">
-                    <div class="tarif">10€ / heure</div>
-                    {% if (app.user) and (app.user.parent == entity.parent) %}
-                        <a href="{{ path('pn_job_edit', { 'id': entity.id }) }}" class="btn bg-yellow engage">edit</a>
-                    {% else %}
-                        <button class="btn bg-yellow icon">
-                            <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
-                        </button>
-                    {% endif %}
-                </div>
-                <h1>{{ entity.title }}</h1>
-                <span class="balloon"></span>
-                <span class="balloon"></span>
-                <span class="balloon"></span>
-                <span class="trust-points">126 points de confiance</span>
+            <div id="map" style="height: 180px;">
+                Veuillez patienter pendant le chargement de la carte...
             </div>
-            <div class="body">
-                {{ entity.description|raw }}
-            </div>
-        </div>
+            {% if (app.user) and (app.user.type == 'parent') and app.user.parent.id == entity.parent.id %}
+                <a href="{{ path('myprofile_edit') }}"><div class="edit bg-red white">modifiez votre annonce</div></a>
+            {% endif %}
 
-        <div class="row">
-            <div class="col-md-4">
-                <div class="coords">
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone"> 06 39 86 64 90 <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
-                </div>
-                <div class="details">
-                    <img src="{{ asset('bundles/pnpn/images/icons/marker.png') }}" alt="marker icon"> Paris, 14e <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"><br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-calendar.png') }}" alt="calendar icon"> du 17.12.2013 au 20.032014<br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience icon"> 3 ans d'expérience minimum<img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certification icon"> Agrément assistante maternelle <br>
-                    Brevet d'aptitude aux fonctions d'animateur <img src="{{ asset('img/icon/checked.png') }}" alt="vérifié"> <br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="telephone"> Prise en charge des enfants de 0 à 1 an, 1 à 3 ans, 4 à 6 ans <br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone"> Français, Italien <br>
-                </div>
-                <div class="badges">
-                    <div class="header">
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-badges.png') }}" alt="badge"> 7 Badges
+
+            <div class="description">
+                <div class="header">
+                    <div class="left">
+                        {% if entity.parent.user.avatar %}
+                            <img class="profile-picture" src="{{ asset('uploads/users/' ~ entity.parent.user.avatar) }}" alt="photo de profil de {{ entity.parent.user.firstname }}" style="height: 120px;">
+                        {% else %}
+                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 120px;">
+                        {% endif %}
+                        {% if (app.user) and (app.user.type == 'nounou') %}
+                            <button class="favorite icon bg-yellow white"></button>
+                        {% endif %}
                     </div>
-                    <div class="body">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-check.png') }}" alt="badge check">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-biberon.png') }}" alt="badge biberon">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-pansement.png') }}" alt="badge pansement">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-.png') }}" alt="badge ">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-ballon.png') }}" alt="badge ballon">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-jeu.png') }}" alt="badge jeu">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-couche.png') }}" alt="badge couche">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-blessure.png') }}" alt="badge blessure">
-                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-securite.png') }}" alt="badge securite">
+                    <div class="right">
+                        {% if entity.ratePrice %}
+                            <div class="tarif">{{ entity.ratePrice }}€ / {{ entity.parent.user.getRateTypes[entity.rateType] }}</div>
+                        {% endif %}
+                    </div>
+                    <h1>{{ entity.title }}</h1>
+                </div>
+                <div class="body">
+                    {{ entity.description|raw }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="coords">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.phone }}
+                    </div>
+                    <div class="details">
+                        <img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="adresse"> {{ entity.address }} <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-calendar.png') }}" alt="calendar icon"> du 17.12.2013 au 20.032014<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience"> {{ entity.experience }} ans d'expérience minimum<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
+                        <p>
+                            {% for pp in entity.diplomas %}
+                                - {{ entity.parent.user.diplomass[pp] }}<br>
+                            {% endfor %}
+                        </p>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age des enfants">
+                        Prise en charge des enfants&nbsp;
+                        {% for pp in entity.ageOfChildren %}
+                        de&nbsp;{{ entity.parent.user.ageOfChildrens[pp] }}
+                        {% if not loop.last %}
+                            ,&nbsp;
+                        {% endif %}
+                        {% endfor %}<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone">
+                        {% for pp in entity.languages %}
+                        {{ entity.parent.user.getLanguagess[pp] }}
+                        {% if not loop.last %}
+                            ,&nbsp;
+                        {% endif %}
+                        {% endfor %}<br>
+                    </div>
+                </div>
+                <div class="col-md-4 calendar">
+                    {{ calendar.viewTable(calendarMatrix) }}
+                </div>
+                <div class="col-md-4">
+                    {#<div class="child-block">
+                        <b>Anais</b><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="timer icon"> 6 ans<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> jouer aux barbies<br>
+                    </div>
+                    <div class="child-block">
+                        <b>Tom</b><br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="timer icon"> 10 ans<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> football, jouer aux mikado, echecs<br>
+                    </div>#}
+                    <div class="other">
+                        <b>Tâches supplémentaire&nbsp;:</b>
+                        <p>
+                            {% for task in entity.extraTasks %}
+                                - {{ entity.parent.user.extraTaskss[task] }}<br>
+                            {% endfor %}
+                        </p>
+
+                        <b>Vos petits plus&nbsp;:</b>
+                        <p>
+                            {% for pp in entity.petitsplus %}
+                                - {{ entity.parent.user.petitspluss[pp] }}<br>
+                            {% endfor %}
+                        </p>
+
+                        <b>Vos atouts :</b>
+                        <p>
+                            {% for part in entity.particularite %}
+                                - {{ entity.parent.user.particularites[part] }}<br>
+                            {% endfor %}
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 calendar">
-                {{ calendar.viewTable(calendarMatrix) }}
-            </div>
-            <div class="col-md-4">
-                <div class="child-block">
-                    <b>Anais</b><br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-timer.png') }}" alt="timer icon"> 6 ans<br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> jouer aux barbies<br>
-                </div>
-                <div class="child-block">
-                    <b>Tom</b><br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-timer.png') }}" alt="timer icon"> 10 ans<br>
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-like.png') }}" alt="heart icon"> football, jouer aux mikado, echecs<br>
-                </div>
-                <div class="other">
-                    <b>Tâches supplémentaire :</b>
-                    <p>cuisine, aide aux devoirs</p>
 
-                    <b>Vos petits plus :</b>
-                    <p>Repas bio</p>
-
-                    <b>Vos atouts :</b>
-                    <p>- non fumeur<br>
-                        - permis de conduire<br>
-                        - lettre de recommandation</p>
-                </div>
-            </div>
         </div>
 
         <div class="recommandations">
-            <div class="banner bg-red"><h4>Mes recommandations</h4></div>
-            <form action="" method="post">
-                <input type="search" placeholder="Ecrivez une recommandation">
-                <input type="submit" value="publier">
-            </form>
-            <div class="recommandation">
-                <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
-                <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icon/left-arrow.png') }}" alt="left-arrow">
-                <div class="bulle">
-                    <p>Sarah est une de mes amies. Nous avons travaillé ensemble dans un centre de loisir l'année derniere. Elle
-                        s'occupait des activités artisitiques. Les enfants étaient tres réceptifs à ses conseils et elle n'a jamais eu
-                        besoin de gronder qui que ce soit. Nous étions tres impressionnés.</p>
-                    <span class="red">Louis D.</span> Baby sitter. Posté le 19 mars 2013
+            <div class="banner bg-red big-wrap">
+                <div class="wrap">
+                    <h4>Recommandations</h4>
                 </div>
             </div>
-            <div class="recommandation">
-                <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
-                <img class="left-arrow" src="{{ asset('img/icon/left-arrow.png') }}" alt="left-arrow">
-                <div class="bulle">
-                    <p>Sarah est une fille tres gentille et tres agréable. Les enfants l'adorent et nous aussi.</p>
-                    <span class="red">Julie B.</span> Parent. Posté le 20 février 2014
-                </div>
+            <div class="wrap">
+                <form action="{{ path('recommendation_send',{ 'to':entity.parent.user.id }) }}" method="post" id="new_recommendation" {{ form_enctype(recommendation_form) }}>
+                    {{ form_errors(recommendation_form.body) }}
+                    {{ form_widget(recommendation_form.body, { 'attr': {'placeholder': 'Ecrivez une recommandation'} }) }}
+
+                    {{ form_rest(recommendation_form) }}
+                    <input type="submit" value="publier">
+                </form>
+                {% for recommendation in entity.parent.user.receivedRecommendations|reverse %}
+                    <div class="recommandation">
+                        {% if recommendation.giver.avatar %}
+                            <img class="profile-picture" src="{{ asset('uploads/users/' ~ recommendation.giver.avatar) }}" alt="photo de profil de {{ recommendation.giver.firstname }}" style="height: 90px;">
+                        {% elseif recommendation.giver.type == 'nounou' %}
+                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 90px;">
+                        {% else %}
+                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 90px; width: 86px;">
+                        {% endif %}
+                        <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
+                        <div class="bulle">
+                            <p>{{ recommendation.body }}</p>
+                            <span class="red">{{ recommendation.giver.hiddenName }}</span> {{ recommendation.giver.type }}. Posté le {{ recommendation.createdAt|date('d-m-Y')  }}
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -126,6 +152,7 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript">
 
