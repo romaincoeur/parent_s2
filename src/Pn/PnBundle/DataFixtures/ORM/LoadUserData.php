@@ -38,7 +38,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user1->setIsActivated(true);
         $user1->setLatitude(48.8481553);
         $user1->setLongitude(2.3886942);
-        $user1->setAddress('Picpus, Paris, France');
+        $user1->setAddress('24 Passage du Génie, 75012 Paris, France');
+        $user1->setCity('Paris');
+        $user1->setPostcode('75012');
         $user1->setConfirmed(true);
         $user1->setConfirmationToken('');
 
@@ -70,7 +72,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user_sarah->setPhone("06 39 86 64 90");
         $user_sarah->setLatitude(48.8620054);
         $user_sarah->setLongitude(2.3245144);
-        $user_sarah->setAddress('Saint-Germain-l\'Auxerrois, Paris, France');
+        $user_sarah->setAddress('Léopold Sedar Senghor, 75001 Paris, France');
+        $user1->setCity('Paris');
+        $user1->setPostcode('75001');
         $user_sarah->setConfirmed(true);
         $user_sarah->setConfirmationToken('');
 
@@ -88,7 +92,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user_manu->setPhone("06 34 56 67 87");
         $user_manu->setLatitude(48.8500050);
         $user_manu->setLongitude(2.3353719);
-        $user_manu->setAddress('Odéon, Paris, France');
+        $user_manu->setAddress('41 Rue Saint-Sulpice, 75006 Paris, France');
+        $user1->setCity('Paris');
+        $user1->setPostcode('75006');
         $user_manu->setConfirmed(true);
         $user_manu->setConfirmationToken('');
         // 48.8500050	2.3353719
@@ -107,7 +113,9 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user_julie->setPhone("06 34 46 77 87");
         $user_julie->setLatitude(49.25416601);
         $user_julie->setLongitude(4.03211587);
-        $user_julie->setAddress('Centre-Ville, 51100 Reims, France');
+        $user_julie->setAddress('2 Cours Jean-Baptiste Langlet, 51100 Reims, France');
+        $user1->setCity('Reims');
+        $user1->setPostcode('51100');
         $user_julie->setConfirmed(true);
         $user_julie->setConfirmationToken('');
         // 48.8500050	2.3353719

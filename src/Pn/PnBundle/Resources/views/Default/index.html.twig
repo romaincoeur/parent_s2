@@ -4,6 +4,11 @@
 
 {% block title %}{{ parent() }} - Accueil{% endblock %}
 
+{% block metadata %}
+    {{ parent() }}
+    <meta name="description" content="Trouver une nounou ou des enfants à garder en toute confiance. Annonces gratuites de baby-sitters, d’assistantes maternelles et de nourrices à domicile">
+{% endblock %}
+
 {% block body %}
     <div class="maptool wrap">
         <div id="map">
@@ -77,7 +82,7 @@
         </div>
         <div class="wrap">
             {% for babysitter in babysitters %}
-                <a href="{{ path('babysitter_show', {'id': babysitter.babysitter.id}) }}">
+                <a href="{{ path('babysitter_show', {'id': babysitter.babysitter.id, 'url': babysitter.babysitter.url}) }}">
                     <div class="mini-profile">
                         <div class="header">
                             {% if babysitter.avatar %}
@@ -137,7 +142,7 @@
         {% endif %}
         });
         var nounou_contentm{{ loop.index }} = '' +
-                '<a href="{{ path('babysitter_show', {'id': entity.id}) }}">' +
+                '<a href="{{ path('babysitter_show', {'id': entity.id, 'url': entity.url}) }}">' +
                 '   <div class="mini-profile" style="margin-left: 0;">' +
                 '       <div class="header">' +
                 {% if entity.user.avatar %}
@@ -177,7 +182,7 @@
             {% endif %}
         });
         var job_contentm{{ loop.index }} = '' +
-                '<a href="{{ path('pn_job_show', {'id': entity.id}) }}">' +
+                '<a href="{{ path('pn_job_show', {'id': entity.id, 'url': entity.url}) }}">' +
                 '   <div class="mini-profile" style="margin-left: 0;">' +
                 '       <div class="header">' +
                 {% if entity.parent.user.avatar %}

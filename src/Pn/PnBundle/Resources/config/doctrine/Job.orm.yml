@@ -23,6 +23,18 @@ Pn\PnBundle\Entity\Job:
       type: string
       length: 255
       nullable: true
+    postcode:
+      type: string
+      length: 255
+      nullable: true
+    departement:
+      type: string
+      length: 255
+      nullable: true
+    city:
+      type: string
+      length: 255
+      nullable: true
     latitude:
       type: decimal
       length: 10

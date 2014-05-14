@@ -73,14 +73,14 @@ class JobController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        /*if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity->setParent($this->getUser()->getParent());
             $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('pn_job_show', array('id' => $entity->getId())));
-        }
+        }*/
 
         $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
         return $this->render('PnPnBundle:Job:new.html.twig', array(
@@ -161,21 +161,28 @@ class JobController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Job entity.
+     * Displays a form to edit the current job of the current user.
      *
      */
-    public function editAction($id)
+    public function editAction()
     {
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Vous devez être connecté pour accéeder à cette fonctionalité');
+        }
+        if ($user->getType() != 'parent') {
+            throw $this->createNotFoundException('Seuls les parents peuvent creer des annonces.');
+        }
+
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PnPnBundle:Job')->find($id);
+        $entity = $user->getParent()->getCurrentJob();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
 
         $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         // gestion du calendrier
         $calendarService = $this->container->get('pn.calendar');
@@ -184,7 +191,6 @@ class JobController extends Controller
         return $this->render('PnPnBundle:Job:edit.html.twig', array(
             'entity'      => $entity,
             'form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
             'calendarMatrix' => $calendar
         ));
     }
@@ -306,14 +312,14 @@ class JobController extends Controller
         }
 
         // Remplacer les valeurs
-        $entity->setAddress($addressTab['formatted_address']);
+        $entity->setAddress($addressTab[0]['formatted_address']);
         $entity->setLatitude($latitude);
         $entity->setLongitude($longitude);
-        /*foreach ($addressTab['address_components'] as $component)
+        foreach ($addressTab[0]['address_components'] as $component)
         {
-            if (preg_match ('\d{2}', $component['short_name']) == 1) $entity->getUser()->setDepartement($component['short_name']);
-            if (preg_match ('\d{5}', $component['short_name']) == 1) $entity->getUser()->setPostCode($component['short_name']);
-        }*/
+            if ($component['types'][0] == "postal_code") $entity->setPostCode($component['short_name']);
+            if ($component['types'][0] == "locality") $entity->setCity($component['short_name']);
+        }
 
         // Persist in DB
         $em->persist($entity);

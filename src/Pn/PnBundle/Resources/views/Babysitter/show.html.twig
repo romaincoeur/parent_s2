@@ -3,7 +3,12 @@
 {% import "PnPnBundle::calendar.html.twig" as calendar %}
 {% extends "PnPnBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - Profil{% endblock %}
+{% block title %}{{ entity.user.firstname }}, {{ entity.user.getCategories[entity.category] }} à {{ entity.user.city }} {{ entity.user.postcode }} | {{ parent() }}{% endblock %}
+
+{% block metadata %}
+    {{ parent() }}
+    <meta name="description" content="{{ entity.user.firstname }}, {{ entity.user.getCategories[entity.category] }} à {{ entity.user.city }} {{ entity.user.postcode }}">
+{% endblock %}
 
 {% block body %}
     <div class="profile-page babysitter">

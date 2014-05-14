@@ -5,6 +5,10 @@
 
 {% block title %}{{ parent() }} - Annonces{% endblock %}
 
+{% block metadata %}
+    <meta name="description" content="Comparer les différentes annonces d’emploi de nounou et de baby-sitter par proximité géographique, dates, langue, tarif et autres critères.">
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/availability.css') }}" type="text/css" />
@@ -187,7 +191,7 @@
 
     <div class="profiles">
         {% for entity in entities %}
-            <a href="{{ path('pn_job_show', {'id': entity.id}) }}">
+            <a href="{{ path('pn_job_show', {'id': entity.id, 'url': entity.url}) }}">
                 <div class="profile" id="{{ entity.id }}"
                      data-calendar="{{ entity.calendar }}"
                      data-category="{{ entity.category }}"
@@ -279,7 +283,7 @@
         });
         zoneMarqueurs.extend(  job_m{{ loop.index }}.getPosition() );
         var job_contentm{{ loop.index }} = '' +
-                '<a href="{{ path('pn_job_show', {'id': entity.id}) }}">' +
+                '<a href="{{ path('pn_job_show', {'id': entity.id, 'url': entity.url}) }}">' +
                 '   <div class="mini-profile" style="margin-left: 0;">' +
                 '       <div class="header">' +
                 {% if entity.parent.user.avatar %}

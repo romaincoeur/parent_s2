@@ -3,7 +3,12 @@
 {% import "PnPnBundle::calendar.html.twig" as calendar %}
 {% extends "PnPnBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - Annonce1{% endblock %}
+{% block title %}Cherche {{ entity.parent.user.getCategories[entity.category] }} à {{ entity.city }} {{ entity.postcode }} | {{ parent() }}{% endblock %}
+
+{% block metadata %}
+    {{ parent() }}
+    <meta name="description" content="Cherche {{ entity.parent.user.getCategories[entity.category] }} à {{ entity.city }} {{ entity.postcode }}">
+{% endblock %}
 
 {% block body %}
     <div class="profile-page parent">

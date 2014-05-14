@@ -485,6 +485,19 @@ class Babysitter
         return $result;
     }
 
+    /**
+     * returns a formated url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->user->getFirstname().'-'
+        .substr($this->user->getLastname(),0,1).'-'
+        .strtolower(str_replace(' ','-',$this->user->getCategories()[$this->getCategory()])).'-'
+        .$this->user->getPostcode();
+    }
+
 
 
 

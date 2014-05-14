@@ -879,6 +879,11 @@ aside a.btn
     position: relative;
 }
 
+.profile-page.wrap
+{
+    position: relative;
+}
+
 .edit-page div.apercu
 {
     position: absolute;
@@ -1263,7 +1268,7 @@ label[for='pn_pnbundle_job_diplomas_1']
     background-color: #eeeeee;
     font-weight: bold;
     margin-bottom: 30px;
-    padding: 7px 20px;
+    padding: 20px;
 }
 
 .message-topMenu a

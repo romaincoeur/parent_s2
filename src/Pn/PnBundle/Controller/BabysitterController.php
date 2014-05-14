@@ -495,14 +495,15 @@ class BabysitterController extends Controller
         }
 
         // Remplacer les valeurs
-        $entity->getUser()->setAddress($addressTab['formatted_address']);
+        $entity->getUser()->setAddress($addressTab[0]['formatted_address']);
+        //$entity->getUser()->setCity($addressTab[1]['formatted_address']);
         $entity->getUser()->setLatitude($latitude);
         $entity->getUser()->setLongitude($longitude);
-        /*foreach ($addressTab['address_components'] as $component)
+        foreach ($addressTab[0]['address_components'] as $component)
         {
-            if (preg_match ('\d{2}', $component['short_name']) == 1) $entity->getUser()->setDepartement($component['short_name']);
-            if (preg_match ('\d{5}', $component['short_name']) == 1) $entity->getUser()->setPostCode($component['short_name']);
-        }*/
+            if ($component['types'][0] == "postal_code") $entity->getUser()->setPostCode($component['short_name']);
+            if ($component['types'][0] == "locality") $entity->getUser()->setCity($component['short_name']);
+        }
 
         $this->updateTrustpoints($entity);
 

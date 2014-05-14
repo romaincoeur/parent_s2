@@ -5,6 +5,11 @@
 
 {% block title %}{{ parent() }} - Nouvelle annonce{% endblock %}
 
+{% block metadata %}
+    {{ parent() }}
+    <meta name="description" content="Publier votre annonce de recherche de nounou, d’assistante maternelle ou de baby-sitter.">
+{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/crop.css') }}" type="text/css" />
@@ -316,7 +321,7 @@
                         $.ajax({
                             type: "POST",
                             url: "{{ path('pn_job_updateAddress', { 'id': entity.id}) }}",
-                            data: {value: JSON.stringify(results[0], null, 2), latitude: latlng.lat(), longitude: latlng.lng()},
+                            data: {value: JSON.stringify(results, null, 2), latitude: latlng.lat(), longitude: latlng.lng()},
                             success: function(response) {
                                 if (response.success)
                                 {

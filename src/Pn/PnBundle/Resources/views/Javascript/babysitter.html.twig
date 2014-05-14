@@ -319,14 +319,14 @@ $(function() {
             return false;
         }
     }
+})
 
 
 
 
 
-
-
-    // Video upload
+// Video upload
+$(function() {
 
     // Map designed upload button to input type=file
     $("body").on("click",".newvideo",function(){
@@ -344,9 +344,9 @@ $(function() {
                     {
                         $('.newvideo').removeClass('btn').removeClass('pres-video').html(
                                 '<video src={{ asset('uploads/babysitters') }}/' + data.videoUrl + '></video>' +
-                                '<div class="btn bg-red changeVideo">Changer la vidéo</div>' +
-                                '<div id="progressbox" style="display: none;"><div id="progressbar"></div ><div id="statustxt">0%</div></div>' +
-                                '<div id="videoOutput"></div>'
+                                        '<div class="btn bg-red changeVideo">Changer la vidéo</div>' +
+                                        '<div id="progressbox" style="display: none;"><div id="progressbar"></div ><div id="statustxt">0%</div></div>' +
+                                        '<div id="videoOutput"></div>'
                         );
                     }
                     else

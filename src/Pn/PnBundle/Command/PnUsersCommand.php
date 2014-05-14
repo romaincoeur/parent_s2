@@ -23,9 +23,10 @@ class PnUsersCommand extends ContainerAwareCommand
     {
         $this
             ->setName('pn:user:create')
-            ->setDescription('Add Jobeet users')
+            ->setDescription('Add admin user')
             ->addArgument('username', InputArgument::REQUIRED, 'The username')
             ->addArgument('password', InputArgument::REQUIRED, 'The password')
+            ->addArgument('email', InputArgument::REQUIRED, 'Email')
         ;
     }
 
@@ -33,17 +34,20 @@ class PnUsersCommand extends ContainerAwareCommand
     {
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
+        $email = $input->getArgument('email');
 
-        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $em = $this->getContainer()->get('doctrine')->getManager();
 
         $user = new User();
-        $user->setUsername($username);
         // encode the password
         $factory = $this->getContainer()->get('security.encoder_factory');
         $encoder = $factory->getEncoder($user);
         $encodedPassword = $encoder->encodePassword($password, $user->getSalt());
         $user->setPassword($encodedPassword);
         $em->persist($user);
+        $user->setUsername($username);
+        $user->setType('admin');
+        $user->setEmail($email);
         $em->flush();
 
         $output->writeln(sprintf('Added %s user with password %s', $username, $password));

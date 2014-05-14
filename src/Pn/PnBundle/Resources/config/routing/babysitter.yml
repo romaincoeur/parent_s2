@@ -3,10 +3,6 @@ babysitter:
     pattern:  /
     defaults: { _controller: PnPnBundle:Babysitter:index }
 
-babysitter_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "PnPnBundle:Babysitter:show" }
-
 babysitter_new:
     pattern:  /new
     defaults: { _controller: "PnPnBundle:Babysitter:new" }
@@ -29,10 +25,6 @@ babysitter_delete:
     pattern:  /{id}/delete
     defaults: { _controller: "PnPnBundle:Babysitter:delete" }
     requirements: { _method: post|delete }
-
-babysitter_search:
-    pattern:  /search/{search}
-    defaults: { _controller: PnPnBundle:Babysitter:search, search: null }
 
 babysitter_update_field:
     pattern:  /{id}/update_field

@@ -133,7 +133,7 @@ class DefaultController extends Controller
         if ($type == 'nounou')
         {
             $nounou = $user->getBabysitter();
-            return $this->redirect($this->generateUrl('babysitter_show', array('id' => $nounou->getId())));
+            return $this->redirect($this->generateUrl('babysitter_show', array('id' => $nounou->getId(), 'url' => $nounou->getUrl())));
         }
         elseif ($type == 'parent')
         {
@@ -182,7 +182,7 @@ class DefaultController extends Controller
             }
             else
             {
-                return $this->redirect($this->generateUrl('pn_job_edit', array('id' => $currentAnnonce[0]->getId())));
+                return $this->redirect($this->generateUrl('pn_job_edit'));
             }
         }
         else
@@ -215,6 +215,12 @@ class DefaultController extends Controller
     {
 
         return $this->render('PnPnBundle:Default:team.html.twig');
+    }
+
+    public function cguAction()
+    {
+
+        return $this->render('PnPnBundle:Default:cgu.html.twig');
     }
 
 }

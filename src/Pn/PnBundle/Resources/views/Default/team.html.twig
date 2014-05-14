@@ -3,6 +3,12 @@
 
 {% extends "PnPnBundle::layout.html.twig" %}
 
+{% block title %}Cherche Qui sommes-nous ? | {{ parent() }}{% endblock %}
+
+{% block metadata %}
+    {{ parent() }}
+    <meta name="description" content="Présentation de l’équipe de parent-nounou.fr">
+{% endblock %}
 
 {% block body %}
 

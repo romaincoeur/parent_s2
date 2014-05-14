@@ -8,6 +8,11 @@
 
     <title>{% block title %}Parent-nounou.fr{% endblock %}</title>
 
+    {% block metadata %}
+        <meta charset="UTF-8">
+        <meta name="keywords" content="nounou, babysitter, parent, enfant, bebe">
+    {% endblock %}
+
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/bootstrap.css') }}" type="text/css" />
         <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/global.css') }}" type="text/css" />
@@ -56,7 +61,7 @@
             <a href="{{ path('pn_job_annonces') }}" class="red" style="padding-left: 0; border-left: 0">Annonces</a>
             <a href="{{ path('babysitter') }}" class="red">Nounous</a>
             <a href="{{ path('pn_blog') }}" class="red">Blog</a>
-            <a href="">CGU</a>
+            <a href="{{ path('pn_cgu') }}">CGU</a>
             {#<a href="#tarifs" role="button" data-toggle="modal">Tarifs</a>#}
             <a href="{{ path('pn_team') }}">Equipe</a>
             <a href="#contact" role="button" data-toggle="modal">Contact</a>

@@ -1,10 +1,1 @@
-blog_article:
-    pattern:  /
-    defaults: { _controller: "PnBlogBundle:Article:index" }
-
-blog_article_show:
-    pattern:  /{id}/show
-    defaults: { _controller: "PnBlogBundle:Article:show" }
-
-
 

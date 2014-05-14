@@ -24,21 +24,15 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
     {
         $job1 = new Job();
         $job1->setTitle('Animatrice pour anniversaire');
-        $job1->setDescription('<p>Je m\'appelle Clémentine, j\'ai 28 ans, je suis animatrice pour enfants et comédienne.
-        J\'ai mon BAFA, et j\'ai été cheftaine scout et animatrice de centre de loisir pendant plusieurs années. A
-        présent, je propose des animations de goûter d\'anniversaire : je maquille les enfants puis j\'organise des
-        jeux sur un thème de conte de fée, afin de préparer les enfants au spectacle de marionnettes qui va suivre.
-        Vous pourrez choisir des contes célèbres comme Pinocchio, le Petit Chaperon rouge, et aussi des contes plus
-        rares du folklore Russe avec les histoires de la sorcière Babayaga ou de la princesse Vassilissa... Pour les
-         petits je présenterai aussi des comptines et fables plus courtes avec des marionnettes en forme d\'animaux.
-         Je propose également des spectacles d\'ombre chinoises...</p>
-         <p>Enfin, je jouerai à partir du 8 janvier dans un joli spectacle théâtral et musical pour enfant à la Comédie de
-         la Passerelle : La Sorcière Polluair et le petit peuple vert !</p>');
+        $job1->setDescription('Je cherche une animatrice ou bien animateur pour animer l\'anniversaire de mon fils Leon et de ses amis.');
         $job1->setHowToApply('Send your resume to fabien.potencier [at] sensio.com');
         $job1->setIsPublic(true);
         $job1->setIsActivated(true);
         $job1->setExpiresAt(new \DateTime('2012-10-10'));
         $job1->setParent($em->merge($this->getReference('parent-anna')));
+        $job1->setAddress('4 Cité de Varenne, 75007 Paris, France');
+        $job1->setCity('Paris');
+        $job1->setPostcode('75007');
 
         $job2 = new Job();
         $job2->setTitle('Babysitter réguliere à domicile');
@@ -50,6 +44,9 @@ class LoadJobData extends AbstractFixture implements OrderedFixtureInterface
         $job2->setIsActivated(true);
         $job2->setExpiresAt(new \DateTime('2012-10-10'));
         $job2->setParent($em->merge($this->getReference('parent-tom')));
+        $job2->setAddress('239 Avenue Jean Jaurès, 75019 Paris, France');
+        $job2->setCity('Paris');
+        $job2->setPostcode('75019');
 
 
         $em->persist($job1);

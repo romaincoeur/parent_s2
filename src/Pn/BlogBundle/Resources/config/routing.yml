@@ -1,7 +1,13 @@
 pn_blog:
     pattern:  /
-    defaults: { _controller: PnBlogBundle:Default:index }
+    defaults: { _controller: PnBlogBundle:Article:index }
 
 PnBlogBundle_blog_article:
     resource: "@PnBlogBundle/Resources/config/routing/article.yml"
     prefix:   /article
+
+blog_article_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "PnBlogBundle:Article:show" }
+
+

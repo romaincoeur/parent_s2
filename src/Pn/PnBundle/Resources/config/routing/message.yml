@@ -8,7 +8,3 @@ pn_new_conversation:
     pattern:  /new_conversation
     defaults: { _controller: "PnPnBundle:Message:newConversation" }
     requirements: { _method: post }
-
-message:
-    pattern:  /{conv}
-    defaults: { _controller: "PnPnBundle:Message:index", conv: null }

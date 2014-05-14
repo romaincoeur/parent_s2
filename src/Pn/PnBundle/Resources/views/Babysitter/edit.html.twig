@@ -362,7 +362,7 @@
                             $.ajax({
                                 type: "POST",
                                 url: "{{ path('pn_babysitter_updateAddress', { 'id': entity.id}) }}",
-                                data: {value: JSON.stringify(results[0], null, 2), latitude: latlng.lat(), longitude: latlng.lng()},
+                                data: {value: JSON.stringify(results, null, 2), latitude: latlng.lat(), longitude: latlng.lng()},
                                 success: function(response) {
                                     if (response.success)
                                     {

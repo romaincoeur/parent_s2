@@ -32,7 +32,7 @@
     font-weight:bold;
     color:#2f3639;
     font-size:15px;
-    width:60px;
+    width:25px;
     border: solid #eeeeee 3px;
 }
 
@@ -53,7 +53,7 @@
     color:#2f3639;
     font-size:14px;
     border:solid 1px #d5d7d7;
-    width:60px;
+    width:25px;
     border-right:none;
     border-bottom:none;}
 
@@ -236,7 +236,6 @@
     padding-top: 0;
     text-align: center;
     vertical-align: middle;
-    width: 36px;
     font-size:16px;
     height:40px;
     border: solid #eeeeee 3px;
@@ -283,7 +282,8 @@ body, tr, th, td
     padding-top: 0;
     text-align: center;
     vertical-align: middle;
-    width: 60px;float:left;
+    width: 60px;
+    float:left;
 }
 
 .checkbox

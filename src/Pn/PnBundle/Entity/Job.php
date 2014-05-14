@@ -409,6 +409,18 @@ class Job
         return $this;
     }
 
+    /**
+     * returns a formated url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return 'cherche-'
+        .strtolower(str_replace(' ','-',$this->parent->getUser()->getCategories()[$this->getCategory()])).'-'
+        .$this->getPostcode();
+    }
+
 
 
 
@@ -1232,5 +1244,89 @@ class Job
     public function getPhone()
     {
         return $this->phone;
+    }
+    /**
+     * @var string
+     */
+    private $postcode;
+
+    /**
+     * @var string
+     */
+    private $departement;
+
+    /**
+     * @var string
+     */
+    private $city;
+
+
+    /**
+     * Set postcode
+     *
+     * @param string $postcode
+     * @return Job
+     */
+    public function setPostcode($postcode)
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    /**
+     * Get postcode
+     *
+     * @return string 
+     */
+    public function getPostcode()
+    {
+        return $this->postcode;
+    }
+
+    /**
+     * Set departement
+     *
+     * @param string $departement
+     * @return Job
+     */
+    public function setDepartement($departement)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return string 
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return Job
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
