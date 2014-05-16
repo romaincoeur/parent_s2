@@ -46,7 +46,10 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_ADMIN');
+        if ($this->type == 'admin')
+            return array('ROLE_SUPER_ADMIN');
+        else
+            return array('ROLE_USER');
     }
 
     public function getSalt()
@@ -100,7 +103,7 @@ class User implements UserInterface
         return array_keys(self::getsecondTypes());
     }
 
-        public function getHiddenName()
+    public function getHiddenName()
     {
         return $this->getFirstname().' '.substr($this->getLastname(),0,1).'.';
     }
@@ -350,7 +353,7 @@ class User implements UserInterface
 
 
 // GENERATED CODE
-    
+
     /**
      * @var integer
      */
@@ -500,7 +503,7 @@ class User implements UserInterface
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -549,7 +552,7 @@ class User implements UserInterface
     /**
      * Get rawPassword
      *
-     * @return string 
+     * @return string
      */
     public function getRawPassword()
     {
@@ -572,7 +575,7 @@ class User implements UserInterface
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -595,7 +598,7 @@ class User implements UserInterface
     /**
      * Get secondType
      *
-     * @return string 
+     * @return string
      */
     public function getSecondType()
     {
@@ -618,7 +621,7 @@ class User implements UserInterface
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -641,7 +644,7 @@ class User implements UserInterface
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname()
     {
@@ -664,7 +667,7 @@ class User implements UserInterface
     /**
      * Get lastname
      *
-     * @return string 
+     * @return string
      */
     public function getLastname()
     {
@@ -687,7 +690,7 @@ class User implements UserInterface
     /**
      * Get phone
      *
-     * @return string 
+     * @return string
      */
     public function getPhone()
     {
@@ -710,7 +713,7 @@ class User implements UserInterface
     /**
      * Get is_activated
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsActivated()
     {
@@ -733,7 +736,7 @@ class User implements UserInterface
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -756,7 +759,7 @@ class User implements UserInterface
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -779,7 +782,7 @@ class User implements UserInterface
     /**
      * Get address
      *
-     * @return string 
+     * @return string
      */
     public function getAddress()
     {
@@ -802,7 +805,7 @@ class User implements UserInterface
     /**
      * Get postcode
      *
-     * @return string 
+     * @return string
      */
     public function getPostcode()
     {
@@ -825,7 +828,7 @@ class User implements UserInterface
     /**
      * Get departement
      *
-     * @return string 
+     * @return string
      */
     public function getDepartement()
     {
@@ -848,7 +851,7 @@ class User implements UserInterface
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -871,7 +874,7 @@ class User implements UserInterface
     /**
      * Get latitude
      *
-     * @return string 
+     * @return string
      */
     public function getLatitude()
     {
@@ -894,7 +897,7 @@ class User implements UserInterface
     /**
      * Get longitude
      *
-     * @return string 
+     * @return string
      */
     public function getLongitude()
     {
@@ -917,7 +920,7 @@ class User implements UserInterface
     /**
      * Get confirmed
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getConfirmed()
     {
@@ -940,7 +943,7 @@ class User implements UserInterface
     /**
      * Get confirmationToken
      *
-     * @return string 
+     * @return string
      */
     public function getConfirmationToken()
     {
@@ -963,7 +966,7 @@ class User implements UserInterface
     /**
      * Get birthdate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBirthdate()
     {
@@ -986,7 +989,7 @@ class User implements UserInterface
     /**
      * Get avatar
      *
-     * @return string 
+     * @return string
      */
     public function getAvatar()
     {
@@ -1009,7 +1012,7 @@ class User implements UserInterface
     /**
      * Get babysitter
      *
-     * @return \Pn\PnBundle\Entity\Babysitter 
+     * @return \Pn\PnBundle\Entity\Babysitter
      */
     public function getBabysitter()
     {
@@ -1032,7 +1035,7 @@ class User implements UserInterface
     /**
      * Get parent
      *
-     * @return \Pn\PnBundle\Entity\Pparent 
+     * @return \Pn\PnBundle\Entity\Pparent
      */
     public function getParent()
     {
@@ -1065,7 +1068,7 @@ class User implements UserInterface
     /**
      * Get sent_messages
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getSentMessages()
     {
@@ -1098,7 +1101,7 @@ class User implements UserInterface
     /**
      * Get received_messages
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReceivedMessages()
     {
@@ -1131,7 +1134,7 @@ class User implements UserInterface
     /**
      * Get given_recommendations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getGivenRecommendations()
     {
@@ -1164,7 +1167,7 @@ class User implements UserInterface
     /**
      * Get received_recommendations
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getReceivedRecommendations()
     {
@@ -1192,7 +1195,7 @@ class User implements UserInterface
     /**
      * Get unacurateAddress
      *
-     * @return string 
+     * @return string
      */
     public function getUnacurateAddress()
     {

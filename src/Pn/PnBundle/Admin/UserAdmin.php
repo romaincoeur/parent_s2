@@ -31,7 +31,6 @@ class UserAdmin extends Admin
             ->add('firstname')
             ->add('lastname')
             ->add('email')
-            ->add('type')
             ->add('birthdate', 'birthday')
             ->add('address')
             ->add('city')
@@ -92,7 +91,6 @@ class UserAdmin extends Admin
             ->add('is_activated')
             ->add('confirmed')
             ->add('confirmationToken')
-
         ;
     }
 }

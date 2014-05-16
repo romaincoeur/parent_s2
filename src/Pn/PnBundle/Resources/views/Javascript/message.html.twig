@@ -54,7 +54,7 @@
             postForm(
                     $('.conversation.selected form'),
                     function(response){
-                        $('#id'+$('.conversation.selected form').attr('id')+' .message').last().after('' +
+                        $('#id'+$('.conversation.selected form').attr('id')+' form').before('' +
                                 '<div class="message to">' +
                                 '   <div class="bulle">' +
                                 '       <p>' + response.message + '</p>' +

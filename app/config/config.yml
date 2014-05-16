@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: admin.yml }
 
 framework:
     #esi:             ~
@@ -74,7 +75,10 @@ swiftmailer:
 
 
 sonata_admin:
-    title: Parent-nounou Admin
+    title: Parent-nounou
+    title_logo: bundles/pnpn/images/favicon.png
+    security:
+        handler: sonata.admin.security.handler.role
 
 sonata_block:
     default_contexts: [cms]

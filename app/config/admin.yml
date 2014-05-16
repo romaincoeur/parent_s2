@@ -1,0 +1,46 @@
+# app/config/admin.yml
+services:
+    pn.pn.admin.job:
+        class: Pn\PnBundle\Admin\JobAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: jobs, label: Jobs }
+        arguments:
+        - ~
+        - Pn\PnBundle\Entity\Job
+        - ~
+
+    pn.pn.admin.user:
+        class: Pn\PnBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users, label: Utilisateurs }
+        arguments: [null, Pn\PnBundle\Entity\User, PnPnBundle:UserAdmin]
+
+    pn.pn.admin.babysitter:
+        class: Pn\PnBundle\Admin\BabysitterAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users, label: Babysitters }
+        arguments: [null, Pn\PnBundle\Entity\Babysitter, PnPnBundle:BabysitterAdmin]
+
+    pn.pn.admin.pparent:
+        class: Pn\PnBundle\Admin\PparentAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users, label: Parents }
+        arguments: [null, Pn\PnBundle\Entity\Pparent, PnPnBundle:PparentAdmin]
+
+    pn.pn.admin.mooc:
+        class: Pn\PnBundle\Admin\MoocAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: formations, label: Formations }
+        arguments: [null, Pn\PnBundle\Entity\Mooc, PnPnBundle:MoocAdmin]
+
+    pn.pn.admin.mailtemplate:
+        class: Pn\PnBundle\Admin\MailTemplateAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: emails, label: Emails }
+        arguments: [null, Pn\PnBundle\Entity\MailTemplate, PnPnBundle:MailTemplateAdmin]
+
+    pn.calendar:
+        class: Pn\PnBundle\Services\Calendar
+
+    pn.crop:
+        class: Pn\PnBundle\Services\Crop

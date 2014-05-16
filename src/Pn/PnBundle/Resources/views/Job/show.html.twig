@@ -50,7 +50,18 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="coords">
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.phone }}
+                        {% if app.user %}
+                            <a href="{{ path('message',{ 'conv':entity.parent.user.id }) }}" style="display: block; color: #ffffff;">
+                                <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
+                                Envoyer un message à {{ entity.parent.user.firstname }}
+                            </a>
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.phone }}
+                        {% else %}
+                            <a href="#login" role="button" data-toggle="modal" style="color: #ffffff;">
+                                Connectez vous pour voir les coordonnées de {{ entity.parent.user.firstname }}
+                            </a>
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.phone }}
+                        {% endif %}
                     </div>
                     <div class="details">
                         <img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="adresse"> {{ entity.unacurateAddress }} <br>

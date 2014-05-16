@@ -2,9 +2,6 @@
 
 Pn\PnBundle\Entity\Job:
     properties:
-        rate_type:
-            - NotBlank: ~
-            - Choice: { callback: getRateTypeValues }
         title:
             - NotBlank: ~
         description:

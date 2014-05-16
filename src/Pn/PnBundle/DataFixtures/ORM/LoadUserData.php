@@ -73,8 +73,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user_sarah->setLatitude(48.8620054);
         $user_sarah->setLongitude(2.3245144);
         $user_sarah->setAddress('Léopold Sedar Senghor, 75001 Paris, France');
-        $user1->setCity('Paris');
-        $user1->setPostcode('75001');
+        $user_sarah->setCity('Paris');
+        $user_sarah->setPostcode('75001');
         $user_sarah->setConfirmed(true);
         $user_sarah->setConfirmationToken('');
 
@@ -93,8 +93,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user_manu->setLatitude(48.8500050);
         $user_manu->setLongitude(2.3353719);
         $user_manu->setAddress('41 Rue Saint-Sulpice, 75006 Paris, France');
-        $user1->setCity('Paris');
-        $user1->setPostcode('75006');
+        $user_manu->setCity('Paris');
+        $user_manu->setPostcode('75006');
         $user_manu->setConfirmed(true);
         $user_manu->setConfirmationToken('');
         // 48.8500050	2.3353719
@@ -114,8 +114,8 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user_julie->setLatitude(49.25416601);
         $user_julie->setLongitude(4.03211587);
         $user_julie->setAddress('2 Cours Jean-Baptiste Langlet, 51100 Reims, France');
-        $user1->setCity('Reims');
-        $user1->setPostcode('51100');
+        $user_julie->setCity('Reims');
+        $user_julie->setPostcode('51100');
         $user_julie->setConfirmed(true);
         $user_julie->setConfirmationToken('');
         // 48.8500050	2.3353719
