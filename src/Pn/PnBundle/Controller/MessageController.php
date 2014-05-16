@@ -26,6 +26,7 @@ class MessageController extends Controller
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         $exceptIds = array($user->getId());
+        $new_conv = false;
 
         $entities = $em->getRepository('PnPnBundle:Message')->getConversations($user);
 
@@ -52,13 +53,30 @@ class MessageController extends Controller
             array_push ( $result[$interlocuteur->getVirtualname()]['messages'] , $raw );
         }
 
+        // Check new conv
+        if (!in_array( $conv, $exceptIds) && $conv != null)
+        {
+            $interlocuteur = $em->getRepository('PnPnBundle:User')->findOneById($conv);
+            $form = $this->createForm(new MessageType(), new Message(), array(
+                'action' => $this->generateUrl('message_send',array('to' => $interlocuteur->getId())),
+                'method' => 'POST',
+            ));
+            $result[$interlocuteur->getVirtualname()]['messages'] = array();
+            $result[$interlocuteur->getVirtualname()]['unread'] = 0;
+            $result[$interlocuteur->getVirtualname()]['object'] = $interlocuteur;
+            $result[$interlocuteur->getVirtualname()]['form'] = $form->createView();
+
+            array_push ( $exceptIds, $interlocuteur->getId() );
+        }
+
         // Get users for new conversation
         $users = $em->getRepository('PnPnBundle:User')->findAllExcept($exceptIds);
 
         return $this->render('PnPnBundle:Message:index.html.twig', array(
             'conversations' => $result,
             'users' => $users,
-            'conv' => $conv
+            'conv' => $conv,
+            'new_conv' => $new_conv
         ));
     }
 

@@ -1329,4 +1329,32 @@ class Job
     {
         return $this->city;
     }
+    /**
+     * @var string
+     */
+    private $unacurateAddress;
+
+
+    /**
+     * Set unacurateAddress
+     *
+     * @param string $unacurateAddress
+     * @return Job
+     */
+    public function setUnacurateAddress($unacurateAddress)
+    {
+        $this->unacurateAddress = $unacurateAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get unacurateAddress
+     *
+     * @return string 
+     */
+    public function getUnacurateAddress()
+    {
+        return $this->unacurateAddress;
+    }
 }

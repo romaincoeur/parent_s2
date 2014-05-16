@@ -12,6 +12,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/availability.css') }}" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/bootstrap-select.min.css') }}" type="text/css" />
 {% endblock %}
 
 {% block body %}
@@ -21,9 +22,9 @@
         </div>
         <div class="searchForm">
             <form action="{{ path('pn_search') }}" method="post">
-                <select class="btn" name="searchType">
+                <select class="selectpicker" name="searchType">
                     <option value="nounou">Je cherche une nounou</option>
-                    <option value="job" selected>Je cherche un job</option>
+                    <option value="job">Je cherche un job</option>
                 </select>
                 <input name="field" class="search" type="search" autocomplete="true" placeholder="Indiquez votre ville ou votre code postal">
                 <input type="submit" value="chercher" class="btn bg-yellow submit">
@@ -190,6 +191,9 @@
     </aside>
 
     <div class="profiles">
+        {% if not entities %}
+        Aucune annonce trouvée
+        {% endif %}
         {% for entity in entities %}
             <a href="{{ path('pn_job_show', {'id': entity.id, 'url': entity.url}) }}">
                 <div class="profile" id="{{ entity.id }}"
@@ -339,6 +343,12 @@
 
     </script>
     <script type="text/javascript" src="{{ asset('bundles/pnpn/js/availability.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/pnpn/js/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.selectpicker').selectpicker();
+        })
+    </script>
 {% endblock %}
 
 

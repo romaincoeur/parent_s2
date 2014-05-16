@@ -224,10 +224,11 @@ $(function() {
     });
 
     // Envoi d'une recommandation
+    {% if app.user %}
     $('form#new_recommendation').submit(function(e){
         e.preventDefault();
 
-        $('form#new_recommendation textarea').css('background','url("../../bundles/pnpn/images/icons/ajax-loader.gif") no-repeat right white');
+        $('form#new_recommendation textarea').css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat right white');
         $('form#new_recommendation input[type="submit"]').attr('disabled', true);
 
         postForm(
@@ -235,10 +236,15 @@ $(function() {
                 function(response){
                     $('#new_recommendation').after('' +
                             '<div class="recommandation">' +
-                            '   <img src="/parent_s2/web/bundles/pnpn/images/illus/nounou.jpg" alt="nounou" style="height: 90px;">' +
-                            '   <img class="left-arrow" src="/parent_s2/web/bundles/pnpn/images/icons/left-arrow.png" alt="left-arrow">' +
+                    {% if app.user.avatar %}
+                            '   <img src="{{ asset('uploads/users/' ~ app.user.avatar) }}" alt="photo de profil de {{ app.user.firstname }}" style="height: 90px;">' +
+                    {% else %}
+                            '   <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">' +
+                    {% endif %}
+                            '   <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">' +
                             '   <div class="bulle">' +
                             '       <p>' + response.message + '</p>' +
+                            '       <span class="red">{{ app.user.hiddenName }}</span> {{ app.user.type }}. Posté le {{ "now"|date("d-m-Y") }}' +
                             '   </div>' +
                             '</div>'
                     );
@@ -250,6 +256,7 @@ $(function() {
                 }
         );
     })
+    {% endif %}
 
     // Envoi du formulaire de contact
     $( '#contactForm' ).submit( function( e ){

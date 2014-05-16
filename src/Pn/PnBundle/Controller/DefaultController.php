@@ -147,7 +147,7 @@ class DefaultController extends Controller
             }
             else
             {
-                return $this->redirect($this->generateUrl('pn_job_show', array('id' => $currentAnnonce[0]->getId())));
+                return $this->redirect($this->generateUrl('pn_job_show', array('id' => $currentAnnonce[0]->getId(), 'url' => $currentAnnonce[0]->getUrl())));
             }
         }
         else
@@ -205,9 +205,13 @@ class DefaultController extends Controller
         {
             return $this->redirect($this->generateUrl('babysitter_search', array('search' => $field)));
         }
+        elseif ($select == 'job')
+        {
+            return $this->redirect($this->generateUrl('pn_job_search', array('search' => $field)));
+        }
         else
         {
-            return $this->redirect($this->generateUrl('pn_job', array('search' => $field)));
+            //Todo throw error
         }
     }
 

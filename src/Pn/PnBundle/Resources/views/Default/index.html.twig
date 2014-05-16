@@ -9,6 +9,11 @@
     <meta name="description" content="Trouver une nounou ou des enfants à garder en toute confiance. Annonces gratuites de baby-sitters, d’assistantes maternelles et de nourrices à domicile">
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/bootstrap-select.min.css') }}" type="text/css" />
+{% endblock %}
+
 {% block body %}
     <div class="maptool wrap">
         <div id="map">
@@ -16,7 +21,7 @@
         </div>
         <div class="searchForm">
             <form action="{{ path('pn_search') }}" method="post">
-                <select class="btn" name="searchType">
+                <select class="selectpicker" name="searchType">
                     <option value="nounou">Je cherche une nounou</option>
                     <option value="job">Je cherche un job</option>
                 </select>
@@ -77,7 +82,7 @@
     <div class="mini-profiles">
         <div class="banner big-wrap">
             <div class="wrap">
-                <h4>Dernières nounou inscrites</h4>
+                <h4>Dernières nounous inscrites</h4>
             </div>
         </div>
         <div class="wrap">
@@ -135,11 +140,11 @@
         var nounou_m{{ loop.index }} = new google.maps.Marker({
             position: nounou_position{{ loop.index }},
             map: map,
-        {% if entity.user == app.user %}
+            {% if entity.user == app.user %}
             icon: icon_rouge,
-        {% else %}
+            {% else %}
             icon: icon_grey,
-        {% endif %}
+            {% endif %}
         });
         var nounou_contentm{{ loop.index }} = '' +
                 '<a href="{{ path('babysitter_show', {'id': entity.id, 'url': entity.url}) }}">' +
@@ -229,5 +234,11 @@
                     });
         })
 
+    </script>
+    <script type="text/javascript" src="{{ asset('bundles/pnpn/js/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.selectpicker').selectpicker();
+        })
     </script>
 {% endblock %}

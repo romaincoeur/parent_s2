@@ -33,6 +33,7 @@ class JobRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('b')
             ->where('b.address LIKE :search')
+            ->orWhere('b.unacurateAddress LIKE :search')
             ->setParameter('search', '%'.$search.'%');
         if($max)
         {

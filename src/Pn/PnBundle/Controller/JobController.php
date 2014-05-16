@@ -313,6 +313,7 @@ class JobController extends Controller
 
         // Remplacer les valeurs
         $entity->setAddress($addressTab[0]['formatted_address']);
+        $entity->setUnacurateAddress($addressTab[1]['formatted_address']);
         $entity->setLatitude($latitude);
         $entity->setLongitude($longitude);
         foreach ($addressTab[0]['address_components'] as $component)

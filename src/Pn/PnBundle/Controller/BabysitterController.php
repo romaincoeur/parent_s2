@@ -496,7 +496,7 @@ class BabysitterController extends Controller
 
         // Remplacer les valeurs
         $entity->getUser()->setAddress($addressTab[0]['formatted_address']);
-        //$entity->getUser()->setCity($addressTab[1]['formatted_address']);
+        $entity->getUser()->setUnacurateAddress($addressTab[1]['formatted_address']);
         $entity->getUser()->setLatitude($latitude);
         $entity->getUser()->setLongitude($longitude);
         foreach ($addressTab[0]['address_components'] as $component)

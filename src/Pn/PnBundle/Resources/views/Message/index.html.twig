@@ -35,8 +35,7 @@
                             {% for user in users %}
                                 <li
                                         data-firstname="{{ user.firstname }}"
-                                        data-virtualName="{{ user.virtualName }}"
-                                        data-id="{{ user.id }}"
+                                        data-id="id{{ user.id }}"
                                         >{{ user.fullname }}</li>
                             {% endfor %}
                         </ul>
@@ -44,7 +43,7 @@
                     </div>
                 </div>
                 {% for key,conversation in conversations %}
-                    <div id="{{ key }}" class="btn conversationButton {% if loop.first and not conv %}selected{% endif %} {% if conv == key %} selected {% endif %}clearfix">
+                    <div id="id{{ conversation.object.id }}" class="btn conversationButton {% if loop.first and not conv %}selected{% endif %} {% if conv == conversation.object.id %} selected {% endif %}clearfix">
                         <div class="left">
                             {{ conversation.object.fullname }}
                         </div>
@@ -58,14 +57,18 @@
             </div>
 
             {% for key,conversation in conversations %}
-                <div class="conversation {% if loop.first and not conv %}selected{% endif %} {% if conv == key %} selected {% endif %} col-md-9" id="{{ key }}">
-                    {% for message in conversation.messages %}
+                <div class="conversation {% if loop.first and not conv %}selected{% endif %} {% if conv == conversation.object.id %} selected {% endif %} col-md-9" id="id{{ conversation.object.id }}">
+                    {% for message in conversation.messages|reverse %}
                         {% if message.receiver == app.user %}
                             <div class="message from">
                                 {% if message.sender.avatar %}
-                                    <img class="profile-picture" src="{{ asset('uploads/users/' ~ message.sender.avatar) }}" alt="photo de profil de {{ message.sender.firstname }}" style="height: 120px;">
+                                    <img class="profile-picture" src="{{ asset('uploads/users/' ~ message.sender.avatar) }}" alt="photo de profil de {{ message.sender.firstname }}" style="height: 90px;">
                                 {% else %}
-                                    <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+                                    {% if message.sender.type == 'parent' %}
+                                        <img src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="parent" style="height: 90px; width: 86px;">
+                                    {% else %}
+                                        <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+                                    {% endif %}
                                 {% endif %}
                                 <img class="arrow left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
                                 <div class="bulle">
@@ -80,11 +83,19 @@
                                     Le {{ message.createdAt|date("d/m/Y \\à H\\hi") }}
                                 </div>
                                 <img class="arrow right-arrow" src="{{ asset('bundles/pnpn/images/icons/right-arrow.png') }}" alt="right-arrow">
-                                <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+                                {% if app.user.avatar %}
+                                    <img class="profile-picture" src="{{ asset('uploads/users/' ~ app.user.avatar) }}" alt="photo de profil de {{ app.user.firstname }}" style="height: 90px;">
+                                {% else %}
+                                    {% if app.user.type == 'parent' %}
+                                        <img src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="parent" style="height: 90px; width: 86px;">
+                                    {% else %}
+                                        <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         {% endif %}
                     {% endfor %}
-                    <form action="{{ path('message_send',{ 'to':conversation.object.id }) }}" method="post" id="{{ key }}" {{ form_enctype(conversation.form) }}>
+                    <form action="{{ path('message_send',{ 'to':conversation.object.id }) }}" method="post" id="{{ conversation.object.id }}" {{ form_enctype(conversation.form) }}>
                         {{ form_errors(conversation.form.body) }}
                         {{ form_widget(conversation.form.body, { 'attr': {'placeholder': 'Envoyer un message à ' ~ conversation.object.firstname } }) }}
 

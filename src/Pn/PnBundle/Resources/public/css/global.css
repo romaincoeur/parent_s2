@@ -234,6 +234,7 @@ video
 header
 {
     height: 120px;
+    position: relative;
 }
 
 header .btn
@@ -257,7 +258,7 @@ header .connected .btn:hover
     width: 180px;
     height: 130px;
     position: absolute;
-    top: -20px;
+    top: 20px;
     left: 50%;
     margin-left: -90px;
     padding: 0 50px 50px 50px;
@@ -270,7 +271,7 @@ header .connected .btn:hover
 .logo
 {
     display: block;
-    width: 410px;
+    width: 426px;
     margin: 45px auto;
     position: relative;
 }
@@ -1350,7 +1351,7 @@ label[for='pn_pnbundle_job_diplomas_1']
 .message .bulle
 {
     display: inline-block;
-    width: 611px;
+    width: 590px;
     border: solid #eeeeee 3px;
     vertical-align: top;
     padding: 20px;
@@ -1359,6 +1360,8 @@ label[for='pn_pnbundle_job_diplomas_1']
 .conversation
 {
     display: none;
+    height: 500px;
+    overflow-y: auto;
 }
 .conversation.selected
 {
@@ -1851,4 +1854,82 @@ footer .social-bar .icon
     width: 40px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***************Bootstrap Select*****************/
+
+.btn-group.bootstrap-select
+{
+    margin-bottom: 0 !important;
+    width: 240px !important;
+}
+
+.btn-group.bootstrap-select
+{
+    margin-bottom: 0;
+}
+
+.btn.dropdown-toggle.selectpicker.btn-default
+{
+    height: 40px;
+    vertical-align: text-bottom;
+    background-color: #666666;
+    padding-left: 20px;
+}
+
+.btn.dropdown-toggle.selectpicker.btn-default:focus
+{
+    color: #ffffff;
+}
+
+.btn.dropdown-toggle.selectpicker.btn-default:enabled
+{
+    color: #ffffff !important;
+}
+
+.dropdown-menu.open
+{
+    background-color: #666666;
+}
+
+.dropdown-menu.inner.selectpicker
+{
+    background-color: transparent;
+    color: white !important;
+}
+
+.dropdown-menu.inner.selectpicker li:hover span.text
+{
+    color: #666666;
+}
+
+.dropdown-menu.inner.selectpicker li.selected span.text
+{
+    color: #666666;
+}
+
+.dropdown-menu.inner.selectpicker span.text
+{
+    color: #ffffff;
+}
 

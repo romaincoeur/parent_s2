@@ -65,372 +65,399 @@ $(function() {
     function update(){
         $('div.profile').css('display', function(){
 
-            // Calendrier - lundi - tot le matin (6h - 9h)
+            // Calendrier - lundi - tot le matin (5h - 9h)
             if ($('table.availability input[name="availability[1][0]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(47) === '0' ||
-                    $(this).data('calendar').charAt(56) === '0' ||
+                if ($(this).data('calendar').charAt(38) === '0' &&
+                    $(this).data('calendar').charAt(47) === '0' &&
+                    $(this).data('calendar').charAt(56) === '0' &&
                     $(this).data('calendar').charAt(65) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mardi - tot le matin (6h - 9h)
+            // Calendrier - mardi - tot le matin (5h - 9h)
             if ($('table.availability input[name="availability[1][1]"]').attr('checked') === 'checked')
             {
-
-                if ($(this).data('calendar').charAt(48) === '0' ||
-                    $(this).data('calendar').charAt(57) === '0' ||
+                if ($(this).data('calendar').charAt(39) === '0' &&
+                    $(this).data('calendar').charAt(48) === '0' &&
+                    $(this).data('calendar').charAt(57) === '0' &&
                     $(this).data('calendar').charAt(66) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mercredi - tot le matin (6h - 9h)
+            // Calendrier - mercredi - tot le matin (5h - 9h)
             if ($('table.availability input[name="availability[1][2]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(49) === '0' ||
-                    $(this).data('calendar').charAt(58) === '0' ||
+                if ($(this).data('calendar').charAt(40) === '0' &&
+                    $(this).data('calendar').charAt(49) === '0' &&
+                    $(this).data('calendar').charAt(58) === '0' &&
                     $(this).data('calendar').charAt(67) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - jeudi - tot le matin (6h - 9h)
+            // Calendrier - jeudi - tot le matin (5h - 9h)
             if ($('table.availability input[name="availability[1][3]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(50) === '0' ||
-                    $(this).data('calendar').charAt(59) === '0' ||
+                if ($(this).data('calendar').charAt(41) === '0' &&
+                    $(this).data('calendar').charAt(50) === '0' &&
+                    $(this).data('calendar').charAt(59) === '0' &&
                     $(this).data('calendar').charAt(68) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - vendredi - tot le matin (6h - 9h)
+            // Calendrier - vendredi - tot le matin (5h - 9h)
             if ($('table.availability input[name="availability[1][4]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(51) === '0' ||
-                    $(this).data('calendar').charAt(60) === '0' ||
+                if ($(this).data('calendar').charAt(42) === '0' &&
+                    $(this).data('calendar').charAt(51) === '0' &&
+                    $(this).data('calendar').charAt(60) === '0' &&
                     $(this).data('calendar').charAt(69) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - samedi - tot le matin (6h - 9h)
+            // Calendrier - samedi - tot le matin (5h - 9h)
             if ($('table.availability input[name="availability[1][5]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(52) === '0' ||
-                    $(this).data('calendar').charAt(61) === '0' ||
+                if ($(this).data('calendar').charAt(43) === '0' &&
+                    $(this).data('calendar').charAt(52) === '0' &&
+                    $(this).data('calendar').charAt(61) === '0' &&
                     $(this).data('calendar').charAt(70) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - dimanche - tot le matin (6h - 9h)
+            // Calendrier - dimanche - tot le matin (5h - 9h)
             if ($('table.availability input[name="availability[1][6]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(53) === '0' ||
-                    $(this).data('calendar').charAt(62) === '0' ||
+                if ($(this).data('calendar').charAt(44) === '0' &&
+                    $(this).data('calendar').charAt(53) === '0' &&
+                    $(this).data('calendar').charAt(62) === '0' &&
                     $(this).data('calendar').charAt(71) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - lundi - matin (9h - 12h)
+            // Calendrier - lundi - matin (9h - 13h)
             if ($('table.availability input[name="availability[2][0]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(74) === '0' ||
-                    $(this).data('calendar').charAt(83) === '0' ||
-                    $(this).data('calendar').charAt(92) === '0'
+                if ($(this).data('calendar').charAt(74) === '0' &&
+                    $(this).data('calendar').charAt(83) === '0' &&
+                    $(this).data('calendar').charAt(92) === '0' &&
+                    $(this).data('calendar').charAt(101) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mardi - matin (9h - 12h)
+            // Calendrier - mardi - matin (9h - 13h)
             if ($('table.availability input[name="availability[2][1]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(75) === '0' ||
-                    $(this).data('calendar').charAt(84) === '0' ||
-                    $(this).data('calendar').charAt(93) === '0'
+                if ($(this).data('calendar').charAt(75) === '0' &&
+                    $(this).data('calendar').charAt(84) === '0' &&
+                    $(this).data('calendar').charAt(93) === '0' &&
+                    $(this).data('calendar').charAt(102) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mercredi - matin (9h - 12h)
+            // Calendrier - mercredi - matin (9h - 13h)
             if ($('table.availability input[name="availability[2][2]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(76) === '0' ||
-                    $(this).data('calendar').charAt(85) === '0' ||
-                    $(this).data('calendar').charAt(94) === '0'
+                if ($(this).data('calendar').charAt(76) === '0' &&
+                    $(this).data('calendar').charAt(85) === '0' &&
+                    $(this).data('calendar').charAt(94) === '0' &&
+                    $(this).data('calendar').charAt(103) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - jeudi - matin (9h - 12h)
+            // Calendrier - jeudi - matin (9h - 13h)
             if ($('table.availability input[name="availability[2][3]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(77) === '0' ||
-                    $(this).data('calendar').charAt(86) === '0' ||
-                    $(this).data('calendar').charAt(95) === '0'
+                if ($(this).data('calendar').charAt(77) === '0' &&
+                    $(this).data('calendar').charAt(86) === '0' &&
+                    $(this).data('calendar').charAt(95) === '0' &&
+                    $(this).data('calendar').charAt(104) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - vendredi - matin (9h - 12h)
+            // Calendrier - vendredi - matin (9h - 13h)
             if ($('table.availability input[name="availability[2][4]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(78) === '0' ||
-                    $(this).data('calendar').charAt(87) === '0' ||
-                    $(this).data('calendar').charAt(96) === '0'
+                if ($(this).data('calendar').charAt(78) === '0' &&
+                    $(this).data('calendar').charAt(87) === '0' &&
+                    $(this).data('calendar').charAt(96) === '0' &&
+                    $(this).data('calendar').charAt(105) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - samedi - matin (9h - 12h)
+            // Calendrier - samedi - matin (9h - 13h)
             if ($('table.availability input[name="availability[2][5]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(79) === '0' ||
-                    $(this).data('calendar').charAt(88) === '0' ||
-                    $(this).data('calendar').charAt(97) === '0'
+                if ($(this).data('calendar').charAt(79) === '0' &&
+                    $(this).data('calendar').charAt(88) === '0' &&
+                    $(this).data('calendar').charAt(97) === '0' &&
+                    $(this).data('calendar').charAt(106) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - dimanche - matin (9h - 12h)
+            // Calendrier - dimanche - matin (9h - 13h)
             if ($('table.availability input[name="availability[2][6]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(80) === '0' ||
-                    $(this).data('calendar').charAt(89) === '0' ||
-                    $(this).data('calendar').charAt(98) === '0'
+                if ($(this).data('calendar').charAt(80) === '0' &&
+                    $(this).data('calendar').charAt(89) === '0' &&
+                    $(this).data('calendar').charAt(98) === '0' &&
+                    $(this).data('calendar').charAt(107) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - lundi - apresmidi (14h - 17h)
+            // Calendrier - lundi - apresmidi (13h - 18h)
             if ($('table.availability input[name="availability[3][0]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(119) === '0' ||
-                    $(this).data('calendar').charAt(128) === '0' ||
-                    $(this).data('calendar').charAt(137) === '0'
+                if ($(this).data('calendar').charAt(110) === '0' &&
+                    $(this).data('calendar').charAt(119) === '0' &&
+                    $(this).data('calendar').charAt(128) === '0' &&
+                    $(this).data('calendar').charAt(137) === '0' &&
+                    $(this).data('calendar').charAt(146) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mardi - apresmidi (14h - 17h)
+            // Calendrier - mardi - apresmidi (13h - 18h)
             if ($('table.availability input[name="availability[3][1]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(120) === '0' ||
-                    $(this).data('calendar').charAt(129) === '0' ||
-                    $(this).data('calendar').charAt(138) === '0'
+                if ($(this).data('calendar').charAt(111) === '0' &&
+                    $(this).data('calendar').charAt(120) === '0' &&
+                    $(this).data('calendar').charAt(129) === '0' &&
+                    $(this).data('calendar').charAt(138) === '0' &&
+                    $(this).data('calendar').charAt(147) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mercredi - apresmidi (14h - 17h)
+            // Calendrier - mercredi - apresmidi (13h - 18h)
             if ($('table.availability input[name="availability[3][2]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(121) === '0' ||
-                    $(this).data('calendar').charAt(130) === '0' ||
-                    $(this).data('calendar').charAt(139) === '0'
+                if ($(this).data('calendar').charAt(112) === '0' &&
+                    $(this).data('calendar').charAt(121) === '0' &&
+                    $(this).data('calendar').charAt(130) === '0' &&
+                    $(this).data('calendar').charAt(139) === '0' &&
+                    $(this).data('calendar').charAt(148) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - jeudi - apresmidi (14h - 17h)
+            // Calendrier - jeudi - apresmidi (13h - 18h)
             if ($('table.availability input[name="availability[3][3]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(122) === '0' ||
-                    $(this).data('calendar').charAt(131) === '0' ||
-                    $(this).data('calendar').charAt(140) === '0'
+                if ($(this).data('calendar').charAt(113) === '0' &&
+                    $(this).data('calendar').charAt(122) === '0' &&
+                    $(this).data('calendar').charAt(131) === '0' &&
+                    $(this).data('calendar').charAt(140) === '0' &&
+                    $(this).data('calendar').charAt(149) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - vendredi - apresmidi (14h - 17h)
+            // Calendrier - vendredi - apresmidi (13h - 18h)
             if ($('table.availability input[name="availability[3][4]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(123) === '0' ||
-                    $(this).data('calendar').charAt(132) === '0' ||
-                    $(this).data('calendar').charAt(141) === '0'
+                if ($(this).data('calendar').charAt(114) === '0' &&
+                    $(this).data('calendar').charAt(123) === '0' &&
+                    $(this).data('calendar').charAt(132) === '0' &&
+                    $(this).data('calendar').charAt(141) === '0' &&
+                    $(this).data('calendar').charAt(150) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - samedi - apresmidi (14h - 17h)
+            // Calendrier - samedi - apresmidi (13h - 18h)
             if ($('table.availability input[name="availability[3][5]"]').attr('checked') === 'checked')
             {
 
-                if ($(this).data('calendar').charAt(124) === '0' ||
-                    $(this).data('calendar').charAt(133) === '0' ||
-                    $(this).data('calendar').charAt(142) === '0'
+                if ($(this).data('calendar').charAt(115) === '0' &&
+                    $(this).data('calendar').charAt(124) === '0' &&
+                    $(this).data('calendar').charAt(133) === '0' &&
+                    $(this).data('calendar').charAt(142) === '0' &&
+                    $(this).data('calendar').charAt(151) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - dimanche - apresmidi (14h - 17h)
+            // Calendrier - dimanche - apresmidi (13h - 18h)
             if ($('table.availability input[name="availability[3][6]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(125) === '0' ||
-                    $(this).data('calendar').charAt(134) === '0' ||
-                    $(this).data('calendar').charAt(143) === '0'
+                if ($(this).data('calendar').charAt(116) === '0' &&
+                    $(this).data('calendar').charAt(125) === '0' &&
+                    $(this).data('calendar').charAt(134) === '0' &&
+                    $(this).data('calendar').charAt(143) === '0' &&
+                    $(this).data('calendar').charAt(152) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - lundi - soir (19h - 22h)
+            // Calendrier - lundi - soir (18h - 22h)
             if ($('table.availability input[name="availability[4][0]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(164) === '0' ||
-                    $(this).data('calendar').charAt(173) === '0' ||
+                if ($(this).data('calendar').charAt(155) === '0' &&
+                    $(this).data('calendar').charAt(164) === '0' &&
+                    $(this).data('calendar').charAt(173) === '0' &&
                     $(this).data('calendar').charAt(182) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mardi - soir (19h - 22h)
+            // Calendrier - mardi - soir (18h - 22h)
             if ($('table.availability input[name="availability[4][1]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(165) === '0' ||
-                    $(this).data('calendar').charAt(174) === '0' ||
+                if ($(this).data('calendar').charAt(156) === '0' &&
+                    $(this).data('calendar').charAt(165) === '0' &&
+                    $(this).data('calendar').charAt(174) === '0' &&
                     $(this).data('calendar').charAt(183) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mercredi - soir (19h - 22h)
+            // Calendrier - mercredi - soir (18h - 22h)
             if ($('table.availability input[name="availability[4][2]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(166) === '0' ||
-                    $(this).data('calendar').charAt(175) === '0' ||
+                if ($(this).data('calendar').charAt(157) === '0' &&
+                    $(this).data('calendar').charAt(166) === '0' &&
+                    $(this).data('calendar').charAt(175) === '0' &&
                     $(this).data('calendar').charAt(184) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - jeudi - soir (19h - 22h)
+            // Calendrier - jeudi - soir (18h - 22h)
             if ($('table.availability input[name="availability[4][3]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(167) === '0' ||
-                    $(this).data('calendar').charAt(176) === '0' ||
+                if ($(this).data('calendar').charAt(158) === '0' &&
+                    $(this).data('calendar').charAt(167) === '0' &&
+                    $(this).data('calendar').charAt(176) === '0' &&
                     $(this).data('calendar').charAt(185) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - vendredi - soir (19h - 22h)
+            // Calendrier - vendredi - soir (18h - 22h)
             if ($('table.availability input[name="availability[4][4]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(168) === '0' ||
-                    $(this).data('calendar').charAt(177) === '0' ||
+                if ($(this).data('calendar').charAt(159) === '0' &&
+                    $(this).data('calendar').charAt(168) === '0' &&
+                    $(this).data('calendar').charAt(177) === '0' &&
                     $(this).data('calendar').charAt(186) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - samedi - soir (19h - 22h)
+            // Calendrier - samedi - soir (18h - 22h)
             if ($('table.availability input[name="availability[4][5]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(169) === '0' ||
-                    $(this).data('calendar').charAt(178) === '0' ||
+                if ($(this).data('calendar').charAt(160) === '0' &&
+                    $(this).data('calendar').charAt(169) === '0' &&
+                    $(this).data('calendar').charAt(178) === '0' &&
                     $(this).data('calendar').charAt(187) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - dimanche - soir (19h - 22h)
+            // Calendrier - dimanche - soir (18h - 22h)
             if ($('table.availability input[name="availability[4][6]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(170) === '0' ||
-                    $(this).data('calendar').charAt(179) === '0' ||
+                if ($(this).data('calendar').charAt(161) === '0' &&
+                    $(this).data('calendar').charAt(170) === '0' &&
+                    $(this).data('calendar').charAt(179) === '0' &&
                     $(this).data('calendar').charAt(188) === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - lundi - nuit (22h - 6h le lendemain)
+            // Calendrier - lundi - nuit (22h - 5h le lendemain)
             if ($('table.availability input[name="availability[5][0]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(191)    === '0' ||
-                    $(this).data('calendar').charAt(200)    === '0' ||
-                    $(this).data('calendar').charAt(209)    === '0' ||
-                    $(this).data('calendar').charAt(3)      === '0' ||
-                    $(this).data('calendar').charAt(12)     === '0' ||
-                    $(this).data('calendar').charAt(21)     === '0' ||
-                    $(this).data('calendar').charAt(30)     === '0' ||
-                    $(this).data('calendar').charAt(39)     === '0'
+                if ($(this).data('calendar').charAt(191)    === '0' &&
+                    $(this).data('calendar').charAt(200)    === '0' &&
+                    $(this).data('calendar').charAt(209)    === '0' &&
+                    $(this).data('calendar').charAt(3)      === '0' &&
+                    $(this).data('calendar').charAt(12)     === '0' &&
+                    $(this).data('calendar').charAt(21)     === '0' &&
+                    $(this).data('calendar').charAt(30)     === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mardi - nuit (22h - 6h le lendemain)
+            // Calendrier - mardi - nuit (22h - 5h le lendemain)
             if ($('table.availability input[name="availability[5][1]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(192)    === '0' ||
-                    $(this).data('calendar').charAt(201)    === '0' ||
-                    $(this).data('calendar').charAt(210)    === '0' ||
-                    $(this).data('calendar').charAt(4)      === '0' ||
-                    $(this).data('calendar').charAt(13)     === '0' ||
-                    $(this).data('calendar').charAt(22)     === '0' ||
-                    $(this).data('calendar').charAt(31)     === '0' ||
-                    $(this).data('calendar').charAt(40)     === '0'
+                if ($(this).data('calendar').charAt(192)    === '0' &&
+                    $(this).data('calendar').charAt(201)    === '0' &&
+                    $(this).data('calendar').charAt(210)    === '0' &&
+                    $(this).data('calendar').charAt(4)      === '0' &&
+                    $(this).data('calendar').charAt(13)     === '0' &&
+                    $(this).data('calendar').charAt(22)     === '0' &&
+                    $(this).data('calendar').charAt(31)     === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - mercredi - nuit (22h - 6h le lendemain)
+            // Calendrier - mercredi - nuit (22h - 5h le lendemain)
             if ($('table.availability input[name="availability[5][2]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(193)    === '0' ||
-                    $(this).data('calendar').charAt(202)    === '0' ||
-                    $(this).data('calendar').charAt(211)    === '0' ||
-                    $(this).data('calendar').charAt(5)      === '0' ||
-                    $(this).data('calendar').charAt(14)     === '0' ||
-                    $(this).data('calendar').charAt(23)     === '0' ||
-                    $(this).data('calendar').charAt(32)     === '0' ||
-                    $(this).data('calendar').charAt(41)     === '0'
+                if ($(this).data('calendar').charAt(193)    === '0' &&
+                    $(this).data('calendar').charAt(202)    === '0' &&
+                    $(this).data('calendar').charAt(211)    === '0' &&
+                    $(this).data('calendar').charAt(5)      === '0' &&
+                    $(this).data('calendar').charAt(14)     === '0' &&
+                    $(this).data('calendar').charAt(23)     === '0' &&
+                    $(this).data('calendar').charAt(32)     === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - jeudi - nuit (22h - 6h le lendemain)
+            // Calendrier - jeudi - nuit (22h - 5h le lendemain)
             if ($('table.availability input[name="availability[5][3]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(194)    === '0' ||
-                    $(this).data('calendar').charAt(203)    === '0' ||
-                    $(this).data('calendar').charAt(212)    === '0' ||
-                    $(this).data('calendar').charAt(6)      === '0' ||
-                    $(this).data('calendar').charAt(15)     === '0' ||
-                    $(this).data('calendar').charAt(24)     === '0' ||
-                    $(this).data('calendar').charAt(33)     === '0' ||
-                    $(this).data('calendar').charAt(42)     === '0'
+                if ($(this).data('calendar').charAt(194)    === '0' &&
+                    $(this).data('calendar').charAt(203)    === '0' &&
+                    $(this).data('calendar').charAt(212)    === '0' &&
+                    $(this).data('calendar').charAt(6)      === '0' &&
+                    $(this).data('calendar').charAt(15)     === '0' &&
+                    $(this).data('calendar').charAt(24)     === '0' &&
+                    $(this).data('calendar').charAt(33)     === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - vendredi - nuit (22h - 6h le lendemain)
+            // Calendrier - vendredi - nuit (22h - 5h le lendemain)
             if ($('table.availability input[name="availability[5][4]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(195)    === '0' ||
-                    $(this).data('calendar').charAt(204)    === '0' ||
-                    $(this).data('calendar').charAt(213)    === '0' ||
-                    $(this).data('calendar').charAt(7)      === '0' ||
-                    $(this).data('calendar').charAt(16)     === '0' ||
-                    $(this).data('calendar').charAt(25)     === '0' ||
-                    $(this).data('calendar').charAt(34)     === '0' ||
-                    $(this).data('calendar').charAt(43)     === '0'
+                if ($(this).data('calendar').charAt(195)    === '0' &&
+                    $(this).data('calendar').charAt(204)    === '0' &&
+                    $(this).data('calendar').charAt(213)    === '0' &&
+                    $(this).data('calendar').charAt(7)      === '0' &&
+                    $(this).data('calendar').charAt(16)     === '0' &&
+                    $(this).data('calendar').charAt(25)     === '0' &&
+                    $(this).data('calendar').charAt(34)     === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - samedi - nuit (22h - 6h le lendemain)
+            // Calendrier - samedi - nuit (22h - 5h le lendemain)
             if ($('table.availability input[name="availability[5][5]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(196)    === '0' ||
-                    $(this).data('calendar').charAt(205)    === '0' ||
-                    $(this).data('calendar').charAt(214)    === '0' ||
-                    $(this).data('calendar').charAt(8)      === '0' ||
-                    $(this).data('calendar').charAt(17)     === '0' ||
-                    $(this).data('calendar').charAt(26)     === '0' ||
-                    $(this).data('calendar').charAt(35)     === '0' ||
-                    $(this).data('calendar').charAt(44)     === '0'
+                if ($(this).data('calendar').charAt(196)    === '0' &&
+                    $(this).data('calendar').charAt(205)    === '0' &&
+                    $(this).data('calendar').charAt(214)    === '0' &&
+                    $(this).data('calendar').charAt(8)      === '0' &&
+                    $(this).data('calendar').charAt(17)     === '0' &&
+                    $(this).data('calendar').charAt(26)     === '0' &&
+                    $(this).data('calendar').charAt(35)     === '0'
                     ){ return 'none'; }
             }
 
-            // Calendrier - dimanche - nuit (22h - 6h le lendemain)
+            // Calendrier - dimanche - nuit (22h - 5h le lendemain)
             if ($('table.availability input[name="availability[5][6]"]').attr('checked') === 'checked')
             {
-                if ($(this).data('calendar').charAt(197)    === '0' ||
-                    $(this).data('calendar').charAt(206)    === '0' ||
-                    $(this).data('calendar').charAt(215)    === '0' ||
-                    $(this).data('calendar').charAt(2)      === '0' ||
-                    $(this).data('calendar').charAt(11)     === '0' ||
-                    $(this).data('calendar').charAt(20)     === '0' ||
-                    $(this).data('calendar').charAt(29)     === '0' ||
-                    $(this).data('calendar').charAt(38)     === '0'
+                if ($(this).data('calendar').charAt(197)    === '0' &&
+                    $(this).data('calendar').charAt(206)    === '0' &&
+                    $(this).data('calendar').charAt(215)    === '0' &&
+                    $(this).data('calendar').charAt(2)      === '0' &&
+                    $(this).data('calendar').charAt(11)     === '0' &&
+                    $(this).data('calendar').charAt(20)     === '0' &&
+                    $(this).data('calendar').charAt(29)     === '0'
                     ){ return 'none'; }
             }
 
