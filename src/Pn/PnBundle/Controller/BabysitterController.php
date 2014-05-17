@@ -159,11 +159,17 @@ class BabysitterController extends Controller
      * Displays a form to edit an existing Babysitter entity.
      *
      */
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Vous devez être connecté pour accéeder à cette fonctionalité');
+        }
+        if ($user->getType() != 'nounou') {
+            throw $this->createNotFoundException('Seules les nounous peuvent modifier leur profil.');
+        }
 
-        $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
+        $entity = $user->getBabysitter();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Babysitter entity.');
@@ -173,11 +179,6 @@ class BabysitterController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid()){
-            $em->persist($entity);
-            $em->flush();
-        }
-
         // gestion du calendrier
         $calendarService = $this->container->get('pn.calendar');
         $calendar = $calendarService->getMatrix($entity->getCalendar());
@@ -186,7 +187,7 @@ class BabysitterController extends Controller
             'entity'      => $entity,
             'form'   => $form->createView(),
             'calendarMatrix' => $calendar,
-            'id' => $id
+            'id' => $user->getId()
         ));
     }
 
@@ -288,12 +289,22 @@ class BabysitterController extends Controller
      * AJAX
      *
      */
-    public function updateFieldAction(Request $request, $id)
+    public function updateFieldAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if ($user->getType() != 'nounou') {
+            throw $this->createNotFoundException('User needs to be of type "nounou"');
+        }
 
-        $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
-        $user = $entity->getUser();
+        $entity = $user->getBabysitter();
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Babysitter entity.');
+        }
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Babysitter entity.');
@@ -417,12 +428,19 @@ class BabysitterController extends Controller
      * AJAX
      *
      */
-    public function updateCalendarAJAXAction(Request $request, $id)
+    public function updateCalendarAJAXAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
         $calendarService = $this->container->get('pn.calendar');
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if ($user->getType() != 'nounou') {
+            throw $this->createNotFoundException('User needs to be of type "nounou"');
+        }
 
-        $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
+        $entity = $user->getBabysitter();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Babysitter entity.');
@@ -470,11 +488,18 @@ class BabysitterController extends Controller
      * AJAX
      *
      */
-    public function updateAddressAJAXAction(Request $request, $id)
+    public function updateAddressAJAXAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if ($user->getType() != 'nounou') {
+            throw $this->createNotFoundException('User needs to be of type "nounou"');
+        }
 
-        $entity = $em->getRepository('PnPnBundle:Babysitter')->find($id);
+        $entity = $user->getBabysitter();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Babysitter entity.');

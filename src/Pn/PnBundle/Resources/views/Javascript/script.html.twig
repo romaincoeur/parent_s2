@@ -236,11 +236,15 @@ $(function() {
                 function(response){
                     $('#new_recommendation').after('' +
                             '<div class="recommandation">' +
-                    {% if app.user.avatar %}
+                            {% if app.user.avatar %}
                             '   <img src="{{ asset('uploads/users/' ~ app.user.avatar) }}" alt="photo de profil de {{ app.user.firstname }}" style="height: 90px;">' +
-                    {% else %}
+                            {% else %}
+                            {% if app.user.type == 'parent' %}
+                            '   <img src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="nounou" style="height: 90px; width: 86px;">' +
+                            {% else %}
                             '   <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">' +
-                    {% endif %}
+                            {% endif %}
+                            {% endif %}
                             '   <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">' +
                             '   <div class="bulle">' +
                             '       <p>' + response.message + '</p>' +

@@ -113,21 +113,22 @@
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ form_widget(form.user.phone) }}&nbsp;<br>
                 </div>
                 <div class="details">
-                    <div id="address">
+                    <div class="detail" id="address">
                         <img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="marker">
                         {{ form_errors(form.user.address) }}
                         {{ form_widget(form.user.address) }}
                     </div>
-                    <div id="birthdate">
+                    <div class="detail" id="birthdate">
                         <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier">
+                        <b style="vertical-align: text-top;">Renseignez votre date de naissance</b>
                         {{ form_errors(form.user.birthdate) }}
                         {{ form_widget(form.user.birthdate) }}
                     </div>
-                    <div id="experience">
+                    <div class="detail" id="experience">
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
                         {{ form_widget(form.experience) }} ans d'expérience
                     </div>
-                    <div id="diplomas">
+                    <div class="detail" id="diplomas">
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
                         <b>Vos diplomes</b>
                         {{ form_errors(form.diplomas) }}
@@ -138,7 +139,7 @@
                             </li>
                         {% endfor %}
                     </div>
-                    <div id="ageOfChildren">
+                    <div class="detail" id="ageOfChildren">
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age">
                         <b>Âges des enfants pris en charge</b>
                         {{ form_errors(form.ageOfChildren) }}

@@ -169,7 +169,7 @@
             </div>
 
         </div>
-        <div class="recommandations">
+        <div class="recommandations" id="recommandations">
             <div class="banner bg-red big-wrap">
                 <div class="wrap">
                     <h4>Recommandations</h4>
@@ -190,7 +190,7 @@
                         {% elseif recommendation.giver.type == 'nounou' %}
                             <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 90px;">
                         {% else %}
-                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 90px;">
+                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 90px; width: 86px;">
                         {% endif %}
                         <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
                         <div class="bulle">

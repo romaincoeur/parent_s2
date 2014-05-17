@@ -31,7 +31,7 @@ class User implements UserInterface
     {
         $this->is_activated = true;
         $this->setUsername($this->email);
-        if ($this->getBirthdate() == null) $this->setBirthdate(new \DateTime('1902-01-01'));
+        if ($this->getBirthdate() == null) $this->setBirthdate(new \DateTime('1990-01-01'));
     }
 
     public function getUsername()

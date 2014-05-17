@@ -86,11 +86,22 @@ class LoadMailTemplateData extends AbstractFixture implements OrderedFixtureInte
         Message : %MESSAGE <br>
         ');
 
+        $mail6 = new MailTemplate();
+        $mail6->setTitle('Nouvelle recommendation');
+        $mail6->setVirtualTitle('newRecommandation');
+        $mail6->setObject('Vous avez été recommandé !');
+        $mail6->setBody('
+        %SENDER vous a laissé une recommandation : <br>
+        %MESSAGE <br>
+        cliquez <a href="%URL">ici</a> pour la voir.
+        ');
+
         $em->persist($mail1);
         $em->persist($mail2);
         $em->persist($mail3);
         $em->persist($mail4);
         $em->persist($mail5);
+        $em->persist($mail6);
 
         $em->flush();
     }

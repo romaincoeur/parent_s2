@@ -67,20 +67,20 @@ class JobController extends Controller
      * Creates a new Job entity.
      *
      */
-    public function createAction(Request $request)
+    /*public function createAction(Request $request)
     {
         $entity = new Job();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        /*if ($form->isValid()) {
+        if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity->setParent($this->getUser()->getParent());
             $em->persist($entity);
             $em->flush();
 
             return $this->redirect($this->generateUrl('pn_job_show', array('id' => $entity->getId())));
-        }*/
+        }
 
         $calendar = array_fill(1, 24 ,array_fill(1, 7, false));
         return $this->render('PnPnBundle:Job:new.html.twig', array(
@@ -88,7 +88,7 @@ class JobController extends Controller
             'form'   => $form->createView(),
             'calendarMatrix' => $calendar
         ));
-    }
+    }*/
 
     /**
     * Creates a form to create a Job entity.
@@ -174,8 +174,6 @@ class JobController extends Controller
             throw $this->createNotFoundException('Seuls les parents peuvent creer des annonces.');
         }
 
-        $em = $this->getDoctrine()->getManager();
-
         $entity = $user->getParent()->getCurrentJob();
 
         if (!$entity) {
@@ -215,7 +213,7 @@ class JobController extends Controller
      * Edits an existing Job entity.
      *
      */
-    public function updateAction(Request $request, $id)
+    /*public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -240,7 +238,7 @@ class JobController extends Controller
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
-    }
+    }*/
     /**
      * Deletes a Job entity.
      *
@@ -290,8 +288,15 @@ class JobController extends Controller
     public function updateAddressAJAXAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if ($user->getType() != 'parent') {
+            throw $this->createNotFoundException('User needs to be of type "parent"');
+        }
 
-        $entity = $em->getRepository('PnPnBundle:Job')->find($id);
+        $entity = $user->getBabysitter();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
@@ -341,8 +346,15 @@ class JobController extends Controller
     public function updateFieldAJAXAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if ($user->getType() != 'parent') {
+            throw $this->createNotFoundException('User needs to be of type "parent"');
+        }
 
-        $entity = $em->getRepository('PnPnBundle:Job')->find($id);
+        $entity = $user->getBabysitter();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
@@ -484,12 +496,19 @@ class JobController extends Controller
      * AJAX
      *
      */
-    public function updateCalendarAJAXAction(Request $request, $id)
+    public function updateCalendarAJAXAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
         $calendarService = $this->container->get('pn.calendar');
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if ($user->getType() != 'parent') {
+            throw $this->createNotFoundException('User needs to be of type "parent"');
+        }
 
-        $entity = $em->getRepository('PnPnBundle:Job')->find($id);
+        $entity = $user->getBabysitter();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');

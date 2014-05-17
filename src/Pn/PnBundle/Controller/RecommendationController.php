@@ -54,9 +54,19 @@ class RecommendationController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            // Envoyer un email de confirmation
-            $Url = $this->generateUrl('message', array(), true);
-            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('nouveaumessage');
+            // Envoyer un email
+            if ($receiver->getType() == 'nounou')
+            {
+                $Url = $this->generateUrl('babysitter_show', array('id' => $receiver->getBabysitter()->getId(), 'url' => $receiver->getBabysitter()->getUrl()), true).'#recommandations';
+            }
+            else
+            {
+                $Url = $this->generateUrl('pn_job_show', array('id' => $receiver->getParent()->getCurrentJob()->getId(), 'url' => $receiver->getParent()->getCurrentJob()->getUrl()), true).'#recommandations';
+            }
+            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('newRecommandation');
+            if (!$mail) {
+                throw $this->createNotFoundException('le template d\'email "Nouvelle recommendation n\'est pas defini."');
+            }
             $body = str_replace(
                 array('%SENDER', '%MESSAGE', '%URL'),
                 array($sender->getFirstname(), $entity->getBody(), $Url),

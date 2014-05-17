@@ -42,3 +42,13 @@ parameters:
     baloon.3: 30    # >=30
     baloon.4: 40    # >=40
     baloon.5: 50    # >=50
+
+
+
+services:
+
+    pn.calendar:
+        class: Pn\PnBundle\Services\Calendar
+
+    pn.crop:
+        class: Pn\PnBundle\Services\Crop
