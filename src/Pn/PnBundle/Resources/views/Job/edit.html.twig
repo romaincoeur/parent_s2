@@ -118,11 +118,22 @@
                         {{ form_errors(form.end) }}
                         {{ form_widget(form.end) }}
                         <br>
+                        <div id="category" style="margin-top: 10px;">
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
+                            <b>Type de nounou</b>
+                            {{ form_errors(form.category) }}
+                            {% for child in form.category %}
+                                <li style="list-style-type: none;">
+                                    {{ form_widget(child) }}
+                                    {{ form_label(child) }}
+                                </li>
+                            {% endfor %}
+                        </div>
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience icon">
                         {{ form_errors(form.experience) }}
                         {{ form_widget(form.experience) }} ans d'expérience minimum
                         <br>
-                        <div id="diplomas">
+                        <div id="diplomas" style="margin-top: 10px;">
                             <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
                             <b>Diplomes requis</b>
                             {{ form_errors(form.diplomas) }}
@@ -133,7 +144,7 @@
                                 </li>
                             {% endfor %}
                         </div>
-                        <div id="ageOfChildren">
+                        <div id="ageOfChildren" style="margin-top: 10px;">
                             <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age">
                             <b>Âges des enfants pris en charge</b>
                             {{ form_errors(form.ageOfChildren) }}
@@ -144,7 +155,7 @@
                                 </li>
                             {% endfor %}
                         </div>
-                        <div id="languages">
+                        <div id="languages" style="margin-top: 10px;">
                             <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="languages">
                             <b>Langues parlées requises</b>
                             {{ form_errors(form.languages) }}
@@ -157,7 +168,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 calendar">
+                <div class="col-md-4 calendar" style="margin-bottom: 50px;">
                     {{ calendar.editTable(calendarMatrix) }}
                 </div>
                 <div class="col-md-4">

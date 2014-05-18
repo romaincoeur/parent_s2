@@ -486,6 +486,9 @@ class JobController extends Controller
             case 'hobbies':
                 $entity->setHobbies($value);
                 break;
+            case 'category':
+                $entity->setCategory($value);
+                break;
             default:
                 $response['success'] = false;
                 $response['message'] = 'wrong parameter';

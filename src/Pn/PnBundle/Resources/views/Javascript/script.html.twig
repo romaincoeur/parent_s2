@@ -100,7 +100,11 @@ $(function() {
                 function( response ){
                     if (response.success)
                     {
+                        {% if app.request.attributes.get('_route') == 'pn_pn_homepage' %}
+                        document.location.href="{{ path('myprofile_edit') }}";
+                        {% else %}
                         location.reload();
+                        {% endif %}
                     }
                     else
                     {

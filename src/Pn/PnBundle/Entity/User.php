@@ -92,7 +92,7 @@ class User implements UserInterface
             'babysitter' => 'Babysitter',
             'assistante' => 'Assistante maternelle',
             'nounou' => 'Nounou à domicile',
-            'garde' => 'Garde partagée',
+            //'garde' => 'Garde partagée',
             'aupair' => 'Fille au pair',
             'animateur' => 'Animateur'
         );
@@ -238,7 +238,7 @@ class User implements UserInterface
             'babysitter' => 'Babysitter',
             'assistante' => 'Assistante maternelle',
             'nounou' => 'Nounou à domicile',
-            'garde' => 'Garde partagée',
+            //'garde' => 'Garde partagée',
             'aupair' => 'Fille au pair',
             'animateur' => 'Animateur'
         );

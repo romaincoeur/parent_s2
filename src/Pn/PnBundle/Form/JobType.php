@@ -99,6 +99,12 @@ class JobType extends AbstractType
                     'placeholder' => 'Numero de téléphone',
                 )
             ))
+            ->add('category', 'choice', array(
+                'choices'   => User::getsecondTypes(),
+                'expanded' => true,
+                'multiple' => false,
+                'required'  => true,
+            ))
         ;
     }
     

@@ -119,6 +119,9 @@ $(document).ready(function(){
     $('input[name="pn_pnbundle_job[petitsplus][]"]').change(function(){
         updateField('petitsplus', 'petitPlus', $(this).val())
     })
+    $('input[name="pn_pnbundle_job[category]"]').change(function(){
+        updateField('category', 'category', $(this).val())
+    })
 
 
     // Calendar AJAX update and feedback

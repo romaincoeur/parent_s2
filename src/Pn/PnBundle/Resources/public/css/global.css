@@ -774,7 +774,7 @@ aside a.btn
 {
     background-color: #eeeeee;
     padding: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 
 .details .detail
@@ -933,9 +933,8 @@ aside a.btn
 .edit-page select
 {
     border: solid #888888 1px;
-    padding: 4px 5px 7px 10px;
+    padding: 7px 5px 6px 10px;
     height: inherit;
-    vertical-align: bottom;
 }
 
 .edit-page .description .body
@@ -1223,15 +1222,15 @@ table.calendar button
 #pn_pnbundle_job_start
 {
     width: 210px;
-    display: inline;
-    vertical-align: middle;
+    display: inline-block;
+    margin-top: 10px;
 }
 
 #pn_pnbundle_job_end
 {
     width: 210px;
-    display: inline;
-    vertical-align: middle;
+    display: inline-block;
+    margin-top: 10px;
 }
 
 #pn_pnbundle_job_experience
@@ -1255,6 +1254,11 @@ label[for='pn_pnbundle_job_diplomas_1']
 #pn_pnbundle_job_diplomas_1
 {
     float: left;
+}
+
+#category li {
+    padding-left: 24px;
+    height: 20px;
 }
 
 
