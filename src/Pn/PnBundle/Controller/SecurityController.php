@@ -95,11 +95,17 @@ class SecurityController extends Controller
             $confirmationUrl = $this->generateUrl('confirmation', array('token' => $entity->getConfirmationToken()), true);
             $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('maildeconfirmation');
 
+            $body = str_replace(
+                array('%FIRSTNAME', '%EMAIL', '%URL'),
+                array($entity->getFirstname(), $entity->getEmail(), $confirmationUrl),
+                $mail->getBody()
+            );
+
             $message = \Swift_Message::newInstance()
                 ->setSubject($mail->getObject())
                 ->setFrom($this->container->getparameter('mailer.from'))
                 ->setTo($entity->getEmail())
-                ->setBody(str_replace('%URL', $confirmationUrl, $mail->getBody()))
+                ->setBody($body)
             ;
             $message->getHeaders()->get('Content-Type')->setValue('text/html');
 
@@ -149,11 +155,16 @@ class SecurityController extends Controller
 
             // Envoyer un email de bienvenue
             $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByTitle('mail de bienvenue');
+            $body = str_replace(
+                array('%FIRSTNAME'),
+                array($entity->getFirstname()),
+                $mail->getBody()
+            );
             $message = \Swift_Message::newInstance()
                 ->setSubject($mail->getObject())
                 ->setFrom($this->container->getparameter('mailer.from'))
                 ->setTo($entity->getEmail())
-                ->setBody($mail->getBody())
+                ->setBody($body)
             ;
             $message->getHeaders()->get('Content-Type')->setValue('text/html');
             $this->get('mailer')->send($message);
@@ -251,12 +262,16 @@ class SecurityController extends Controller
 
             // Send email
             $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('resetPasswordMail');
-
+            $body = str_replace(
+                array('%FIRSTNAME', '%EMAIL', '%PASSWORD'),
+                array($user->getFirstname(), $user->getEmail(), $rawPassword),
+                $mail->getBody()
+            );
             $message = \Swift_Message::newInstance()
                 ->setSubject($mail->getObject())
                 ->setFrom($this->container->getparameter('mailer.from'))
                 ->setTo($user->getEmail())
-                ->setBody(str_replace('%PASSWORD', $rawPassword, $mail->getBody()))
+                ->setBody($body)
             ;
             $message->getHeaders()->get('Content-Type')->setValue('text/html');
 

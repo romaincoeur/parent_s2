@@ -162,12 +162,15 @@ $(function() {
             success: function (data) {
                 if (data.has_error) {
                     // Insert your error process
-                    alert(data.error);
+                    $('#loginErrors').html(data.error).css('display','block');
                 }
                 else {
                     // Insert your success process
                     window.location.reload();
                 }
+            },
+            error: function(error){
+                $('#loginErrors').html(error.statusText).css('display','block');
             }
         });
     });
@@ -186,39 +189,57 @@ $(function() {
 
     // Gestion du compte
     $( '#changePasswordForm' ).submit( function( e ){
+
         e.preventDefault();
         $( '#changePasswordForm button[type="submit"]').after('<img src="{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}" alt="ajax-loader" id="ajax-loader">');
         $('#changePasswordErrors').css('display','none');
         $('#changePasswordSuccess').css('display','none');
 
-        postForm(
-                $(this),
-                function( response ){
-                    if (response.success)
-                    {
-                        setTimeout(
-                                function()
-                                {
-                                    $('#changePasswordSuccess').html("Votre nouveau mot de passe est activé").css('display','block');
-                                }, 1000);
-                        //$( "#account_management button.close" ).trigger( "click" );
-
-                        // Effacer les champs du formulaire
-                        $(':input','#changePasswordForm')
-                                .not(':button, :submit, :reset, :hidden')
-                                .val('');
-                    }
-                    else
-                    {
-                        $('#changePasswordErrors').html(response.cause).css('display','block');
-                    }
+        var options = {
+            //target:   '#videoOutput',   // target element(s) to be updated with server response
+            beforeSubmit:  function(){
+                if ($('#change_password_newPassword_first').val() != $('#change_password_newPassword_second').val())
+                {
+                    $('#changePasswordErrors').html('Le nouveau mot de passe et la confirmation ne correspondent pas.').css('display','block');
                     $('#ajax-loader').remove();
-                },
-                function(error){
-                    $('#changePasswordErrors').html(error).css('display','block');
-                    $('#ajax-loader').remove();
+                    return false;
                 }
-        );
+                if ($('#change_password_oldPassword').val().length < 6)
+                {
+                    $('#changePasswordErrors').html('Un mot de passe doit contenir au moins 6 caractères').css('display','block');
+                    $('#ajax-loader').remove();
+                    return false;
+                }
+                if ($('#change_password_newPassword_first').val().length < 6)
+                {
+                    $('#changePasswordErrors').html('Le nouveau mot de passe doit contenir au moins 6 caractères').css('display','block');
+                    $('#ajax-loader').remove();
+                    return false;
+                }
+            },  // pre-submit callback
+            success: function( response ){
+                if (response.success)
+                {
+                    $('#changePasswordSuccess').html("Votre nouveau mot de passe est activé").css('display','block');
+                    $('#changePasswordForm input').hide();
+                    $('#changePasswordForm button').click(function(e){
+                        e.preventDefault();
+                        window.location.reload();
+                    });
+                }
+                else
+                {
+                    $('#changePasswordErrors').html(response.cause).css('display','block');
+                }
+                $('#ajax-loader').remove();
+            },
+            error: function(error){
+                $('#changePasswordErrors').html(error).css('display','block');
+                $('#ajax-loader').remove();
+            },
+            resetForm: true        // reset the form after successful submit
+        };
+        $('#changePasswordForm').ajaxSubmit(options);
 
         return false;
     });
@@ -231,34 +252,35 @@ $(function() {
         $('form#new_recommendation textarea').css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat right white');
         $('form#new_recommendation input[type="submit"]').attr('disabled', true);
 
-        postForm(
-                $('form#new_recommendation'),
-                function(response){
-                    $('#new_recommendation').after('' +
-                            '<div class="recommandation">' +
-                            {% if app.user.avatar %}
-                            '   <img src="{{ asset('uploads/users/' ~ app.user.avatar) }}" alt="photo de profil de {{ app.user.firstname }}" style="height: 90px;">' +
-                            {% else %}
-                            {% if app.user.type == 'parent' %}
-                            '   <img src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="nounou" style="height: 90px; width: 86px;">' +
-                            {% else %}
-                            '   <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">' +
-                            {% endif %}
-                            {% endif %}
-                            '   <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">' +
-                            '   <div class="bulle">' +
-                            '       <p>' + response.message + '</p>' +
-                            '       <span class="red">{{ app.user.hiddenName }}</span> {{ app.user.type }}. Posté le {{ "now"|date("d-m-Y") }}' +
-                            '   </div>' +
-                            '</div>'
-                    );
-                    $('form#new_recommendation textarea').css('background','white');
-                    $('form#new_recommendation input[type="submit"]').attr('disabled', false);
-                },
-                function (error){
-
-                }
-        );
+        var options = {
+            success: function(response){
+                $('#new_recommendation').after('' +
+                        '<div class="recommandation">' +
+                        {% if app.user.avatar %}
+                        '   <img src="{{ asset('uploads/users/' ~ app.user.avatar) }}" alt="photo de profil de {{ app.user.firstname }}" style="height: 90px;">' +
+                        {% else %}
+                        {% if app.user.type == 'parent' %}
+                        '   <img src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="nounou" style="height: 90px; width: 86px;">' +
+                        {% else %}
+                        '   <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="nounou" style="height: 90px;">' +
+                        {% endif %}
+                        {% endif %}
+                        '   <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">' +
+                        '   <div class="bulle">' +
+                        '       <p>' + response.message + '</p>' +
+                        '       <span class="red">{{ app.user.hiddenName }}</span> {{ app.user.type }}. Posté le {{ "now"|date("d-m-Y") }}' +
+                        '   </div>' +
+                        '</div>'
+                );
+                $('form#new_recommendation textarea').css('background','white');
+                $('form#new_recommendation input[type="submit"]').attr('disabled', false);
+            },
+            error: function(error){
+                console.error(error);
+            },
+            resetForm: true
+        };
+        $(this).ajaxSubmit(options);
     })
     {% endif %}
 

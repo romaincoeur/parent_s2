@@ -176,6 +176,8 @@
                 </div>
             </div>
             <div class="wrap">
+                <div class="alert alert-danger" id="new_recommendationErrors" style="display: none;"></div>
+                {% if app.user and app.user.id != entity.user.id %}
                 <form action="{{ path('recommendation_send',{ 'to':entity.user.id }) }}" method="post" id="new_recommendation" {{ form_enctype(recommendation_form) }}>
                     {{ form_errors(recommendation_form.body) }}
                     {{ form_widget(recommendation_form.body, { 'attr': {'placeholder': 'Ecrivez une recommandation'} }) }}
@@ -183,6 +185,7 @@
                     {{ form_rest(recommendation_form) }}
                     <input type="submit" value="publier">
                 </form>
+                {% endif %}
                 {% for recommendation in entity.user.receivedRecommendations|reverse %}
                     <div class="recommandation">
                         {% if recommendation.giver.avatar %}

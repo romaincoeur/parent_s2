@@ -29,10 +29,12 @@ $(document).ready(function(){
                 {
                     $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/error.png') }}") no-repeat right white');
                 }
+                {% if app.environment == 'dev' %}
                 if (response.message)
                 {
                     alert(response.message);
                 }
+                {% endif %}
             },
             error     : function() {
                 $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/error.png') }}") no-repeat right white');

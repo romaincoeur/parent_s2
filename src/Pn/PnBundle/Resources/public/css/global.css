@@ -830,7 +830,8 @@ aside a.btn
 {
     width: 110px;
     height: 53px;
-    vertical-align: top;
+    vertical-align: bottom;
+    margin-bottom: 10px;
 }
 
 .recommandations form

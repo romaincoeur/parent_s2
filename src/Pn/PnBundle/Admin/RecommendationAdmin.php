@@ -6,7 +6,7 @@
  * Time: 14:32
  */
 
-// src/Pn/PnBundle/Admin/MailTemplateAdmin.php
+// src/Pn/PnBundle/Admin/RecommendationAdmin.php
 
 namespace Pn\PnBundle\Admin;
 
@@ -16,39 +16,43 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Pn\PnBundle\Entity\Recommendation;
 
-class MailTemplateAdmin extends Admin
+class RecommendationAdmin extends Admin
 {
     // setup the default sort column and order
     protected $datagridValues = array(
         '_sort_order' => 'ASC',
-        '_sort_by' => 'title'
+        '_sort_by' => 'receiverUsername'
     );
 
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title')
-            ->add('virtualTitle')
-            ->add('object')
+            ->add('receiver', 'sonata_type_model_list')
+            ->add('giver', 'sonata_type_model_list')
             ->add('body')
+            ->add('status')
         ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('title')
-            ->add('virtualTitle')
-            ->add('object')
+            ->add('receiver')
+            ->add('giver')
+            ->add('status')
+            ->add('created_at')
         ;
     }
 
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('title')
-            ->add('virtualTitle')
+            ->addIdentifier('receiver')
+            ->add('giver')
+            ->add('status')
+            ->add('created_at')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -62,10 +66,11 @@ class MailTemplateAdmin extends Admin
     protected function configureShowField(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('title')
-            ->add('object')
+            ->add('receiver')
+            ->add('giver')
             ->add('body')
-            ->add('virtualTitle')
+            ->add('status')
+            ->add('created_at')
         ;
     }
 }

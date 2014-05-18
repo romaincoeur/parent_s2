@@ -39,8 +39,8 @@ services:
             - { name: sonata.admin, manager_type: orm, group: emails, label: Emails }
         arguments: [null, Pn\PnBundle\Entity\MailTemplate, PnPnBundle:MailTemplateAdmin]
 
-    pn.calendar:
-        class: Pn\PnBundle\Services\Calendar
-
-    pn.crop:
-        class: Pn\PnBundle\Services\Crop
+    pn.pn.admin.recommendation:
+            class: Pn\PnBundle\Admin\RecommendationAdmin
+            tags:
+                - { name: sonata.admin, manager_type: orm, group: users, label: Recommendations }
+            arguments: [null, Pn\PnBundle\Entity\Recommendation, PnPnBundle:RecommendationAdmin]

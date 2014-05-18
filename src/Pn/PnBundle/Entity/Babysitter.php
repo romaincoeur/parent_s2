@@ -111,7 +111,10 @@ class Babysitter
 
     public function __toString()
     {
-        return $this->getUser()->getFullname();
+        if ($this->getUser())
+            return $this->getUser()->getFullname();
+        else
+            return '';
     }
 
     public static function getPetitsplusValues()
@@ -523,7 +526,7 @@ class Babysitter
 
 
 // GENERATED CODE
-    
+
     /**
      * @var integer
      */
@@ -628,7 +631,7 @@ class Babysitter
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -651,7 +654,7 @@ class Babysitter
     /**
      * Get presentation
      *
-     * @return string 
+     * @return string
      */
     public function getPresentation()
     {
@@ -674,7 +677,7 @@ class Babysitter
     /**
      * Get rate_price
      *
-     * @return string 
+     * @return string
      */
     public function getRatePrice()
     {
@@ -697,7 +700,7 @@ class Babysitter
     /**
      * Get rate_type
      *
-     * @return string 
+     * @return string
      */
     public function getRateType()
     {
@@ -720,7 +723,7 @@ class Babysitter
     /**
      * Get video
      *
-     * @return string 
+     * @return string
      */
     public function getVideo()
     {
@@ -743,7 +746,7 @@ class Babysitter
     /**
      * Get experience
      *
-     * @return integer 
+     * @return integer
      */
     public function getExperience()
     {
@@ -766,7 +769,7 @@ class Babysitter
     /**
      * Get trustpoints
      *
-     * @return integer 
+     * @return integer
      */
     public function getTrustpoints()
     {
@@ -789,7 +792,7 @@ class Babysitter
     /**
      * Get anythingelse
      *
-     * @return string 
+     * @return string
      */
     public function getAnythingelse()
     {
@@ -812,7 +815,7 @@ class Babysitter
     /**
      * Get ageofchildren
      *
-     * @return array 
+     * @return array
      */
     public function getAgeofchildren()
     {
@@ -835,7 +838,7 @@ class Babysitter
     /**
      * Get favoriteactivities
      *
-     * @return string 
+     * @return string
      */
     public function getFavoriteactivities()
     {
@@ -858,7 +861,7 @@ class Babysitter
     /**
      * Get hobbies
      *
-     * @return string 
+     * @return string
      */
     public function getHobbies()
     {
@@ -881,7 +884,7 @@ class Babysitter
     /**
      * Get mychildren
      *
-     * @return string 
+     * @return string
      */
     public function getMychildren()
     {
@@ -904,7 +907,7 @@ class Babysitter
     /**
      * Get calendar
      *
-     * @return string 
+     * @return string
      */
     public function getCalendar()
     {
@@ -927,7 +930,7 @@ class Babysitter
     /**
      * Get category
      *
-     * @return string 
+     * @return string
      */
     public function getCategory()
     {
@@ -950,7 +953,7 @@ class Babysitter
     /**
      * Get petitsplus
      *
-     * @return array 
+     * @return array
      */
     public function getPetitsplus()
     {
@@ -973,7 +976,7 @@ class Babysitter
     /**
      * Get extraTasks
      *
-     * @return array 
+     * @return array
      */
     public function getExtraTasks()
     {
@@ -996,7 +999,7 @@ class Babysitter
     /**
      * Get particularite
      *
-     * @return array 
+     * @return array
      */
     public function getParticularite()
     {
@@ -1019,7 +1022,7 @@ class Babysitter
     /**
      * Get diplomas
      *
-     * @return array 
+     * @return array
      */
     public function getDiplomas()
     {
@@ -1042,7 +1045,7 @@ class Babysitter
     /**
      * Get languages
      *
-     * @return array 
+     * @return array
      */
     public function getLanguages()
     {
@@ -1065,7 +1068,7 @@ class Babysitter
     /**
      * Get user
      *
-     * @return \Pn\PnBundle\Entity\User 
+     * @return \Pn\PnBundle\Entity\User
      */
     public function getUser()
     {

@@ -290,16 +290,22 @@ class JobController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         if (!$user) {
-            throw $this->createNotFoundException('Not connected user');
+            $response['success'] = false;
+            $response['message'] = 'Not connected user';
+            return new JsonResponse( $response );
         }
         if ($user->getType() != 'parent') {
-            throw $this->createNotFoundException('User needs to be of type "parent"');
+            $response['success'] = false;
+            $response['message'] = 'User needs to be of type "parent"';
+            return new JsonResponse( $response );
         }
 
-        $entity = $user->getBabysitter();
+        $entity = $user->getParent()->getCurrentJob();
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Job entity.');
+            $response['success'] = false;
+            $response['message'] = 'Unable to find Job entity';
+            return new JsonResponse( $response );
         }
 
         // Get data
@@ -348,16 +354,22 @@ class JobController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         if (!$user) {
-            throw $this->createNotFoundException('Not connected user');
+            $response['success'] = false;
+            $response['message'] = 'Not connected user';
+            return new JsonResponse( $response );
         }
         if ($user->getType() != 'parent') {
-            throw $this->createNotFoundException('User needs to be of type "parent"');
+            $response['success'] = false;
+            $response['message'] = 'User needs to be of type "parent"';
+            return new JsonResponse( $response );
         }
 
-        $entity = $user->getBabysitter();
+        $entity = $user->getParent()->getCurrentJob();
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Job entity.');
+            $response['success'] = false;
+            $response['message'] = 'Unable to find Job entity';
+            return new JsonResponse( $response );
         }
 
         // Get data
@@ -502,16 +514,22 @@ class JobController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         if (!$user) {
-            throw $this->createNotFoundException('Not connected user');
+            $response['success'] = false;
+            $response['message'] = 'Not connected user';
+            return new JsonResponse( $response );
         }
         if ($user->getType() != 'parent') {
-            throw $this->createNotFoundException('User needs to be of type "parent"');
+            $response['success'] = false;
+            $response['message'] = 'User needs to be of type "parent"';
+            return new JsonResponse( $response );
         }
 
-        $entity = $user->getBabysitter();
+        $entity = $user->getParent()->getCurrentJob();
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Job entity.');
+            $response['success'] = false;
+            $response['message'] = 'Unable to find Job entity';
+            return new JsonResponse( $response );
         }
 
         $calendar = $calendarService->getMatrix($entity->getCalendar());

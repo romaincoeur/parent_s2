@@ -10,13 +10,13 @@
 
 namespace Pn\PnBundle\Admin;
 
+use Pn\PnBundle\Entity\User;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Pn\PnBundle\Entity\Babysitter;
 
 class BabysitterAdmin extends Admin
 {
@@ -29,7 +29,8 @@ class BabysitterAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('file', 'file', array('label' => 'Avatar', 'required' => false))
+            ->add('user', 'sonata_type_model_list')
+            //->add('file', 'file', array('label' => 'Avatar', 'required' => false))
             ->add('trustpoints','integer')
             ->add('presentation')
             ->add('rate_price')
@@ -51,7 +52,7 @@ class BabysitterAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('userUsername')
+            ->addIdentifier('user')
             ->add('category')
             ->add('trustpoints')
             ->add('rate_price')
@@ -70,7 +71,7 @@ class BabysitterAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('userUsername')
+            ->add('user')
             ->add('avatar')
             ->add('trustpoints')
             ->add('presentation')
@@ -78,7 +79,7 @@ class BabysitterAdmin extends Admin
             ->add('rate_type')
             ->add('category')
             ->add('diplomas', 'choice', array(
-                'choices'   => Babysitter::getDiplomass(),
+                'choices'   => User::getDiplomass(),
                 'expanded' => true,
                 'multiple' => true,
                 'required'  => true,

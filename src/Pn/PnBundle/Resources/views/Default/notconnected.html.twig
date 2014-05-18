@@ -41,6 +41,8 @@
             </div>
             <div class="modal-body">
                 <form id="form-login" action="{{ path('login_check') }}" method="post">
+                    <div class="alert alert-danger" id="loginErrors" style="display: none;"></div>
+
                     <input type="text" id="username" name="_username" placeholder="E-mail"/>
 
                     <input type="password" id="password" name="_password" placeholder="Mot de passe"/>

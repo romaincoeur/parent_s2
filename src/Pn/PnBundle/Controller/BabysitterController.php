@@ -163,7 +163,7 @@ class BabysitterController extends Controller
     {
         $user = $this->getUser();
         if (!$user) {
-            throw $this->createNotFoundException('Vous devez être connecté pour accéeder à cette fonctionalité');
+            throw $this->createNotFoundException('Vous devez être connecté pour accéder à cette fonctionalité');
         }
         if ($user->getType() != 'nounou') {
             throw $this->createNotFoundException('Seules les nounous peuvent modifier leur profil.');

@@ -40,7 +40,15 @@ class RecommendationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $sender = $this->getUser();
+        if (!$sender)
+        {
+            throw $this->createNotFoundException('Vous devez être connecté pour accéder à cette fonctionalité');
+        }
         $receiver = $em->getRepository('PnPnBundle:User')->findOneById($to);
+        if ($receiver->getId() == $sender->getId())
+        {
+            throw $this->createNotFoundException('Vous ne pouvez vous recommander vous même');
+        }
         $entity = new Recommendation();
         $form = $this->createForm(new RecommendationType(), $entity, array(
             'action' => $this->generateUrl('recommendation_send', array('to' => $to)),
