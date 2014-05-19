@@ -9,6 +9,72 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Article
 {
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if(!$this->getCreatedAt())
+        {
+            $this->created_at = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        // Add your code here
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updated_at = new \DateTime();
+    }
+
+    public function shortPresentation($maxLength)
+    {
+        if (strlen($this->presentation) <= $maxLength)
+            return $this->presentation."...";
+
+        $result = substr($this->presentation, 0, $maxLength);
+        return $result."...";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // GENERATED CODE
+
+    
     /**
      * @var integer
      */
@@ -40,21 +106,19 @@ class Article
     private $updated_at;
 
     /**
+     * @var string
+     */
+    private $miniPresentation;
+
+    /**
+     * @var boolean
+     */
+    private $onWelcomePage;
+
+    /**
      * @var \Pn\BlogBundle\Entity\Category
      */
     private $category;
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
@@ -183,6 +247,52 @@ class Article
     }
 
     /**
+     * Set miniPresentation
+     *
+     * @param string $miniPresentation
+     * @return Article
+     */
+    public function setMiniPresentation($miniPresentation)
+    {
+        $this->miniPresentation = $miniPresentation;
+
+        return $this;
+    }
+
+    /**
+     * Get miniPresentation
+     *
+     * @return string 
+     */
+    public function getMiniPresentation()
+    {
+        return $this->miniPresentation;
+    }
+
+    /**
+     * Set onWelcomePage
+     *
+     * @param boolean $onWelcomePage
+     * @return Article
+     */
+    public function setOnWelcomePage($onWelcomePage)
+    {
+        $this->onWelcomePage = $onWelcomePage;
+
+        return $this;
+    }
+
+    /**
+     * Get onWelcomePage
+     *
+     * @return boolean 
+     */
+    public function getOnWelcomePage()
+    {
+        return $this->onWelcomePage;
+    }
+
+    /**
      * Set category
      *
      * @param \Pn\BlogBundle\Entity\Category $category
@@ -203,40 +313,5 @@ class Article
     public function getCategory()
     {
         return $this->category;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        if(!$this->getCreatedAt())
-        {
-            $this->created_at = new \DateTime();
-        }
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setDefaultValues()
-    {
-        // Add your code here
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedAtValue()
-    {
-        $this->updated_at = new \DateTime();
-    }
-
-    public function shortPresentation($maxLength)
-    {
-        if (strlen($this->presentation) <= $maxLength)
-            return $this->presentation."...";
-
-        $result = substr($this->presentation, 0, $maxLength);
-        return $result."...";
     }
 }

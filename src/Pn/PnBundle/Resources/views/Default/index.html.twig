@@ -2,7 +2,7 @@
 
 {% extends "PnPnBundle::layout.html.twig" %}
 
-{% block title %}{{ parent() }} - Accueil{% endblock %}
+{% block title %}{{ parent() }} - Garde d'enfants{% endblock %}
 
 {% block metadata %}
     {{ parent() }}
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="body">
-                        <p>{{ entity.shortPresentation(300) | truncate(120, true, '...') }}</p>
+                        <p>{{ entity.miniPresentation }}</p>
                     </div>
                 </div>
             </a>

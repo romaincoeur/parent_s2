@@ -34,7 +34,7 @@
                         {% endif %}#}
                     </div>
                     <div class="right">
-                        {% if entity.ratePrice %}
+                        {% if entity.ratePrice and entity.rateType %}
                             <div class="tarif">{{ entity.ratePrice }}€ / {{ entity.user.getRateTypes[entity.rateType] }}</div>
                         {% endif %}
                     </div>

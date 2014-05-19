@@ -36,7 +36,7 @@
                         {% endif %}#}
                     </div>
                     <div class="right">
-                        {% if entity.ratePrice %}
+                        {% if entity.ratePrice and entity.rateType %}
                             <div class="tarif">{{ entity.ratePrice }}€ / {{ entity.parent.user.getRateTypes[entity.rateType] }}</div>
                         {% endif %}
                     </div>
@@ -59,7 +59,7 @@
                         {% else %}
                             <a href="#login" role="button" data-toggle="modal" style="color: #ffffff;">
                                 Connectez vous pour voir les coordonnées de {{ entity.parent.user.firstname }}
-                            </a>
+                            </a><br>
                             <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.phone }}
                         {% endif %}
                     </div>

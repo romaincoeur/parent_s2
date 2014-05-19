@@ -31,7 +31,10 @@ class ArticleAdmin extends Admin
         $formMapper
             ->add('title')
             ->add('category')
+            ->add('miniPresentation')
             ->add('presentation')
+            ->add('onWelcomePage')
+            ->add('is_activated')
         ;
     }
 
@@ -40,6 +43,7 @@ class ArticleAdmin extends Admin
         $datagridMapper
             ->add('title')
             ->add('category')
+            ->add('onWelcomePage')
         ;
     }
 
@@ -48,7 +52,8 @@ class ArticleAdmin extends Admin
         $listMapper
             ->addIdentifier('title')
             ->add('category')
-            ->add('presentation')
+            ->add('miniPresentation')
+            ->add('onWelcomePage')
             ->add('created_at')
             ->add('updated_at')
             ->add('_action', 'actions', array(
@@ -66,7 +71,9 @@ class ArticleAdmin extends Admin
         $showMapper
             ->add('title')
             ->add('category')
+            ->add('miniPresentation')
             ->add('presentation')
+            ->add('onWelcomePage')
             ->add('created_at')
             ->add('updated_at')
         ;

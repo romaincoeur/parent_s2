@@ -211,7 +211,7 @@
                         {% else %}
                             <img src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="{{ entity.parent.user.hiddenName }}" class="photo" style="height: 120px;">
                         {% endif %}
-                        {% if entity.ratePrice %}
+                        {% if entity.ratePrice and entity.rateType %}
                             <p class="tarif">{{ entity.ratePrice }}€ / {{ entity.parent.user.rateTypes[entity.rateType] }}</p>
                         {% endif %}
                         <strong>{{ entity.title }}&nbsp;</strong>
@@ -278,12 +278,12 @@
         var job_m{{ loop.index }} = new google.maps.Marker({
             position: job_position{{ loop.index }},
             map: map,
-            icon: icon_grey
+            icon: icon_jaune
         });
-        var nounou2_m{{ loop.index }} = new google.maps.Marker({
+        var job2_m{{ loop.index }} = new google.maps.Marker({
             position: job_position{{ loop.index }},
             map: minimap,
-            icon: icon_grey
+            icon: icon_jaune
         });
         zoneMarqueurs.extend(  job_m{{ loop.index }}.getPosition() );
         var job_contentm{{ loop.index }} = '' +

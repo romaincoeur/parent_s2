@@ -23,4 +23,20 @@ class ArticleRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * Get Blog arcticles that are shown on welcome page
+     *
+     * @return array
+     */
+    public function getOnWelcomePageList()
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.onWelcomePage = true')
+           ->orderBy('a.created_at', 'DESC');
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

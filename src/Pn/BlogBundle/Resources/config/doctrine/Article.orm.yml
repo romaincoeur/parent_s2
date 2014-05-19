@@ -23,6 +23,12 @@ Pn\BlogBundle\Entity\Article:
     updated_at:
       type: datetime
       nullable: true
+    miniPresentation:
+      type: text
+      nullable: true
+    onWelcomePage:
+      type: boolean
+      nullable: true
   manyToOne:
     category:
       targetEntity: Category

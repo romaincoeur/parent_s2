@@ -210,7 +210,7 @@
                         {% else %}
                             <img src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="{{ entity.user.hiddenName }}" class="photo" style="height: 120px;">
                         {% endif %}
-                        {% if entity.ratePrice %}
+                        {% if entity.ratePrice and entity.rateType %}
                             <p class="tarif">{{ entity.ratePrice }}€ / {{ entity.user.rateTypes[entity.rateType] }}</p>
                         {% endif %}
                         {% if app.user %}

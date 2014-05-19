@@ -20,7 +20,7 @@ class DefaultController extends Controller
 
         $babysitters = $em->getRepository('PnPnBundle:User')->getLastUpdatedBabysitters(3);
 
-        $articles = $em->getRepository('PnBlogBundle:Article')->getLatest(4);
+        $articles = $em->getRepository('PnBlogBundle:Article')->getOnWelcomePageList();
 
         $nounous = $em->getRepository('PnPnBundle:Babysitter')->findAll();
 

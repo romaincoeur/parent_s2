@@ -219,6 +219,11 @@ video
     background-color: #d3d3d3 !important;
 }
 
+a
+{
+    padding: 0;
+}
+
 
 
 
@@ -1174,7 +1179,7 @@ table.calendar td.on
 table.calendar button
 {
     width: 100%;
-    height: 100%;
+    height: 20px;
     border: none;
     background-color: #ffffff;
 }
@@ -1821,6 +1826,17 @@ label[for='pn_pnbundle_job_diplomas_1']
 #contact input#contact_email
 {
     margin-right: 0;
+}
+
+button.close
+{
+    height: 30px;
+}
+
+button.close img
+{
+    vertical-align: top;
+    margin-top: 5px;
 }
 
 
