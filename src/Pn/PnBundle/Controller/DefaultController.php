@@ -200,14 +200,27 @@ class DefaultController extends Controller
 
         $select = $request->get('searchType');
         $field = $request->get('field');
+        $place = json_decode($request->get('place'));
 
         if ($select == 'nounou')
         {
-            return $this->redirect($this->generateUrl('babysitter_search', array('search' => $field)));
+            return $this->redirect($this->generateUrl('babysitter_search', array(
+                'search'    => $field,
+                'top'       => $request->get('placeTop'),
+                'bottom'    => $request->get('placeBottom'),
+                'left'      => $request->get('placeLeft'),
+                'right'     => $request->get('placeRight'),
+            )));
         }
         elseif ($select == 'job')
         {
-            return $this->redirect($this->generateUrl('pn_job_search', array('search' => $field)));
+            return $this->redirect($this->generateUrl('pn_job_search', array(
+                'search'    => $field,
+                'top'       => $request->get('placeTop'),
+                'bottom'    => $request->get('placeBottom'),
+                'left'      => $request->get('placeLeft'),
+                'right'     => $request->get('placeRight'),
+            )));
         }
         else
         {

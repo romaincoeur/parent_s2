@@ -3,16 +3,16 @@ pn_pn_homepage:
     defaults: { _controller: PnPnBundle:Default:index }
 
 babysitter_search:
-    pattern:  /recherche/nounous/{search}
-    defaults: { _controller: PnPnBundle:Babysitter:search, search: null }
+    pattern:  /recherche/nounous/{search}/{top}/{bottom}/{left}/{right}
+    defaults: { _controller: PnPnBundle:Babysitter:search, search: null, top: null, left: null, right: null }
 
 babysitter_show:
     pattern:  /{id}/profil-de-nounou/{url}
     defaults: { _controller: "PnPnBundle:Babysitter:show" }
 
 pn_job_search:
-    pattern:  /recherche/annonces/{search}
-    defaults: { _controller: "PnPnBundle:Job:search", search: null }
+    pattern:  /recherche/annonces/{search}/{top}/{bottom}/{left}/{right}
+    defaults: { _controller: "PnPnBundle:Job:search", search: null, top: null, left: null, right: null }
 
 pn_job_edit:
     pattern:  /publier-annonce

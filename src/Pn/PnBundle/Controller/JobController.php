@@ -52,14 +52,18 @@ class JobController extends Controller
      * Lists Job entities.
      *
      */
-    public function searchAction($search)
+    public function searchAction($search, $top, $bottom, $left, $right)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PnPnBundle:Job')->getFromSearch($search);
+        $entities = $em->getRepository('PnPnBundle:Job')->getFromGoogleSearch($top, $bottom, $left, $right);
 
         return $this->render('PnPnBundle:Job:index.html.twig', array(
             'entities' => $entities,
+            'mapTop' => $top,
+            'mapBottom' => $bottom,
+            'mapLeft' => $left,
+            'mapRight' => $right,
         ));
     }
 

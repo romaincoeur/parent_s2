@@ -44,11 +44,11 @@ class BabysitterController extends Controller
      * Lists Babysitter entities.
      *
      */
-    public function searchAction($search)
+    public function searchAction($search, $top, $bottom, $left, $right)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PnPnBundle:Babysitter')->getFromSearch($search);
+        $entities = $em->getRepository('PnPnBundle:Babysitter')->getFromGoogleSearch($top, $bottom, $left, $right);
 
         // gestion du calendrier
         $calendarService = $this->container->get('pn.calendar');
@@ -56,7 +56,11 @@ class BabysitterController extends Controller
 
         return $this->render('PnPnBundle:Babysitter:index.html.twig', array(
             'entities' => $entities,
-            'calendarMatrix' => $calendar
+            'calendarMatrix' => $calendar,
+            'mapTop' => $top,
+            'mapBottom' => $bottom,
+            'mapLeft' => $left,
+            'mapRight' => $right,
         ));
     }
 

@@ -13,7 +13,6 @@ $(function() {
         var bottom_ofset = $('div.profiles').offset().top + $('div.profiles').height() - $('aside').height();
         //console.log($('div.profiles').height());
         if ($(window).scrollTop() < $('div.profiles').offset().top || $('div.profiles').height() < $('aside').height()) {
-            console.log('top');
             $('aside').removeClass("affix").removeClass("affix-bottom").addClass("affix-top");
             $('div.profiles').css('margin-left','0');
         }

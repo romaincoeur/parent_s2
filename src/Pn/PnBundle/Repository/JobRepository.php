@@ -44,4 +44,26 @@ class JobRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function getFromGoogleSearch($top, $bottom, $left, $right, $max = null)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.latitude < :top')
+            ->setParameter('top', $top)
+            ->andWhere('b.latitude > :bottom')
+            ->setParameter('bottom', $bottom)
+            ->andWhere('b.longitude > :left')
+            ->setParameter('left', $left)
+            ->andWhere('b.longitude < :right')
+            ->setParameter('right', $right);
+        if($max)
+        {
+            $qb->setMaxResults($max);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

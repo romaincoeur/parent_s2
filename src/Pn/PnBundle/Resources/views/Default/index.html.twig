@@ -20,12 +20,16 @@
             Veuillez patienter pendant le chargement de la carte...
         </div>
         <div class="searchForm">
-            <form action="{{ path('pn_search') }}" method="post">
+            <form action="{{ path('pn_search') }}" method="post" id="searchForm" onsubmit="return sumbmitSearchForm()">
                 <select class="selectpicker" name="searchType">
                     <option value="nounou">Je cherche une nounou</option>
                     <option value="job">Je cherche un job</option>
                 </select>
-                <input name="field" class="search" type="search" autocomplete="true" placeholder="Indiquez votre ville ou votre code postal">
+                <input id="pac-input" name="field" class="search" type="search" autocomplete="true" placeholder="Indiquez votre ville ou votre code postal">
+                <input type="hidden" value="" name="placeTop">
+                <input type="hidden" value="" name="placeBottom">
+                <input type="hidden" value="" name="placeLeft">
+                <input type="hidden" value="" name="placeRight">
                 <input type="submit" value="chercher" class="btn bg-yellow submit">
             </form>
         </div>
@@ -111,7 +115,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
     <script type="text/javascript">
 
         var latlng = new google.maps.LatLng(48.8575162, 2.3426246);
@@ -132,6 +136,22 @@
         var icon_grey = "{{ asset('bundles/pnpn/images/markers/marqueur-grey.png') }}";
         var icon_jaune = "{{ asset('bundles/pnpn/images/markers/marqueur-jaune.png') }}";
         var icon_rouge = "{{ asset('bundles/pnpn/images/markers/marqueur-rouge.png') }}";
+
+        // Input du lieu
+        var input = /** @type {HTMLInputElement} */(
+                document.getElementById('pac-input'));
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        //autocomplete.bindTo('bounds', map);
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            var place = autocomplete.getPlace();
+            if (place.geometry)
+            {
+                $('input[name="placeTop"]').val(place.geometry.viewport.Aa.j);
+                $('input[name="placeBottom"]').val(place.geometry.viewport.Aa.k);
+                $('input[name="placeLeft"]').val(place.geometry.viewport.ra.j);
+                $('input[name="placeRight"]').val(place.geometry.viewport.ra.k);
+            }
+        });
 
         //Positionnement des nounou
         {% for entity in nounous %}
@@ -212,6 +232,14 @@
         });
         {% endif %}
         {% endfor %}
+
+        // Intercept search form submit
+        function sumbmitSearchForm(){
+            if (!$('input[name="placeTop"]').val().length)
+            {
+                return false;
+            }
+        }
 
     </script>
     <script type="text/javascript">
