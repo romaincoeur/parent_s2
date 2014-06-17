@@ -94,7 +94,12 @@
                     <div class="details">
                         <img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="adresse"> {{ entity.user.unacurateAddress }} <br>
                         <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier"> {{ entity.user.age() }}&nbsp;ans <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience"> {{ entity.experience }} ans d'expérience <br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
+                        {% if entity.experience %}
+                        {{ entity.experience }} ans d'expérience <br>
+                        {% else %}
+                        pas d'expérience<br>
+                        {% endif %}
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
                         <p>
                             {% for pp in entity.diplomas %}
@@ -149,19 +154,22 @@
                         <p>{{ entity.hobbies }}</p>
 
                         <b>Tâches supplémentaire&nbsp;:</b>
-                        <p>{{ entity.anythingelse }}</p>
+                        <p>{% for task in entity.extraTasks %}
+                                - {{ entity.user.getExtraTaskss[task] }}<br>
+                            {% endfor %}
+                        </p>
 
                         <b>Les petits plus&nbsp;:</b>
                         <p>
                             {% for pp in entity.petitsplus %}
-                                - {{ pp }}<br>
+                                - {{ entity.user.getPetitsPluss[pp] }}<br>
                             {% endfor %}
                         </p>
 
                         <b>Particularités :</b>
                         <p>
                             {% for part in entity.particularite %}
-                                - {{ part }}<br>
+                                - {{ entity.user.getParticularites[part] }}<br>
                             {% endfor %}
                         </p>
                     </div>

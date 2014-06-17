@@ -17,7 +17,8 @@ class JobRepository extends EntityRepository
         $qb = $this->createQueryBuilder('j')
             ->where('j.parent = :parent')
             ->setParameter('parent', $parent)
-            ->andwhere('j.status = \'annonce\'');
+            ->andwhere('j.status = \'annonce\'')
+            ->orderBy('j.created_at', 'DESC');
 
         if($max)
         {
@@ -34,7 +35,8 @@ class JobRepository extends EntityRepository
         $qb = $this->createQueryBuilder('b')
             ->where('b.address LIKE :search')
             ->orWhere('b.unacurateAddress LIKE :search')
-            ->setParameter('search', '%'.$search.'%');
+            ->setParameter('search', '%'.$search.'%')
+            ->orderBy('b.created_at', 'DESC');
         if($max)
         {
             $qb->setMaxResults($max);
@@ -56,7 +58,8 @@ class JobRepository extends EntityRepository
             ->andWhere('b.longitude > :left')
             ->setParameter('left', $left)
             ->andWhere('b.longitude < :right')
-            ->setParameter('right', $right);
+            ->setParameter('right', $right)
+            ->orderBy('b.created_at', 'DESC');
         if($max)
         {
             $qb->setMaxResults($max);

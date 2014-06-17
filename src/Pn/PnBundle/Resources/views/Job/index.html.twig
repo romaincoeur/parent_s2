@@ -259,7 +259,7 @@
         var icon_jaune = "{{ asset('bundles/pnpn/images/markers/marqueur-jaune.png') }}";
         var icon_rouge = "{{ asset('bundles/pnpn/images/markers/marqueur-rouge.png') }}";
 
-        var latlng = new google.maps.LatLng(48.8575162, 2.3426246);
+        var latlng = new google.maps.LatLng(46.7592690, 2.8603553);
         {% if mapTop and mapBottom and mapLeft and mapRight %}
         var bounds = new google.maps.LatLngBounds();
         bounds.extend(new google.maps.LatLng({{ mapTop }}, {{ mapLeft }}));
@@ -270,7 +270,7 @@
         //de définir des options d'affichage de notre carte
         var options = {
             center: latlng,
-            zoom: 7,
+            zoom: 5,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
@@ -288,10 +288,10 @@
             var place = autocomplete.getPlace();
             if (place.geometry)
             {
-                $('input[name="placeTop"]').val(place.geometry.viewport.Aa.j);
-                $('input[name="placeBottom"]').val(place.geometry.viewport.Aa.k);
-                $('input[name="placeLeft"]').val(place.geometry.viewport.ra.j);
-                $('input[name="placeRight"]').val(place.geometry.viewport.ra.k);
+                $('input[name="placeTop"]').val(place.geometry.viewport.getNorthEast().lat());
+                $('input[name="placeBottom"]').val(place.geometry.viewport.getSouthWest().lat());
+                $('input[name="placeLeft"]').val(place.geometry.viewport.getSouthWest().lng());
+                $('input[name="placeRight"]').val(place.geometry.viewport.getNorthEast().lng());
             }
         });
 

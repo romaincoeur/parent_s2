@@ -79,19 +79,35 @@ sonata_admin:
     title_logo: bundles/pnpn/images/favicon.png
     security:
         handler: sonata.admin.security.handler.role
+    templates:
+        # other configuration options
+        search:              SonataAdminBundle:Core:search.html.twig
+        search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
+    dashboard:
+        blocks:
+#            - { position: left, type: sonata.admin.block.admin_list }
+            - { position: left, type: sonata.block.service.statistics }
+            - { position: right, type: sonata.block.service.connected.user }
 
 sonata_block:
     default_contexts: [cms]
     blocks:
         sonata.admin.block.admin_list:
             contexts:   [admin]
-
+        sonata.admin.block.search_result:
+            contexts: [admin]
         sonata.block.service.text:
         sonata.block.service.action:
         sonata.block.service.rss:
+        sonata.block.service.statistics:
+        sonata.block.service.connected.user:
 
 services:
     twig.extension.text:
        class: Twig_Extensions_Extension_Text
        tags:
            - { name: twig.extension }
+
+genemu_form:
+    tinymce:
+        theme:   modern

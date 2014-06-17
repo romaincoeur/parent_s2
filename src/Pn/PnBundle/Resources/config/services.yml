@@ -46,9 +46,7 @@ parameters:
 
 
 services:
-
     pn.calendar:
         class: Pn\PnBundle\Services\Calendar
-
     pn.crop:
         class: Pn\PnBundle\Services\Crop

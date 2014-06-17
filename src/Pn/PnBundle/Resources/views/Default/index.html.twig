@@ -118,13 +118,13 @@
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
     <script type="text/javascript">
 
-        var latlng = new google.maps.LatLng(48.8575162, 2.3426246);
+        var latlng = new google.maps.LatLng(46.7592690, 2.8603553);
         // paris : 48.8575162	2.3426246
         //objet contenant des propriétés avec des identificateurs prédéfinis dans Google Maps permettant
         //de définir des options d'affichage de notre carte
         var options = {
             center: latlng,
-            zoom: 13,
+            zoom: 5,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
@@ -144,12 +144,13 @@
         //autocomplete.bindTo('bounds', map);
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             var place = autocomplete.getPlace();
+            //console.log(place.geometry.viewport.getNorthEast().lat());
             if (place.geometry)
             {
-                $('input[name="placeTop"]').val(place.geometry.viewport.Aa.j);
-                $('input[name="placeBottom"]').val(place.geometry.viewport.Aa.k);
-                $('input[name="placeLeft"]').val(place.geometry.viewport.ra.j);
-                $('input[name="placeRight"]').val(place.geometry.viewport.ra.k);
+                $('input[name="placeTop"]').val(place.geometry.viewport.getNorthEast().lat());
+                $('input[name="placeBottom"]').val(place.geometry.viewport.getSouthWest().lat());
+                $('input[name="placeLeft"]').val(place.geometry.viewport.getSouthWest().lng());
+                $('input[name="placeRight"]').val(place.geometry.viewport.getNorthEast().lng());
             }
         });
 
@@ -239,6 +240,19 @@
             {
                 return false;
             }
+        }
+
+        // Geolocation
+        if (navigator.geolocation)
+            var watchId = navigator.geolocation.watchPosition(successCallback,
+                    null,
+                    {enableHighAccuracy:true});
+        else
+            alert("Votre navigateur ne prend pas en compte la géolocalisation HTML5");
+
+        function successCallback(position){
+            map.panTo(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
+            map.setZoom(13);
         }
 
     </script>

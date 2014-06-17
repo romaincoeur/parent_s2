@@ -36,7 +36,11 @@ class BabysitterController extends Controller
 
         return $this->render('PnPnBundle:Babysitter:index.html.twig', array(
             'entities' => $entities,
-            'calendarMatrix' => $calendar
+            'calendarMatrix' => $calendar,
+            'mapTop' => null,
+            'mapBottom' => null,
+            'mapLeft' => null,
+            'mapRight' => null,
         ));
     }
 
@@ -422,6 +426,60 @@ class BabysitterController extends Controller
 
         $response['success'] = true;
         //$response['message'] = $user->getBirthdate()->format( 'd - m - Y');
+
+        // Response
+        return new JsonResponse( $response );
+    }
+
+    /**
+     * Edits presentation field
+     * AJAX
+     *
+     */
+    public function presentationAJAXAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if ($user->getType() != 'nounou') {
+            throw $this->createNotFoundException('User needs to be of type "nounou"');
+        }
+
+        $entity = $user->getBabysitter();
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Babysitter entity.');
+        }
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Babysitter entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $value = $request->request->get('pn_pnbundle_babysitter');
+        }
+        else
+        {
+            $value = $request->query->get('pn_pnbundle_babysitter');
+        }
+
+        // Update Parameter
+        $response['success'] = false;
+        $entity->setPresentation($value["presentation"]);
+
+        //$this->updateTrustpoints($entity);
+
+        // Persist in DB
+        $em->persist($entity);
+        //$em->persist($user);
+        $em->flush();
+
+        $response['success'] = true;
+        $response['message'] = $value["presentation"];
 
         // Response
         return new JsonResponse( $response );

@@ -52,7 +52,14 @@ class DefaultController extends Controller
         }
         else
         {
-            return $this->render('PnPnBundle:Default:connected.html.twig');
+            if ($user->getType() == 'admin')
+            {
+                return $this->render('PnPnBundle:Default:admin.html.twig');
+            }
+            else
+            {
+                return $this->render('PnPnBundle:Default:connected.html.twig');
+            }
         }
     }
 

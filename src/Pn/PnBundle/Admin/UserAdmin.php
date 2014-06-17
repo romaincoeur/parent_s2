@@ -30,14 +30,26 @@ class UserAdmin extends Admin
         $formMapper
             ->add('firstname')
             ->add('lastname')
-            ->add('email')
-            ->add('birthdate', 'birthday')
-            ->add('address')
-            ->add('city')
             ->add('postcode')
+            ->add('city')
+            ->add('email')
+            ->add('rawPassword')
+            ->add('password')
+            ->add('type', 'choice', array(
+                'choices'   => array('parent' => 'Parent', 'nounou' => 'Nounou'),
+                'expanded' => true,
+                'required'  => true,
+            ))
+            //->add('parent', 'sonata_type_model_list')
+            //->add('babysitter', 'sonata_type_model_list')
+            ->add('address')
+            ->add('phone')
+            ->add('birthdate', 'birthday', array(
+                'required'  => false,
+            ))
+            ->add('created_at')
             ->add('latitude')
             ->add('longitude')
-            ->add('phone')
             ->add('is_activated')
         ;
     }
@@ -74,9 +86,10 @@ class UserAdmin extends Admin
         ;
     }
 
-    protected function configureShowField(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->add('username')
             ->add('firstname')
             ->add('lastname')
             ->add('email')

@@ -44,4 +44,9 @@ pn_babysitter_updateAddress:
 pn_babysitter_videoUpload:
     pattern:  /videoUpload
     defaults: { _controller: "PnPnBundle:Babysitter:videoUploadAJAX" }
+    requirements: { _method: post|put }
+
+pn_babysitter_presentationAJAX:
+    pattern:  /presentationAJAX
+    defaults: { _controller: "PnPnBundle:Babysitter:presentationAJAX" }
     requirements: { _method: post|put|get }

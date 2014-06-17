@@ -59,7 +59,7 @@ class MailTemplateAdmin extends Admin
         ;
     }
 
-    protected function configureShowField(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->add('title')

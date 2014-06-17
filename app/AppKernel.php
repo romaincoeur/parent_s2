@@ -28,6 +28,7 @@ class AppKernel extends Kernel
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Pn\BlogBundle\PnBlogBundle(),
             new Divi\AjaxLoginBundle\DiviAjaxLoginBundle(),
+            new Genemu\Bundle\FormBundle\GenemuFormBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

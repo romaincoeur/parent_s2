@@ -8,177 +8,182 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/pnpn/css/crop.css') }}" type="text/css" />
+    {{ form_stylesheet(form) }}
 {% endblock %}
 
 {% block body %}
     <div class="profile-page babysitter wrap edit-page">
 
 
-        <div id="map" style="height: 180px;">
-            Veuillez patienter pendant le chargement de la carte...
+    <div id="map" style="height: 180px;">
+        Veuillez patienter pendant le chargement de la carte...
+    </div>
+    <a href="{{ path('myprofile_show') }}"><div class="apercu bg-red white">aperçu de votre profil</div></a>
+    <div class="infobox-wrapper">
+        <div id="infobox">
+            Déplacez moi pour indiquer votre adresse.
         </div>
-        <a href="{{ path('myprofile_show') }}"><div class="apercu bg-red white">aperçu de votre profil</div></a>
-        <div class="infobox-wrapper">
-            <div id="infobox">
-                Déplacez moi pour indiquer votre adresse.
-            </div>
-        </div>
+    </div>
 
 
-        <div class="description">
-            <div class="header">
-                <div class="left" style="position: relative; ">
-                    {% if entity.user.avatar %}
-                        <img class="profile-picture" src="{{ asset(entity.user.getWebPath()) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">
-                    {% else %}
-                        <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
-                    {% endif %}
-                    <div id="choose-photo">
-                        <form action="{{ path('pn_avatarUpload') }}" method="post" enctype="multipart/form-data" id="avatarUploadForm">
-                            <input type="file" class="uploadfile" id="uploadfile" name="uploadfile">
-                            <div class="newupload btn"><img src="{{ asset('bundles/pnpn/images/icons/profil-modif2.png') }}" alt="modif profile"></div>
+    <div class="description">
+        <div class="header">
+            <div class="left" style="position: relative; ">
+                {% if entity.user.avatar %}
+                    <img class="profile-picture" src="{{ asset(entity.user.getWebPath()) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">
+                {% else %}
+                    <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
+                {% endif %}
+                <div id="choose-photo">
+                    <form action="{{ path('pn_avatarUpload') }}" method="post" enctype="multipart/form-data" id="avatarUploadForm">
+                        <input type="file" class="uploadfile" id="uploadfile" name="uploadfile">
+                        <div class="newupload btn"><img src="{{ asset('bundles/pnpn/images/icons/profil-modif2.png') }}" alt="modif profile"></div>
 
-                            {# Coord fields #}
-                            <input type="hidden" id="x" name="x">
-                            <input type="hidden" id="y" name="y">
-                            <input type="hidden" id="w" name="w">
-                            <input type="hidden" id="h" name="h">
-                            {#<button type="button" class="btn choose-photo-button js-dropdown-toggle dropdown-toggle" id="profile_image_upload" data-toggle="dropdown">
-                                <img src="{{ asset('bundles/pnpn/images/icons/profil-modif2.png') }}" alt="modif profile">
-                            </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="profile_image_upload" style="list-style-type: none; top: 40px;">
-                                <li id="photo-choose-existing" class="photo-choose-existing upload-photo" role="presentation">
-                                    <input type="file" class="uploadfile" id="uploadfile">
-                                    <div class="newupload">Changer de photo</div>
-                                </li>
-                                <li id="photo-delete-image" class="" role="presentation">
-                                    <button type="button" class="dropdown-link" role="menuitem">Supprimer</button>
-                                </li>
-                            </ul>#}
-                        </form>
-                    </div>
+                        {# Coord fields #}
+                        <input type="hidden" id="x" name="x">
+                        <input type="hidden" id="y" name="y">
+                        <input type="hidden" id="w" name="w">
+                        <input type="hidden" id="h" name="h">
+                        {#<button type="button" class="btn choose-photo-button js-dropdown-toggle dropdown-toggle" id="profile_image_upload" data-toggle="dropdown">
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-modif2.png') }}" alt="modif profile">
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="profile_image_upload" style="list-style-type: none; top: 40px;">
+                            <li id="photo-choose-existing" class="photo-choose-existing upload-photo" role="presentation">
+                                <input type="file" class="uploadfile" id="uploadfile">
+                                <div class="newupload">Changer de photo</div>
+                            </li>
+                            <li id="photo-delete-image" class="" role="presentation">
+                                <button type="button" class="dropdown-link" role="menuitem">Supprimer</button>
+                            </li>
+                        </ul>#}
+                    </form>
+                </div>
 
-                    <div class="modal fade" id="cropDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-                        <div class="modal-dialog small">
-                            <div class="modal-content">
+                <div class="modal fade" id="cropDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog small">
+                        <div class="modal-content">
 
-                                <div class="modal-header bg-red small">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                                        <img src="{{ asset('bundles/pnpn/images/icons/croix.png') }}">
-                                    </button>
-                                    <h3 id="myModalLabel">Changer la photo</h3>
-                                </div>
-                                <div class="modal-body">
+                            <div class="modal-header bg-red small">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    <img src="{{ asset('bundles/pnpn/images/icons/croix.png') }}">
+                                </button>
+                                <h3 id="myModalLabel">Changer la photo</h3>
+                            </div>
+                            <div class="modal-body">
 
-                                    <div class="example">
+                                <div class="example">
 
-                                        <div class="default">
-                                            <div class="cropMain">
+                                    <div class="default">
+                                        <div class="cropMain">
 
-                                            </div>
-                                            <div class="cropSlider noUi-target">
-
-                                            </div>
-                                            <div id="output"></div>
-                                            <button>Valider</button>
                                         </div>
+                                        <div class="cropSlider noUi-target">
 
+                                        </div>
+                                        <div id="output"></div>
+                                        <button>Valider</button>
                                     </div>
 
                                 </div>
+
                             </div>
                         </div>
                     </div>
+                </div>
 
-                </div>
-                <div class="right">
-                    <div class="tarif">{{ form_errors(form.rate_price) }}{{ form_widget(form.rate_price) }}€ / {{ form_errors(form.rate_type) }}{{ form_widget(form.rate_type) }}</div>
-                </div>
-                {{ form_errors(form.user.firstname) }}
-                {{ form_widget(form.user.firstname) }}
-                {{ form_errors(form.user.lastname) }}
-                {{ form_widget(form.user.lastname) }}
             </div>
-            <div class="body">
+            <div class="right">
+                <div class="tarif">{{ form_errors(form.rate_price) }}{{ form_widget(form.rate_price) }}€ / {{ form_errors(form.rate_type) }}{{ form_widget(form.rate_type) }}</div>
+            </div>
+            {{ form_errors(form.user.firstname) }}
+            {{ form_widget(form.user.firstname) }}
+            {{ form_errors(form.user.lastname) }}
+            {{ form_widget(form.user.lastname) }}
+        </div>
+        <div class="body">
+            <form id="presentationForm" action="{{ path('pn_babysitter_presentationAJAX') }}">
                 {{ form_errors(form.presentation) }}
                 {{ form_widget(form.presentation) }}
+                <input type="submit" value="Enregistrer" style="background-color: #eeeeee; color: black; font-weight: normal; border-radius: 0; border: solid black 1px; border-top: none;">
+                <span id="presentationFormOutput"></span>
+            </form>
+        </div>
+    </div>
+
+    {{ form_errors(form) }}
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="coords">
+                <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ form_widget(form.user.phone) }}&nbsp;<br>
+            </div>
+            <div class="details">
+                <div class="detail" id="address">
+                    <img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="marker">
+                    {{ form_errors(form.user.address) }}
+                    {{ form_widget(form.user.address) }}
+                </div>
+                <div class="detail" id="birthdate">
+                    <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier">
+                    <b style="vertical-align: text-top;">Renseignez votre date de naissance</b>
+                    {{ form_errors(form.user.birthdate) }}
+                    {{ form_widget(form.user.birthdate) }}
+                </div>
+                <div class="detail" id="experience">
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
+                    {{ form_widget(form.experience) }} ans d'expérience
+                </div>
+                <div class="detail" id="diplomas">
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
+                    <b>Vos diplomes</b>
+                    {{ form_errors(form.diplomas) }}
+                    {% for child in form.diplomas %}
+                        <li style="list-style-type: none;">
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </li>
+                    {% endfor %}
+                </div>
+                <div class="detail" id="ageOfChildren">
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age">
+                    <b>Âges des enfants pris en charge</b>
+                    {{ form_errors(form.ageOfChildren) }}
+                    {% for child in form.ageOfChildren %}
+                        <li style="list-style-type: none;">
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </li>
+                    {% endfor %}
+                </div>
+                <div id="languages">
+                    <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="languages">
+                    <b>Langues parlées</b>
+                    {{ form_errors(form.languages) }}
+                    {% for child in form.languages %}
+                        <li style="list-style-type: none;">
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </li>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-
-        {{ form_errors(form) }}
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="coords">
-                    <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ form_widget(form.user.phone) }}&nbsp;<br>
-                </div>
-                <div class="details">
-                    <div class="detail" id="address">
-                        <img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="marker">
-                        {{ form_errors(form.user.address) }}
-                        {{ form_widget(form.user.address) }}
+        <div class="col-md-4 calendar">
+            {{ calendar.editTable(calendarMatrix) }}
+        </div>
+        <div class="col-md-4 right-panel">
+            {% if entity.video %}
+                <form action="{{ path('pn_babysitter_videoUpload') }}" method="post" enctype="multipart/form-data" id="videoUploadForm">
+                    <input type="file" class="videoUploadfile" id="videoUploadfile" name="videoUploadfile">
+                    <div class="newvideo">
+                        <video src="{{ asset(entity.getWebPath()) }}"></video>
+                        <div class="btn bg-red changeVideo">Changer la vidéo</div>
+                        <div id="progressbox" style="display: none;"><div id="progressbar"></div ><div id="statustxt">0%</div></div>
+                        <div id="videoOutput"></div>
                     </div>
-                    <div class="detail" id="birthdate">
-                        <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier">
-                        <b style="vertical-align: text-top;">Renseignez votre date de naissance</b>
-                        {{ form_errors(form.user.birthdate) }}
-                        {{ form_widget(form.user.birthdate) }}
-                    </div>
-                    <div class="detail" id="experience">
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
-                        {{ form_widget(form.experience) }} ans d'expérience
-                    </div>
-                    <div class="detail" id="diplomas">
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
-                        <b>Vos diplomes</b>
-                        {{ form_errors(form.diplomas) }}
-                        {% for child in form.diplomas %}
-                            <li style="list-style-type: none;">
-                                {{ form_widget(child) }}
-                                {{ form_label(child) }}
-                            </li>
-                        {% endfor %}
-                    </div>
-                    <div class="detail" id="ageOfChildren">
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age">
-                        <b>Âges des enfants pris en charge</b>
-                        {{ form_errors(form.ageOfChildren) }}
-                        {% for child in form.ageOfChildren %}
-                            <li style="list-style-type: none;">
-                                {{ form_widget(child) }}
-                                {{ form_label(child) }}
-                            </li>
-                        {% endfor %}
-                    </div>
-                    <div id="languages">
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="languages">
-                        <b>Langues parlées</b>
-                        {{ form_errors(form.languages) }}
-                        {% for child in form.languages %}
-                            <li style="list-style-type: none;">
-                                {{ form_widget(child) }}
-                                {{ form_label(child) }}
-                            </li>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 calendar">
-                {{ calendar.editTable(calendarMatrix) }}
-            </div>
-            <div class="col-md-4 right-panel">
-                {% if entity.video %}
-                    <form action="{{ path('pn_babysitter_videoUpload') }}" method="post" enctype="multipart/form-data" id="videoUploadForm">
-                        <input type="file" class="videoUploadfile" id="videoUploadfile" name="videoUploadfile">
-                        <div class="newvideo">
-                            <video src="{{ asset(entity.getWebPath()) }}"></video>
-                            <div class="btn bg-red changeVideo">Changer la vidéo</div>
-                            <div id="progressbox" style="display: none;"><div id="progressbar"></div ><div id="statustxt">0%</div></div>
-                            <div id="videoOutput"></div>
-                        </div>
-                        <img src="{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}" id="loading-img" style="display:none;" alt="Please Wait"/>
-                    </form>
-                {% else %}
+                    <img src="{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}" id="loading-img" style="display:none;" alt="Please Wait"/>
+                </form>
+            {% else %}
                 <form action="{{ path('pn_babysitter_videoUpload') }}" method="post" enctype="multipart/form-data" id="videoUploadForm">
                     <input type="file" class="videoUploadfile" id="videoUploadfile" name="videoUploadfile">
                     <div class="pres-video newvideo btn">
@@ -188,53 +193,53 @@
                     </div>
                     <img src="{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}" id="loading-img" style="display:none;" alt="Please Wait"/>
                 </form>
-                {% endif %}
-                <div class="other">
-                    <div id="favoriteactivities" style="margin-top: 0;">
-                        {{ form_errors(form.favoriteactivities) }}
-                        {{ form_widget(form.favoriteactivities) }}
-                    </div>
+            {% endif %}
+            <div class="other">
+                <div id="favoriteactivities" style="margin-top: 0;">
+                    {{ form_errors(form.favoriteactivities) }}
+                    {{ form_widget(form.favoriteactivities) }}
+                </div>
 
-                    <div id="hobbies">
-                        {{ form_errors(form.hobbies) }}
-                        {{ form_widget(form.hobbies) }}
-                    </div>
+                <div id="hobbies">
+                    {{ form_errors(form.hobbies) }}
+                    {{ form_widget(form.hobbies) }}
+                </div>
 
-                    <div id="particularite">
-                        <b>Atouts :</b>
-                        {{ form_errors(form.particularite) }}
-                        {% for child in form.particularite %}
-                            <li style="list-style-type: none;">
-                                {{ form_widget(child) }}
-                                {{ form_label(child) }}
-                            </li>
-                        {% endfor %}
-                    </div>
+                <div id="particularite">
+                    <b>Atouts :</b>
+                    {{ form_errors(form.particularite) }}
+                    {% for child in form.particularite %}
+                        <li style="list-style-type: none;">
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </li>
+                    {% endfor %}
+                </div>
 
-                    <div id="extratasks">
-                        <b>Tâches supplémentaire :</b>
-                        {{ form_errors(form.extraTasks) }}
-                        {% for child in form.extraTasks %}
-                            <li style="list-style-type: none;">
-                                {{ form_widget(child) }}
-                                {{ form_label(child) }}
-                            </li>
-                        {% endfor %}
-                    </div>
+                <div id="extratasks">
+                    <b>Tâches supplémentaire :</b>
+                    {{ form_errors(form.extraTasks) }}
+                    {% for child in form.extraTasks %}
+                        <li style="list-style-type: none;">
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </li>
+                    {% endfor %}
+                </div>
 
-                    <div id="petitsplus">
-                        <b>Les petits plus :</b>
-                        {{ form_errors(form.petitsplus) }}
-                        {% for child in form.petitsplus %}
-                            <li style="list-style-type: none;">
-                                {{ form_widget(child) }}
-                                {{ form_label(child) }}
-                            </li>
-                        {% endfor %}
-                    </div>
+                <div id="petitsplus">
+                    <b>Les petits plus :</b>
+                    {{ form_errors(form.petitsplus) }}
+                    {% for child in form.petitsplus %}
+                        <li style="list-style-type: none;">
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </li>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 {% endblock %}
@@ -274,14 +279,14 @@
 
                 // Info windows
                 /*var contentString =
-                        '<div id="infoWindow">' +
-                                '   <p>Déplacez-moi pour indiquer votre adresse</p>' +
-                                '</div>';
+                 '<div id="infoWindow">' +
+                 '   <p>Déplacez-moi pour indiquer votre adresse</p>' +
+                 '</div>';
 
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString,
-                    pixelOffset: new google.maps.Size(-150, 60)
-                });*/
+                 var infowindow = new google.maps.InfoWindow({
+                 content: contentString,
+                 pixelOffset: new google.maps.Size(-150, 60)
+                 });*/
 
                 // Info Box
                 infobox = new InfoBox({
@@ -398,6 +403,25 @@
     </script>
     <script type="text/javascript" src="{{ asset('bundles/pnpn/js/crop.js') }}"></script>
     {% include 'PnPnBundle:Javascript:babysitter.html.twig' %}
+    {% if app.environment == 'dev' %}
+        <script type="text/javascript" src="{{ asset('bundles/pnpn/js/tinymce/tinymce.min.js') }}"></script>
+        {{ form_javascript(form) }}
+    {% else %}
+        <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    {% endif %}
+    <script type="text/javascript">
+        $(function() {
+            tinyMCE.init({
+                setup : function(ed) {
+                    ed.on('change', function(e) {
+                        console.log('the event object '+e);
+                        console.log('the editor object '+ed);
+                        console.log('the content '+ed.getContent());
+                    });
+                }
+            });
+        })
+    </script>
 {% endblock %}
 
 

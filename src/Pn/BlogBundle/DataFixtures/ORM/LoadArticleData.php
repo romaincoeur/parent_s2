@@ -23,11 +23,18 @@ class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface
         $article1->setCategory($em->merge($this->getReference('cat-prevention')));
         $article1->setPresentation('Les comptines représentent une source majeure d\'apprentissage
         linguistique et culturel des tout-petits. Elles permettent à l\'enfant d\'incorporer');
+        $article1->setMiniPresentation('Les comptines représentent une source majeure d\'apprentissage
+        linguistique et culturel des tout-petits. Elles permettent à l\'enfant d\'incorporer...');
+        $article1->setIsActivated(true);
+        $article1->setOnWelcomePage(true);
 
         $article2 = new Article();
         $article2->setCategory($em->merge($this->getReference('cat-baby')));
         $article2->setTitle('Comment choisir son mode de garde');
         $article2->setPresentation('Il existe quatre modes de garde principaux pour un enfant de moins de 3 ans');
+        $article2->setMiniPresentation('Il existe quatre modes de garde principaux pour un enfant de moins de 3 ans...');
+        $article2->setIsActivated(true);
+        $article2->setOnWelcomePage(true);
 
 
         $article3 = new Article();
@@ -35,12 +42,20 @@ class LoadArticleData extends AbstractFixture implements OrderedFixtureInterface
         $article3->setTitle('Développement psychomoteur, socio affectif et cognitif de l\'enfant');
         $article3->setPresentation('Mener de front vie familiale et vie professionnelle est l\'un des
         principaux défis des femmes d\'aujourdh\'ui' );
+        $article3->setMiniPresentation('Mener de front vie familiale et vie professionnelle est l\'un des
+        principaux défis des femmes d\'aujourdh\'ui...' );
+        $article3->setIsActivated(true);
+        $article3->setOnWelcomePage(true);
 
         $article4 = new Article();
         $article4->setCategory($em->merge($this->getReference('cat-new')));
         $article4->setTitle('La boite à comptines est née !');
         $article4->setPresentation('La boite à comptines est une application collaborative de collecte
         et de partage de comptines pour les touts-petits. Son ambition est d\'aider les parent.');
+        $article4->setMiniPresentation('La boite à comptines est une application collaborative de collecte
+        et de partage de comptines pour les touts-petits. Son ambition est d\'aider les...');
+        $article4->setIsActivated(true);
+        $article4->setOnWelcomePage(true);
 
 
         $em->persist($article1);

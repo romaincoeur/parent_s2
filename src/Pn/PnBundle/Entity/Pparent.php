@@ -21,7 +21,10 @@ class Pparent
 
     public function __toString()
     {
-        return $this->getUser()->getHiddenName();
+        if ($this->getUser() != null)
+            return $this->getUser()->getHiddenName();
+        else
+            return null;
     }
 
     public function getCurrentJob()
@@ -88,7 +91,7 @@ class Pparent
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -111,7 +114,7 @@ class Pparent
     /**
      * Get nbChildren
      *
-     * @return integer 
+     * @return integer
      */
     public function getNbChildren()
     {
@@ -134,7 +137,7 @@ class Pparent
     /**
      * Get trustpoints
      *
-     * @return integer 
+     * @return integer
      */
     public function getTrustpoints()
     {
@@ -157,7 +160,7 @@ class Pparent
     /**
      * Get calendar
      *
-     * @return string 
+     * @return string
      */
     public function getCalendar()
     {
@@ -180,7 +183,7 @@ class Pparent
     /**
      * Get user
      *
-     * @return \Pn\PnBundle\Entity\User 
+     * @return \Pn\PnBundle\Entity\User
      */
     public function getUser()
     {
@@ -226,7 +229,7 @@ class Pparent
     /**
      * Get jobs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getJobs()
     {

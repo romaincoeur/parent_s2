@@ -29,12 +29,18 @@ class ArticleAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+            ->with('General')
             ->add('title')
-            ->add('category')
+            ->add('category', null, array(
+                'required'  => true,
+            ))
             ->add('miniPresentation')
-            ->add('presentation')
+            ->add('presentation', 'genemu_tinymce', array(
+                'attr' => array('class' => 'tinymce')
+            ))
             ->add('onWelcomePage')
             ->add('is_activated')
+            ->end()
         ;
     }
 
@@ -66,7 +72,7 @@ class ArticleAdmin extends Admin
         ;
     }
 
-    protected function configureShowField(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->add('title')

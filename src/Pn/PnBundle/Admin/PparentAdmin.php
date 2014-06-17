@@ -28,7 +28,7 @@ class PparentAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('user')
+            ->add('user', 'sonata_type_model_list')
         ;
     }
 
@@ -43,6 +43,8 @@ class PparentAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('user')
+            ->add('user.firstname')
+            ->add('user.lastname')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -53,7 +55,7 @@ class PparentAdmin extends Admin
         ;
     }
 
-    protected function configureShowField(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->add('user')

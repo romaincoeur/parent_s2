@@ -10,6 +10,7 @@
 
 namespace Pn\PnBundle\Admin;
 
+use Pn\PnBundle\Entity\User;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -44,7 +45,12 @@ class JobAdmin extends Admin
             ->add('duration')
             ->add('how_to_apply')
             ->add('calendar')
-            ->add('category')
+            ->add('category', 'choice', array(
+                'choices'   => User::getsecondTypes(),
+                'expanded' => false,
+                'multiple' => false,
+                'required'  => true,
+            ))
             ->add('experience')
             ->add('expires_at')
             ->add('is_public')
@@ -80,7 +86,7 @@ class JobAdmin extends Admin
         ;
     }
 
-    protected function configureShowField(ShowMapper $showMapper)
+    protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
             ->add('title')

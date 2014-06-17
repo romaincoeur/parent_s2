@@ -17,7 +17,7 @@ class BabysitterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('presentation', 'textarea', array(
+            ->add('presentation', 'genemu_tinymce', array(
                 'attr' => array(
                     'placeholder' => 'Décrivez-vous en quelques lignes',
                 ),

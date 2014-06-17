@@ -62,61 +62,92 @@ $(document).ready(function(){
 
     $('#pn_pnbundle_babysitter_user_firstname').change(function(){
         updateField($(this).attr('id'), 'firstname', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_user_lastname').change(function(){
         updateField($(this).attr('id'), 'lastname', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_rate_price').change(function(){
         updateField($(this).attr('id'), 'rate_price', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_rate_type').change(function(){
         updateField($(this).attr('id'), 'rate_type', $(this).val());
-    })
-    $('#pn_pnbundle_babysitter_presentation').change(function(){
+    });
+    /*$('#tinymce').change(function(){
         updateField($(this).attr('id'), 'presentation', $(this).val());
-    })
+    })*/
     $('#pn_pnbundle_babysitter_user_phone').change(function(){
         updateField($(this).attr('id'), 'phone', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_user_address').change(function(){
         updateField($(this).attr('id'), 'address', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_user_birthdate_day').change(function(){
         updateField($(this).attr('id'), 'birthdate_day', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_user_birthdate_month').change(function(){
         updateField($(this).attr('id'), 'birthdate_month', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_user_birthdate_year').change(function(){
         updateField($(this).attr('id'), 'birthdate_year', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_experience').change(function(){
         updateField($(this).attr('id'), 'experience', $(this).val());
-    })
+    });
     $('input[name="pn_pnbundle_babysitter[diplomas][]"]').change(function(){
         updateField('diplomas', 'diplomas', $(this).val())
-    })
+    });
     $('input[name="pn_pnbundle_babysitter[ageOfChildren][]"]').change(function(){
         updateField('ageOfChildren', 'ageOfChildren', $(this).val())
-    })
+    });
     $('input[name="pn_pnbundle_babysitter[languages][]"]').change(function(){
         updateField('languages', 'languages', $(this).val())
-    })
+    });
     $('input[name="pn_pnbundle_babysitter[particularite][]"]').change(function(){
         updateField('particularite', 'particularite', $(this).val())
-    })
+    });
     $('input[name="pn_pnbundle_babysitter[extraTasks][]"]').change(function(){
         updateField('extratasks', 'extraTasks', $(this).val())
-    })
+    });
     $('input[name="pn_pnbundle_babysitter[petitsplus][]"]').change(function(){
         updateField('petitsplus', 'petitPlus', $(this).val())
-    })
+    });
     $('#pn_pnbundle_babysitter_favoriteactivities').change(function(){
         updateField($(this).attr('id'), 'favoriteactivities', $(this).val());
-    })
+    });
     $('#pn_pnbundle_babysitter_hobbies').change(function(){
         updateField($(this).attr('id'), 'hobbies', $(this).val());
-    })
+    });
+
+
+    // wysiwyg
+    $('#presentationForm').submit(function(e){
+        e.preventDefault();
+        var presentationOptions = {
+            target:   '#presentationFormOutput',   // target element(s) to be updated with server response
+            //beforeSubmit:  videoBeforeSubmit,  // pre-submit callback
+            resetForm: false,        // reset the form after successful submit
+            success: function(data) {
+                if (data.success)
+                {
+                    $('#presentationFormOutput').html('OK').delay( 800 ).fadeOut(400);
+                    window.setTimeout(function() {
+                        $('#presentationFormOutput').html('').css('display','inline');
+                    }, 2000);
+                }
+                else
+                {
+                    $('#presentationFormOutput').html(data.message);
+                }
+            },
+            error: function(error){
+                $('#presentationFormOutput').html(error);
+                //$('#cropAjaxLoader').remove();
+            }
+        };
+        window.setTimeout(function() {
+            $('#presentationForm').ajaxSubmit(presentationOptions);
+        }, 10);
+     });
 
 
     // Calendar AJAX update and feedback

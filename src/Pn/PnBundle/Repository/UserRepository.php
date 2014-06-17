@@ -69,4 +69,34 @@ class UserRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+
+    public function count()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb ->select($qb->expr()->count('u'));
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countBabysitters()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->where('u.type = \'nounou\'');
+        $qb ->select($qb->expr()->count('u'));
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countParents()
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->where('u.type = \'parent\'');
+        $qb ->select($qb->expr()->count('u'));
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }

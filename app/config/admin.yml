@@ -44,3 +44,19 @@ services:
             tags:
                 - { name: sonata.admin, manager_type: orm, group: users, label: Recommendations }
             arguments: [null, Pn\PnBundle\Entity\Recommendation, PnPnBundle:RecommendationAdmin]
+    sonata.block.service.statistics:
+        class: Pn\PnBundle\Block\Service\StatisticsBlockService
+        tags:
+            - { name: sonata.block }
+        arguments:
+            - "sonata.block.service.statistics"
+            - @templating
+            - @doctrine.orm.entity_manager
+    sonata.block.service.connected.user:
+        class: Pn\PnBundle\Block\Service\ConnectedUserBlockService
+        tags:
+            - { name: sonata.block }
+        arguments:
+            - "sonata.block.service.connected.user"
+            - @templating
+            - @security.context

@@ -45,6 +45,10 @@ class JobController extends Controller
 
         return $this->render('PnPnBundle:Job:index.html.twig', array(
             'entities' => $entities,
+            'mapTop' => null,
+            'mapBottom' => null,
+            'mapLeft' => null,
+            'mapRight' => null,
         ));
     }
 
