@@ -1,0 +1,78 @@
+# src/Application/Sonata/UserBundle/Resources/config/doctrine/User.orm.yml
+
+Application\Sonata\UserBundle\Entity\User:
+  type: entity
+  repositoryClass: Application\Sonata\UserBundle\Repository\UserRepository
+  table: fos_user_user
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    address:
+      type: string
+      length: 255
+      nullable: true
+    unacurateAddress:
+      type: string
+      length: 255
+      nullable: true
+    postcode:
+      type: string
+      length: 255
+      nullable: true
+    departement:
+      type: string
+      length: 255
+      nullable: true
+    city:
+      type: string
+      length: 255
+      nullable: true
+    latitude:
+      type: decimal
+      length: 10
+      scale: 8
+      nullable: true
+    longitude:
+      type: decimal
+      length: 10
+      scale: 8
+      nullable: true
+    avatar:
+      type: string
+      length: 255
+      nullable: true
+  oneToOne:
+    babysitter:
+      targetEntity: Pn\PnBundle\Entity\Babysitter
+      mappedBy: user
+      joinColumn:
+          onDelete: CASCADE
+    parent:
+      targetEntity: Pn\PnBundle\Entity\Pparent
+      mappedBy: user
+      joinColumn:
+          onDelete: CASCADE
+  oneToMany:
+    sent_messages:
+      targetEntity: Pn\PnBundle\Entity\Message
+      mappedBy: sender
+    received_messages:
+      targetEntity: Pn\PnBundle\Entity\Message
+      mappedBy: receiver
+    given_recommendations:
+      targetEntity: Pn\PnBundle\Entity\Recommendation
+      mappedBy: giver
+    received_recommendations:
+      targetEntity: Pn\PnBundle\Entity\Recommendation
+      mappedBy: receiver
+    comments:
+      targetEntity: Application\Sonata\NewsBundle\Entity\Comment
+      mappedBy: author
+  lifecycleCallbacks:
+    prePersist: [ preUpload, setDefaultValues ]
+    preUpdate: [ preUpload ]
+    postPersist: [ upload ]
+    postUpdate: [ upload ]
+    postRemove: [ removeUpload ]

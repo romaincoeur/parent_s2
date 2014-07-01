@@ -62,6 +62,7 @@ class Pparent
 
     // GENERATED CODE
 
+
     /**
      * @var integer
      */
@@ -83,15 +84,20 @@ class Pparent
     private $calendar;
 
     /**
-     * @var \Pn\PnBundle\Entity\User
+     * @var \Application\Sonata\UserBundle\Entity\User
      */
     private $user;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $jobs;
 
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -114,7 +120,7 @@ class Pparent
     /**
      * Get nbChildren
      *
-     * @return integer
+     * @return integer 
      */
     public function getNbChildren()
     {
@@ -137,7 +143,7 @@ class Pparent
     /**
      * Get trustpoints
      *
-     * @return integer
+     * @return integer 
      */
     public function getTrustpoints()
     {
@@ -160,7 +166,7 @@ class Pparent
     /**
      * Get calendar
      *
-     * @return string
+     * @return string 
      */
     public function getCalendar()
     {
@@ -170,10 +176,10 @@ class Pparent
     /**
      * Set user
      *
-     * @param \Pn\PnBundle\Entity\User $user
+     * @param \Application\Sonata\UserBundle\Entity\User $user
      * @return Pparent
      */
-    public function setUser(\Pn\PnBundle\Entity\User $user = null)
+    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -183,33 +189,20 @@ class Pparent
     /**
      * Get user
      *
-     * @return \Pn\PnBundle\Entity\User
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
     public function getUser()
     {
         return $this->user;
     }
-    /**
-     * @ORM\PrePersist
-     */
-    public function setDefaultValues()
-    {
-        // Add your code here
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $jobs;
-
-
 
     /**
      * Add jobs
      *
-     * @param \Pn\PnBundle\Entity\job $jobs
+     * @param \Pn\PnBundle\Entity\Job $jobs
      * @return Pparent
      */
-    public function addJob(\Pn\PnBundle\Entity\job $jobs)
+    public function addJob(\Pn\PnBundle\Entity\Job $jobs)
     {
         $this->jobs[] = $jobs;
 
@@ -219,9 +212,9 @@ class Pparent
     /**
      * Remove jobs
      *
-     * @param \Pn\PnBundle\Entity\job $jobs
+     * @param \Pn\PnBundle\Entity\Job $jobs
      */
-    public function removeJob(\Pn\PnBundle\Entity\job $jobs)
+    public function removeJob(\Pn\PnBundle\Entity\Job $jobs)
     {
         $this->jobs->removeElement($jobs);
     }
@@ -229,10 +222,17 @@ class Pparent
     /**
      * Get jobs
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getJobs()
     {
         return $this->jobs;
+    }
+    /**
+     * @ORM\PrePersist
+     */
+    public function setDefaultValues()
+    {
+        // Add your code here
     }
 }

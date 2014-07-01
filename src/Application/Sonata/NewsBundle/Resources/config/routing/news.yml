@@ -1,0 +1,42 @@
+
+sonata_news_add_comment:
+    pattern:  /add-comment/{id}
+    defaults: { _controller: "SonataNewsBundle:Post:addComment" }
+
+sonata_news_archive_monthly:
+    pattern:  /archive/{year}/{month}.{_format}
+    defaults: { _controller: "SonataNewsBundle:Post:archiveMonthly", _format: "html" }
+    requirements: { _format: html|rss, year: \d+, month: \d+ }
+
+sonata_news_tag:
+    pattern:  /tag/{tag}.{_format}
+    defaults: { _controller: "SonataNewsBundle:Post:tag", _format: "html" }
+    requirements: { _format: html|rss }
+
+sonata_news_collection:
+    pattern:  /collection/{collection}.{_format}
+    defaults: { _controller: "SonataNewsBundle:Post:collection", _format: "html" }
+    requirements: { _format: html|rss }
+
+sonata_news_archive_yearly:
+    pattern:  /archive/{year}.{_format}
+    defaults: { _controller: "SonataNewsBundle:Post:archiveYearly", _format: "html" }
+    requirements: { _format: html|rss, year: \d+ }
+
+sonata_news_archive:
+    pattern:  /archive.{_format}
+    defaults: { _controller: "SonataNewsBundle:Post:archive", _format: "html" }
+    requirements: { _format: html|rss }
+
+sonata_news_comment_moderation:
+    pattern:  /comment/moderation/{commentId}/{hash}/{status}
+    defaults: { _controller: "SonataNewsBundle:Post:commentModeration" }
+
+sonata_news_view:
+    pattern:  /{permalink}.{_format}
+    defaults: { _controller: "SonataNewsBundle:Post:view", _format: "html" }
+    requirements: { _format: html|rss, permalink: .+? }
+
+sonata_news_home:
+    pattern:  /
+    defaults: { _controller: "SonataNewsBundle:Post:home" }

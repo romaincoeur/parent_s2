@@ -40,3 +40,8 @@ pn_job_updateCalendar:
     pattern:  /{id}/updateCalendar
     defaults: { _controller: "PnPnBundle:Job:updateCalendarAJAX" }
     requirements: { _method: post|put|get }
+
+pn_job_presentationAJAX:
+    pattern:  /presentationAJAX
+    defaults: { _controller: "PnPnBundle:Job:presentationAJAX" }
+    requirements: { _method: post|put|get }

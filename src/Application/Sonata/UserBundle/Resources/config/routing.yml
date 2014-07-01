@@ -1,0 +1,4 @@
+pn_avatarUpload:
+    pattern:  /avatarUpload
+    defaults: { _controller: "ApplicationSonataUserBundle:ProfileFOSUser1:avatarUploadAJAX" }
+    requirements: { _method: post|put|get }

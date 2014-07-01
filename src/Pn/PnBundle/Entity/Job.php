@@ -1357,4 +1357,32 @@ class Job
     {
         return $this->unacurateAddress;
     }
+    /**
+     * @var string
+     */
+    private $presentation;
+
+
+    /**
+     * Set presentation
+     *
+     * @param string $presentation
+     * @return Job
+     */
+    public function setPresentation($presentation)
+    {
+        $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    /**
+     * Get presentation
+     *
+     * @return string 
+     */
+    public function getPresentation()
+    {
+        return $this->presentation;
+    }
 }

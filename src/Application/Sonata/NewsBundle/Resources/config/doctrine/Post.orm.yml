@@ -1,0 +1,15 @@
+# src/Application/Sonata/NewsBundle/Resources/config/doctrine/Post.orm.yml
+Application\Sonata\NewsBundle\Entity\Post:
+  type: entity
+  repositoryClass: Application\Sonata\NewsBundle\Repository\PostRepository
+  table: news__post
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    onHomePage:
+      type: boolean
+      nullable: true
+  lifecycleCallbacks:
+    prePersist: [ setDefaultValues ]

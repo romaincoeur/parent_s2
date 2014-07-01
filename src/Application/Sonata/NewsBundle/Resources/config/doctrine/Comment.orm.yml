@@ -1,0 +1,18 @@
+# src/Application/Sonata/NewsBundle/Resources/config/doctrine/Comment.orm.yml
+Application\Sonata\NewsBundle\Entity\Comment:
+  type: entity
+  repositoryClass: Doctrine\ORM\EntityRepository
+  table: news__comment
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  manyToOne:
+    author:
+      targetEntity: Application\Sonata\UserBundle\Entity\User
+      inversedBy: comments
+      joinColumn:
+        name: user_id
+        referencedColumnName: id
+  lifecycleCallbacks:
+    prePersist: [ setDefaultValues ]

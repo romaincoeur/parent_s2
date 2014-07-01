@@ -56,7 +56,7 @@ class MessageController extends Controller
         // Check new conv
         if (!in_array( $conv, $exceptIds) && $conv != null)
         {
-            $interlocuteur = $em->getRepository('PnPnBundle:User')->findOneById($conv);
+            $interlocuteur = $em->getRepository('ApplicationSonataUserBundle:User')->findOneById($conv);
             $form = $this->createForm(new MessageType(), new Message(), array(
                 'action' => $this->generateUrl('message_send',array('to' => $interlocuteur->getId())),
                 'method' => 'POST',
@@ -70,7 +70,7 @@ class MessageController extends Controller
         }
 
         // Get users for new conversation
-        $users = $em->getRepository('PnPnBundle:User')->findAllExcept($exceptIds);
+        $users = $em->getRepository('ApplicationSonataUserBundle:User')->findAllExcept($exceptIds);
 
         return $this->render('PnPnBundle:Message:index.html.twig', array(
             'conversations' => $result,
@@ -88,7 +88,7 @@ class MessageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $sender = $this->getUser();
-        $receiver = $em->getRepository('PnPnBundle:User')->findOneById($to);
+        $receiver = $em->getRepository('ApplicationSonataUserBundle:User')->findOneById($to);
         $entity = new Message();
         $form = $this->createForm(new MessageType(), $entity, array(
             'action' => $this->generateUrl('message_send', array('to' => $to)),
@@ -139,7 +139,7 @@ class MessageController extends Controller
         $em = $this->getDoctrine()->getManager();
         $sender = $this->getUser();
         $receiverID = $request->request->get('userId');
-        $receiver = $em->getRepository('PnPnBundle:User')->findOneById($receiverID);
+        $receiver = $em->getRepository('ApplicationSonataUserBundle:User')->findOneById($receiverID);
         $entity = new Message();
         $form = $this->createForm(new MessageType(), $entity, array(
             'action' => $this->generateUrl('message_send', array('to' => $receiverID)),
@@ -192,7 +192,7 @@ class MessageController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $sender = $this->getUser();
-        $receiver = $em->getRepository('PnPnBundle:User')->findOneById($to);
+        $receiver = $em->getRepository('ApplicationSonataUserBundle:User')->findOneById($to);
         $entity = new Message();
         $form = $this->createForm(new MessageType(), $entity, array(
             'action' => $this->generateUrl('message_send', array('to' => $to)),

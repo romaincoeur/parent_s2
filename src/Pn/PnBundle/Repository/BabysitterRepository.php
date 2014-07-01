@@ -72,4 +72,25 @@ class BabysitterRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    public function count()
+    {
+        return $this->createQueryBuilder('b')
+            ->select('COUNT(b)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getLastUpdatedBabysitters($number = 3)
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->leftJoin('b.user', 'u')
+            ->orderBy('u.updatedAt', 'DESC')
+            ->setMaxResults($number);
+
+
+        $query = $qb->getQuery();
+
+        return $query->getResult();
+    }
 }

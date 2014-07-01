@@ -50,10 +50,6 @@ pn_pn_jobs:
     resource: "@PnPnBundle/Resources/config/routing/job.yml"
     prefix:   /job
 
-PnPnBundle_user:
-    resource: "@PnPnBundle/Resources/config/routing/user.yml"
-    prefix:   /user
-
 PnPnBundle_babysitter:
     resource: "@PnPnBundle/Resources/config/routing/babysitter.yml"
     prefix:   /babysitter

@@ -20,7 +20,7 @@ Pn\PnBundle\Entity\Pparent:
       nullable: true
   oneToOne:
     user:
-      targetEntity: User
+      targetEntity: Application\Sonata\UserBundle\Entity\User
       inversedBy: parent
       joinColumn:
         name: user_id

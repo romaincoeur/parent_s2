@@ -50,3 +50,7 @@ pn_babysitter_presentationAJAX:
     pattern:  /presentationAJAX
     defaults: { _controller: "PnPnBundle:Babysitter:presentationAJAX" }
     requirements: { _method: post|put|get }
+
+pn_babysitter_updateTrustpoints:
+    pattern:  /updateTrustpoints
+    defaults: { _controller: "PnPnBundle:Babysitter:updateAllTrustpoints" }

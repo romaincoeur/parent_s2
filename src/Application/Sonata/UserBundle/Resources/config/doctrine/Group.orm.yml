@@ -1,0 +1,9 @@
+# src/Application/Sonata/UserBundle/Resources/config/doctrine/Group.orm.yml
+
+Application\Sonata\UserBundle\Entity\Group:
+  type: entity
+  table: fos_user_group
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }

@@ -1,0 +1,36 @@
+<div class="alert alert-success" id="registerSuccess" style="display: none;"></div>
+<div class="alert alert-danger" id="registerErrors" style="display: none;"></div>
+
+<form id="registerForm" action="{{ path('fos_user_registration_register') }}" method="post" {{ form_enctype(form) }} class="fos_user_registration_register">
+
+    {{ form_errors(form.type) }}
+    {{ form_widget(form.type) }}
+
+    <div class="info">
+        <p>L'inscription est gratuite pendant la phase test du site. </p>
+    </div>
+
+    {{ form_errors(form.firstname) }}
+    {{ form_widget(form.firstname) }}
+
+    {{ form_errors(form.lastname) }}
+    {{ form_widget(form.lastname) }}
+
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.email) }}
+
+    {{ form_errors(form.plainPassword.first) }}
+    {{ form_widget(form.plainPassword.first) }}
+
+    {{ form_errors(form.plainPassword.second) }}
+    {{ form_widget(form.plainPassword.second) }}
+
+    {{ form_errors(form.secondType) }}
+    {{ form_widget(form.secondType) }}
+
+    {{ form_rest(form) }}
+
+    <button type="submit">Inscription</button>
+
+
+</form>

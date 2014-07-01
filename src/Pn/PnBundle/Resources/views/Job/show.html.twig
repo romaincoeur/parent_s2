@@ -18,7 +18,7 @@
             <div id="map" style="height: 180px;">
                 Veuillez patienter pendant le chargement de la carte...
             </div>
-            {% if (app.user) and (app.user.type == 'parent') and app.user.parent.id == entity.parent.id %}
+            {% if (app.user) and is_granted('ROLE_PARENT') and app.user.parent.id == entity.parent.id %}
                 <a href="{{ path('myprofile_edit') }}"><div class="edit bg-red white">modifiez votre annonce</div></a>
             {% endif %}
 
@@ -43,7 +43,7 @@
                     <h1>{{ entity.title }}</h1>
                 </div>
                 <div class="body">
-                    {{ entity.description|raw }}
+                    {{ entity.presentation|raw }}
                 </div>
             </div>
 
@@ -148,22 +148,26 @@
                 {% else %}
                     <a href="#login" role="button" class="btn bg-yellow" data-toggle="modal" style="width: 100%; margin-bottom: 30px;">Connectez-vous pour laisser une recommandation</a>
                 {% endif %}
-                {% for recommendation in entity.parent.user.receivedRecommendations|reverse %}
-                    <div class="recommandation">
-                        {% if recommendation.giver.avatar %}
-                            <img class="profile-picture" src="{{ asset('uploads/users/' ~ recommendation.giver.avatar) }}" alt="photo de profil de {{ recommendation.giver.firstname }}" style="height: 90px;">
-                        {% elseif recommendation.giver.type == 'nounou' %}
-                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 90px;">
-                        {% else %}
-                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 90px; width: 86px;">
-                        {% endif %}
-                        <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
-                        <div class="bulle">
-                            <p>{{ recommendation.body }}</p>
-                            <span class="red">{{ recommendation.giver.hiddenName }}</span> {{ recommendation.giver.type }}. Posté le {{ recommendation.createdAt|date('d-m-Y')  }}
+                {% if entity.parent.user.receivedRecommendations|length > 0 %}
+                    {% for recommendation in entity.parent.user.receivedRecommendations|reverse %}
+                        <div class="recommandation">
+                            {% if recommendation.giver.avatar %}
+                                <img class="profile-picture" src="{{ asset('uploads/users/' ~ recommendation.giver.avatar) }}" alt="photo de profil de {{ recommendation.giver.firstname }}" style="height: 90px;">
+                            {% elseif recommendation.giver.type == 'nounou' %}
+                                <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 90px;">
+                            {% else %}
+                                <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 90px; width: 86px;">
+                            {% endif %}
+                            <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
+                            <div class="bulle">
+                                <p>{{ recommendation.body }}</p>
+                                <span class="red">{{ recommendation.giver.hiddenName }}</span> {{ recommendation.giver.type }}. Posté le {{ recommendation.createdAt|date('d-m-Y')  }}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <p>{{ entity.parent.user.firstname }} n'a reçu aucune recommandation</p>
+                {% endif %}
             </div>
         </div>
     </div>

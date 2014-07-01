@@ -2,7 +2,8 @@
 
 namespace Pn\PnBundle\Form;
 
-use Pn\PnBundle\Entity\User;
+use Application\Sonata\UserBundle\Entity\User;
+use Application\Sonata\UserBundle\Form\Type\UserFullType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;

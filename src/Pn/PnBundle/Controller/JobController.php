@@ -178,12 +178,16 @@ class JobController extends Controller
         if (!$user) {
             throw $this->createNotFoundException('Vous devez être connecté pour accéeder à cette fonctionalité');
         }
-        if ($user->getType() != 'parent') {
+        if (!$user->hasRole('ROLE_PARENT')) {
             throw $this->createNotFoundException('Seuls les parents peuvent creer des annonces.');
         }
 
-        $entity = $user->getParent()->getCurrentJob();
+        $parent = $user->getParent();
+        if (!$parent) {
+            throw $this->createNotFoundException('Unable to find Parent entity.');
+        }
 
+        $entity = $parent->getCurrentJob();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Job entity.');
         }
@@ -302,7 +306,7 @@ class JobController extends Controller
             $response['message'] = 'Not connected user';
             return new JsonResponse( $response );
         }
-        if ($user->getType() != 'parent') {
+        if (!$user->hasRole('ROLE_PARENT')) {
             $response['success'] = false;
             $response['message'] = 'User needs to be of type "parent"';
             return new JsonResponse( $response );
@@ -366,7 +370,7 @@ class JobController extends Controller
             $response['message'] = 'Not connected user';
             return new JsonResponse( $response );
         }
-        if ($user->getType() != 'parent') {
+        if (!$user->hasRole('ROLE_PARENT')) {
             $response['success'] = false;
             $response['message'] = 'User needs to be of type "parent"';
             return new JsonResponse( $response );
@@ -529,7 +533,7 @@ class JobController extends Controller
             $response['message'] = 'Not connected user';
             return new JsonResponse( $response );
         }
-        if ($user->getType() != 'parent') {
+        if (!$user->hasRole('ROLE_PARENT')) {
             $response['success'] = false;
             $response['message'] = 'User needs to be of type "parent"';
             return new JsonResponse( $response );
@@ -573,6 +577,54 @@ class JobController extends Controller
 
         $response['success'] = true;
         $response['id'] = $id;
+
+        // Response
+        return new JsonResponse( $response );
+    }
+
+    /**
+     * Edits presentation field
+     * AJAX
+     *
+     */
+    public function presentationAJAXAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if (!$user->hasRole('ROLE_PARENT')) {
+            throw $this->createNotFoundException('User needs to have the role ROLE_PARENT');
+        }
+
+        $entity = $user->getParent()->getCurrentJob();
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Job entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $value = $request->request->get('pn_pnbundle_job');
+        }
+        else
+        {
+            $value = $request->query->get('pn_pnbundle_job');
+        }
+
+        // Update Parameter
+        $response['success'] = false;
+        $entity->setPresentation($value["presentation"]);
+
+        // Persist in DB
+        $em->persist($entity);
+        //$em->persist($user);
+        $em->flush();
+
+        $response['success'] = true;
+        $response['message'] = $value["presentation"];
 
         // Response
         return new JsonResponse( $response );

@@ -78,9 +78,9 @@ Passerelle : La Sorcière Polluair et le petit peuple vert !");
         for ($i=1;$i<=10;$i++)
         {
             $babysitter_test = new Babysitter();
-            $babysitter_test->setUser($em->merge($this->getReference('user-test'.$i)));
+            $babysitter_test->setUser($em->merge($this->getReference('user-'.$i)));
             $babysitter_test->setCategory('assistante');
-            $babysitter_test->setTrustpoints(abs((mt_rand() / mt_getrandmax())*5000));
+            $babysitter_test->setTrustpoints(abs((mt_rand() / mt_getrandmax())*55));
             $babysitter_test->addLanguage('fr');
 
             $em->persist($babysitter_test);
@@ -92,6 +92,6 @@ Passerelle : La Sorcière Polluair et le petit peuple vert !");
 
     public function getOrder()
     {
-        return 4; // the order in which fixtures will be loaded
+        return 6; // the order in which fixtures will be loaded
     }
 }

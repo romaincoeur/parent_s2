@@ -18,7 +18,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Pn\PnBundle\PnPnBundle(),
 
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\CacheBundle\SonataCacheBundle(),
@@ -26,9 +25,24 @@ class AppKernel extends Kernel
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\CoreBundle\SonataCoreBundle(),
-            new Pn\BlogBundle\PnBlogBundle(),
             new Divi\AjaxLoginBundle\DiviAjaxLoginBundle(),
             new Genemu\Bundle\FormBundle\GenemuFormBundle(),
+            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            new Sonata\IntlBundle\SonataIntlBundle(),
+            new Sonata\MediaBundle\SonataMediaBundle(),
+            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
+            new Sonata\NewsBundle\SonataNewsBundle(),
+            new Sonata\FormatterBundle\SonataFormatterBundle(),
+            new Sonata\ClassificationBundle\SonataClassificationBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
+            new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Application\Sonata\NewsBundle\ApplicationSonataNewsBundle(),
+            new Application\Sonata\ClassificationBundle\ApplicationSonataClassificationBundle(),
+            new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Sonata\MarkItUpBundle\SonataMarkItUpBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -36,6 +50,8 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle();
+            $bundles[] = new Bazinga\Bundle\FakerBundle\BazingaFakerBundle();
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
 
         return $bundles;

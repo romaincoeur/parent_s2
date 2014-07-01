@@ -2,14 +2,13 @@
 
 namespace Pn\PnBundle\Controller;
 
+use Application\Sonata\UserBundle\Entity\User;
 use Pn\PnBundle\Form\ContactType;
 use Pn\PnBundle\Form\Model\Contact;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
-use Pn\PnBundle\Entity\User;
-use Pn\PnBundle\Form\UserType;
 
 
 class DefaultController extends Controller
@@ -18,9 +17,9 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $babysitters = $em->getRepository('PnPnBundle:User')->getLastUpdatedBabysitters(3);
+        $babysitters = $em->getRepository('PnPnBundle:Babysitter')->getLastUpdatedBabysitters(3);
 
-        $articles = $em->getRepository('PnBlogBundle:Article')->getOnWelcomePageList();
+        $articles = $em->getRepository('ApplicationSonataNewsBundle:Post')->getOnHomePageList();
 
         $nounous = $em->getRepository('PnPnBundle:Babysitter')->findAll();
 
@@ -44,7 +43,7 @@ class DefaultController extends Controller
         $user = $this->getUser();
         if ($user === null)
         {
-            $entity = new User();
+            $entity = new \Application\Sonata\UserBundle\Entity\User();
 
             return $this->render('PnPnBundle:Default:notconnected.html.twig', array(
                 'entity' => $entity,
@@ -52,14 +51,7 @@ class DefaultController extends Controller
         }
         else
         {
-            if ($user->getType() == 'admin')
-            {
-                return $this->render('PnPnBundle:Default:admin.html.twig');
-            }
-            else
-            {
-                return $this->render('PnPnBundle:Default:connected.html.twig');
-            }
+            return $this->render('PnPnBundle:Default:connected.html.twig');
         }
     }
 
@@ -135,14 +127,13 @@ class DefaultController extends Controller
         {
             return $this->redirect($this->generateUrl('pn_pn_homepage'));
         }
-        $type = $user->getType();
 
-        if ($type == 'nounou')
+        if ($user->hasRole('ROLE_NOUNOU'))
         {
             $nounou = $user->getBabysitter();
             return $this->redirect($this->generateUrl('babysitter_show', array('id' => $nounou->getId(), 'url' => $nounou->getUrl())));
         }
-        elseif ($type == 'parent')
+        elseif ($user->hasRole('ROLE_PARENT'))
         {
             $parent = $this->getUser()->getParent();
             $em = $this->getDoctrine()->getManager();
@@ -170,14 +161,13 @@ class DefaultController extends Controller
         {
             return $this->redirect($this->generateUrl('pn_pn_homepage'));
         }
-        $type = $user->getType();
 
-        if ($type == 'nounou')
+        if ($user->hasRole('ROLE_NOUNOU'))
         {
             $nounou = $user->getBabysitter();
             return $this->redirect($this->generateUrl('babysitter_edit', array('id' => $nounou->getId())));
         }
-        elseif ($type == 'parent')
+        elseif ($user->hasRole('ROLE_PARENT'))
         {
             $parent = $this->getUser()->getParent();
             $em = $this->getDoctrine()->getManager();
@@ -237,13 +227,11 @@ class DefaultController extends Controller
 
     public function teamAction()
     {
-
         return $this->render('PnPnBundle:Default:team.html.twig');
     }
 
     public function cguAction()
     {
-
         return $this->render('PnPnBundle:Default:cgu.html.twig');
     }
 

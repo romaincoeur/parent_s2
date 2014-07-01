@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+        http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd">
+
+
+    <class name="Sonata\NewsBundle\Model\Post">
+        <property name="title">
+            <constraint name="NotBlank" />
+        </property>
+
+        <property name="slug">
+            <constraint name="NotBlank" />
+        </property>
+
+        <property name="abstract">
+            <constraint name="NotBlank" />
+        </property>
+
+        <property name="author">
+            <constraint name="Valid" />
+        </property>
+
+        <property name="rawContent">
+            <constraint name="NotBlank"/>
+        </property>
+
+        <property name="tags">
+            <constraint name="Valid" />
+        </property>
+
+        <property name="commentsDefaultStatus">
+            <constraint name="NotBlank" />
+        </property>
+
+        <property name="contentFormatter">
+            <constraint name="Sonata\FormatterBundle\Validator\Constraints\Formatter" />
+        </property>
+    </class>
+
+    <class name="Sonata\NewsBundle\Model\Comment">
+
+        <property name="message">
+            <constraint name="NotNull" />
+            <constraint name="NotBlank" />
+        </property>
+
+
+
+        <property name="post">
+            <constraint name="NotNull" />
+        </property>
+    </class>
+
+</constraint-mapping>

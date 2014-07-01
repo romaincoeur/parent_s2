@@ -61,12 +61,12 @@ $(function() {
         if ($('form input[type=radio]:checked').val() == 'parent')
         {
             $('#registerForm .info p').html('L\'inscription est gratuite pendant la phase test du site.');
-            $('#pn_pnbundle_user_secondType').css('display','none');
+            $('#application_sonata_user_registration_secondType').css('display','none');
         }
         if ($('form input[type=radio]:checked').val() == 'nounou')
         {
             $('#registerForm .info p').html('L\'inscription est complètement gratuite pour les nounous.');
-            $('#pn_pnbundle_user_secondType').css('display','block');
+            $('#application_sonata_user_registration_secondType').css('display','block');
         }
     });
 
@@ -98,17 +98,14 @@ $(function() {
         postForm(
                 $(this),
                 function( response ){
+                    console.log(response);
                     if (response.success)
                     {
-                        {% if app.request.attributes.get('_route') == 'pn_pn_homepage' %}
-                        document.location.href="{{ path('myprofile_edit') }}";
-                        {% else %}
-                        location.reload();
-                        {% endif %}
+                        $('#registerSuccess').html(response.message).css('display','block');
                     }
                     else
                     {
-                        $('#registerErrors').html(response.cause).css('display','block');
+                        $('#registerErrors').html(response.message).css('display','block');
 
                         /*else
                          {
@@ -136,6 +133,7 @@ $(function() {
                     $('#ajax-loader').remove();
                 },
                 function(error){
+                    console.log(response);
                     $('#registerErrors').html(error.statusText).css('display','block');
                     $('#ajax-loader').remove();
                 }
@@ -165,7 +163,6 @@ $(function() {
             data: inputs,
             success: function (data) {
                 if (data.has_error) {
-                    // Insert your error process
                     $('#loginErrors').html(data.error).css('display','block');
                 }
                 else {
@@ -182,13 +179,14 @@ $(function() {
     // mot de passe oublié
     $('a#mdp_oublie').click( function(e){
         e.preventDefault();
-        $('form#form-login').attr('action','{{ path('reset_password') }}');
+        $('form#form-login').attr('action','{{ path('sonata_user_resetting_send_email') }}');
+        $('#username').attr('name','username');
         $('#password').css('display','none');
         $('#remember_me').css('display','none');
         $('form#form-login label').css('display','none');
         $('#mdp_oublie').css('display','none');
         $('#username').before('<p>Entrez votre email pour recevoir un nouveau mot de passe</p>')
-        $('form#form-login button[type="submit"]').css('width','100%').html('Recevoir un nouveau mot de passe')
+        $('form#form-login button[type="submit"]').css('width','100%').html('Réinitialiser mon mot de passe')
     })
 
     // Gestion du compte

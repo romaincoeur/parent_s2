@@ -31,7 +31,9 @@ class MailTemplateAdmin extends Admin
             ->add('title')
             ->add('virtualTitle')
             ->add('object')
-            ->add('body')
+            ->add('body', 'genemu_tinymce', array(
+                'attr' => array('class' => 'tinymce')
+            ))
         ;
     }
 

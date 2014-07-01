@@ -130,12 +130,17 @@ a:hover
 
 .banner
 {
-    height: 60px;
+    height: 70px;
     text-align: center;
     padding-top: 10px;
     margin-top: 30px;
     margin-bottom: 30px;
     color: #FFFFFF;
+}
+
+.banner.bg-red
+{
+    background: url("../images/banners/ban-large-red.png") no-repeat;
 }
 
 input
@@ -222,6 +227,11 @@ video
 a
 {
     padding: 0;
+}
+
+td
+{
+    padding: 2px;
 }
 
 
@@ -1266,6 +1276,13 @@ label[for='pn_pnbundle_job_diplomas_1']
     height: 20px;
 }
 
+#pn_pnbundle_job_presentation
+{
+    height: 106px;
+    width: 100%;
+    max-width: 100%;
+}
+
 
 
 
@@ -1577,6 +1594,72 @@ label[for='pn_pnbundle_job_diplomas_1']
 
 
 
+
+
+/***************Comments*****************/
+
+
+form.new_comment
+{
+    margin-bottom: 30px;
+}
+
+form.new_comment textarea
+{
+    width: 815px;
+    margin-right: 30px;
+    margin-left: 0;
+    border-radius: 20px;
+    max-width: 815px;
+    padding: 5px 10px;
+}
+
+form.new_comment button[type="submit"] {
+    width: 110px;
+    height: 53px;
+    vertical-align: bottom;
+    margin-bottom: 10px;
+    background-color: #f7c937;
+    color: #FFFFFF;
+    border-radius: 20px;
+    border: none;
+}
+
+.comments .left-arrow
+{
+    width: 10px;
+}
+
+.comment
+{
+    color: #888888;
+    margin-bottom: 20px;
+}
+
+.comment p
+{
+    color: #000000;
+    font-weight: bold;
+}
+
+.comment .bulle
+{
+    display: inline-block;
+    width: 856px;
+    border: solid #eeeeee 3px;
+    vertical-align: top;
+    padding: 20px;
+}
+
+
+
+
+
+
+
+
+
+
 /***************Popups*****************/
 
 .modal-dialog.small
@@ -1722,7 +1805,7 @@ label[for='pn_pnbundle_job_diplomas_1']
     background-color: #65c0e3;
 }
 
-#pn_pnbundle_user_secondType
+#application_sonata_user_registration_secondType
 {
     display: none;
 }

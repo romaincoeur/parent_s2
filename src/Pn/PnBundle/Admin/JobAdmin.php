@@ -10,14 +10,13 @@
 
 namespace Pn\PnBundle\Admin;
 
-use Pn\PnBundle\Entity\User;
+use Application\Sonata\UserBundle\Entity\User;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Pn\PnBundle\Entity\Job;
 
 class JobAdmin extends Admin
 {
@@ -75,7 +74,7 @@ class JobAdmin extends Admin
             ->add('parent')
             ->add('category')
             ->add('address')
-            ->add('is_activated')
+            ->add('is_activated', null, array('editable' => true))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'view' => array(),

@@ -2,12 +2,10 @@
 
 namespace Pn\PnBundle\Form;
 
-use Pn\PnBundle\Entity\Babysitter;
-use Pn\PnBundle\Entity\User;
+use Application\Sonata\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Pn\PnBundle\Entity\Job;
 
 class JobType extends AbstractType
 {
@@ -24,7 +22,7 @@ class JobType extends AbstractType
                 ),
                 'required'  => false,
             ))
-            ->add('description', 'textarea', array(
+            ->add('presentation', 'genemu_tinymce', array(
                 'attr' => array(
                     'placeholder' => 'Présentez votre annonce en quelques lignes',
                 ),

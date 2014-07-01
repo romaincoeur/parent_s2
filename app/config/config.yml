@@ -2,6 +2,15 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: admin.yml }
+    - { resource: sonata_classification.yml }
+
+    # Sonata Core Bundles
+#    - { resource: sonata/sonata_block.yml }
+    - { resource: sonata/sonata_formatter.yml }
+
+    # Sonata Feature Bundles
+    - { resource: sonata/sonata_admin.yml }
+    - { resource: sonata/sonata_news.yml }
 
 framework:
     #esi:             ~
@@ -29,6 +38,12 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+
+    form:
+        resources:
+            - 'SonataFormatterBundle:Form:formatter.html.twig'
+            - 'SonataMediaBundle:Form:media_widgets.html.twig'
+            - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 
 
@@ -59,6 +74,8 @@ doctrine:
         # if using pdo_sqlite as your database driver, add the path in parameters.yml
         # e.g. database_path: "%kernel.root_dir%/data/data.db3"
         # path:     "%database_path%"
+        types:
+            json: Sonata\Doctrine\Types\JsonType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -73,22 +90,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
-
-sonata_admin:
-    title: Parent-nounou
-    title_logo: bundles/pnpn/images/favicon.png
-    security:
-        handler: sonata.admin.security.handler.role
-    templates:
-        # other configuration options
-        search:              SonataAdminBundle:Core:search.html.twig
-        search_result_block: SonataAdminBundle:Block:block_search_result.html.twig
-    dashboard:
-        blocks:
-#            - { position: left, type: sonata.admin.block.admin_list }
-            - { position: left, type: sonata.block.service.statistics }
-            - { position: right, type: sonata.block.service.connected.user }
-
 sonata_block:
     default_contexts: [cms]
     blocks:
@@ -101,6 +102,12 @@ sonata_block:
         sonata.block.service.rss:
         sonata.block.service.statistics:
         sonata.block.service.connected.user:
+        sonata.block.service.controls:
+        sonata.block.service.menu:
+        sonata.block.service.container:
+        sonata.block.service.template:
+        sonata.user.block.menu:
+        sonata.user.block.account:
 
 services:
     twig.extension.text:
@@ -111,3 +118,110 @@ services:
 genemu_form:
     tinymce:
         theme:   modern
+
+sonata_media:
+    # if you don't use default namespace configuration
+    #class:
+    #    media: MyVendor\MediaBundle\Entity\Media
+    #    gallery: MyVendor\MediaBundle\Entity\Gallery
+    #    gallery_has_media: MyVendor\MediaBundle\Entity\GalleryHasMedia
+    default_context: default
+    db_driver: doctrine_orm # or doctrine_mongodb, doctrine_phpcr
+    contexts:
+        default:  # the default context is mandatory
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+
+            formats:
+                small: { width: 100 , quality: 70}
+                big:   { width: 500 , quality: 70}
+        news:
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+
+            formats:
+                small: { width: 150 , quality: 95}
+                big:   { width: 500 , quality: 90}
+
+    cdn:
+        server:
+            path: /uploads/media # http://media.sonata-project.org/
+
+    filesystem:
+        local:
+            directory:  %kernel.root_dir%/../web/uploads/media
+            create:     false
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: Application\Sonata\UserBundle\Entity\User
+    group:
+        group_class:   Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager
+    service:
+        user_manager: sonata.user.orm.user_manager
+    registration:
+        confirmation:
+            enabled:    true
+            template: ApplicationSonataUserBundle:Registration:email.txt.twig
+            from_email:
+                address:        contact@parent-nounou.fr
+                sender_name:    parent-nounou
+
+sonata_user:
+    security_acl: true
+    manager_type: orm
+    profile:
+        default_avatar: 'bundles/pnpn/images/illus/logo.png'
+        register:
+            confirm:
+                redirect:
+                    # Set it to false to disable redirection
+                    route: 'pn_pn_homepage'
+                    route_parameters: ~
+
+sonata_block:
+    blocks:
+        #...
+        sonata.user.block.menu:    # used to display the menu in profile pages
+        sonata.user.block.account: # used to display menu option (login option)
+        sonata.block.service.text: # used to if you plan to use Sonata user routes
+
+ivory_ck_editor:
+    default_config: default
+    configs:
+        default:
+            filebrowserBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            filebrowserImageBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            # Display images by default when clicking the image dialog browse button
+            filebrowserImageBrowseRouteParameters:
+                provider: sonata.media.provider.image
+            filebrowserUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserUploadRouteParameters:
+                provider: sonata.media.provider.file
+            # Upload file as image when sending a file from the image dialog
+            filebrowserImageUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserImageUploadRouteParameters:
+                provider: sonata.media.provider.image
+                context: default # Optional, to upload in a custom context
+
+        news:
+            filebrowserBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            filebrowserImageBrowseRoute: admin_sonata_media_media_ckeditor_browser
+            # Display images by default when clicking the image dialog browse button
+            filebrowserImageBrowseRouteParameters:
+                provider: sonata.media.provider.image
+            filebrowserUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserUploadRouteParameters:
+                provider: sonata.media.provider.file
+            # Upload file as image when sending a file from the image dialog
+            filebrowserImageUploadRoute: admin_sonata_media_media_ckeditor_upload
+            filebrowserImageUploadRouteParameters:
+                provider: sonata.media.provider.image
+                context: news # Optional, to upload in a custom context

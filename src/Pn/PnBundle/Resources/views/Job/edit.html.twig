@@ -91,8 +91,12 @@
                     {{ form_widget(form.title) }}
                 </div>
                 <div class="body">
-                    {{ form_errors(form.description) }}
-                    {{ form_widget(form.description) }}
+                    <form id="presentationForm" action="{{ path('pn_job_presentationAJAX') }}">
+                        {{ form_errors(form.presentation) }}
+                        {{ form_widget(form.presentation) }}
+                        <input type="submit" value="Enregistrer" style="background-color: #eeeeee; color: black; font-weight: normal; border-radius: 0; border: solid black 1px; border-top: none;">
+                        <span id="presentationFormOutput"></span>
+                    </form>
                 </div>
             </div>
 
@@ -363,4 +367,23 @@
     <script type="text/javascript" src="{{ asset('bundles/pnpn/js/crop.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/pnpn/js/jquery.form.min.js') }}"></script>
     {% include 'PnPnBundle:Javascript:job.html.twig' %}
+    {% if app.environment == 'dev' %}
+        <script type="text/javascript" src="{{ asset('bundles/pnpn/js/tinymce/tinymce.min.js') }}"></script>
+        {{ form_javascript(form) }}
+    {% else %}
+        <script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    {% endif %}
+    <script type="text/javascript">
+        $(function() {
+            tinyMCE.init({
+                setup : function(ed) {
+                    ed.on('change', function(e) {
+                        console.log('the event object '+e);
+                        console.log('the editor object '+ed);
+                        console.log('the content '+ed.getContent());
+                    });
+                }
+            });
+        })
+    </script>
 {% endblock %}

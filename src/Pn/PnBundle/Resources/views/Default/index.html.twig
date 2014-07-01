@@ -65,18 +65,16 @@
     <div class="news wrap">
         <img src="{{ asset('bundles/pnpn/images/illus/parents-nounou2.png') }}" alt="enfants et nounou" style="height: 360px; margin-top: 40px;">
         {% for entity in articles %}
-            <a href="{{ path('blog_article_show', {'id': entity.id}) }}">
+            <a href="{{ path('sonata_news_view', {'permalink': sonata_news_permalink(entity)}) }}">
                 <div class="new">
                     <div class="header">
-                        {% if entity.category %}
-                            <img src="{{ asset('bundles/pnpn/images/badges/' ~ entity.category.icon) }}" alt="{{ entity.category.name }}">
-                        {% endif %}
+                        {% media entity.collection.media, 'small' %}
                         <div class="title">
                             <h5>{{ entity.title }}</h5>
                         </div>
                     </div>
                     <div class="body">
-                        <p>{{ entity.miniPresentation }}</p>
+                        <p>{{ entity.abstract }}</p>
                     </div>
                 </div>
             </a>
@@ -91,19 +89,19 @@
         </div>
         <div class="wrap">
             {% for babysitter in babysitters %}
-                <a href="{{ path('babysitter_show', {'id': babysitter.babysitter.id, 'url': babysitter.babysitter.url}) }}">
+                <a href="{{ path('babysitter_show', {'id': babysitter.id, 'url': babysitter.url}) }}">
                     <div class="mini-profile">
                         <div class="header">
-                            {% if babysitter.avatar %}
-                                <img class="profile-picture" src="{{ asset('uploads/users/' ~ babysitter.avatar) }}" alt="photo de profil de {{ babysitter.firstname }}" style="height: 120px;">
+                            {% if babysitter.user.avatar %}
+                                <img class="profile-picture" src="{{ asset('uploads/users/' ~ babysitter.user.avatar) }}" alt="photo de profil de {{ babysitter.user.firstname }}" style="height: 120px;">
                             {% else %}
                                 <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
                             {% endif %}
-                            <strong>{{ babysitter.getHiddenName() }}</strong>
-                            <p>{{ babysitter.city }}</p>
+                            <strong>{{ babysitter.user.getHiddenName() }}</strong>
+                            <p>{{ babysitter.user.city }}</p>
                         </div>
                         <div class="body">
-                            <p>{{ babysitter.getCategories[babysitter.babysitter.category] }}</p>
+                            <p>{{ babysitter.user.getCategories[babysitter.category] }}</p>
                         </div>
                     </div>
                 </a>

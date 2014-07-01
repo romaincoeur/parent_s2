@@ -464,7 +464,7 @@ class Babysitter
         # Trustpoints Profile
         if ($this->user->getFirstname() != null) $result += $values['profile']['firstname'];
         if ($this->user->getLastname() != null) $result += $values['profile']['lastname'];
-        if ($this->user->getBirthdate() != null) $result += $values['profile']['birthdate'];
+        if ($this->user->getDateOfBirth() != null) $result += $values['profile']['birthdate'];
         if ($this->user->getPostcode() != null) $result += $values['profile']['postcode'];
         if ($this->user->getCity() != null) $result += $values['profile']['city'];
         if ($this->user->getAddress() != null) $result += $values['profile']['address'];
@@ -528,6 +528,7 @@ class Babysitter
 // GENERATED CODE
 
     
+
     /**
      * @var integer
      */
@@ -624,7 +625,7 @@ class Babysitter
     private $languages;
 
     /**
-     * @var \Pn\PnBundle\Entity\User
+     * @var \Application\Sonata\UserBundle\Entity\User
      */
     private $user;
 
@@ -1056,10 +1057,10 @@ class Babysitter
     /**
      * Set user
      *
-     * @param \Pn\PnBundle\Entity\User $user
+     * @param \Application\Sonata\UserBundle\Entity\User $user
      * @return Babysitter
      */
-    public function setUser(\Pn\PnBundle\Entity\User $user = null)
+    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
     {
         $this->user = $user;
 
@@ -1069,7 +1070,7 @@ class Babysitter
     /**
      * Get user
      *
-     * @return \Pn\PnBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
     public function getUser()
     {

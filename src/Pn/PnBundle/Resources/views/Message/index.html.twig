@@ -20,7 +20,7 @@
     <div class="wrap">
         <div class="row">
             <div class="message-leftMenu col-md-3">
-                <div id="newConversation" class="btn clearfix">
+                {#<div id="newConversation" class="btn clearfix">
                     <div class="reduce">
                         <div class="right">
                             <div class="unread bg-red white round"><div style="font-size: 30px; margin-top: -10px;">+</div></div>
@@ -41,7 +41,7 @@
                         </ul>
                         <button class="cancel bg-yellow white">Annuler</button>
                     </div>
-                </div>
+                </div>#}
                 {% for key,conversation in conversations %}
                     <div id="id{{ conversation.object.id }}" class="btn conversationButton {% if loop.first and not conv %}selected{% endif %} {% if conv == conversation.object.id %} selected {% endif %}clearfix">
                         <div class="left">
@@ -56,6 +56,7 @@
                 {% endfor %}
             </div>
 
+            {% if conversations|length > 0 %}
             {% for key,conversation in conversations %}
                 <div class="conversation {% if loop.first and not conv %}selected{% endif %} {% if conv == conversation.object.id %} selected {% endif %} col-md-9" id="id{{ conversation.object.id }}">
                     {% for message in conversation.messages|reverse %}
@@ -104,6 +105,9 @@
                     </form>
                 </div>
             {% endfor %}
+            {% else %}
+            <p style="margin-bottom: 70px;margin-left: -70px;">Pour démarrer une nouvelle conversation avec un utilisateur de Parent-nounou.fr, rendez-vous sur son profil</p>
+            {% endif %}
 
         </div>
     </div>

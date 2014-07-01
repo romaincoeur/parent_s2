@@ -9,6 +9,37 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Recommendation
 {
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if(!$this->getCreatedAt())
+        {
+            $this->created_at = new \DateTime();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // GENERATED CODE
+
+    
     /**
      * @var integer
      */
@@ -30,12 +61,12 @@ class Recommendation
     private $created_at;
 
     /**
-     * @var \Pn\PnBundle\Entity\User
+     * @var \Application\Sonata\UserBundle\Entity\User
      */
     private $giver;
 
     /**
-     * @var \Pn\PnBundle\Entity\User
+     * @var \Application\Sonata\UserBundle\Entity\User
      */
     private $receiver;
 
@@ -122,10 +153,10 @@ class Recommendation
     /**
      * Set giver
      *
-     * @param \Pn\PnBundle\Entity\User $giver
+     * @param \Application\Sonata\UserBundle\Entity\User $giver
      * @return Recommendation
      */
-    public function setGiver(\Pn\PnBundle\Entity\User $giver = null)
+    public function setGiver(\Application\Sonata\UserBundle\Entity\User $giver = null)
     {
         $this->giver = $giver;
 
@@ -135,7 +166,7 @@ class Recommendation
     /**
      * Get giver
      *
-     * @return \Pn\PnBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
     public function getGiver()
     {
@@ -145,10 +176,10 @@ class Recommendation
     /**
      * Set receiver
      *
-     * @param \Pn\PnBundle\Entity\User $receiver
+     * @param \Application\Sonata\UserBundle\Entity\User $receiver
      * @return Recommendation
      */
-    public function setReceiver(\Pn\PnBundle\Entity\User $receiver = null)
+    public function setReceiver(\Application\Sonata\UserBundle\Entity\User $receiver = null)
     {
         $this->receiver = $receiver;
 
@@ -158,20 +189,10 @@ class Recommendation
     /**
      * Get receiver
      *
-     * @return \Pn\PnBundle\Entity\User 
+     * @return \Application\Sonata\UserBundle\Entity\User 
      */
     public function getReceiver()
     {
         return $this->receiver;
-    }
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue()
-    {
-        if(!$this->getCreatedAt())
-        {
-            $this->created_at = new \DateTime();
-        }
     }
 }

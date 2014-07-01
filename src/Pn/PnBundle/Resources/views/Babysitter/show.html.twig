@@ -13,179 +13,210 @@
 {% block body %}
     <div class="profile-page babysitter">
 
-        <div class="wrap">
-            <div id="map" style="height: 180px;">
-                Veuillez patienter pendant le chargement de la carte...
-            </div>
-            {% if (app.user) and (app.user.type == 'nounou') and app.user.babysitter.id == id %}
-                <a href="{{ path('myprofile_edit') }}"><div class="edit bg-red white">modifiez votre profil</div></a>
-            {% endif %}
+    <div class="wrap">
+        <div id="map" style="height: 180px;">
+            Veuillez patienter pendant le chargement de la carte...
+        </div>
+        {% if (app.user) and is_granted('ROLE_NOUNOU') and app.user.babysitter.id == id %}
+            <a href="{{ path('myprofile_edit') }}"><div class="edit bg-red white">modifiez votre profil</div></a>
+        {% endif %}
 
-            <div class="description">
-                <div class="header">
-                    <div class="left">
-                        {% if entity.user.avatar %}
-                            <img class="profile-picture" src="{{ asset('uploads/users/' ~ entity.user.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">
-                        {% else %}
-                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
-                        {% endif %}
-                        {#{% if (app.user) and (app.user.type == 'parent') %}
-                            <button class="favorite icon bg-yellow white"></button>
-                        {% endif %}#}
-                    </div>
-                    <div class="right">
-                        {% if entity.ratePrice and entity.rateType %}
-                            <div class="tarif">{{ entity.ratePrice }}€ / {{ entity.user.getRateTypes[entity.rateType] }}</div>
-                        {% endif %}
-                    </div>
-                    {% if app.user %}
-                        <h1>{{ entity.user.firstname }} {{ entity.user.lastname }}</h1>
+        <div class="description">
+            <div class="header">
+                <div class="left">
+                    {% if entity.user.avatar %}
+                        <img class="profile-picture" src="{{ asset('uploads/users/' ~ entity.user.avatar) }}" alt="photo de profil de {{ entity.user.firstname }}" style="height: 120px;">
                     {% else %}
-                        <h1>{{ entity.user.getHiddenName() }}</h1>
+                        <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
                     {% endif %}
-                    {% if entity.trustpoints >= 10 %}
-                        <span class="balloon"></span>
-                    {% endif %}
-                    {% if entity.trustpoints >= 20 %}
-                        <span class="balloon"></span>
-                    {% endif %}
-                    {% if entity.trustpoints >= 30 %}
-                        <span class="balloon"></span>
-                    {% endif %}
-                    {% if entity.trustpoints >= 40 %}
-                        <span class="balloon"></span>
-                    {% endif %}
-                    {% if entity.trustpoints >= 50 %}
-                        <span class="balloon"></span>
-                    {% endif %}
-                    <span class="trust-points">{{ entity.trustpoints }} points de confiance</span>
+                    {#{% if (app.user) and (app.user.type == 'parent') %}
+                        <button class="favorite icon bg-yellow white"></button>
+                    {% endif %}#}
                 </div>
-                <div class="body">
-                    <p>{{ entity.presentation|raw }}</p>
+                <div class="right">
+                    {% if entity.ratePrice and entity.rateType %}
+                        <div class="tarif">{{ entity.ratePrice }}€ / {{ entity.user.getRateTypes[entity.rateType] }}</div>
+                    {% endif %}
                 </div>
+                {% if app.user %}
+                    <h1>{{ entity.user.firstname }} {{ entity.user.lastname }}</h1>
+                {% else %}
+                    <h1>{{ entity.user.getHiddenName() }}</h1>
+                {% endif %}
+                {% if entity.trustpoints >= 10 %}
+                    <span class="balloon"></span>
+                {% endif %}
+                {% if entity.trustpoints >= 20 %}
+                    <span class="balloon"></span>
+                {% endif %}
+                {% if entity.trustpoints >= 30 %}
+                    <span class="balloon"></span>
+                {% endif %}
+                {% if entity.trustpoints >= 40 %}
+                    <span class="balloon"></span>
+                {% endif %}
+                {% if entity.trustpoints >= 50 %}
+                    <span class="balloon"></span>
+                {% endif %}
+                <span class="trust-points">{{ entity.trustpoints }} points de confiance</span>
             </div>
+            <div class="body">
+                <p>{{ entity.presentation|raw }}</p>
+            </div>
+        </div>
 
-            <div class="row">
-                <div class="col-md-4">
-                    {% if app.user %}
-                        {% if app.user.type == 'parent' or app.user.id == entity.user.id %}
-                            <div class="coords">
-                                <a href="{{ path('message',{ 'conv':entity.user.id }) }}" style="display: block; color: #ffffff;">
-                                    <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
-                                    Envoyer un message à {{ entity.user.firstname }}
-                                </a>
-                                <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.user.phone }}
-                            </div>
-                        {% else %}
-                            <div class="coords">
-                                <a href="{{ path('message',{ 'conv':entity.user.id }) }}" style="display: block; color: #ffffff;">
-                                    <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
-                                    Envoyer un message à {{ entity.user.firstname }}
-                                </a>
-                            </div>
-                        {% endif %}
+        <div class="row">
+            <div class="col-md-4">
+                {% if app.user %}
+                    {% if app.user.type == 'parent' or app.user.id == entity.user.id %}
+                        <div class="coords">
+                            <a href="{{ path('message',{ 'conv':entity.user.id }) }}" style="display: block; color: #ffffff;">
+                                <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
+                                Envoyer un message à {{ entity.user.firstname }}
+                            </a>
+                            <img src="{{ asset('bundles/pnpn/images/icons/profil-phone.png') }}" alt="telephone">&nbsp;{{ entity.user.phone }}
+                        </div>
                     {% else %}
                         <div class="coords">
-                            <a href="#login" role="button" data-toggle="modal" style="color: #ffffff;">
-                                Connectez vous pour voir les coordonnées de {{ entity.user.firstname }}
+                            <a href="{{ path('message',{ 'conv':entity.user.id }) }}" style="display: block; color: #ffffff;">
+                                <img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="message icon">
+                                Envoyer un message à {{ entity.user.firstname }}
                             </a>
                         </div>
                     {% endif %}
-                    <div class="details">
-                        <img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="adresse"> {{ entity.user.unacurateAddress }} <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier"> {{ entity.user.age() }}&nbsp;ans <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
-                        {% if entity.experience %}
-                        {{ entity.experience }} ans d'expérience <br>
-                        {% else %}
-                        pas d'expérience<br>
-                        {% endif %}
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
-                        <p>
-                            {% for pp in entity.diplomas %}
-                                - {{ entity.user.diplomass[pp] }}<br>
-                            {% endfor %}
-                        </p>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age des enfants">
-                        Prise en charge des enfants&nbsp;
-                        {% for pp in entity.ageOfChildren %}
-                        de&nbsp;{{ entity.user.ageOfChildrens[pp] }}
-                        {% if not loop.last %}
-                            ,&nbsp;
-                        {% endif %}
-                        {% endfor %}<br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone">
-                        {% for pp in entity.languages %}
-                        {{ entity.user.getLanguagess[pp] }}
-                        {% if not loop.last %}
-                            ,&nbsp;
-                        {% endif %}
-                        {% endfor %}<br>
+                {% else %}
+                    <div class="coords">
+                        <a href="#login" role="button" data-toggle="modal" style="color: #ffffff;">
+                            Connectez vous pour voir les coordonnées de {{ entity.user.firstname }}
+                        </a>
                     </div>
-                    {#<div class="badges">
-                        <div class="header">
-                            <img src="{{ asset('bundles/pnpn/images/icons/profil-badge.png') }}" alt="badge"> 7 Badges
-                        </div>
-                        <div class="body">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-check.png') }}" alt="badge check">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-biberon.png') }}" alt="badge biberon">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-pansement.png') }}" alt="badge pansement">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-.png') }}" alt="badge ">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-ballon.png') }}" alt="badge ballon">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-jeu.png') }}" alt="badge jeu">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-couche.png') }}" alt="badge couche">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-blessure.png') }}" alt="badge blessure">
-                            <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-securite.png') }}" alt="badge securite">
-                        </div>
-                    </div>#}
+                {% endif %}
+                <div class="details">
+                    <table>
+                        <tr>
+                            <td style="text-align: center;"><img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="adresse"></td>
+                            <td style="padding-left: 5px;">
+                                {% if entity.user.unacurateAddress %}
+                                    {{ entity.user.unacurateAddress }}
+                                {% else %}
+                                    Pas d'adresse renseignée
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% if entity.user.age() %}
+                            <tr>
+                                <td style="text-align: center;"><img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier"></td>
+                                <td style="padding-left: 5px;">{{ entity.user.age() }}&nbsp;ans</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td style="text-align: center;"><img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience"></td>
+                            <td style="padding-left: 5px;">
+                                {% if entity.experience %}
+                                    {{ entity.experience }} ans d'expérience
+                                {% else %}
+                                    Pas d'expérience
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% if entity.diplomas %}
+                            <tr>
+                                <td style="text-align: center;"><img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications"></td>
+                                <td style="padding-left: 5px;">
+                                    <p>
+                                        {% for pp in entity.diplomas %}
+                                            - {{ entity.user.diplomass[pp] }}<br>
+                                        {% endfor %}
+                                    </p>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if entity.ageOfChildren %}
+                            <tr>
+                                <td style="text-align: center;"><img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age des enfants"></td>
+                                <td style="padding-left: 5px;">
+                                    Prise en charge des enfants&nbsp;
+                                    {% for pp in entity.ageOfChildren %}
+                                        de&nbsp;{{ entity.user.ageOfChildrens[pp] }}{% if not loop.last %},{% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if entity.languages %}
+                            <tr>
+                                <td style="text-align: center;"><img src="{{ asset('bundles/pnpn/images/icons/profil-languages.png') }}" alt="telephone"></td>
+                                <td style="padding-left: 5px;">
+                                    {% for pp in entity.languages %}
+                                        {{ entity.user.getLanguagess[pp] }}{% if not loop.last %},{% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </table>
                 </div>
-                <div class="col-md-4 calendar">
-                    {{ calendar.viewTable(calendarMatrix) }}
-                </div>
-                <div class="col-md-4">
-                    {% if entity.video %}
-                        <video src="{{ asset(entity.getWebPath()) }}" controls></video>
-                    {% endif %}
-                    <div class="other">
-                        <b>Mes activités préférées avec les enfants&nbsp;:</b>
-                        <p>{{ entity.favoriteactivities }}</p>
-
-                        <b>Mes loisirs&nbsp;:</b>
-                        <p>{{ entity.hobbies }}</p>
-
-                        <b>Tâches supplémentaire&nbsp;:</b>
-                        <p>{% for task in entity.extraTasks %}
-                                - {{ entity.user.getExtraTaskss[task] }}<br>
-                            {% endfor %}
-                        </p>
-
-                        <b>Les petits plus&nbsp;:</b>
-                        <p>
-                            {% for pp in entity.petitsplus %}
-                                - {{ entity.user.getPetitsPluss[pp] }}<br>
-                            {% endfor %}
-                        </p>
-
-                        <b>Particularités :</b>
-                        <p>
-                            {% for part in entity.particularite %}
-                                - {{ entity.user.getParticularites[part] }}<br>
-                            {% endfor %}
-                        </p>
+                {#<div class="badges">
+                    <div class="header">
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-badge.png') }}" alt="badge"> 7 Badges
                     </div>
+                    <div class="body">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-check.png') }}" alt="badge check">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-biberon.png') }}" alt="badge biberon">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-pansement.png') }}" alt="badge pansement">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-.png') }}" alt="badge ">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-ballon.png') }}" alt="badge ballon">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-jeu.png') }}" alt="badge jeu">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-couche.png') }}" alt="badge couche">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-blessure.png') }}" alt="badge blessure">
+                        <img class="icon" src="{{ asset('bundles/pnpn/images/icons/badge-securite.png') }}" alt="badge securite">
+                    </div>
+                </div>#}
+            </div>
+            <div class="col-md-4 calendar">
+                {{ calendar.viewTable(calendarMatrix) }}
+            </div>
+            <div class="col-md-4">
+                {% if entity.video %}
+                    <video src="{{ asset(entity.getWebPath()) }}" controls></video>
+                {% endif %}
+                <div class="other">
+                    <b>Mes activités préférées avec les enfants&nbsp;:</b>
+                    <p>{{ entity.favoriteactivities }}</p>
+
+                    <b>Mes loisirs&nbsp;:</b>
+                    <p>{{ entity.hobbies }}</p>
+
+                    <b>Tâches supplémentaire&nbsp;:</b>
+                    <p>{% for task in entity.extraTasks %}
+                            - {{ entity.user.getExtraTaskss[task] }}<br>
+                        {% endfor %}
+                    </p>
+
+                    <b>Les petits plus&nbsp;:</b>
+                    <p>
+                        {% for pp in entity.petitsplus %}
+                            - {{ entity.user.getPetitsPluss[pp] }}<br>
+                        {% endfor %}
+                    </p>
+
+                    <b>Particularités :</b>
+                    <p>
+                        {% for part in entity.particularite %}
+                            - {{ entity.user.getParticularites[part] }}<br>
+                        {% endfor %}
+                    </p>
                 </div>
             </div>
-
         </div>
-        <div class="recommandations" id="recommandations">
-            <div class="banner bg-red big-wrap">
-                <div class="wrap">
-                    <h4>Recommandations</h4>
-                </div>
-            </div>
+
+    </div>
+    <div class="recommandations" id="recommandations">
+        <div class="banner bg-red big-wrap">
             <div class="wrap">
-                <div class="alert alert-danger" id="new_recommendationErrors" style="display: none;"></div>
-                {% if app.user and app.user.id != entity.user.id %}
+                <h4>Recommandations</h4>
+            </div>
+        </div>
+        <div class="wrap">
+            {% if app.user and app.user.id != entity.user.id %}
                 <form action="{{ path('recommendation_send',{ 'to':entity.user.id }) }}" method="post" id="new_recommendation" {{ form_enctype(recommendation_form) }}>
                     {{ form_errors(recommendation_form.body) }}
                     {{ form_widget(recommendation_form.body, { 'attr': {'placeholder': 'Ecrivez une recommandation'} }) }}
@@ -193,25 +224,32 @@
                     {{ form_rest(recommendation_form) }}
                     <input type="submit" value="publier">
                 </form>
-                {% endif %}
-                {% for recommendation in entity.user.receivedRecommendations|reverse %}
-                    <div class="recommandation">
-                        {% if recommendation.giver.avatar %}
-                            <img class="profile-picture" src="{{ asset('uploads/users/' ~ recommendation.giver.avatar) }}" alt="photo de profil de {{ recommendation.giver.firstname }}" style="height: 90px;">
-                        {% elseif recommendation.giver.type == 'nounou' %}
-                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 90px;">
-                        {% else %}
-                            <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 90px; width: 86px;">
-                        {% endif %}
-                        <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
-                        <div class="bulle">
-                            <p>{{ recommendation.body }}</p>
-                            <span class="red">{{ recommendation.giver.hiddenName }}</span> {{ recommendation.giver.type }}. Posté le {{ recommendation.createdAt|date('d-m-Y')  }}
-                        </div>
+            {% else %}
+                <a href="#login" role="button" class="btn bg-yellow" data-toggle="modal" style="width: 100%; margin-bottom: 30px;">Connectez-vous pour laisser une recommandation</a>
+            {% endif %}
+            <div class="alert alert-danger" id="new_recommendationErrors" style="display: none;"></div>
+            {% if entity.user.receivedRecommendations|length > 0 %}
+            {% for recommendation in entity.user.receivedRecommendations|reverse %}
+                <div class="recommandation">
+                    {% if recommendation.giver.avatar %}
+                        <img class="profile-picture" src="{{ asset('uploads/users/' ~ recommendation.giver.avatar) }}" alt="photo de profil de {{ recommendation.giver.firstname }}" style="height: 90px;">
+                    {% elseif recommendation.giver.type == 'nounou' %}
+                        <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 90px;">
+                    {% else %}
+                        <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 90px; width: 86px;">
+                    {% endif %}
+                    <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
+                    <div class="bulle">
+                        <p>{{ recommendation.body }}</p>
+                        <span class="red">{{ recommendation.giver.hiddenName }}</span> {{ recommendation.giver.type }}. Posté le {{ recommendation.createdAt|date('d-m-Y')  }}
                     </div>
-                {% endfor %}
-            </div>
+                </div>
+            {% endfor %}
+            {% else %}
+                <p>{{ entity.user.firstname }} n'a reçu aucune recommandation</p>
+            {% endif %}
         </div>
+    </div>
     </div>
 
 {% endblock %}

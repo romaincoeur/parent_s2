@@ -9,12 +9,6 @@ services:
         - Pn\PnBundle\Entity\Job
         - ~
 
-    pn.pn.admin.user:
-        class: Pn\PnBundle\Admin\UserAdmin
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: users, label: Utilisateurs }
-        arguments: [null, Pn\PnBundle\Entity\User, PnPnBundle:UserAdmin]
-
     pn.pn.admin.babysitter:
         class: Pn\PnBundle\Admin\BabysitterAdmin
         tags:
@@ -40,10 +34,11 @@ services:
         arguments: [null, Pn\PnBundle\Entity\MailTemplate, PnPnBundle:MailTemplateAdmin]
 
     pn.pn.admin.recommendation:
-            class: Pn\PnBundle\Admin\RecommendationAdmin
-            tags:
-                - { name: sonata.admin, manager_type: orm, group: users, label: Recommendations }
-            arguments: [null, Pn\PnBundle\Entity\Recommendation, PnPnBundle:RecommendationAdmin]
+        class: Pn\PnBundle\Admin\RecommendationAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users, label: Recommendations }
+        arguments: [null, Pn\PnBundle\Entity\Recommendation, PnPnBundle:RecommendationAdmin]
+
     sonata.block.service.statistics:
         class: Pn\PnBundle\Block\Service\StatisticsBlockService
         tags:
@@ -52,11 +47,21 @@ services:
             - "sonata.block.service.statistics"
             - @templating
             - @doctrine.orm.entity_manager
+
     sonata.block.service.connected.user:
         class: Pn\PnBundle\Block\Service\ConnectedUserBlockService
         tags:
             - { name: sonata.block }
         arguments:
             - "sonata.block.service.connected.user"
+            - @templating
+            - @security.context
+
+    sonata.block.service.controls:
+        class: Pn\PnBundle\Block\Service\ControlsBlockService
+        tags:
+            - { name: sonata.block }
+        arguments:
+            - "sonata.block.service.controls"
             - @templating
             - @security.context

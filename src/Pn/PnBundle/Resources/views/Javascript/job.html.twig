@@ -71,9 +71,9 @@ $(document).ready(function(){
     $('#pn_pnbundle_job_rate_type').change(function(){
         updateField($(this).attr('id'), 'rate_type', $(this).val());
     })
-    $('#pn_pnbundle_job_description').change(function(){
+/*    $('#pn_pnbundle_job_description').change(function(){
         updateField($(this).attr('id'), 'description', $(this).val());
-    })
+    })*/
     $('#pn_pnbundle_job_phone').change(function(){
         updateField($(this).attr('id'), 'phone', $(this).val());
     })
@@ -122,6 +122,36 @@ $(document).ready(function(){
     $('input[name="pn_pnbundle_job[category]"]').change(function(){
         updateField('category', 'category', $(this).val())
     })
+
+    // wysiwyg
+    $('#presentationForm').submit(function(e){
+        e.preventDefault();
+        var presentationOptions = {
+            target:   '#presentationFormOutput',   // target element(s) to be updated with server response
+            //beforeSubmit:  videoBeforeSubmit,  // pre-submit callback
+            resetForm: false,        // reset the form after successful submit
+            success: function(data) {
+                if (data.success)
+                {
+                    $('#presentationFormOutput').html('OK').delay( 800 ).fadeOut(400);
+                    window.setTimeout(function() {
+                        $('#presentationFormOutput').html('').css('display','inline');
+                    }, 2000);
+                }
+                else
+                {
+                    $('#presentationFormOutput').html(data.message);
+                }
+            },
+            error: function(error){
+                $('#presentationFormOutput').html(error);
+                //$('#cropAjaxLoader').remove();
+            }
+        };
+        window.setTimeout(function() {
+            $('#presentationForm').ajaxSubmit(presentationOptions);
+        }, 10);
+    });
 
 
     // Calendar AJAX update and feedback

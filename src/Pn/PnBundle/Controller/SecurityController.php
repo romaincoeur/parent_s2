@@ -2,12 +2,16 @@
 
 namespace Pn\PnBundle\Controller;
 
+use Application\Sonata\UserBundle\Entity\User;
+use Application\Sonata\UserBundle\Form\RegistrationFormType;
+use FOS\UserBundle\Model\UserInterface;
 use Pn\PnBundle\Entity\Babysitter;
 use Pn\PnBundle\Entity\Pparent;
-use Pn\PnBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\SecurityContext;
-use Pn\PnBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,103 +42,6 @@ class SecurityController extends Controller
         ));
     }
 
-    public function registerAction(Request $request)
-    {
-        $entity = new User();
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('register'),
-            'method' => 'POST',
-        ));
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-
-            // encode password
-            $factory = $this->get('security.encoder_factory');
-            $encoder = $factory->getEncoder($entity);
-            $encodedPassword = $encoder->encodePassword($form["rawPassword"]->getData(), $entity->getSalt());
-            $entity->setPassword($encodedPassword);
-
-            if ($form["type"]->getData() == 'nounou')
-            {
-                $babysitter = new Babysitter();
-                $babysitter->setUser($entity);
-                $babysitter->setCategory($form["secondType"]->getData());
-                $em->persist($babysitter);
-            }
-            elseif ($form["type"]->getData() == 'parent')
-            {
-                $parent = new Pparent();
-                $parent->setUser($entity);
-                $em->persist($parent);
-            }
-
-            // enregistrement en BDD
-            try {
-                $em->persist($entity);
-                $em->flush();
-            } catch (\Doctrine\DBAL\DBALException $e) {
-                $response['success'] = false;
-                $response['cause'] = 'Un utilisateur utilise deja cet email';
-                return new JsonResponse( $response );
-            }
-
-            // Correction du bug de clef étrangere
-            // Maniere peu délicate
-            /*if ($form["type"]->getData() == 'nounou')
-            {
-                $babysitter = $entity->getBabysitter();
-                $babysitter->setUser($entity);
-                $em->persist($babysitter);
-                $em->flush();
-            }*/
-
-            // Envoyer un email de confirmation
-            $confirmationUrl = $this->generateUrl('confirmation', array('token' => $entity->getConfirmationToken()), true);
-            $mail = $em->getRepository('PnPnBundle:MailTemplate')->findOneByVirtualTitle('maildeconfirmation');
-
-            $body = str_replace(
-                array('%FIRSTNAME', '%EMAIL', '%URL'),
-                array($entity->getFirstname(), $entity->getEmail(), $confirmationUrl),
-                $mail->getBody()
-            );
-
-            $message = \Swift_Message::newInstance()
-                ->setSubject($mail->getObject())
-                ->setFrom($this->container->getparameter('mailer.from'))
-                ->setTo($entity->getEmail())
-                ->setBody($body)
-            ;
-            $message->getHeaders()->get('Content-Type')->setValue('text/html');
-
-            $this->get('mailer')->send($message);
-
-            // Connexion
-            $token = new UsernamePasswordToken($entity, null, 'main', $entity->getRoles());
-            $this->get('security.context')->setToken($token);
-
-            // Response
-            $response['success'] = true;
-            return new JsonResponse( $response );
-
-        }
-
-        if ($request->isXmlHttpRequest())
-        {
-            $response['success'] = false;
-            $response['cause'] = $this->getErrorsAsString($form);
-            return new JsonResponse( $response );
-        }
-        else
-        {
-            return $this->render('PnPnBundle:Default:register.html.twig', array(
-                'entity' => $entity,
-                'register_form'   => $form->createView()
-            ));
-        }
-    }
 
     public function confirmationAction($token)
     {
@@ -330,5 +237,38 @@ class SecurityController extends Controller
         }
 
         return $errors;
+    }
+
+    /**
+     * Authenticate a user with Symfony Security
+     *
+     * @param \FOS\UserBundle\Model\UserInterface        $user
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     */
+    protected function authenticateUser(UserInterface $user, Response $response)
+    {
+        try {
+            $this->container->get('fos_user.security.login_manager')->loginUser(
+                $this->container->getParameter('fos_user.firewall_name'),
+                $user,
+                $response);
+        } catch (AccountStatusException $ex) {
+            // We simply do not authenticate users which do not pass the user
+            // checker (not enabled, expired, etc.).
+        }
+    }
+
+    /**
+     * @param string $action
+     * @param string $value
+     */
+    protected function setFlash($action, $value)
+    {
+        $this->container->get('session')->getFlashBag()->set($action, $value);
+    }
+
+    protected function getEngine()
+    {
+        return $this->container->getParameter('fos_user.template.engine');
     }
 }

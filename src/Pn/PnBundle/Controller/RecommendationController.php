@@ -44,7 +44,7 @@ class RecommendationController extends Controller
         {
             throw $this->createNotFoundException('Vous devez être connecté pour accéder à cette fonctionalité');
         }
-        $receiver = $em->getRepository('PnPnBundle:User')->findOneById($to);
+        $receiver = $em->getRepository('ApplicationSonataUserBundle:User')->findOneById($to);
         if ($receiver->getId() == $sender->getId())
         {
             throw $this->createNotFoundException('Vous ne pouvez vous recommander vous même');

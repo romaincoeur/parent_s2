@@ -1,0 +1,81 @@
+{# src/Pn/BlogBundle/Resources/views/Article/index.html.twig #}
+
+
+{% extends "PnPnBundle::layout.html.twig" %}
+
+
+{% block body %}
+
+    <div class="wrap moocs">
+        <div class="frame">
+            <img src="{{ asset('bundles/pnpn/images/illus/formations.jpg') }}" alt="formations">
+            <div class="description">
+                <img src="{{  asset('bundles/pnpn/images/icons/present-badge.png') }}" alt="badge">
+                <strong>
+                    Lisez nos articles,<br>
+                    Passez des tests,<br>
+                    Gagnez des badges !
+                </strong>
+            </div>
+        </div>
+
+        <div class="list row">
+
+            {#<div class="col-md-4">
+                <div class="mooc-mini new">
+                    <div class="header">
+                        <img src="{{ asset('bundles/pnpn/images/icons/alaune.png') }}" alt="a la une">
+                        <div class="title">
+                            <h5>Filtrez par catégorie</h5>
+                        </div>
+                    </div>
+                    <div class="body">
+                        <input type="checkbox">Santé et sécurité<br>
+                        <input type="checkbox">Eveil<br>
+                        <input type="checkbox">Geste du quotidien<br>
+                        <input type="checkbox">Organisation professionnel<br>
+                    </div>
+                </div>
+            </div>#}
+
+            {% for entity in pager.getResults() %}
+                <a href="{{ path('sonata_news_view', { 'permalink': sonata_news_permalink(entity) }) }}">
+                    <div class="col-md-4">
+                        <div class="mooc-mini new">
+                            <div class="header">
+                                {% if entity.collection %}
+                                    {% thumbnail entity.collection.media, 'small' %}
+                                {% endif %}
+                                <div class="title">
+                                    <h5>{{ entity.title }}</h5>
+                                </div>
+                            </div>
+                            <div class="body">
+                                <p>{{ entity.abstract }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+        $(function() {
+            $('.new').hover(
+                    function() {
+                        $(this).children(".header").css('background-color','#e84355');
+                    }
+                    , function() {
+                        $(this).children(".header").css('background-color','#eeeeee');
+                    });
+        })
+
+    </script>
+{% endblock %}

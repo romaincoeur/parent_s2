@@ -12,5 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ParentRepository extends EntityRepository
 {
-
+    public function count()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

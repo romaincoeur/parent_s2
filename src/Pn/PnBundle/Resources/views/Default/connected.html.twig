@@ -2,7 +2,7 @@
 
 <div class="row wrap connected">
     <a href="{{ path('pn_pn_homepage') }}" title="Page d'accueil" class="btn left round" style="margin-left: 0"><img src="{{ asset('bundles/pnpn/images/icons/white-home.png') }}" alt="menu tab" style="margin-top: 4px; margin-left: -1px;"></a>
-    {% if app.user.type == 'parent' %}
+    {% if is_granted('ROLE_PARENT') %}
         <a href="{{ path('myprofile_edit') }}" title="Mon annonce" class="btn left round"><img src="{{ asset('bundles/pnpn/images/icons/menu-profile.png') }}" alt="menu profile"></a>
     {% else %}
         <a href="{{ path('myprofile_edit') }}" title="Mon profil" class="btn left round"><img src="{{ asset('bundles/pnpn/images/icons/menu-profile.png') }}" alt="menu profile"></a>
@@ -11,6 +11,9 @@
     <a href="{{ path('logout') }}" title="Déconnexion" class="btn right round"><img src="{{ asset('bundles/pnpn/images/icons/menu-signout.png') }}" alt="menu signout"></a>
     <a href="#account_management" title="Gestion du compte" role="button" class="btn right round" data-toggle="modal"><img src="{{ asset('bundles/pnpn/images/icons/menu-account.png') }}" alt="menu account"></a>
     <a href="{{ path('message') }}" title="Messages" class="btn right round"><img src="{{ asset('bundles/pnpn/images/icons/menu-message.png') }}" alt="menu message"></a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('sonata_admin_dashboard') }}" class="btn right round" style="margin-left: 0; padding-top: 5px;">A</a>
+    {% endif %}
     <a href="{{ path('pn_pn_homepage') }}" title="Page d'accueil">
         <div class="logo">
             <h2 style="text-align: right; margin-left: 53px;">Parent</h2>

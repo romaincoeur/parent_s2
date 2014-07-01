@@ -16,7 +16,7 @@ Pn\PnBundle\Entity\Job:
       type: string
       length: 255
       nullable: true
-    description:
+    presentation:
       type: text
       nullable: true
     address:

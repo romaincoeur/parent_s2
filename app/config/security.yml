@@ -1,17 +1,29 @@
 security:
     encoders:
-        Pn\PnBundle\Entity\User: sha512
+        Application\Sonata\UserBundle\Entity\User: sha512
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH, ROLE_SONATA_ADMIN]
 
     providers:
-        main:
-            entity: { class: Pn\PnBundle\Entity\User, property: username }
+        fos_userbundle:
+            id: fos_user.user_manager
 
     firewalls:
-        secured_area:
+        admin:
+            pattern:            /admin(.*)
+            context:            user
+            form_login:
+                provider:       fos_userbundle
+                login_path:     /admin/login
+                use_forward:    false
+                check_path:     /admin/login_check
+                failure_path:   null
+            logout:
+                path:           /admin/logout
+            anonymous:          true
+        main:
             pattern:    ^/
             anonymous: ~
             ajax_form_login:
@@ -27,4 +39,13 @@ security:
                 domain:   ~ # Prend la valeur par défaut du domaine courant depuis $_SERVER
 
     access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/logout$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }
+
+    acl:
+        connection: default

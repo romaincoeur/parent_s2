@@ -18,10 +18,12 @@ class StatisticsBlockService extends BaseBlockService
      */
     public function execute(BlockContextInterface $block, Response $response = null)
     {
-        $userRepository = $this->em->getRepository('PnPnBundle:User');
+        $userRepository = $this->em->getRepository('ApplicationSonataUserBundle:User');
+        $babysitterRepository = $this->em->getRepository('PnPnBundle:Babysitter');
+        $parentRepository = $this->em->getRepository('PnPnBundle:Pparent');
         $nbUsers = $userRepository->count();
-        $nbNounou = $userRepository->countBabysitters();
-        $nbParents = $userRepository->countParents();
+        $nbNounou = $babysitterRepository->count();
+        $nbParents = $parentRepository->count();
 
         return $this->renderResponse('PnPnBundle:Block:block_statistics.html.twig', array(
             'block'     => $block,

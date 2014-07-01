@@ -2,8 +2,7 @@
 
 namespace Pn\PnBundle\Controller;
 
-use FOS\UserBundle\Entity\User;
-use Proxies\__CG__\Pn\PnBundle\Entity\Recommendation;
+use Pn\PnBundle\Entity\Recommendation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -173,7 +172,7 @@ class BabysitterController extends Controller
         if (!$user) {
             throw $this->createNotFoundException('Vous devez être connecté pour accéder à cette fonctionalité');
         }
-        if ($user->getType() != 'nounou') {
+        if (!$user->hasRole('ROLE_NOUNOU')) {
             throw $this->createNotFoundException('Seules les nounous peuvent modifier leur profil.');
         }
 
@@ -304,15 +303,11 @@ class BabysitterController extends Controller
         if (!$user) {
             throw $this->createNotFoundException('Not connected user');
         }
-        if ($user->getType() != 'nounou') {
+        if (!$user->hasRole('ROLE_NOUNOU')) {
             throw $this->createNotFoundException('User needs to be of type "nounou"');
         }
 
         $entity = $user->getBabysitter();
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Babysitter entity.');
-        }
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Babysitter entity.');
@@ -360,29 +355,29 @@ class BabysitterController extends Controller
             case 'longitude':
                 $user->setLongitude($value);
                 break;
-            case 'birthdate_day':
-                $birthdate = $user->getBirthdate();
+            case 'dateOfBirth_day':
+                $birthdate = $user->getdateOfBirth();
                 $d = $value;
                 $m = $birthdate->format('m');
                 $Y = $birthdate->format('Y');
 
-                $user->setBirthdate(new \DateTime($Y.'-'.$m.'-'.$d));
+                $user->setDateOfBirth(new \DateTime($Y.'-'.$m.'-'.$d));
                 break;
-            case 'birthdate_month':
-                $birthdate = $user->getBirthdate();
+            case 'dateOfBirth_month':
+                $birthdate = $user->getdateOfBirth();
                 $d = $birthdate->format('d');
                 $m = $value;
                 $Y = $birthdate->format('Y');
 
-                $user->setBirthdate(new \DateTime($Y.'-'.$m.'-'.$d));
+                $user->setDateOfBirth(new \DateTime($Y.'-'.$m.'-'.$d));
                 break;
-            case 'birthdate_year':
-                $birthdate = $user->getBirthdate();
+            case 'dateOfBirth_year':
+                $birthdate = $user->getdateOfBirth();
                 $d = $birthdate->format('d');
                 $m = $birthdate->format('m');
                 $Y = $value;
 
-                $user->setBirthdate(new \DateTime($Y.'-'.$m.'-'.$d));
+                $user->setDateOfBirth(new \DateTime($Y.'-'.$m.'-'.$d));
                 break;
             case 'experience':
                 $entity->setExperience($value);
@@ -443,15 +438,11 @@ class BabysitterController extends Controller
         if (!$user) {
             throw $this->createNotFoundException('Not connected user');
         }
-        if ($user->getType() != 'nounou') {
+        if (!$user->hasRole('ROLE_NOUNOU')) {
             throw $this->createNotFoundException('User needs to be of type "nounou"');
         }
 
         $entity = $user->getBabysitter();
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Babysitter entity.');
-        }
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Babysitter entity.');
@@ -498,7 +489,7 @@ class BabysitterController extends Controller
         if (!$user) {
             throw $this->createNotFoundException('Not connected user');
         }
-        if ($user->getType() != 'nounou') {
+        if (!$user->hasRole('ROLE_NOUNOU')) {
             throw $this->createNotFoundException('User needs to be of type "nounou"');
         }
 
@@ -557,7 +548,7 @@ class BabysitterController extends Controller
         if (!$user) {
             throw $this->createNotFoundException('Not connected user');
         }
-        if ($user->getType() != 'nounou') {
+        if (!$user->hasRole('ROLE_NOUNOU')) {
             throw $this->createNotFoundException('User needs to be of type "nounou"');
         }
 
@@ -688,6 +679,28 @@ class BabysitterController extends Controller
         {
             die('Something wrong with upload!');
         }
+    }
+
+    /**
+     * Updates all Babysitters' trustpoints.
+     *
+     */
+    public function updateAllTrustpointsAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('PnPnBundle:Babysitter')->findAll();
+
+        foreach ($entities as $babysitter)
+        {
+            $this->updateTrustpoints($babysitter);
+            $em->persist($babysitter);
+        }
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('fos_user_success', 'Les points de confiance des nounous ont été mis à jour');
+
+        return $this->redirect($this->container->get('request')->headers->get('referer'));
     }
 
     private function updateTrustpoints(Babysitter $user)

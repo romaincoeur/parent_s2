@@ -126,8 +126,8 @@
                 <div class="detail" id="birthdate">
                     <img src="{{ asset('bundles/pnpn/images/icons/sablier.png') }}" alt="sablier">
                     <b style="vertical-align: text-top;">Renseignez votre date de naissance</b>
-                    {{ form_errors(form.user.birthdate) }}
-                    {{ form_widget(form.user.birthdate) }}
+                    {{ form_errors(form.user.dateOfBirth) }}
+                    {{ form_widget(form.user.dateOfBirth) }}
                 </div>
                 <div class="detail" id="experience">
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience">
@@ -168,7 +168,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 calendar">
+        <div class="col-md-4 calendar" style="margin-bottom: 50px;">
             {{ calendar.editTable(calendarMatrix) }}
         </div>
         <div class="col-md-4 right-panel">
@@ -423,37 +423,3 @@
         })
     </script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{#
-{% extends '::base.html.twig' %}
-
-{% block body -%}
-    <h1>Babysitter edit</h1>
-
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('babysitter') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
-{% endblock %}#}

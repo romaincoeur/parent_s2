@@ -1,0 +1,25 @@
+
+
+<div class="sonata-blog-comment-container">
+
+    <div class="sonata-blog-comment-list comments">
+        {% for comment in pager.results|reverse %}
+            <div class="sonata-blog-comment comment">
+                {% if comment.author.avatar %}
+                    <img class="profile-picture" src="{{ asset('uploads/users/' ~ comment.author.avatar) }}" alt="photo de profil de {{ comment.author.firstname }}" style="height: 90px;">
+                {% elseif is_granted('ROLE_NOUNOU') %}
+                    <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 90px;">
+                {% else %}
+                    <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 90px; width: 86px;">
+                {% endif %}
+                <img class="left-arrow" src="{{ asset('bundles/pnpn/images/icons/left-arrow.png') }}" alt="left-arrow">
+                <div class="bulle">
+                    <p>{{ comment.message }}</p>
+                    <span class="red">{{ comment.author.hiddenName }}</span> Posté le {{ comment.createdAt|format_date  }}
+                </div>
+            </div>
+        {% else %}
+            {{ 'no_comments_available'|trans({}, 'SonataNewsBundle') }}
+        {% endfor %}
+    </div>
+</div>

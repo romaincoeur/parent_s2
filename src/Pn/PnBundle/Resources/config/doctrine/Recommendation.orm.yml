@@ -19,13 +19,13 @@ Pn\PnBundle\Entity\Recommendation:
       type: datetime
   manyToOne:
     giver:
-      targetEntity: User
+      targetEntity: Application\Sonata\UserBundle\Entity\User
       inversedBy: given_recommendations
       joinColumn:
         name: giver_id
         referencedColumnName: id
     receiver:
-      targetEntity: User
+      targetEntity: Application\Sonata\UserBundle\Entity\User
       inversedBy: received_recommendations
       joinColumn:
         name: receiver_id

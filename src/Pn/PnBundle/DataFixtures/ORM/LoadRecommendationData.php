@@ -38,6 +38,6 @@ class LoadRecommendationData extends AbstractFixture implements OrderedFixtureIn
 
     public function getOrder()
     {
-        return 5; // the order in which fixtures will be loaded
+        return 11; // the order in which fixtures will be loaded
     }
 }
