@@ -434,6 +434,7 @@ header .connected .btn:hover
 {
     height: 20px;
     float: right;
+    width: inherit;
 }
 
 .new .header h5

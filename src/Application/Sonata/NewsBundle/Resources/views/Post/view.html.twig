@@ -12,7 +12,7 @@
     <div class="blog wrap">
         <div class="header clearfix">
             <div class="left">
-                {% thumbnail post.collection.media, 'small' %}
+                {% thumbnail post.collection.media, 'small' with {'class': 'icon'} %}
                 <h1>{{ post.title }}</h1>
             </div>
             {#<div class="right">
@@ -26,22 +26,26 @@
             {% media post.image, 'wide' %}
             {{ post.content|raw }}
         </div>
-        </div>
+    </div>
 
-        <div class="banner bg-red big-wrap">
-            <div class="wrap">
-                <h4>Commentaires</h4>
-            </div>
+    <div class="banner bg-red big-wrap">
+        <div class="wrap">
+            <h4>Commentaires</h4>
         </div>
+    </div>
 
     <div class="comments wrap">
         {% render(controller('SonataNewsBundle:Post:comments', {'postId': post.id})) %}
 
         {% if post.iscommentable %}
-            {% render(controller('SonataNewsBundle:Post:addCommentForm', {
-            'postId': post.id,
-            'form': form
-            })) %}
+            {% if app.user %}
+                {% render(controller('SonataNewsBundle:Post:addCommentForm', {
+                'postId': post.id,
+                'form': form
+                })) %}
+            {% else %}
+                <a href="#login" role="button" class="btn bg-yellow" data-toggle="modal" style="width: 100%; margin-bottom: 30px;">Connectez-vous pour laisser un commentaire</a>
+            {% endif %}
         {% else %}
             <div>
                 {{ 'message_comments_are_closed'|trans({}, 'SonataNewsBundle') }}

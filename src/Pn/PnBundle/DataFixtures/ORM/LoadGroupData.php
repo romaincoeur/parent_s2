@@ -30,7 +30,7 @@ class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface, 
     {
 
         // group admin
-        $group_admin = new Group('admin', array('ROLE_ADMIN','ROLE_SONATA_ADMIN'));
+        $group_admin = new Group('admin', array('ROLE_ADMIN','ROLE_SONATA_ADMIN', 'ROLE_SUPER_ADMIN'));
         $this->addReference('group-admin', $group_admin);
         $em->persist($group_admin);
 

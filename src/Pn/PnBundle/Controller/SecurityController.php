@@ -43,6 +43,12 @@ class SecurityController extends Controller
     }
 
 
+    /**
+     * @param $token
+     * @return RedirectResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @deprecated
+     */
     public function confirmationAction($token)
     {
         $repository = $this->getDoctrine()->getRepository('PnPnBundle:User');

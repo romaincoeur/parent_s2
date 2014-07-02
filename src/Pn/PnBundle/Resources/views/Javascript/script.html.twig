@@ -171,7 +171,10 @@ $(function() {
                 }
             },
             error: function(error){
-                $('#loginErrors').html(error.statusText).css('display','block');
+                if (error.statusText == 'OK')
+                    $('#loginSuccess').html("Un email vous a été envoyé avec un lien de réinitialisation de mot de passe").css('display','block');
+                else
+                    $('#loginErrors').html(error.statusText).css('display','block');
             }
         });
     });

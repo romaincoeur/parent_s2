@@ -1,12 +1,8 @@
 
-{% if app.user %}
-    <form action="{{ url('sonata_news_add_comment', {'id': post_id}) }}" method="POST" class="form-horizontal new_comment" role="form">
-        {{ form_errors(form) }}
-        {{ form_widget(form.message, { 'attr': {'placeholder': 'Ecrivez votre commentaire ici'} }) }}
+<form action="{{ url('sonata_news_add_comment', {'id': post_id}) }}" method="POST" class="form-horizontal new_comment" role="form">
+    {{ form_errors(form) }}
+    {{ form_widget(form.message, { 'attr': {'placeholder': 'Ecrivez votre commentaire ici'} }) }}
 
-        {{ form_rest(form) }}
-        <button type="submit"> Ajouter un commentaire </button>
-    </form>
-{% else %}
-    <a href="#login" role="button" class="btn bg-yellow" data-toggle="modal" style="width: 100%; margin-bottom: 30px;">Connectez-vous pour laisser un commentaire</a>
-{% endif %}
+    {{ form_rest(form) }}
+    <button type="submit"> Ajouter un commentaire </button>
+</form>

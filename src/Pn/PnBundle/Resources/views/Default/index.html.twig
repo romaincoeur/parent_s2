@@ -68,7 +68,7 @@
             <a href="{{ path('sonata_news_view', {'permalink': sonata_news_permalink(entity)}) }}">
                 <div class="new">
                     <div class="header">
-                        {% media entity.collection.media, 'small' %}
+                        {% thumbnail entity.collection.media, 'small' %}
                         <div class="title">
                             <h5>{{ entity.title }}</h5>
                         </div>
