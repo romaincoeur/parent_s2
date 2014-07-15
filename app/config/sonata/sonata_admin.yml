@@ -38,9 +38,11 @@ sonata_admin:
     dashboard:
         blocks:
 #            - { position: left, type: sonata.admin.block.admin_list }
-            - { position: left, type: sonata.block.service.statistics }
-            - { position: right, type: sonata.block.service.connected.user }
+            - { position: right, type: sonata.block.service.statistics }
+#            - { position: right, type: sonata.block.service.connected.user }
             - { position: left, type: sonata.block.service.controls }
+            - { position: left, type: sonata.news.block.recent_posts, settings: { title: Articles récents, number: 5, mode: admin }}
+            - { position: right, type: sonata.news.block.recent_comments, settings: { title: Derniers commentaires, number: 7, mode: admin }}
 
         groups:
             sonata.admin.group.administration:

@@ -73,8 +73,8 @@ $(document).ready(function(){
         updateField($(this).attr('id'), 'rate_type', $(this).val());
     });
     /*$('#tinymce').change(function(){
-        updateField($(this).attr('id'), 'presentation', $(this).val());
-    })*/
+     updateField($(this).attr('id'), 'presentation', $(this).val());
+     })*/
     $('#pn_pnbundle_babysitter_user_phone').change(function(){
         updateField($(this).attr('id'), 'phone', $(this).val());
     });
@@ -147,7 +147,7 @@ $(document).ready(function(){
         window.setTimeout(function() {
             $('#presentationForm').ajaxSubmit(presentationOptions);
         }, 10);
-     });
+    });
 
 
     // Calendar AJAX update and feedback
@@ -201,6 +201,71 @@ $(document).ready(function(){
     });
 
 
+    // Other Diplomas
+    $('#pn_pnbundle_babysitter_diplomas_new').change(function(){
+        $('#pn_pnbundle_babysitter_diplomas_new').css('background','url("{{ asset('bundles/pnpn/images/icons/ajax-loader.gif') }}") no-repeat right white');
+
+        $.ajax({
+            type        : "POST",
+            url         : "{{ path('babysitter_add_otherDiploma', { 'id': entity.id}) }}",
+            data        : { value: $(this).val() },
+            success     : function(response) {
+                if (response.success)
+                {
+                    $('#pn_pnbundle_babysitter_diplomas_new').val('');
+                    html_text = '' +
+                            '<li style="list-style-type: none;" id="' + response.value + '">' +
+                            '<button class="remove_otherDiploma" title="Supprimer ce diplôme"><img src="{{ asset('bundles/pnpn/images/icons/error.png') }}" alt="supprimer diplome"></button>' +
+                            '&nbsp;' + response.value +
+                            '</li>';
+                    if ($('#other_diplomas li').length != 0)
+                    {
+                        $('#other_diplomas li').last().after(html_text);
+                    }
+                    else
+                    {
+                        $('#other_diplomas').html(html_text);
+                    }
+                    $('#pn_pnbundle_babysitter_diplomas_new').css('background','white');
+                }
+                else
+                {
+                    $('#pn_pnbundle_babysitter_diplomas_new').css('background','url("{{ asset('bundles/pnpn/images/icons/error.png') }}") no-repeat right white');
+                }
+                if (response.message)
+                {
+                    alert(response.message);
+                }
+            },
+            error     : function(error) {
+                $('#' + $fieldId).css('background','url("{{ asset('bundles/pnpn/images/icons/error.png') }}") no-repeat right white');
+                alert(error);
+            }
+        });
+    });
+
+    $('.remove_otherDiploma').click(function(){
+        $.ajax({
+            type        : "POST",
+            url         : "{{ path('babysitter_remove_otherDiploma', { 'id': entity.id }) }}",
+            data        : { value: $(this).parent( "li" ).attr("id") },
+            success     : function(response) {
+                if (response.success)
+                {
+                    $('#other_diplomas li#' + response.value).remove();
+                }
+                if (response.message)
+                {
+                    alert(response.message);
+                }
+            },
+            error     : function(error) {
+                alert(error);
+            }
+        });
+    })
+
+
 })
 
 
@@ -235,7 +300,7 @@ $(function() {
     $("input#uploadfile").change(function(){
         loadImageFile();
         /*$(".uploadfile").wrap("<form>").closest("form").get(0).reset();
-        $(".uploadfile").unwrap()*/
+         $(".uploadfile").unwrap()*/
     });
 
     oFReader=new FileReader,rFilter=/^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;

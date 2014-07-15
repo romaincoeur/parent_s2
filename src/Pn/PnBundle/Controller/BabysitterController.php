@@ -385,6 +385,9 @@ class BabysitterController extends Controller
             case 'diplomas':
                 $entity->switchDiploma($value);
                 break;
+            case 'otherDiplomas':
+                $entity->addOtherDiploma($value);
+                break;
             case 'ageOfChildren':
                 $entity->switchAgeOfChildren($value);
                 break;
@@ -701,6 +704,95 @@ class BabysitterController extends Controller
         $this->get('session')->getFlashBag()->add('fos_user_success', 'Les points de confiance des nounous ont été mis à jour');
 
         return $this->redirect($this->container->get('request')->headers->get('referer'));
+    }
+
+    /**
+     * Adds a custom diploma
+     *
+     * @param Request $request
+     */
+    public function addOtherDiplomaAction(Request $request)
+    {
+        $response['success'] = false;
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if (!$user->hasRole('ROLE_NOUNOU')) {
+            throw $this->createNotFoundException('User needs to be of type "nounou"');
+        }
+
+        $entity = $user->getBabysitter();
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Babysitter entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $name = $request->request->get('value');
+        }
+        else
+        {
+            $name = $request->query->get('value');
+        }
+
+        $entity->addOtherDiploma($name);
+        $em->persist($entity);
+        $em->flush();
+
+        $response['success'] = true;
+        $response['value'] = $name;
+        //$response['message'] = $name;
+
+        // Response
+        return new JsonResponse( $response );
+    }
+
+    /**
+     * Adds a custom diploma
+     *
+     * @param Request $request
+     */
+    public function removeOtherDiplomaAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!$user) {
+            throw $this->createNotFoundException('Not connected user');
+        }
+        if (!$user->hasRole('ROLE_NOUNOU')) {
+            throw $this->createNotFoundException('User needs to be of type "nounou"');
+        }
+
+        $entity = $user->getBabysitter();
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Babysitter entity.');
+        }
+
+        // Get data
+        if ($request->getMethod()=='POST')
+        {
+            $name = $request->request->get('value');
+        }
+        else
+        {
+            $name = $request->query->get('value');
+        }
+
+        $entity->removeOtherDiploma($name);
+        $em->persist($entity);
+        $em->flush();
+
+        $response['success'] = true;
+        $response['value'] = $name;
+        //$response['message'] = $request->request->get('value');
+
+        // Response
+        return new JsonResponse( $response );
     }
 
     private function updateTrustpoints(Babysitter $user)

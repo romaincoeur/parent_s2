@@ -13,6 +13,7 @@ class Babysitter
     public function __construct()
     {
         $this->diplomas = array();
+        $this->otherDiplomas = array();
         $this->ageofchildren = array();
         $this->languages = array();
         $this->particularite = array();
@@ -288,6 +289,61 @@ class Babysitter
     }
 
     /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function addOtherDiploma($diploma)
+    {
+        if (!$this->hasOtherDiploma($diploma)) {
+            $this->otherDiplomas[] = $diploma;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $diploma
+     */
+    public function hasOtherDiploma($diploma)
+    {
+        return in_array($diploma, $this->otherDiplomas, true);
+    }
+
+    /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function removeOtherDiploma($diploma)
+    {
+        if (false !== $key = array_search($diploma, $this->otherDiplomas, true)) {
+            unset($this->otherDiplomas[$key]);
+            $this->otherDiplomas = array_values($this->otherDiplomas);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $diploma
+     *
+     * @return Babysitter
+     */
+    public function switchOtherDiploma($diploma)
+    {
+        if ($this->hasOtherDiploma($diploma)) {
+            $this->removeOtherDiploma($diploma);
+        }
+        else
+        {
+            $this->addOtherDiploma($diploma);
+        }
+
+        return $this;
+    }
+
+    /**
      * @param string $language
      *
      * @return Babysitter
@@ -500,6 +556,27 @@ class Babysitter
         .strtolower(str_replace(' ','-',$this->user->getCategories()[$this->getCategory()])).'-'
         .$this->user->getPostcode();
     }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue()
+    {
+        if(!$this->getCreatedAt())
+        {
+            $this->created_at = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updated_at = new \DateTime();
+    }
+
+
 
 
 
@@ -1075,5 +1152,89 @@ class Babysitter
     public function getUser()
     {
         return $this->user;
+    }
+    /**
+     * @var array
+     */
+    private $otherDiplomas;
+
+
+    /**
+     * Set otherDiplomas
+     *
+     * @param array $otherDiplomas
+     * @return Babysitter
+     */
+    public function setOtherDiplomas($otherDiplomas)
+    {
+        $this->otherDiplomas = $otherDiplomas;
+
+        return $this;
+    }
+
+    /**
+     * Get otherDiplomas
+     *
+     * @return array 
+     */
+    public function getOtherDiplomas()
+    {
+        return $this->otherDiplomas;
+    }
+    /**
+     * @var \DateTime
+     */
+    private $created_at;
+
+    /**
+     * @var \DateTime
+     */
+    private $updated_at;
+
+
+    /**
+     * Set created_at
+     *
+     * @param \DateTime $createdAt
+     * @return Babysitter
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->created_at = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get created_at
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * Set updated_at
+     *
+     * @param \DateTime $updatedAt
+     * @return Babysitter
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updated_at = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updated_at
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
     }
 }

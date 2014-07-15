@@ -21,7 +21,7 @@ media:
 
 news:
     resource: '@SonataNewsBundle/Resources/config/routing/news.xml'
-    prefix: /news
+    prefix: /blog
 
 sonata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'

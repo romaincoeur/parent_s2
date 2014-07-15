@@ -218,7 +218,7 @@
                             <p class="tarif">{{ entity.ratePrice }}€ / {{ entity.user.rateTypes[entity.rateType] }}</p>
                         {% endif %}
                         {% if app.user %}
-                            <strong>{{ entity.user.fullName() }}&nbsp;</strong>
+                            <strong>{{ entity.user.fullName()|title }}&nbsp;</strong>
                         {% else %}
                             <strong>{{ entity.user.hiddenName() }}&nbsp;</strong>
                         {% endif %}
@@ -240,7 +240,7 @@
                     </div>
                     <div class="body">
                         <p>
-                            {{ entity.shortPresentation(85)|raw }}<br>
+                            {{ entity.shortPresentation(65)|raw|lower|capitalize }}<br>
                             <strong>
                                 {#<img src="{{ asset('bundles/pnpn/images/icons/profil-badge.png') }}" alt="badge"> 5 Badges&nbsp;&nbsp;#}
                                 {% if entity.experience %}

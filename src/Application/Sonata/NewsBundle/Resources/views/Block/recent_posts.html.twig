@@ -1,0 +1,38 @@
+
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="sonata-news-block-recent-post panel panel-default">
+        {% if settings.title %}
+            <div class="panel-heading">
+                <h3 class="sonata-news-block-recent-post panel-title"><i class="fa fa-pencil"></i> {{ settings.title }}</h3>
+            </div>
+        {% endif %}
+
+        <div class="panel-body">
+
+            <div class="sonata-blog-post-container list-group">
+                {% for post in pager.getResults() %}
+                    {% if context.getSetting('mode') == 'admin' %}
+                        <a class="list-group-item" href="{{ url('admin_sonata_news_post_edit', { 'id': post.id }) }}">
+                            {% if post.onHomePage %}
+                                <span class="label label-success">On home Page</span>
+                            {% endif %}&nbsp;
+
+                            {{ post.title }} - {{ 'archive_author'|trans({'%author%': post.author }, 'SonataNewsBundle') }} - {{ post.publicationDateStart | format_date }}</a>
+                    {% else %}
+                        <a class="list-group-item" href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(post) }) }}">{{ post.title }}</a> - {{ 'archive_author'|trans({'%author%': post.author }, 'SonataNewsBundle') }} - {{ post.publicationDateStart | format_date }}
+                    {% endif %}
+                {% else %}
+                    <a class="list-group-item" href="#">{{ 'no_post_found'|trans({}, 'SonataNewsBundle') }}</a>
+                {% endfor %}
+            </div>
+
+            {% if context.getSetting('mode') == 'admin' %}
+                <a href="{{ url('admin_sonata_news_post_list') }}" class="btn btn-primary btn-block"><i class="fa fa-list"></i> {{ 'view_all_posts'|trans({}, 'SonataNewsBundle') }}</a>
+            {% else %}
+                <a href="{{ url('sonata_news_archive') }}" class="btn btn-primary btn-block"><i class="fa fa-list"></i> {{ 'view_all_posts'|trans({}, 'SonataNewsBundle') }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

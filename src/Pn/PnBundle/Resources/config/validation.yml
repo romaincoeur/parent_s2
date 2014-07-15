@@ -4,8 +4,6 @@ Pn\PnBundle\Entity\Job:
     properties:
         title:
             - NotBlank: ~
-        description:
-            - NotBlank: ~
 
 Pn\PnBundle\Entity\Babysitter:
     properties:

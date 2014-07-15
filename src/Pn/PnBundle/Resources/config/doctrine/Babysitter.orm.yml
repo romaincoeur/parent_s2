@@ -66,8 +66,16 @@ Pn\PnBundle\Entity\Babysitter:
     diplomas:
       type: array
       nullable: true
+    otherDiplomas:
+      type: array
+      nullable: true
     languages:
       type: array
+      nullable: true
+    created_at:
+      type: datetime
+    updated_at:
+      type: datetime
       nullable: true
   oneToOne:
     user:
@@ -77,8 +85,8 @@ Pn\PnBundle\Entity\Babysitter:
         name: user_id
         referencedColumnName: id
   lifecycleCallbacks:
-    prePersist: [ preUpload, setDefaultValues ]
-    preUpdate: [ preUpload ]
+    prePersist: [ preUpload, setDefaultValues, setCreatedAtValue ]
+    preUpdate: [ preUpload, setUpdatedAtValue ]
     postPersist: [ upload ]
     postUpdate: [ upload ]
     postRemove: [ removeUpload ]

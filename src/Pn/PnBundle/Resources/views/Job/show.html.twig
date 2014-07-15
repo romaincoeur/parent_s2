@@ -23,7 +23,7 @@
             {% endif %}
 
 
-            <div class="description">
+            <div class="description clearfix">
                 <div class="header">
                     <div class="left">
                         {% if entity.parent.user.avatar %}
@@ -45,6 +45,13 @@
                 <div class="body">
                     {{ entity.presentation|raw }}
                 </div>
+                <div class="right dates">
+                    {% if entity.updatedAt %}
+                        Mis à jour le {{ entity.updatedAt|date("d/m/Y")  }}
+                    {% else %}
+                        Créé le {{ entity.createdAt|date("d/m/Y") }}
+                    {% endif %}
+                </div>
             </div>
 
             <div class="row">
@@ -64,7 +71,7 @@
                     </div>
                     <div class="details">
                         <img src="{{ asset('bundles/pnpn/images/icons/adresse.png') }}" alt="adresse"> {{ entity.unacurateAddress }} <br>
-                        <img src="{{ asset('bundles/pnpn/images/icons/profil-calendar.png') }}" alt="calendar icon"> du 17.12.2013 au 20.032014<br>
+                        <img src="{{ asset('bundles/pnpn/images/icons/profil-calendar.png') }}" alt="calendar icon"> du {{ entity.start|date("d/m/Y") }} au {{ entity.end|date("d/m/Y") }}<br>
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-experience.png') }}" alt="experience"> {{ entity.experience }} ans d'expérience minimum<br>
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-certifications.png') }}" alt="certifications">
                         <p>
@@ -73,7 +80,7 @@
                             {% endfor %}
                         </p>
                         <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age des enfants">
-                        Prise en charge des enfants&nbsp;
+                        Prise en charge des enfants
                         {% for pp in entity.ageOfChildren %}
                         de&nbsp;{{ entity.parent.user.ageOfChildrens[pp] }}
                         {% if not loop.last %}

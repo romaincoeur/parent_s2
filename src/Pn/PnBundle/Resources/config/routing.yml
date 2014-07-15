@@ -22,14 +22,6 @@ pn_job_show:
     pattern:  /{id}/annonce/{url}
     defaults: { _controller: "PnPnBundle:Job:show" }
 
-pn_team:
-    pattern:   /qui-sommes-nous
-    defaults:  { _controller: PnPnBundle:Default:team }
-
-pn_cgu:
-    pattern:   /mentions-legales
-    defaults:  { _controller: PnPnBundle:Default:cgu }
-
 message:
     pattern:  /messages/{conv}
     defaults: { _controller: "PnPnBundle:Message:index", conv: null }

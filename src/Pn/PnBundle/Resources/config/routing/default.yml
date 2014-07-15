@@ -14,3 +14,23 @@ pn_search:
 pn_contact:
     pattern:   /contact
     defaults:  { _controller: PnPnBundle:Default:contact }
+
+pn_team:
+    pattern:   /qui-sommes-nous
+    defaults:  { _controller: PnPnBundle:Default:team }
+
+pn_cgu:
+    pattern:   /mentions-legales
+    defaults:  { _controller: PnPnBundle:Default:cgu }
+
+pn_ecertification:
+    pattern:   /E-Certification
+    defaults:  { _controller: PnPnBundle:Default:eCertification }
+
+pn_gardePartagee:
+    pattern:   /Garder_les_enfants_entre_parents
+    defaults:  { _controller: PnPnBundle:Default:gardePartagee }
+
+pn_accueilDeQualite:
+    pattern:   /Pour_un_accueil_d_enfant_de_qualite
+    defaults:  { _controller: PnPnBundle:Default:accueilDeQualite }

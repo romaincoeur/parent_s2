@@ -108,6 +108,8 @@ sonata_block:
         sonata.block.service.template:
         sonata.user.block.menu:
         sonata.user.block.account:
+        sonata.news.block.recent_comments:
+        sonata.news.block.recent_posts:
 
 services:
     twig.extension.text:
@@ -166,6 +168,7 @@ fos_user:
         group_manager: sonata.user.orm.group_manager
     service:
         user_manager: sonata.user.orm.user_manager
+        mailer: fos_user.mailer.default
     registration:
         confirmation:
             enabled:    true

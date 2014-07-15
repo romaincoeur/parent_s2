@@ -1,7 +1,28 @@
 
-<div id="cms-block-001" class="cms-block cms-block-element">
-    <h2>Statistiques</h2>
-    <b>Nombre d'utilisateurs : {{ nbUsers }}</b><br>
-    &nbsp;&nbsp;Nombre de nounous : {{ nbNounous }}<br>
-    &nbsp;&nbsp;Nombre de parents : {{ nbParents }}<br>
-</div>
+
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="sonata-news-block-recent-post panel panel-default">
+        <div class="panel-heading">
+            <h3 class="sonata-news-block-recent-post panel-title"><i class="fa fa-bar-chart-o"></i>&nbsp;Statistiques</h3>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="sonata-blog-post-container list-group">
+                <div class="list-group-item">
+                    <b>Nombre d'utilisateurs : {{ nbUsers }}</b>
+                </div>
+                <div class="list-group-item">
+                    &nbsp;&nbsp;Nombre de nounous : {{ nbNounous }}
+                </div>
+                <div class="list-group-item">
+                    &nbsp;&nbsp;Nombre de parents : {{ nbParents }}
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

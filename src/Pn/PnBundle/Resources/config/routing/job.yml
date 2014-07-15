@@ -24,7 +24,7 @@ pn_job_delete:
 
 pn_job_annonces:
     pattern:  /annonces
-    defaults: { _controller: "PnPnBundle:Job:annonces" }
+    defaults: { _controller: "PnPnBundle:Job:index" }
 
 pn_job_updateAddress:
     pattern:  /{id}/updateAddress

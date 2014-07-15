@@ -26,21 +26,6 @@ class JobController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PnPnBundle:Job')->findAll();
-
-        return $this->render('PnPnBundle:Job:index.html.twig', array(
-            'entities' => $entities,
-        ));
-    }
-
-    /**
-     * Lists all Job entities.
-     *
-     */
-    public function annoncesAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
         $entities = $em->getRepository('PnPnBundle:Job')->findByStatus('annonce');
 
         return $this->render('PnPnBundle:Job:index.html.twig', array(

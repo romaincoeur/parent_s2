@@ -235,4 +235,19 @@ class DefaultController extends Controller
         return $this->render('PnPnBundle:Default:cgu.html.twig');
     }
 
+    public function eCertificationAction()
+    {
+        return $this->render('PnPnBundle:Default:eCertification.html.twig');
+    }
+
+    public function accueilDeQualiteAction()
+    {
+        return $this->render('PnPnBundle:Default:accueilDeQualite.html.twig');
+    }
+
+    public function gardePartageeAction()
+    {
+        return $this->render('PnPnBundle:Default:gardePartagee.html.twig');
+    }
+
 }

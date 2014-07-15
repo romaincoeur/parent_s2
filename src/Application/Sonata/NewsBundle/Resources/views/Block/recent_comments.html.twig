@@ -1,0 +1,55 @@
+{#
+
+This file is part of the Sonata package.
+
+(c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+
+For the full copyright and license information, please view the LICENSE
+file that was distributed with this source code.
+
+#}
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="sonata-news-block-recent-comment panel panel-default">
+        {% if settings.title %}
+            <div class="panel-heading">
+                <h3 class="panel-title sonata-news-block-recent-comment"><i class="fa fa-comments fa-fw"></i> {{ settings.title }}</h3>
+            </div>
+        {% endif %}
+
+        <div class="panel-body">
+
+            <div class="sonata-blog-post-container list-group">
+                {% for comment in pager.getResults() %}
+                    {% if context.getSetting('mode') == 'admin' %}
+                        <a class="list-group-item" href="{{ url('admin_sonata_news_comment_edit', { 'id': comment.id }) }}">
+                            <span class="label label-{{ comment|sonata_status_class }}">
+                                {% if comment.status == constant('Sonata\\NewsBundle\\Model\\CommentInterface::STATUS_INVALID') %}
+                                    {{ 'label_comment_invalid'|trans({}, 'SonataNewsBundle') }}
+                                {% elseif comment.status == constant('Sonata\\NewsBundle\\Model\\CommentInterface::STATUS_VALID') %}
+                                    {{ 'label_comment_valid'|trans({}, 'SonataNewsBundle') }}
+                                {% elseif comment.status == constant('Sonata\\NewsBundle\\Model\\CommentInterface::STATUS_MODERATE') %}
+                                    {{ 'label_comment_moderate'|trans({}, 'SonataNewsBundle') }}
+                                {% else %}
+                                    {{ 'label_unknown_status'|trans({}, 'SonataNewsBundle') }}
+                                {% endif %}
+                            </span>&nbsp;
+
+                            {{ comment.name }} - {{ comment.message|truncate(30) }}
+                        </a>
+                    {% else %}
+                        <a class="list-group-item" href="{{ url('sonata_news_view', { 'permalink': sonata_news_permalink(comment.post) }) }}">{{ comment.name }} - {{ comment.message|truncate(30) }}
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a href="#">{{ 'no_comment_found'|trans({}, 'SonataNewsBundle') }}</a>
+                {% endfor %}
+            </div>
+
+            {% if context.getSetting('mode') == 'admin' %}
+                <a href="{{ url('admin_sonata_news_comment_list') }}" class="btn btn-primary btn-block"><i class="fa fa-list"></i> {{ 'view_all_comments'|trans({}, 'SonataNewsBundle') }}</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

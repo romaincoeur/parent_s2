@@ -1,0 +1,55 @@
+{# src/Pn/PnBundle/Resources/views/Default/eCertification.html.twig #}
+
+
+{% extends "PnPnBundle::layout.html.twig" %}
+
+{% block title %}E-Certification | {{ parent() }}{% endblock %}
+
+{% block metadata %}
+    {{ parent() }}
+    <meta name="description" content="Dans le souci de mettre en place un véritable parcours de formation accessible à tous, nous avons
+inventé une certification numérique des compétences de garde d’enfant.">
+{% endblock %}
+
+{% block body %}
+
+    <div class="blog wrap">
+        <div class="header clearfix">
+            <div class="left">
+                <h1>E-Certification</h1>
+            </div>
+        </div>
+        <div class="sonata-blog-post-content" style="margin: 20px 0 50px 0;">
+            <p>Dans le souci de mettre en place un véritable parcours de formation accessible à tous, nous avons
+                inventé une certification numérique des compétences de garde d’enfant. Elle se compose de 8
+                badges correspondants à 8 domaines clés de la petite enfance :</p>
+
+            <ol>
+                <li>Sécurité et prévention des accidents</li>
+                <li>Santé et croissance de l’enfant</li>
+                <li>Développement psychomoteur, socio-affectif et cognitif de l’enfant</li>
+                <li>Choisir les activités d’éveil et de jeu selon l’âge</li>
+                <li>Gestes du quotidien</li>
+                <li>Alimentation</li>
+                <li>Droits et obligations des gardes d’enfant</li>
+                <li>Communiquer efficacement avec les parents</li>
+            </ol>
+
+            <p>Dans chaque domaine, vous pouvez obtenir un badge de bronze, d’argent ou d’or. Les 3 types de
+                badges correspondent à 3 niveaux de progression dans les compétences petite enfance :</p>
+
+            <ul>
+                <li>Le BADGE DE BRONZE sanctionne les connaissances théoriques que vous pouvez valider en
+                    passant des quiz en ligne</li>
+                <li>Le BADGE D’ARGENT sanctionne vos connaissances pratiques acquises dans des formations
+                    partenaires</li>
+                <li>Le BADGE D’OR enfin est attribué suite à la validation de vos connaissances par les parents</li>
+            </ul>
+
+            <p>Tout cela sera mis en place progressivement. N’hésitez pas à nous envoyer vos remarques et
+                suggestions d’amélioration. L’objectif est de créer un système de certification en ligne simple
+                d’utilisation et efficace dans la valorisation de vos savoirs et savoir-faire.</p>
+        </div>
+    </div>
+
+{% endblock %}

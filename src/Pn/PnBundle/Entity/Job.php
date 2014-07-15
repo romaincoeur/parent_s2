@@ -72,10 +72,10 @@ class Job
 
     public function shortDescription($maxLength)
     {
-        if (strlen($this->description) <= $maxLength)
-            return $this->description;
+        if (strlen($this->presentation) <= $maxLength)
+            return $this->presentation;
 
-        $result = substr($this->description, 0, $maxLength);
+        $result = substr($this->presentation, 0, $maxLength);
         return $result."...";
     }
 
@@ -451,6 +451,7 @@ class Job
 
     // GENERATED CODE
 
+
     /**
      * @var integer
      */
@@ -469,12 +470,32 @@ class Job
     /**
      * @var string
      */
-    private $description;
+    private $presentation;
 
     /**
      * @var string
      */
     private $address;
+
+    /**
+     * @var string
+     */
+    private $unacurateAddress;
+
+    /**
+     * @var string
+     */
+    private $postcode;
+
+    /**
+     * @var string
+     */
+    private $departement;
+
+    /**
+     * @var string
+     */
+    private $city;
 
     /**
      * @var string
@@ -542,6 +563,51 @@ class Job
     private $category;
 
     /**
+     * @var \DateTime
+     */
+    private $start;
+
+    /**
+     * @var \DateTime
+     */
+    private $end;
+
+    /**
+     * @var array
+     */
+    private $diplomas;
+
+    /**
+     * @var array
+     */
+    private $ageofchildren;
+
+    /**
+     * @var array
+     */
+    private $languages;
+
+    /**
+     * @var array
+     */
+    private $petitsplus;
+
+    /**
+     * @var array
+     */
+    private $extraTasks;
+
+    /**
+     * @var array
+     */
+    private $particularite;
+
+    /**
+     * @var string
+     */
+    private $phone;
+
+    /**
      * @var \Pn\PnBundle\Entity\Pparent
      */
     private $parent;
@@ -604,26 +670,26 @@ class Job
     }
 
     /**
-     * Set description
+     * Set presentation
      *
-     * @param string $description
+     * @param string $presentation
      * @return Job
      */
-    public function setDescription($description)
+    public function setPresentation($presentation)
     {
-        $this->description = $description;
+        $this->presentation = $presentation;
 
         return $this;
     }
 
     /**
-     * Get description
+     * Get presentation
      *
      * @return string 
      */
-    public function getDescription()
+    public function getPresentation()
     {
-        return $this->description;
+        return $this->presentation;
     }
 
     /**
@@ -647,6 +713,98 @@ class Job
     public function getAddress()
     {
         return $this->address;
+    }
+
+    /**
+     * Set unacurateAddress
+     *
+     * @param string $unacurateAddress
+     * @return Job
+     */
+    public function setUnacurateAddress($unacurateAddress)
+    {
+        $this->unacurateAddress = $unacurateAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get unacurateAddress
+     *
+     * @return string 
+     */
+    public function getUnacurateAddress()
+    {
+        return $this->unacurateAddress;
+    }
+
+    /**
+     * Set postcode
+     *
+     * @param string $postcode
+     * @return Job
+     */
+    public function setPostcode($postcode)
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    /**
+     * Get postcode
+     *
+     * @return string 
+     */
+    public function getPostcode()
+    {
+        return $this->postcode;
+    }
+
+    /**
+     * Set departement
+     *
+     * @param string $departement
+     * @return Job
+     */
+    public function setDepartement($departement)
+    {
+        $this->departement = $departement;
+
+        return $this;
+    }
+
+    /**
+     * Get departement
+     *
+     * @return string 
+     */
+    public function getDepartement()
+    {
+        return $this->departement;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     * @return Job
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string 
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 
     /**
@@ -972,39 +1130,6 @@ class Job
     }
 
     /**
-     * Set parent
-     *
-     * @param \Pn\PnBundle\Entity\Pparent $parent
-     * @return Job
-     */
-    public function setParent(\Pn\PnBundle\Entity\Pparent $parent = null)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return \Pn\PnBundle\Entity\Pparent 
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-    /**
-     * @var \DateTime
-     */
-    private $start;
-
-    /**
-     * @var \DateTime
-     */
-    private $end;
-
-
-    /**
      * Set start
      *
      * @param \DateTime $start
@@ -1049,11 +1174,6 @@ class Job
     {
         return $this->end;
     }
-    /**
-     * @var array
-     */
-    private $diplomas;
-
 
     /**
      * Set diplomas
@@ -1077,11 +1197,6 @@ class Job
     {
         return $this->diplomas;
     }
-    /**
-     * @var array
-     */
-    private $ageofchildren;
-
 
     /**
      * Set ageofchildren
@@ -1105,11 +1220,6 @@ class Job
     {
         return $this->ageofchildren;
     }
-    /**
-     * @var array
-     */
-    private $languages;
-
 
     /**
      * Set languages
@@ -1133,21 +1243,6 @@ class Job
     {
         return $this->languages;
     }
-    /**
-     * @var array
-     */
-    private $petitsplus;
-
-    /**
-     * @var array
-     */
-    private $extraTasks;
-
-    /**
-     * @var array
-     */
-    private $particularite;
-
 
     /**
      * Set petitsplus
@@ -1217,11 +1312,6 @@ class Job
     {
         return $this->particularite;
     }
-    /**
-     * @var string
-     */
-    private $phone;
-
 
     /**
      * Set phone
@@ -1245,144 +1335,27 @@ class Job
     {
         return $this->phone;
     }
-    /**
-     * @var string
-     */
-    private $postcode;
 
     /**
-     * @var string
-     */
-    private $departement;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-
-    /**
-     * Set postcode
+     * Set parent
      *
-     * @param string $postcode
+     * @param \Pn\PnBundle\Entity\Pparent $parent
      * @return Job
      */
-    public function setPostcode($postcode)
+    public function setParent(\Pn\PnBundle\Entity\Pparent $parent = null)
     {
-        $this->postcode = $postcode;
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * Get postcode
+     * Get parent
      *
-     * @return string 
+     * @return \Pn\PnBundle\Entity\Pparent 
      */
-    public function getPostcode()
+    public function getParent()
     {
-        return $this->postcode;
-    }
-
-    /**
-     * Set departement
-     *
-     * @param string $departement
-     * @return Job
-     */
-    public function setDepartement($departement)
-    {
-        $this->departement = $departement;
-
-        return $this;
-    }
-
-    /**
-     * Get departement
-     *
-     * @return string 
-     */
-    public function getDepartement()
-    {
-        return $this->departement;
-    }
-
-    /**
-     * Set city
-     *
-     * @param string $city
-     * @return Job
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    /**
-     * Get city
-     *
-     * @return string 
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-    /**
-     * @var string
-     */
-    private $unacurateAddress;
-
-
-    /**
-     * Set unacurateAddress
-     *
-     * @param string $unacurateAddress
-     * @return Job
-     */
-    public function setUnacurateAddress($unacurateAddress)
-    {
-        $this->unacurateAddress = $unacurateAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get unacurateAddress
-     *
-     * @return string 
-     */
-    public function getUnacurateAddress()
-    {
-        return $this->unacurateAddress;
-    }
-    /**
-     * @var string
-     */
-    private $presentation;
-
-
-    /**
-     * Set presentation
-     *
-     * @param string $presentation
-     * @return Job
-     */
-    public function setPresentation($presentation)
-    {
-        $this->presentation = $presentation;
-
-        return $this;
-    }
-
-    /**
-     * Get presentation
-     *
-     * @return string 
-     */
-    public function getPresentation()
-    {
-        return $this->presentation;
+        return $this->parent;
     }
 }

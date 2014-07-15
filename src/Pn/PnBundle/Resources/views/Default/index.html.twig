@@ -42,21 +42,27 @@
         <div class="big-banner">
             <div class="wrap">
                 <div class="row">
-                    <div class="col-md-4 topic">
-                        <img src="{{ asset('bundles/pnpn/images/icons/present-search.png') }}" alt="present-search">
-                        <h5>Nounous qualifiées</h5>
-                        <p>Nous présélectionnons nos nounous et baby-sitters grâce à un moteur de recherche intelligent</p>
-                    </div>
-                    <div class="col-md-4 topic">
-                        <img src="{{ asset('bundles/pnpn/images/icons/present-badge.png') }}" alt="present-confiance">
-                        <h5>E-certification</h5>
-                        <p>Nous accompagnons nos nounous et baby-sitters dans leur formation continue</p>
-                    </div>
-                    <div class="col-md-4 topic">
-                        <img src="{{ asset('bundles/pnpn/images/icons/present-confiance.png') }}" alt="present-badge">
-                        <h5>Garde d'enfants entre parents (bientôt)</h5>
-                        <p>Nos "parents-nounous" s'entraident dans la garde de leurs enfants</p>
-                    </div>
+                    <a href="{{ path('pn_accueilDeQualite') }}">
+                        <div class="col-md-4 topic">
+                            <img src="{{ asset('bundles/pnpn/images/icons/present-search.png') }}" alt="present-search">
+                            <h5>Nounous qualifiées</h5>
+                            <p>Nous présélectionnons nos nounous et baby-sitters grâce à un moteur de recherche intelligent</p>
+                        </div>
+                    </a>
+                    <a href="{{ path('pn_ecertification') }}">
+                        <div class="col-md-4 topic">
+                            <img src="{{ asset('bundles/pnpn/images/icons/present-badge.png') }}" alt="present-confiance">
+                            <h5>E-certification</h5>
+                            <p>Nous accompagnons nos nounous et baby-sitters dans leur formation continue</p>
+                        </div>
+                    </a>
+                    <a href="{{ path('pn_gardePartagee') }}">
+                        <div class="col-md-4 topic">
+                            <img src="{{ asset('bundles/pnpn/images/icons/present-confiance.png') }}" alt="present-badge">
+                            <h5>Garde d'enfants entre parents (bientôt)</h5>
+                            <p>Nos "parents-nounous" s'entraident dans la garde de leurs enfants</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -98,7 +104,7 @@
                                 <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">
                             {% endif %}
                             <strong>{{ babysitter.user.getHiddenName() }}</strong>
-                            <p>{{ babysitter.user.city }}</p>
+                            <p>{{ babysitter.user.city|slice(0, 13) }}</p>
                         </div>
                         <div class="body">
                             <p>{{ babysitter.user.getCategories[babysitter.category] }}</p>
@@ -113,7 +119,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=places&language=fr-FR"></script>
     <script type="text/javascript">
 
         var latlng = new google.maps.LatLng(46.7592690, 2.8603553);
@@ -175,7 +181,7 @@
                 '           <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/nounou.jpg') }}" alt="photo de profil" style="height: 120px;">' +
                 {% endif %}
                 '           <strong>{{ entity.user.getHiddenName() }}</strong>' +
-                '           <p>Paris</p>' +
+                '           <p>{{ entity.user.city }}</p>' +
                 '       </div>' +
                 '       <div class="body">' +
                 '           <p>{{ entity.user.getCategories[entity.category] }}</p>' +
@@ -215,7 +221,7 @@
                 '           <img class="profile-picture" src="{{ asset('bundles/pnpn/images/illus/logo.png') }}" alt="photo de profil" style="height: 120px;">' +
                 {% endif %}
                 '           <strong>{{ entity.parent.user.getHiddenName() }}</strong>' +
-                '           <p>Paris</p>' +
+                '           <p>{{ entity.parent.user.city }}</p>' +
                 '       </div>' +
                 '       <div class="body">' +
                 '           <p>Parent</p>' +

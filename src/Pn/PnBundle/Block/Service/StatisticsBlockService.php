@@ -16,7 +16,7 @@ class StatisticsBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockContextInterface $block, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
         $userRepository = $this->em->getRepository('ApplicationSonataUserBundle:User');
         $babysitterRepository = $this->em->getRepository('PnPnBundle:Babysitter');
@@ -26,7 +26,9 @@ class StatisticsBlockService extends BaseBlockService
         $nbParents = $parentRepository->count();
 
         return $this->renderResponse('PnPnBundle:Block:block_statistics.html.twig', array(
-            'block'     => $block,
+            'context'   => $blockContext,
+            'settings'  => $blockContext->getSettings(),
+            'block'     => $blockContext->getBlock(),
             'nbUsers' => $nbUsers,
             'nbNounous' => $nbNounou,
             'nbParents' => $nbParents,

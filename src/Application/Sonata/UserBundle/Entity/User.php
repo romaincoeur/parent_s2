@@ -74,8 +74,8 @@ class User extends BaseUser
     public static function getDiplomass()
     {
         return array(
-            'assistante' => 'Agrément assistante maternelle',
-            'bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
+            '_assistante' => 'Agrément assistante maternelle',
+            '_bafa' => 'Brevet d\'aptitude aux fonctions d\'animateur (BAFA)',
         );
     }
 

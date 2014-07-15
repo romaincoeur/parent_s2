@@ -43,6 +43,7 @@ class BabysitterAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
+            ->add('user')
             ->add('trustpoints')
             ->add('rate_price')
             ->add('rate_type')
@@ -52,7 +53,8 @@ class BabysitterAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('user')
+            ->add('user.firstname')
+            ->add('user.lastname')
             ->add('category')
             ->add('trustpoints')
             ->add('rate_price')

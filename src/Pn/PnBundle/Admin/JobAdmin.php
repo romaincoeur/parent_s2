@@ -30,7 +30,7 @@ class JobAdmin extends Admin
     {
         $formMapper
             ->add('title')
-            ->add('description')
+            ->add('presentation')
             ->add('status')
             ->add('parent')
             ->add('rate_price')
@@ -61,8 +61,9 @@ class JobAdmin extends Admin
     {
         $datagridMapper
             ->add('title')
-            ->add('description')
+            ->add('is_activated')
             ->add('address')
+            ->add('parent')
         ;
     }
 
@@ -73,7 +74,7 @@ class JobAdmin extends Admin
             ->add('status')
             ->add('parent')
             ->add('category')
-            ->add('address')
+            ->add('unacurateAddress')
             ->add('is_activated', null, array('editable' => true))
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -89,10 +90,11 @@ class JobAdmin extends Admin
     {
         $showMapper
             ->add('title')
-            ->add('description')
+            ->add('presentation')
             ->add('status')
             ->add('parent')
             ->add('address')
+            ->add('unacurateAddress')
             ->add('latitude')
             ->add('longitude')
             ->add('rate_price')

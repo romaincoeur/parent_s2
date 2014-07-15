@@ -54,3 +54,11 @@ pn_babysitter_presentationAJAX:
 pn_babysitter_updateTrustpoints:
     pattern:  /updateTrustpoints
     defaults: { _controller: "PnPnBundle:Babysitter:updateAllTrustpoints" }
+
+babysitter_add_otherDiploma:
+    pattern: /{id}/add_OtherDiploma
+    defaults: { _controller: "PnPnBundle:Babysitter:addOtherDiploma" }
+
+babysitter_remove_otherDiploma:
+    pattern: /{id}/remove_OtherDiploma
+    defaults: { _controller: "PnPnBundle:Babysitter:removeOtherDiploma" }

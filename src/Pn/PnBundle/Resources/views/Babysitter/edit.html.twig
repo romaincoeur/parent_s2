@@ -143,6 +143,17 @@
                             {{ form_label(child) }}
                         </li>
                     {% endfor %}
+                    <div id="other_diplomas">
+                        {% for child in entity.otherDiplomas %}
+                            <li style="list-style-type: none;" id="{{ child|replace({ ' ': '', '\'':'' }) }}">
+                                <button class="remove_otherDiploma" title="Supprimer ce diplôme"><img src="{{ asset('bundles/pnpn/images/icons/error.png') }}" alt="supprimer diplome"></button>
+                                {{ child }}
+                            </li>
+                        {% endfor %}
+                    </div>
+                    <li style="list-style-type: none;">
+                        <b>+&nbsp;</b><input type="text" id="pn_pnbundle_babysitter_diplomas_new" placeholder="Autre diplôme"/>
+                    </li>
                 </div>
                 <div class="detail" id="ageOfChildren">
                     <img src="{{ asset('bundles/pnpn/images/icons/profil-age.png') }}" alt="age">

@@ -78,6 +78,7 @@ class BabysitterType extends AbstractType
                 'multiple' => true,
                 'required'  => false,
             ))
+            ->add('otherDiplomas')
             ->add('ageOfChildren', 'choice', array(
                 'choices'   => User::getAgeofchildrens(),
                 'expanded' => true,

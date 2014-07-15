@@ -53,6 +53,7 @@
     </route>
 
     <route id="sonata_news_home" pattern="/">
-        <default key="_controller">SonataNewsBundle:Post:home</default>
+        <default key="_controller">SonataNewsBundle:Post:archive</default>
+        <default key="_format">html</default>
     </route>
 </routes>

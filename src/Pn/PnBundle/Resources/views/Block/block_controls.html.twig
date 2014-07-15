@@ -1,5 +1,21 @@
 
-<div id="cms-block-002" class="cms-block cms-block-element">
-    <h2>Contrôles</h2>
-    <a href="{{ path('pn_babysitter_updateTrustpoints') }}"><button type="button" class="btn">Mettre à jour les points de confiance des babysitters</button></a>
-</div>
+
+{% extends sonata_block.templates.block_base %}
+
+{% block block %}
+    <div class="sonata-news-block-recent-post panel panel-default">
+        <div class="panel-heading">
+            <h3 class="sonata-news-block-recent-post panel-title"><i class="fa fa-sliders"></i>&nbsp;Contrôles</h3>
+        </div>
+
+        <div class="panel-body">
+
+            <div class="sonata-blog-post-container list-group">
+                <a class="list-group-item" href="{{ path('pn_babysitter_updateTrustpoints') }}">
+                    Mettre à jour les points de confiance des babysitters
+                </a>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

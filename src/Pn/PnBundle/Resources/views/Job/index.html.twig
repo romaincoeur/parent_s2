@@ -6,6 +6,7 @@
 {% block title %}{{ parent() }} - Annonces{% endblock %}
 
 {% block metadata %}
+    {{ parent() }}
     <meta name="description" content="Comparer les différentes annonces d’emploi de nounou et de baby-sitter par proximité géographique, dates, langue, tarif et autres critères.">
 {% endblock %}
 
@@ -36,7 +37,7 @@
         </div>
     </div>
 
-    <div class="wrap">
+    <div class="wrap" style="position: relative;">
     <aside>
 
         <div class="panel-group" id="accordion">
@@ -222,7 +223,7 @@
                     </div>
                     <div class="body">
                         <p>
-                            {{ entity.shortDescription(85)|raw }}<br>
+                            {{ entity.shortDescription(65)|raw|lower|capitalize }}<br>
                             <strong>
                                 {#<img src="{{ asset('bundles/pnpn/images/icons/profil-badge.png') }}" alt="badge"> 5 Badges&nbsp;&nbsp;#}
                                 {% if entity.experience %}

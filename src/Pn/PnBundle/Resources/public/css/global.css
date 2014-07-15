@@ -25,6 +25,11 @@
     background-color: #175fad;
 }
 
+.bg-grey
+{
+    background-color: #EEEEEE;
+}
+
 .blue
 {
     color: #65c0e3;
@@ -893,6 +898,12 @@ aside a.btn
     background: url('../images/icons/profil-modif.png') no-repeat #e84355 10px 4px;
 }
 
+.dates
+{
+    padding: 5px 10px;
+    font-style: italic;
+}
+
 
 /***************Page profil edit des nounous*****************/
 
@@ -1134,6 +1145,13 @@ label[for="pn_pnbundle_babysitter_diplomas_1"]
     text-shadow:0 -1px #000000;
     -webkit-box-shadow: 0 0  8px #000;
     box-shadow: 0 0 8px #000;
+}
+
+button.remove_otherDiploma
+{
+    border: none;
+    background-color: transparent;
+    padding: 0;
 }
 
 

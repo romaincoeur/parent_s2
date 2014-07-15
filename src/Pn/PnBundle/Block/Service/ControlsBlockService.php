@@ -16,10 +16,12 @@ class ControlsBlockService extends BaseBlockService
     /**
      * {@inheritdoc}
      */
-    public function execute(BlockContextInterface $block, Response $response = null)
+    public function execute(BlockContextInterface $blockContext, Response $response = null)
     {
         return $this->renderResponse('PnPnBundle:Block:block_controls.html.twig', array(
-            'block'     => $block,
+            'context'   => $blockContext,
+            'settings'  => $blockContext->getSettings(),
+            'block'     => $blockContext->getBlock(),
         ), $response);
     }
 
