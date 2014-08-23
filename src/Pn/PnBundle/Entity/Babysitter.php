@@ -606,6 +606,7 @@ class Babysitter
 
     
 
+    
     /**
      * @var integer
      */
@@ -699,7 +700,22 @@ class Babysitter
     /**
      * @var array
      */
+    private $otherDiplomas;
+
+    /**
+     * @var array
+     */
     private $languages;
+
+    /**
+     * @var \DateTime
+     */
+    private $created_at;
+
+    /**
+     * @var \DateTime
+     */
+    private $updated_at;
 
     /**
      * @var \Application\Sonata\UserBundle\Entity\User
@@ -1109,57 +1125,6 @@ class Babysitter
     }
 
     /**
-     * Set languages
-     *
-     * @param array $languages
-     * @return Babysitter
-     */
-    public function setLanguages($languages)
-    {
-        $this->languages = $languages;
-
-        return $this;
-    }
-
-    /**
-     * Get languages
-     *
-     * @return array 
-     */
-    public function getLanguages()
-    {
-        return $this->languages;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \Application\Sonata\UserBundle\Entity\User $user
-     * @return Babysitter
-     */
-    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Application\Sonata\UserBundle\Entity\User 
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-    /**
-     * @var array
-     */
-    private $otherDiplomas;
-
-
-    /**
      * Set otherDiplomas
      *
      * @param array $otherDiplomas
@@ -1181,16 +1146,29 @@ class Babysitter
     {
         return $this->otherDiplomas;
     }
-    /**
-     * @var \DateTime
-     */
-    private $created_at;
 
     /**
-     * @var \DateTime
+     * Set languages
+     *
+     * @param array $languages
+     * @return Babysitter
      */
-    private $updated_at;
+    public function setLanguages($languages)
+    {
+        $this->languages = $languages;
 
+        return $this;
+    }
+
+    /**
+     * Get languages
+     *
+     * @return array 
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
 
     /**
      * Set created_at
@@ -1236,5 +1214,28 @@ class Babysitter
     public function getUpdatedAt()
     {
         return $this->updated_at;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Application\Sonata\UserBundle\Entity\User $user
+     * @return Babysitter
+     */
+    public function setUser(\Application\Sonata\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Application\Sonata\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

@@ -10,7 +10,7 @@
 
 namespace Pn\PnBundle\Admin;
 
-use Pn\PnBundle\Entity\User;
+use Application\Sonata\UserBundle\Entity\User;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -34,9 +34,14 @@ class BabysitterAdmin extends Admin
             ->add('trustpoints','integer')
             ->add('presentation')
             ->add('rate_price')
-            ->add('rate_type')
-            ->add('category')
+            ->add('rate_type', 'choice', array(
+                'choices'   => User::getRateTypes(),
+                'expanded' => false,
+                'required'  => false,
+            ))            ->add('category')
             ->add('diplomas')
+            ->add('created_at')
+            ->add('updated_at')
         ;
     }
 
@@ -58,7 +63,11 @@ class BabysitterAdmin extends Admin
             ->add('category')
             ->add('trustpoints')
             ->add('rate_price')
-            ->add('rate_type')
+            ->add('rate_type', 'choice', array(
+                'choices'   => User::getRateTypes(),
+                'expanded' => false,
+                'required'  => false,
+            ))
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -80,12 +89,9 @@ class BabysitterAdmin extends Admin
             ->add('rate_price')
             ->add('rate_type')
             ->add('category')
-            ->add('diplomas', 'choice', array(
-                'choices'   => User::getDiplomass(),
-                'expanded' => true,
-                'multiple' => true,
-                'required'  => true,
-            ))
+            ->add('diplomas')
+            ->add('created_at')
+            ->add('updated_at')
         ;
     }
 }

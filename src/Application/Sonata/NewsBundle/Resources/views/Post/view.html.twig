@@ -25,6 +25,23 @@
         <div class="sonata-blog-post-content">
             {% media post.image, 'wide' %}
             {{ post.content|raw }}
+
+            {# Signature google+ #}
+            {% if post.author.gplusUid %}
+                <!-- Placez cette balise où vous souhaitez faire apparaître le gadget widget. -->
+                <div class="g-person" data-href="{{ post.author.gplusUid }}" data-layout="landscape" data-rel="author"></div>
+
+                <!-- Placez cette ballise après la dernière balise widget. -->
+                <script type="text/javascript">
+                    window.___gcfg = {lang: 'fr'};
+
+                    (function() {
+                        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                        po.src = 'https://apis.google.com/js/platform.js';
+                        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+                    })();
+                </script>
+            {% endif %}
         </div>
     </div>
 

@@ -37,6 +37,6 @@ swiftmailer:
     encryption: ssl
     auth_mode:  login
     host:       trigone.o2switch.net
-    username:   contact@parent-nounou.fr
-    password:   Mura6151
+    username:   "%mailer_user%"
+    password:   "%mailer_password%"
     delivery_address: coeurro@gmail.com

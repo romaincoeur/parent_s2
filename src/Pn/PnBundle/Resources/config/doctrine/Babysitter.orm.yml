@@ -74,6 +74,7 @@ Pn\PnBundle\Entity\Babysitter:
       nullable: true
     created_at:
       type: datetime
+      nullable: true
     updated_at:
       type: datetime
       nullable: true
