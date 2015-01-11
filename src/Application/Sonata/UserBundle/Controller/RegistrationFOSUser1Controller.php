@@ -49,7 +49,7 @@ class RegistrationFOSUser1Controller extends \Sonata\UserBundle\Controller\Regis
             $form,
             $request,
             $this->container->get('fos_user.user_manager'),
-            $this->container->get('fos_user.mailer.default'),
+            $this->container->get('fos_user.mailer'),
             $this->container->get('fos_user.util.token_generator')
         );
 
