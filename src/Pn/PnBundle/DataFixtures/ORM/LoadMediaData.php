@@ -42,6 +42,9 @@ class LoadMediaData extends AbstractFixture implements ContainerAwareInterface, 
             $media = $manager->create();
             $media->setBinaryContent($file);
             $media->setEnabled(true);
+            //$media->setName("media_".$i);
+            //$media->setDescription("media_".$i);
+            //$media->setContext('default');
             $this->addReference('media-'.($i++), $media);
             $manager->save($media, 'default', 'sonata.media.provider.image');
         }

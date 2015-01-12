@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: romain
- * Date: 27/03/14
- * Time: 15:39
- */
+// src/Pn/PnBundle/DataFixtures/ORM/LoadUserData.php
 
-// src/Application/Sonata/UserBundle/DataFixtures/ORM/LoadUserData.php
-namespace Application\Sonata\UserBundle\DataFixtures\ORM;
+
+namespace Pn\PnBundle\DataFixtures\ORM;
 
 use Application\Sonata\UserBundle\Entity\User;
 use Doctrine\Common\Persistence\ObjectManager;

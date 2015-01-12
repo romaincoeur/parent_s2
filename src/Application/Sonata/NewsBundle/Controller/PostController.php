@@ -47,7 +47,6 @@ class PostController extends \Sonata\NewsBundle\Controller\PostController
         }
 
         if (!$post->isCommentable()) {
-            // todo add notice
             return new RedirectResponse($this->generateUrl('application_sonata_news_view', array(
                 'permalink'  => $this->getBlog()->getPermalinkGenerator()->generate($post)
             )));
@@ -64,7 +63,6 @@ class PostController extends \Sonata\NewsBundle\Controller\PostController
             $this->getCommentManager()->save($comment);
             $this->get('sonata.news.mailer')->sendCommentNotification($comment);
 
-            // todo : add notice
             return new RedirectResponse($this->generateUrl('sonata_news_view', array(
                 'permalink'  => $this->getBlog()->getPermalinkGenerator()->generate($post)
             )));

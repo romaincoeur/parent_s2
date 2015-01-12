@@ -17,5 +17,15 @@
             <generator strategy="AUTO"/>
         </id>
 
+        <one-to-many field="children" target-entity="Application\Sonata\ClassificationBundle\Entity\Category" mapped-by="parent">
+            <cascade>
+                <cascade-persist />
+            </cascade>
+        </one-to-many>
+
+        <many-to-one field="parent" target-entity="Application\Sonata\ClassificationBundle\Entity\Category">
+            <join-column name="parent_id" referenced-column-name="id" nullable="true" />
+        </many-to-one>
+
     </entity>
 </doctrine-mapping>
