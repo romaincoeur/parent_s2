@@ -2,9 +2,9 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
-    database_name:     symfony
+    database_name:     parents
     database_user:     root
-    database_password: ~
+    database_password: azerty1234
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -14,10 +14,10 @@ parameters:
     locale:            fr
     secret:            ThisTokdsfsdfertcxenI56sNotSoSecxvcretxcvChangeIt
 
-    sonata_news.blog_title: 'My Awesome Blog'
+    sonata_news.blog_title: 'Le blog de parent-nounou'
     sonata_news.blog_link: 'http://awesome-blog.ltd'
     sonata_news.blog_description: 'My Awesome blog description'
     sonata_news.salt: Thqsdez34isTokenIsNotSoSecrexvctChanxcvxvgeIt
     sonata_news.comment.emails:
         - mail@example.org
-    sonata_news.comment.email_from: no-reply@example.org
+    sonata_news.comment.email_from: no-reply@parent-nounou.fr
